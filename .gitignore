@@ -1,0 +1,34 @@
+## ==========================================
+## Visual Studio Build Outputs (3-Tier Layers)
+## ==========================================
+# سيتكفل بحظر مجلدات الـ Build لكل الطبقات (Presentation, Business, Data Access)
+[Dd]ebug/
+[Rr]elease/
+**/bin/
+**/obj/
+
+## ==========================================
+## Visual Studio Cache, User & IDE Files
+## ==========================================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.suo
+*.ntvs_analysis.dat
+*.斜
+
+## ==========================================
+## Test Results & Diagnostics
+## ==========================================
+[Tt]est[Rr]esults/
+*.visualstudio.updatelog
+*.log
+
+## ==========================================
+## OS & System Files
+## ==========================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
