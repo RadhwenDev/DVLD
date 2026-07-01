@@ -51,6 +51,8 @@ namespace DVLD_PresentationLayer
         {
             activeSidebarButton = btnPeople;
             lblBreadcrumb.Text = "DVLD > People";
+            ucPeople myPeoplePage = new ucPeople();
+            showUserControl(myPeoplePage);
         }
 
         private void btnPeople_Paint(object sender, PaintEventArgs e)
@@ -81,6 +83,17 @@ namespace DVLD_PresentationLayer
                 btn.HoverState.FillColor = Color.FromArgb(45, 52, 71);
                 btn.HoverState.ForeColor = Color.White;
             }
+        }
+
+        private void showUserControl(UserControl userControl)
+        {
+            pnlContainer.Controls.Clear();
+
+            userControl.Dock = DockStyle.Fill;
+
+            pnlContainer.Controls.Add(userControl);
+
+            userControl.BringToFront();
         }
 
     }

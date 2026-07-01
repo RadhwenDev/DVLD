@@ -29,15 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.lblBreadcrumb = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.btnMenu = new Guna.UI2.WinForms.Guna2Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnDashboard = new Guna.UI2.WinForms.Guna2Button();
             this.btnPeople = new Guna.UI2.WinForms.Guna2Button();
@@ -46,78 +41,18 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnMenu = new Guna.UI2.WinForms.Guna2Button();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.pnlContainer = new System.Windows.Forms.Panel();
+            this.lblBreadcrumb = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlSidebar.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.panel2.Controls.Add(this.panel3);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(260, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1642, 1033);
-            this.panel2.TabIndex = 1;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.Controls.Add(this.lblBreadcrumb);
-            this.panel3.Controls.Add(this.lblDate);
-            this.panel3.Controls.Add(this.btnMenu);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1642, 70);
-            this.panel3.TabIndex = 0;
-            // 
-            // lblBreadcrumb
-            // 
-            this.lblBreadcrumb.AutoSize = false;
-            this.lblBreadcrumb.BackColor = System.Drawing.Color.Transparent;
-            this.lblBreadcrumb.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBreadcrumb.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblBreadcrumb.Location = new System.Drawing.Point(118, 13);
-            this.lblBreadcrumb.Name = "lblBreadcrumb";
-            this.lblBreadcrumb.Size = new System.Drawing.Size(899, 41);
-            this.lblBreadcrumb.TabIndex = 4;
-            this.lblBreadcrumb.Text = "DVLD";
-            this.lblBreadcrumb.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblDate
-            // 
-            this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblDate.Location = new System.Drawing.Point(1454, 23);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(181, 40);
-            this.lblDate.TabIndex = 3;
-            this.lblDate.Text = "Date";
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.BorderRadius = 3;
-            this.btnMenu.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnMenu.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnMenu.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnMenu.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnMenu.FillColor = System.Drawing.Color.White;
-            this.btnMenu.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.btnMenu.ForeColor = System.Drawing.Color.Gray;
-            this.btnMenu.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnMenu.Location = new System.Drawing.Point(39, 12);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(44, 41);
-            this.btnMenu.TabIndex = 0;
-            this.btnMenu.Text = "X";
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // panel1
             // 
@@ -131,16 +66,15 @@
             this.panel1.Size = new System.Drawing.Size(260, 100);
             this.panel1.TabIndex = 0;
             // 
-            // pictureBox1
+            // label2
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(34, 30);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(40, 39);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.label2.Location = new System.Drawing.Point(80, 53);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(157, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "License Management";
             // 
             // label1
             // 
@@ -152,15 +86,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "DVLD System";
             // 
-            // label2
+            // pictureBox1
             // 
-            this.label2.Font = new System.Drawing.Font("Segoe UI Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.label2.Location = new System.Drawing.Point(80, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(157, 25);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "License Management";
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(34, 30);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(40, 39);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // label3
             // 
@@ -280,35 +215,93 @@
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.White;
+            this.panel3.Controls.Add(this.lblBreadcrumb);
+            this.panel3.Controls.Add(this.lblDate);
+            this.panel3.Controls.Add(this.btnMenu);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(260, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1642, 70);
+            this.panel3.TabIndex = 0;
+            // 
+            // btnMenu
+            // 
+            this.btnMenu.BorderRadius = 3;
+            this.btnMenu.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnMenu.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnMenu.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnMenu.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnMenu.FillColor = System.Drawing.Color.White;
+            this.btnMenu.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.btnMenu.ForeColor = System.Drawing.Color.Gray;
+            this.btnMenu.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnMenu.Location = new System.Drawing.Point(39, 12);
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(44, 41);
+            this.btnMenu.TabIndex = 0;
+            this.btnMenu.Text = "X";
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+            // 
+            // lblDate
+            // 
+            this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lblDate.Location = new System.Drawing.Point(1378, 23);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(257, 40);
+            this.lblDate.TabIndex = 3;
+            this.lblDate.Text = "Date";
+            // 
+            // pnlContainer
+            // 
+            this.pnlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.pnlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlContainer.Location = new System.Drawing.Point(260, 70);
+            this.pnlContainer.Name = "pnlContainer";
+            this.pnlContainer.Size = new System.Drawing.Size(1642, 963);
+            this.pnlContainer.TabIndex = 1;
+            // 
+            // lblBreadcrumb
+            // 
+            this.lblBreadcrumb.AutoSize = false;
+            this.lblBreadcrumb.BackColor = System.Drawing.Color.Transparent;
+            this.lblBreadcrumb.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBreadcrumb.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lblBreadcrumb.Location = new System.Drawing.Point(118, 13);
+            this.lblBreadcrumb.Name = "lblBreadcrumb";
+            this.lblBreadcrumb.Size = new System.Drawing.Size(899, 41);
+            this.lblBreadcrumb.TabIndex = 4;
+            this.lblBreadcrumb.Text = "DVLD";
+            this.lblBreadcrumb.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1902, 1033);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pnlContainer);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.pnlSidebar);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlSidebar.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        private Guna.UI2.WinForms.Guna2Button btnMenu;
-        private System.Windows.Forms.Label lblDate;
-        private Guna.UI2.WinForms.Guna2HtmlLabel lblBreadcrumb;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
@@ -321,6 +314,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Panel panel3;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lblBreadcrumb;
+        private System.Windows.Forms.Label lblDate;
+        private Guna.UI2.WinForms.Guna2Button btnMenu;
+        private System.Windows.Forms.Panel pnlContainer;
     }
 }
 
