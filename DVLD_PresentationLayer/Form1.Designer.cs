@@ -42,10 +42,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnMenu = new Guna.UI2.WinForms.Guna2Button();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.pnlContainer = new System.Windows.Forms.Panel();
             this.lblBreadcrumb = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.btnMenu = new Guna.UI2.WinForms.Guna2Button();
+            this.pnlContainer = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlSidebar.SuspendLayout();
@@ -227,6 +227,30 @@
             this.panel3.Size = new System.Drawing.Size(1642, 70);
             this.panel3.TabIndex = 0;
             // 
+            // lblBreadcrumb
+            // 
+            this.lblBreadcrumb.AutoSize = false;
+            this.lblBreadcrumb.BackColor = System.Drawing.Color.Transparent;
+            this.lblBreadcrumb.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBreadcrumb.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lblBreadcrumb.Location = new System.Drawing.Point(118, 13);
+            this.lblBreadcrumb.Name = "lblBreadcrumb";
+            this.lblBreadcrumb.Size = new System.Drawing.Size(899, 41);
+            this.lblBreadcrumb.TabIndex = 4;
+            this.lblBreadcrumb.Text = "DVLD";
+            this.lblBreadcrumb.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblDate
+            // 
+            this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lblDate.Location = new System.Drawing.Point(1378, 23);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(257, 40);
+            this.lblDate.TabIndex = 3;
+            this.lblDate.Text = "Date";
+            // 
             // btnMenu
             // 
             this.btnMenu.BorderRadius = 3;
@@ -245,38 +269,14 @@
             this.btnMenu.Text = "X";
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
-            // lblDate
-            // 
-            this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblDate.Location = new System.Drawing.Point(1378, 23);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(257, 40);
-            this.lblDate.TabIndex = 3;
-            this.lblDate.Text = "Date";
-            // 
             // pnlContainer
             // 
-            this.pnlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.pnlContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.pnlContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContainer.Location = new System.Drawing.Point(260, 70);
             this.pnlContainer.Name = "pnlContainer";
             this.pnlContainer.Size = new System.Drawing.Size(1642, 963);
             this.pnlContainer.TabIndex = 1;
-            // 
-            // lblBreadcrumb
-            // 
-            this.lblBreadcrumb.AutoSize = false;
-            this.lblBreadcrumb.BackColor = System.Drawing.Color.Transparent;
-            this.lblBreadcrumb.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBreadcrumb.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblBreadcrumb.Location = new System.Drawing.Point(118, 13);
-            this.lblBreadcrumb.Name = "lblBreadcrumb";
-            this.lblBreadcrumb.Size = new System.Drawing.Size(899, 41);
-            this.lblBreadcrumb.TabIndex = 4;
-            this.lblBreadcrumb.Text = "DVLD";
-            this.lblBreadcrumb.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 

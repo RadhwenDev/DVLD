@@ -61,6 +61,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ucAddUpdatePerson.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucAddUpdatePerson.Designer.cs">
+      <DependentUpon>ucAddUpdatePerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucPeople.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -79,6 +85,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ucAddUpdatePerson.resx">
+      <DependentUpon>ucAddUpdatePerson.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucPeople.resx">
       <DependentUpon>ucPeople.cs</DependentUpon>
     </EmbeddedResource>
