@@ -1,15 +1,18 @@
-﻿using System;
+﻿using DVLD_DataAccessLayer;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DVLD_DataAccessLayer;
+using System.Xml.Linq;
 
 namespace DVLD_BusinessLayer
 {
     public class clsPerson
     {
+        enum enMode { AddNew, Update };
+        enMode Mode;
         public int PersonID {  set; get; }
         public string NationalNo { set; get; }
         public string FirstName { set; get; }
@@ -40,6 +43,7 @@ namespace DVLD_BusinessLayer
             this.Email = "";
             this.NationalCountryID = -1;
             this.ImagePath = "";
+            Mode = enMode.AddNew;
         }
 
 
@@ -58,12 +62,47 @@ namespace DVLD_BusinessLayer
             this.Email = Email;
             this.NationalCountryID = NationalCountryID;
             this.ImagePath = ImagePath;
+            Mode = enMode.Update;
         }
 
         public static DataTable GetPeople()
         {
             return clsPeopleDataAccess.GetPeople();
         }
-        
+
+        public bool AddNewPerson()
+        {
+            this.PersonID = clsPeopleDataAccess.AddNewPerson(this.NationalNo, this.FirstName, this.SecondName, this.ThirdName, this.LastName, this.DateOfBirth, this.Gendor, this.Address, this.Phone, this.Email, this.NationalCountryID, this.ImagePath);
+            return (this.PersonID != -1);
+        }
+        public bool UpdatePerson()
+        {
+            return true;
+        }
+
+        public bool Save()
+        {
+            switch (Mode)
+            {
+                case enMode.AddNew:
+                    if (AddNewPerson())
+                    {
+                        Mode = enMode.Update;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case enMode.Update:
+                    return UpdatePerson();
+
+            }
+            return false;
+        }
+        public static bool IsPersonExist(string NationalNo)
+        {
+            return clsPeopleDataAccess.IsPersonExist(NationalNo);
+        }
     }
 }

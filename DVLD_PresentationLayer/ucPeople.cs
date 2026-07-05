@@ -64,16 +64,13 @@ namespace DVLD_PresentationLayer
                 MessageBox.Show("Error in Country Cache: " + ex.Message, "Cache Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void ucPeople_Load(object sender, EventArgs e)
+        private void _RefreshPeopleList()
         {
-            guna2DataGridView1.CellPainting += guna2DataGridView1_CellPainting;
-
-            LoadCountryCodesCache();
             DataTable _dtAllPeople = clsPerson.GetPeople();
 
             if (_dtAllPeople != null)
             {
+                // إضافة الأعمدة المحسوبة ديناميكياً
                 _dtAllPeople.Columns.Add("PERSON", typeof(string), "FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName");
                 _dtAllPeople.Columns.Add("CountryCode", typeof(string));
 
@@ -88,46 +85,53 @@ namespace DVLD_PresentationLayer
                 }
             }
 
-            guna2DataGridView1.DataSource = _dtAllPeople;
-            int rowsCount = guna2DataGridView1.Rows.Count;
-
+            dgvPeople.DataSource = _dtAllPeople;
             UpdateRowsCount();
 
-            if (guna2DataGridView1.Columns["CountryCode"] != null)
+            // إخفاء الأعمدة الإضافية بعد ربط الـ DataSource الجديد
+            if (dgvPeople.Columns["CountryCode"] != null)
             {
-                guna2DataGridView1.Columns["CountryCode"].Visible = false;
+                dgvPeople.Columns["CountryCode"].Visible = false;
             }
 
-            if (guna2DataGridView1.Rows.Count > 0)
+            if (dgvPeople.Rows.Count > 0)
             {
-                guna2DataGridView1.Columns["FirstName"].Visible = false;
-                guna2DataGridView1.Columns["SecondName"].Visible = false;
-                guna2DataGridView1.Columns["ThirdName"].Visible = false;
-                guna2DataGridView1.Columns["LastName"].Visible = false;
-                guna2DataGridView1.Columns["Gendor"].Visible = false;
-                guna2DataGridView1.Columns["ImagePath"].Visible = false;
-                guna2DataGridView1.Columns["Address"].Visible = false;
-                guna2DataGridView1.Columns["NationalNo"].HeaderText = "NATIONAL ID";
-                guna2DataGridView1.Columns["DateOfBirth"].DefaultCellStyle.Format = "MMM dd, yyyy";
-                guna2DataGridView1.Columns["DateOfBirth"].HeaderText = "DATE OF BIRTH";
-                guna2DataGridView1.Columns["Email"].HeaderText = "EMAIL";
-                guna2DataGridView1.Columns["PERSON"].HeaderText = "  PERSON";
-                guna2DataGridView1.Columns["PERSON"].DisplayIndex = 0;
-                guna2DataGridView1.Columns["PERSON"].Width = 250;
-                guna2DataGridView1.Columns["PERSON"].DefaultCellStyle.Padding = new Padding(10, 0, 0, 0);
+                dgvPeople.Columns["FirstName"].Visible = false;
+                dgvPeople.Columns["SecondName"].Visible = false;
+                dgvPeople.Columns["ThirdName"].Visible = false;
+                dgvPeople.Columns["LastName"].Visible = false;
+                dgvPeople.Columns["Gendor"].Visible = false;
+                dgvPeople.Columns["ImagePath"].Visible = false;
+                dgvPeople.Columns["Address"].Visible = false;
+                dgvPeople.Columns["NationalNo"].HeaderText = "NATIONAL ID";
+                dgvPeople.Columns["DateOfBirth"].DefaultCellStyle.Format = "MMM dd, yyyy";
+                dgvPeople.Columns["DateOfBirth"].HeaderText = "DATE OF BIRTH";
+                dgvPeople.Columns["Email"].HeaderText = "EMAIL";
+                dgvPeople.Columns["PERSON"].HeaderText = "  PERSON";
+                dgvPeople.Columns["PERSON"].DisplayIndex = 0;
+                dgvPeople.Columns["PERSON"].Width = 250;
+                dgvPeople.Columns["PERSON"].DefaultCellStyle.Padding = new Padding(10, 0, 0, 0);
             }
+        }
+        private void ucPeople_Load(object sender, EventArgs e)
+        {
+            dgvPeople.CellPainting += guna2DataGridView1_CellPainting;
+            LoadCountryCodesCache();
+
+            // استدعاء دالة التحديث لأول مرة عند تحميل الصفحة
+            _RefreshPeopleList();
         }
 
         private void guna2DataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && guna2DataGridView1.Columns[e.ColumnIndex].Name == "CountryName")
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && dgvPeople.Columns[e.ColumnIndex].Name == "CountryName")
             {
                 if (e.Value != null)
                 {
                     e.PaintBackground(e.CellBounds, true);
 
                     string countryName = e.Value.ToString().Trim();
-                    string countryCode = guna2DataGridView1.Rows[e.RowIndex].Cells["CountryCode"].Value?.ToString() ?? "";
+                    string countryCode = dgvPeople.Rows[e.RowIndex].Cells["CountryCode"].Value?.ToString() ?? "";
 
                     Image flagImage = null;
                     int imageWidth = 24;
@@ -177,7 +181,7 @@ namespace DVLD_PresentationLayer
 
                     // توسيط وحسابات النص
                     int textX = startX + (flagImage != null ? imageWidth + 10 : 0);
-                    Font cellFont = e.CellStyle.Font ?? guna2DataGridView1.Font;
+                    Font cellFont = e.CellStyle.Font ?? dgvPeople.Font;
                     SizeF textSize = e.Graphics.MeasureString(countryName, cellFont);
                     float textY = e.CellBounds.Y + ((e.CellBounds.Height - textSize.Height) / 2);
 
@@ -194,7 +198,7 @@ namespace DVLD_PresentationLayer
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (guna2DataGridView1.DataSource is DataTable dt)
+            if (dgvPeople.DataSource is DataTable dt)
             {
                 dt.DefaultView.RowFilter = string.Format("PERSON LIKE '%{0}%' OR NationalNo LIKE '%{0}%' OR Email LIKE '%{0}%'", guna2TextBox1.Text.Replace("'", "''"));
             }
@@ -203,7 +207,7 @@ namespace DVLD_PresentationLayer
 
         private void UpdateRowsCount()
         {
-            int rowsCount = guna2DataGridView1.Rows.Count;
+            int rowsCount = dgvPeople.Rows.Count;
 
             if (rowsCount == 0)
                 lblCountRows.Text = "No Registered Individuals";
@@ -237,12 +241,29 @@ namespace DVLD_PresentationLayer
                     myAddPersonPage.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myAddPersonPage);
 
+                    // 🌟 السطر السحري: ربط الـ Delegate الخاص بالـ User Control بالدالة المخصصة للتحديث
+                    myAddPersonPage.DataBack += MyAddPersonPage_DataBack;
+
                     Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
                     elipse.TargetControl = frmContainer;
                     elipse.BorderRadius = 16;
 
                     frmContainer.ShowDialog(overlay);
                 }
+            }
+        }
+        private void MyAddPersonPage_DataBack(object sender, int PersonID)
+        {
+            _RefreshPeopleList();
+            MessageBox.Show($"تم استقبال المعرف الجديد في الفورم الرئيسي بنجاح: ID = {PersonID}", "تم التحديث", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void dgvPeople_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgvPeople.ClearSelection();
+                dgvPeople.Rows[e.RowIndex].Selected = true;
             }
         }
     }

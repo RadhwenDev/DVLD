@@ -6,14 +6,18 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace DVLD_PresentationLayer
 {
     public partial class ucAddUpdatePerson : UserControl
     {
+        public delegate void DataBackEventHandler(object sender, int PersonID);
+        public event DataBackEventHandler DataBack;
         public enum enMode { AddNew = 0, Update = 1 };
         private enMode _Mode = enMode.AddNew;
         private int _PersonID = -1;
@@ -115,7 +119,7 @@ namespace DVLD_PresentationLayer
 
             // 2. إعداد الـ Guna2ComboBox برمجياً لترك مساحة واسعة للعلم على اليسار
             cbNationality.DrawMode = DrawMode.Normal;
-            cbNationality.TextOffset = new Point(35, 0); // إزاحة النص 35 بكسل لليمين لترك مساحة للـ PictureBox
+            cbNationality.TextOffset = new Point(35, 0);
 
             // 3. إنشاء الـ PictureBox المخصص للعلم برمجياً وتحديد أبعاده ومكانه
             _pbComboFlag = new PictureBox();
@@ -124,7 +128,7 @@ namespace DVLD_PresentationLayer
             _pbComboFlag.BackColor = Color.Transparent;
 
             // وضعه في أقصى اليسار بالمنتصف عمودياً داخل الكومبوبوكس
-            _pbComboFlag.Location = new Point(10, (cbNationality.Height - 16) / 2);
+            _pbComboFlag.Location = new Point(10, (cbNationality.Height - 24) / 2);
 
             // زرع الـ PictureBox داخل عناصر تحكم الكومبوبوكس نفسه
             cbNationality.Controls.Add(_pbComboFlag);
@@ -132,11 +136,21 @@ namespace DVLD_PresentationLayer
             // 4. ربط حدث تغير الاختيار لتحديث العلم فوراً
             cbNationality.SelectedIndexChanged += new EventHandler(cbNationality_SelectedIndexChanged);
 
-            // 5. جلب الدول من قاعدة البيانات وربطها بالـ ComboBox
+            // 🌟 5. ضبط إعدادات الـ Dropdown (تم تقليل العناصر لـ 4 لضمان ملاءمة المساحة السفلية)
+            cbNationality.IntegralHeight = false; // جرب تحويلها إلى false هنا مع الحجم الثابت
+            cbNationality.ItemHeight = 22;        // تقليص الارتفاع قليلاً ليتناسب مع المساحة
+            cbNationality.MaxDropDownItems = 8;   // 4 عناصر كافية جداً لمنع القائمة من القفز للأعلى
+            cbNationality.DropDownHeight = 8 * 22; // إجبار الحجم الكلي يدوياً
+
+            // 6. جلب الدول من قاعدة البيانات وربطها بالـ ComboBox
             DataTable dtCountries = clsCountries.GetAllCountries();
 
+            // تأمين فصل الـ DataSource أولاً
+            cbNationality.DataSource = null;
             cbNationality.DisplayMember = "CountryName";
             cbNationality.ValueMember = "CountryID";
+
+            // ربط البيانات النهائي
             cbNationality.DataSource = dtCountries;
 
             if (cbNationality.Items.Count > 0)
@@ -282,8 +296,67 @@ namespace DVLD_PresentationLayer
                 return;
             }
 
-            MessageBox.Show("Data validation passed successfully! Ready to save.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (!_HandlePersonImage())
+            {
+                return;
+            }
+
+            clsPerson Person = new clsPerson();
+
+            Person.NationalNo = txtNationalID.Text.Trim();
+            Person.FirstName = txtFirstName.Text.Trim();
+            Person.SecondName = txtSecondName.Text.Trim();
+            Person.ThirdName = txtThirdName.Text.Trim();
+            Person.LastName = txtLastName.Text.Trim();
+            Person.DateOfBirth = dtpDateOfBirth.Value;
+            Person.Gendor = Convert.ToByte(cbGendor.SelectedIndex);
+            Person.Address = txtAddress.Text.Trim();
+            Person.Phone = txtPhone.Text.Trim();
+            Person.Email = txtEmail.Text.Trim();
+            Person.NationalCountryID = Convert.ToInt32(cbNationality.SelectedValue);
+            Person.ImagePath = _SelectedImagePath;
+            if (Person.Save())
+            {
+                MessageBox.Show($"Person saved successfully with ID = {Person.PersonID}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DataBack?.Invoke(this, Person.PersonID);
+                this.ParentForm.Close();
+            }
+            else
+            {
+                MessageBox.Show("Failed to save person data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private bool _HandlePersonImage()
+        {
+            if (string.IsNullOrEmpty(_SelectedImagePath))
+                return true;
+
+            try
+            {
+                string targetFolder = Path.Combine(Application.StartupPath, "Person_Images");
+
+                if (!Directory.Exists(targetFolder))
+                {
+                    Directory.CreateDirectory(targetFolder);
+                }
+
+                string extension = Path.GetExtension(_SelectedImagePath);
+                string newFileName = Guid.NewGuid().ToString() + extension;
+                string destinationPath = Path.Combine(targetFolder, newFileName);
+
+                File.Copy(_SelectedImagePath, destinationPath, true);
+
+                _SelectedImagePath = destinationPath; // شحن المسار الجديد للـ Database
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error processing image: {ex.Message}", "Image Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         private string _SelectedImagePath = "";
 
         private void linkLblImage_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
@@ -296,6 +369,27 @@ namespace DVLD_PresentationLayer
                 picImage.Image = Image.FromFile(openFileDialog.FileName);
                 _SelectedImagePath = openFileDialog.FileName;
                 linkLblImage.Text = "Update Image";
+            }
+        }
+
+        private void txtNationalID_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNationalID.Text))
+            {
+                errorProvider1.SetError(txtNationalID, "National ID is required!");
+                return;
+            }
+
+            // التحقق في حالة الإضافة الجديدة فقط
+            if (_Mode == enMode.AddNew && clsPerson.IsPersonExist(txtNationalID.Text.Trim()))
+            {
+                e.Cancel = true; // منع الانتقال للحقل التالي
+                errorProvider1.SetError(txtNationalID, "This National ID already exists in the system!");
+                MessageBox.Show("This National ID is already assigned to another person.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                errorProvider1.SetError(txtNationalID, "");
             }
         }
     }

@@ -37,7 +37,7 @@
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.cbNationality = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.guna2ComboBox1 = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.cbGendor = new Guna.UI2.WinForms.Guna2ComboBox();
             this.dtpDateOfBirth = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
@@ -132,7 +132,7 @@
             // 
             this.guna2Panel2.AutoScroll = true;
             this.guna2Panel2.Controls.Add(this.cbNationality);
-            this.guna2Panel2.Controls.Add(this.guna2ComboBox1);
+            this.guna2Panel2.Controls.Add(this.cbGendor);
             this.guna2Panel2.Controls.Add(this.dtpDateOfBirth);
             this.guna2Panel2.Controls.Add(this.guna2Panel3);
             this.guna2Panel2.Controls.Add(this.linkLblImage);
@@ -180,27 +180,27 @@
             this.cbNationality.Size = new System.Drawing.Size(257, 36);
             this.cbNationality.TabIndex = 11;
             // 
-            // guna2ComboBox1
+            // cbGendor
             // 
-            this.guna2ComboBox1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2ComboBox1.BorderRadius = 10;
-            this.guna2ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.guna2ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.guna2ComboBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.guna2ComboBox1.ForeColor = System.Drawing.Color.Black;
-            this.guna2ComboBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.ItemHeight = 30;
-            this.guna2ComboBox1.Items.AddRange(new object[] {
+            this.cbGendor.BackColor = System.Drawing.Color.Transparent;
+            this.cbGendor.BorderRadius = 10;
+            this.cbGendor.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbGendor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGendor.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.cbGendor.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbGendor.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbGendor.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbGendor.ForeColor = System.Drawing.Color.Black;
+            this.cbGendor.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbGendor.ItemHeight = 30;
+            this.cbGendor.Items.AddRange(new object[] {
             "Male",
             "Female"});
-            this.guna2ComboBox1.Location = new System.Drawing.Point(392, 574);
-            this.guna2ComboBox1.Name = "guna2ComboBox1";
-            this.guna2ComboBox1.Size = new System.Drawing.Size(257, 36);
-            this.guna2ComboBox1.StartIndex = 0;
-            this.guna2ComboBox1.TabIndex = 10;
+            this.cbGendor.Location = new System.Drawing.Point(392, 574);
+            this.cbGendor.Name = "cbGendor";
+            this.cbGendor.Size = new System.Drawing.Size(257, 36);
+            this.cbGendor.StartIndex = 0;
+            this.cbGendor.TabIndex = 10;
             // 
             // dtpDateOfBirth
             // 
@@ -285,9 +285,9 @@
             // 
             // picImage
             // 
-            this.picImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.picImage.BorderRadius = 20;
-            this.picImage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.picImage.BackColor = System.Drawing.Color.Transparent;
+            this.picImage.BorderRadius = 30;
+            this.picImage.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(232)))), ((int)(((byte)(234)))));
             this.picImage.ImageRotate = 0F;
             this.picImage.Location = new System.Drawing.Point(673, 138);
             this.picImage.Name = "picImage";
@@ -504,6 +504,7 @@
             this.txtThirdName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtThirdName.FocusedState.ForeColor = System.Drawing.Color.Black;
             this.txtThirdName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtThirdName.ForeColor = System.Drawing.Color.Black;
             this.txtThirdName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtThirdName.Location = new System.Drawing.Point(48, 273);
             this.txtThirdName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -535,6 +536,7 @@
             this.txtNationalID.SelectedText = "";
             this.txtNationalID.Size = new System.Drawing.Size(257, 37);
             this.txtNationalID.TabIndex = 1;
+            this.txtNationalID.Validating += new System.ComponentModel.CancelEventHandler(this.txtNationalID_Validating);
             // 
             // label4
             // 
@@ -639,7 +641,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         private Guna.UI2.WinForms.Guna2Button btnSave;
         private Guna.UI2.WinForms.Guna2Button btnCancel;
-        private Guna.UI2.WinForms.Guna2ComboBox guna2ComboBox1;
+        private Guna.UI2.WinForms.Guna2ComboBox cbGendor;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpDateOfBirth;
         private Guna.UI2.WinForms.Guna2ComboBox cbNationality;
     }
