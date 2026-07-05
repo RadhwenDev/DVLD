@@ -8,34 +8,34 @@ using System.Threading.Tasks;
 
 namespace DVLD_DataAccessLayer
 {
-    public class clsPeopleDataAccess
+    public class clsCountryDataAccess
     {
-        public static DataTable GetPeople()
+        public static DataTable GetAllCountries()
         {
             DataTable dt = new DataTable();
+
+            // استخدام using يضمن إغلاق وتفريغ الـ Connection والـ Command من الذاكرة فوراً حتى لو حدث استثناء
             using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                string query = @"select FirstName, SecondName, ThirdName, LastName, NationalNo, DateOfBirth, Gendor,
-                         Address, Email, Phone, CountryName, ImagePath
-                         from People P inner join Countries C on P.NationalityCountryID = C.CountryID;";
+                // نطلب فقط الأعمدة التي نحتاجها بدقة للـ ComboBox والأعلام لزيادة سرعة النقل
+                string query = "SELECT CountryID, CountryName FROM Countries ORDER BY CountryName ASC;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try
                     {
                         connection.Open();
-
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {
                                 dt.Load(reader);
                             }
-                        } 
+                        }
                     }
-                    catch (Exception){}
-                } 
-            }
+                    catch (Exception) { }
+                }
+            } // يتم إغلاق الـ connection تلقائياً هنا وبشكل آمن جداً
 
             return dt;
         }

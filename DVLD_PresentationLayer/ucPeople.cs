@@ -11,24 +11,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-
-
 namespace DVLD_PresentationLayer
 {
     public partial class ucPeople : UserControl
     {
-        // وضع هذا الجزء داخل الـ Class مباشرة
         [DllImport("dwmapi.dll")]
         public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
-        // ثوابت نظام التشغيل لتفعيل التأثيرات الزجاجية
         private const int DWMWA_SYSTEMBACKDROP_TYPE = 38;
-        private const int DWMSBT_TABBEDWINDOW = 2; // تأثير Acrylic/Blur قوي وممتاز للـ Modals
+        private const int DWMSBT_TABBEDWINDOW = 2;
+
         public ucPeople()
         {
             InitializeComponent();
         }
 
+        // استخدام اسم الدولة كـ مفتاح أساسي للكاش لتوحيد المنطق مع الـ ComboBox
         private Dictionary<string, string> _countryCodesCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private Dictionary<string, Image> _flagImagesCache = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
 
@@ -59,12 +57,11 @@ namespace DVLD_PresentationLayer
                             }
                         }
                     }
-
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("خطأ في الكاش: " + ex.Message);
+                MessageBox.Show("Error in Country Cache: " + ex.Message, "Cache Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -94,18 +91,8 @@ namespace DVLD_PresentationLayer
             guna2DataGridView1.DataSource = _dtAllPeople;
             int rowsCount = guna2DataGridView1.Rows.Count;
 
-            if (rowsCount == 0)
-            {
-                lblCountRows.Text = "No Registered Individuals";
-            }
-            else if (rowsCount == 1)
-            {
-                lblCountRows.Text = "1 Registered Individual";
-            }
-            else
-            {
-                lblCountRows.Text = $"{rowsCount} Registered Individuals";
-            }
+            UpdateRowsCount();
+
             if (guna2DataGridView1.Columns["CountryCode"] != null)
             {
                 guna2DataGridView1.Columns["CountryCode"].Visible = false;
@@ -130,7 +117,6 @@ namespace DVLD_PresentationLayer
                 guna2DataGridView1.Columns["PERSON"].DefaultCellStyle.Padding = new Padding(10, 0, 0, 0);
             }
         }
-        
 
         private void guna2DataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -138,59 +124,69 @@ namespace DVLD_PresentationLayer
             {
                 if (e.Value != null)
                 {
-                    // 1. رسم خلفية الخلية الافتراضية
                     e.PaintBackground(e.CellBounds, true);
 
                     string countryName = e.Value.ToString().Trim();
-                    string countryCode = guna2DataGridView1.Rows[e.RowIndex].Cells["CountryCode"].Value?.ToString() ?? "unknown";
+                    string countryCode = guna2DataGridView1.Rows[e.RowIndex].Cells["CountryCode"].Value?.ToString() ?? "";
 
                     Image flagImage = null;
                     int imageWidth = 24;
                     int imageHeight = 16;
 
-                    if (_flagImagesCache.TryGetValue(countryCode, out Image cachedImage))
+                    // 🌟 البحث الذكي في الكاش: باستخدام اسم الدولة أولاً للتوحيد
+                    if (_flagImagesCache.TryGetValue(countryName, out Image cachedImage))
                     {
                         flagImage = cachedImage;
                     }
                     else
                     {
+                        // 1. محاولة البحث باسم الصورة الثنائي (مثال: tn.png)
                         string flagPath = Path.Combine(Application.StartupPath, "Flags", $"{countryCode}.png");
+
+                        // 2. خطة بديلة: البحث باسم الدولة كاملاً (مثال: Tunisia.png) ليتوافق مع فورم الإضافة
+                        if (!File.Exists(flagPath))
+                        {
+                            flagPath = Path.Combine(Application.StartupPath, "Flags", $"{countryName}.png");
+                        }
+
+                        // 3. البحث في مجلد المشروع الأب للتسهيل أثناء الـ Debugging
+                        if (!File.Exists(flagPath) && Directory.GetParent(Application.StartupPath)?.Parent != null)
+                        {
+                            string alternativePath = Path.Combine(Directory.GetParent(Application.StartupPath).Parent.FullName, "Flags", $"{countryCode}.png");
+                            if (File.Exists(alternativePath)) flagPath = alternativePath;
+                        }
+
                         if (File.Exists(flagPath))
                         {
                             try
                             {
                                 flagImage = Image.FromFile(flagPath);
-                                _flagImagesCache.Add(countryCode, flagImage);
+                                _flagImagesCache.Add(countryName, flagImage); // الحفظ باسم الدولة للسرعة
                             }
                             catch { }
                         }
                     }
 
-                    // حساب الإحداثيات الآمنة للرسم في منتصف الخلية عمودياً
                     int startX = e.CellBounds.X + 8;
                     int startY = e.CellBounds.Y + ((e.CellBounds.Height - imageHeight) / 2);
 
                     if (flagImage != null)
                     {
-                        // رسم العلم المأخوذ من الكاش
                         e.Graphics.DrawImage(flagImage, startX, startY, imageWidth, imageHeight);
                     }
 
-                    // حساب موقع النص ليأتي بجانب العلم مباشرة
-                    int textX = startX + (flagImage != null ? imageWidth + 8 : 0);
-                    SizeF textSize = e.Graphics.MeasureString(countryName, e.CellStyle.Font);
+                    // توسيط وحسابات النص
+                    int textX = startX + (flagImage != null ? imageWidth + 10 : 0);
+                    Font cellFont = e.CellStyle.Font ?? guna2DataGridView1.Font;
+                    SizeF textSize = e.Graphics.MeasureString(countryName, cellFont);
                     float textY = e.CellBounds.Y + ((e.CellBounds.Height - textSize.Height) / 2);
 
-                    // رسم اسم الدولة باللون الافتراضي المخصص للخلية
                     using (Brush textBrush = new SolidBrush(e.CellStyle.ForeColor))
                     {
-                        e.Graphics.DrawString(countryName, e.CellStyle.Font, textBrush, textX, textY);
+                        e.Graphics.DrawString(countryName, cellFont, textBrush, textX, textY);
                     }
 
-                    // 2. رسم الحدود الفاصلة للجدول فقط (تعديل السطر المسبب للخطأ)
                     e.Paint(e.CellBounds, DataGridViewPaintParts.Border);
-
-                    // منع الأداة من إعادة رسم محتواها الافتراضي فوق شغلنا
                     e.Handled = true;
                 }
             }
@@ -198,20 +194,19 @@ namespace DVLD_PresentationLayer
 
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
-            
             if (guna2DataGridView1.DataSource is DataTable dt)
             {
                 dt.DefaultView.RowFilter = string.Format("PERSON LIKE '%{0}%' OR NationalNo LIKE '%{0}%' OR Email LIKE '%{0}%'", guna2TextBox1.Text.Replace("'", "''"));
             }
-            
             UpdateRowsCount();
         }
+
         private void UpdateRowsCount()
         {
             int rowsCount = guna2DataGridView1.Rows.Count;
 
             if (rowsCount == 0)
-                lblCountRows.Text = "0 Registered Individuals";
+                lblCountRows.Text = "No Registered Individuals";
             else if (rowsCount == 1)
                 lblCountRows.Text = "1 Registered Individual";
             else
@@ -224,20 +219,12 @@ namespace DVLD_PresentationLayer
             {
                 overlay.StartPosition = FormStartPosition.Manual;
                 overlay.FormBorderStyle = FormBorderStyle.None;
-
-                // 1. نضع لوناً مصمتاً (Solid) تماماً وبدون أي قيمة Alpha (تفادي الخطأ)
-                // اخترنا لوناً رمادياً داكناً يميل للزرقة ليتماشى مع ثيم المشروع
                 overlay.BackColor = Color.FromArgb(45, 55, 72);
-
-                // 2. نتحكم في نسبة الشفافية (ظهور الهيكل الخلفي) عبر الـ Opacity
-                // قيمة 0.45d تعني شفافية بنسبة 45% (وهي مكافئة تماماً للـ 110 السابقة)
                 overlay.Opacity = 0.45d;
-
                 overlay.Bounds = Screen.FromControl(this).Bounds;
                 overlay.ShowInTaskbar = false;
                 overlay.Show(this);
 
-                // [باقي الكود الخاص بـ frmContainer يظل كما هو دون تغيير...]
                 using (Form frmContainer = new Form())
                 {
                     frmContainer.FormBorderStyle = FormBorderStyle.None;
@@ -245,6 +232,7 @@ namespace DVLD_PresentationLayer
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
                     ucAddUpdatePerson myAddPersonPage = new ucAddUpdatePerson();
+                    myAddPersonPage.LoadPersonData(-1);
                     frmContainer.Size = myAddPersonPage.Size;
                     myAddPersonPage.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myAddPersonPage);
