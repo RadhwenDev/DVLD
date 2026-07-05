@@ -96,6 +96,7 @@ namespace DVLD_PresentationLayer
 
             if (dgvPeople.Rows.Count > 0)
             {
+                dgvPeople.Columns["PersonID"].Visible = false;
                 dgvPeople.Columns["FirstName"].Visible = false;
                 dgvPeople.Columns["SecondName"].Visible = false;
                 dgvPeople.Columns["ThirdName"].Visible = false;
@@ -262,8 +263,63 @@ namespace DVLD_PresentationLayer
         {
             if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
             {
+                dgvPeople.CurrentCell = dgvPeople.Rows[e.RowIndex].Cells[e.ColumnIndex >= 0 ? e.ColumnIndex : 0];
+
+                // التحديد البصري (إضافي للتأكيد)
                 dgvPeople.ClearSelection();
                 dgvPeople.Rows[e.RowIndex].Selected = true;
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 1. التأكد من أن هناك سطر محدد في الـ DataGridView الخاص بك
+            // استبدل dgvPeople بالاسم الحقيقي للـ DataGridView لديك
+            if (dgvPeople.CurrentRow == null)
+            {
+
+                MessageBox.Show("Please select a person first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. جلب الـ ID من العمود الخاص به (تأكد من كتابة اسم العمود بدقة كما هو في قاعدة البيانات أو الـ DataGridView)
+            int selectedPersonID = Convert.ToInt32(dgvPeople.CurrentRow.Cells["PersonID"].Value);
+
+
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucAddUpdatePerson myAddPersonPage = new ucAddUpdatePerson();
+
+                    // 🌟 هنا نقوم بتمرير الـ ID المجلوب مباشرة ليتحول الـ User Control إلى وضع الـ Update تلقائياً
+                    myAddPersonPage.LoadPersonData(selectedPersonID);
+
+                    frmContainer.Size = myAddPersonPage.Size;
+                    myAddPersonPage.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myAddPersonPage);
+
+                    // ربط الـ Delegate الخاص بالـ User Control بالدالة المخصصة للتحديث
+                    myAddPersonPage.DataBack += MyAddPersonPage_DataBack;
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
             }
         }
     }
