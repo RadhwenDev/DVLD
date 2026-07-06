@@ -167,5 +167,49 @@ namespace DVLD_DataAccessLayer
             }
             return isFound;
         }
+
+        public static bool UpdatePerson(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        {
+            int rowAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"UPDATE People SET NationalNo = @NationalNo, FirstName = @FirstName, SecondName = @SecondName, ThirdName = @ThirdName, LastName = @LastName, DateOfBirth = @DateOfBirth, Gendor = @Gendor, Address = @Address, Phone = @Phone,
+                            Email = @Email, NationalityCountryID = @NationalityCountryID, ImagePath = @ImagePath
+                            WHERE PersonID = @PersonID";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@PersonID", PersonID);
+            command.Parameters.AddWithValue("@NationalNo", NationalNo);
+            command.Parameters.AddWithValue("@FirstName", FirstName);
+
+            // 🌟 الحل هنا: إرسال نص فارغ "" بدل DBNull لأن الجدول مصمم NOT NULL
+            command.Parameters.AddWithValue("@SecondName", string.IsNullOrWhiteSpace(SecondName) ? "" : SecondName.Trim());
+            command.Parameters.AddWithValue("@ThirdName", string.IsNullOrWhiteSpace(ThirdName) ? "" : ThirdName.Trim());
+
+            command.Parameters.AddWithValue("@LastName", LastName);
+            command.Parameters.AddWithValue("@DateOfBirth", DateOfBirth);
+            command.Parameters.AddWithValue("@Gendor", Gendor);
+            command.Parameters.AddWithValue("@Address", Address);
+            command.Parameters.AddWithValue("@Phone", Phone);
+
+            command.Parameters.AddWithValue("@Email", string.IsNullOrWhiteSpace(Email) ? "" : Email.Trim());
+            command.Parameters.AddWithValue("@NationalityCountryID", NationalityCountryID);
+
+            if (!string.IsNullOrEmpty(ImagePath))
+                command.Parameters.AddWithValue("@ImagePath", ImagePath);
+            else
+                command.Parameters.AddWithValue("@ImagePath", "");
+
+            try
+            {
+                connection.Open();
+                rowAffected = command.ExecuteNonQuery();
+            }
+            catch (Exception) { return false; }
+            finally
+            {
+                connection.Close();
+            }
+
+            return rowAffected != 0;
+        }
     }
 }

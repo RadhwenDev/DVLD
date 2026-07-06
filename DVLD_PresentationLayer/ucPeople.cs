@@ -256,7 +256,6 @@ namespace DVLD_PresentationLayer
         private void MyAddPersonPage_DataBack(object sender, int PersonID)
         {
             _RefreshPeopleList();
-            MessageBox.Show($"تم استقبال المعرف الجديد في الفورم الرئيسي بنجاح: ID = {PersonID}", "تم التحديث", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void dgvPeople_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)

@@ -11,6 +11,13 @@ namespace DVLD_BusinessLayer
 {
     public class clsPerson
     {
+        private clsPerson _OriginalPerson;
+        public enum enSaveResult
+        {
+            SavedSuccessfully,
+            NoChanges,
+            Failed
+        }
         enum enMode { AddNew, Update };
         enMode Mode;
         public int PersonID {  set; get; }
@@ -63,6 +70,7 @@ namespace DVLD_BusinessLayer
             this.NationalCountryID = NationalCountryID;
             this.ImagePath = ImagePath;
             Mode = enMode.Update;
+            _OriginalPerson = (clsPerson)this.MemberwiseClone();
         }
 
         public static DataTable GetPeople()
@@ -75,9 +83,11 @@ namespace DVLD_BusinessLayer
             this.PersonID = clsPeopleDataAccess.AddNewPerson(this.NationalNo, this.FirstName, this.SecondName, this.ThirdName, this.LastName, this.DateOfBirth, this.Gendor, this.Address, this.Phone, this.Email, this.NationalCountryID, this.ImagePath);
             return (this.PersonID != -1);
         }
-        public bool UpdatePerson()
+        public enSaveResult UpdatePerson()
         {
-            return true;
+            if (clsPeopleDataAccess.UpdatePerson(this.PersonID, this.NationalNo, this.FirstName, this.SecondName, this.ThirdName, this.LastName, this.DateOfBirth, this.Gendor, this.Address, this.Phone, this.Email, this.NationalCountryID, this.ImagePath))
+                return enSaveResult.SavedSuccessfully;
+            return enSaveResult.Failed;
         }
 
         public static clsPerson Find(int PersonID)
@@ -94,7 +104,7 @@ namespace DVLD_BusinessLayer
         }
 
 
-        public bool Save()
+        public enSaveResult Save()
         {
             switch (Mode)
             {
@@ -102,21 +112,41 @@ namespace DVLD_BusinessLayer
                     if (AddNewPerson())
                     {
                         Mode = enMode.Update;
-                        return true;
+                        return enSaveResult.SavedSuccessfully;
                     }
                     else
                     {
-                        return false;
+                        return enSaveResult.Failed;
                     }
                 case enMode.Update:
+                    if (!HasChanges())
+                        return enSaveResult.NoChanges;
+
                     return UpdatePerson();
 
             }
-            return false;
+            return enSaveResult.Failed;
         }
         public static bool IsPersonExist(string NationalNo)
         {
             return clsPeopleDataAccess.IsPersonExist(NationalNo);
+        }
+
+        private bool HasChanges()
+        {
+            return
+                FirstName != _OriginalPerson.FirstName ||
+                SecondName != _OriginalPerson.SecondName ||
+                ThirdName != _OriginalPerson.ThirdName ||
+                LastName != _OriginalPerson.LastName ||
+                NationalNo != _OriginalPerson.NationalNo ||
+                Phone != _OriginalPerson.Phone ||
+                Email != _OriginalPerson.Email ||
+                Address != _OriginalPerson.Address ||
+                DateOfBirth != _OriginalPerson.DateOfBirth.Date ||
+                Gendor != _OriginalPerson.Gendor ||
+                NationalCountryID != _OriginalPerson.NationalCountryID ||
+                ImagePath != _OriginalPerson.ImagePath;
         }
     }
 }

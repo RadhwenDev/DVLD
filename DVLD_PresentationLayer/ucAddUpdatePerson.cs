@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static DVLD_BusinessLayer.clsPerson;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace DVLD_PresentationLayer
@@ -68,12 +69,10 @@ namespace DVLD_PresentationLayer
             if (_PersonID == -1)
             {
                 _Mode = enMode.AddNew;
-                _LoadAddNewMode();
             }
             else
             {
                 _Mode = enMode.Update;
-                _LoadUpdateMode();
             }
         }
 
@@ -108,15 +107,15 @@ namespace DVLD_PresentationLayer
             txtThirdName.Text = _Person.ThirdName;
             txtLastName.Text = _Person.LastName;
             txtNationalID.Text = _Person.NationalNo;
+            txtNationalID.ReadOnly = true;
+            txtNationalID.ForeColor = Color.Gray;
             txtPhone.Text = _Person.Phone;
             txtEmail.Text = _Person.Email;
             txtAddress.Text = _Person.Address;
             dtpDateOfBirth.Value = _Person.DateOfBirth;
             cbGendor.SelectedIndex = _Person.Gendor;
-
             // تحديد الدولة الصحيحة بناءً على الـ ID الخاص بها
-            cbNationality.SelectedValue = _Person.NationalCountryID;
-
+            cbNationality.SelectedValue = Convert.ToInt32(_Person.NationalCountryID);
             // معالجة الصورة الشخصية عند التحميل
             _SelectedImagePath = _Person.ImagePath;
 
@@ -155,10 +154,14 @@ namespace DVLD_PresentationLayer
 
         private void ucAddUpdatePerson_Load(object sender, EventArgs e)
         {
-            DateTime maxAllowedDate = DateTime.Today.AddYears(-18);
-            dtpDateOfBirth.Value = maxAllowedDate;
-            dtpDateOfBirth.MaxDate = maxAllowedDate.Date.AddDays(1).AddSeconds(-1);
-            dtpDateOfBirth.Checked = true;
+            if (_Mode == enMode.AddNew)
+            {
+                DateTime maxAllowedDate = DateTime.Today.AddYears(-18);
+                dtpDateOfBirth.Value = maxAllowedDate;
+                dtpDateOfBirth.MaxDate = maxAllowedDate.Date.AddDays(1).AddSeconds(-1);
+                dtpDateOfBirth.Checked = false;
+            }
+            
 
             dtpDateOfBirth.FillColor = Color.FromArgb(248, 250, 252);
             dtpDateOfBirth.BorderColor = Color.FromArgb(213, 218, 223);
@@ -190,6 +193,10 @@ namespace DVLD_PresentationLayer
             cbNationality.DisplayMember = "CountryName";
             cbNationality.ValueMember = "CountryID";
             cbNationality.DataSource = dtCountries;
+            if (_Mode == enMode.Update)
+                _LoadUpdateMode();
+            else
+                _LoadAddNewMode();
 
             if (cbNationality.Items.Count > 0 && _Mode == enMode.AddNew)
                 cbNationality.SelectedIndex = 0;
@@ -296,19 +303,23 @@ namespace DVLD_PresentationLayer
             _Person.NationalCountryID = Convert.ToInt32(cbNationality.SelectedValue);
             _Person.ImagePath = _SelectedImagePath;
 
-            if (_Person.Save())
+            switch (_Person.Save())
             {
-                MessageBox.Show($"Person saved successfully with ID = {_Person.PersonID}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                case clsPerson.enSaveResult.SavedSuccessfully:
+                    MessageBox.Show($"Person saved successfully with ID = {_Person.PersonID}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                _Mode = enMode.Update; // تغيير الوضع إلى تعديل بعد النجاح الفوري
-                _PersonID = _Person.PersonID;
+                    _Mode = enMode.Update; // تغيير الوضع إلى تعديل بعد النجاح الفوري
+                    _PersonID = _Person.PersonID;
 
-                DataBack?.Invoke(this, _Person.PersonID);
-                this.FindForm()?.Close();
-            }
-            else
-            {
-                MessageBox.Show("Failed to save person data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DataBack?.Invoke(this, _Person.PersonID);
+                    this.FindForm()?.Close();
+                    break;
+                case enSaveResult.NoChanges:
+                    MessageBox.Show("Nothing was changed");
+                    break;
+                case enSaveResult.Failed:
+                    MessageBox.Show("Failed to save person data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
             }
         }
 
