@@ -73,6 +73,12 @@
     <Compile Include="ucPeople.Designer.cs">
       <DependentUpon>ucPeople.cs</DependentUpon>
     </Compile>
+    <Compile Include="ucShowDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucShowDetails.Designer.cs">
+      <DependentUpon>ucShowDetails.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ucPeople.resx">
       <DependentUpon>ucPeople.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucShowDetails.resx">
+      <DependentUpon>ucShowDetails.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

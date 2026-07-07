@@ -321,5 +321,53 @@ namespace DVLD_PresentationLayer
                 }
             }
         }
+
+        private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvPeople.CurrentRow == null)
+            {
+
+                MessageBox.Show("Please select a person first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. جلب الـ ID من العمود الخاص به (تأكد من كتابة اسم العمود بدقة كما هو في قاعدة البيانات أو الـ DataGridView)
+            int selectedPersonID = Convert.ToInt32(dgvPeople.CurrentRow.Cells["PersonID"].Value);
+
+
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucShowDetails myShowDetails = new ucShowDetails();
+
+                    // 🌟 هنا نقوم بتمرير الـ ID المجلوب مباشرة ليتحول الـ User Control إلى وضع الـ Update تلقائياً
+                    myShowDetails.LoadPersonData(selectedPersonID);
+
+                    frmContainer.Size = myShowDetails.Size;
+                    myShowDetails.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myShowDetails);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+
+        }
     }
 }
