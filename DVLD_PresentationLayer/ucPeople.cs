@@ -369,5 +369,19 @@ namespace DVLD_PresentationLayer
             }
 
         }
+
+        private void dgvPeople_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // التأكد من أننا داخل العمود الخاص بتاريخ الميلاد وأن الخلية تحتوي على قيمة
+            if (dgvPeople.Columns[e.ColumnIndex].Name == "DateOfBirth" && e.Value != null)
+            {
+                if (e.Value is DateTime dateValue)
+                {
+                    // هنا نجبر الخلية على طباعة التاريخ باللغة الإنجليزية القياسية مهما كانت لغة الجهاز
+                    e.Value = dateValue.ToString("MMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                    e.FormattingApplied = true; // إعلام نظام الـ Grid بأنه تم تطبيق التنسيق بنجاح
+                }
+            }
+        }
     }
 }

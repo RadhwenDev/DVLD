@@ -42,7 +42,7 @@ namespace DVLD_PresentationLayer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            lblDate.Text = DateTime.Today.Date.ToString("dddd , MMM dd, yyyy");
+            lblDate.Text = DateTime.Today.Date.ToString("ddd , MMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture);
         }
 
         Guna.UI2.WinForms.Guna2Button activeSidebarButton = null;

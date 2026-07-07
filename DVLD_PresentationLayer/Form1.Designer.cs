@@ -245,11 +245,12 @@
             this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDate.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblDate.Location = new System.Drawing.Point(1378, 23);
+            this.lblDate.Location = new System.Drawing.Point(1390, 23);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(257, 40);
+            this.lblDate.Size = new System.Drawing.Size(245, 40);
             this.lblDate.TabIndex = 3;
             this.lblDate.Text = "Date";
+            this.lblDate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // btnMenu
             // 
