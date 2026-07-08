@@ -160,6 +160,8 @@
             this.dgvUsers.ThemeStyle.RowsStyle.Height = 60;
             this.dgvUsers.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvUsers.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            this.dgvUsers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellClick);
+            this.dgvUsers.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvUsers_CellPainting);
             // 
             // guna2TextBox1
             // 
@@ -179,10 +181,11 @@
             this.guna2TextBox1.Location = new System.Drawing.Point(20, 27);
             this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(5, 7, 5, 7);
             this.guna2TextBox1.Name = "guna2TextBox1";
-            this.guna2TextBox1.PlaceholderText = "🔎 Search by name, national ID, or email ...";
+            this.guna2TextBox1.PlaceholderText = "🔎 Search by name or username...";
             this.guna2TextBox1.SelectedText = "";
             this.guna2TextBox1.Size = new System.Drawing.Size(586, 63);
             this.guna2TextBox1.TabIndex = 3;
+            this.guna2TextBox1.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
             // ucUsers
             // 
