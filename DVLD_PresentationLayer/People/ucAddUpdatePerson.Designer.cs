@@ -351,6 +351,7 @@
             this.txtEmail.SelectedText = "";
             this.txtEmail.Size = new System.Drawing.Size(257, 37);
             this.txtEmail.TabIndex = 3;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating_1);
             // 
             // txtLastName
             // 
@@ -374,6 +375,7 @@
             this.txtLastName.SelectedText = "";
             this.txtLastName.Size = new System.Drawing.Size(257, 37);
             this.txtLastName.TabIndex = 3;
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.txtLastName_Validating);
             // 
             // txtSecondName
             // 
@@ -397,6 +399,7 @@
             this.txtSecondName.SelectedText = "";
             this.txtSecondName.Size = new System.Drawing.Size(257, 37);
             this.txtSecondName.TabIndex = 3;
+            this.txtSecondName.Validating += new System.ComponentModel.CancelEventHandler(this.txtSecondName_Validating);
             // 
             // lblGender
             // 
@@ -513,6 +516,7 @@
             this.txtThirdName.SelectedText = "";
             this.txtThirdName.Size = new System.Drawing.Size(257, 37);
             this.txtThirdName.TabIndex = 1;
+            this.txtThirdName.Validating += new System.ComponentModel.CancelEventHandler(this.txtThirdName_Validating);
             // 
             // txtNationalID
             // 
@@ -580,6 +584,7 @@
             this.txtFirstName.SelectedText = "";
             this.txtFirstName.Size = new System.Drawing.Size(257, 37);
             this.txtFirstName.TabIndex = 1;
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
             // 
             // label2
             // 

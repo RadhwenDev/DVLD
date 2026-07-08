@@ -1,6 +1,6 @@
 ﻿namespace DVLD_PresentationLayer
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,6 +37,9 @@
             this.btnDashboard = new Guna.UI2.WinForms.Guna2Button();
             this.btnPeople = new Guna.UI2.WinForms.Guna2Button();
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.btnUsers = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLicenses = new Guna.UI2.WinForms.Guna2Button();
+            this.btnApplications = new Guna.UI2.WinForms.Guna2Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -124,12 +127,14 @@
             this.btnDashboard.Image = ((System.Drawing.Image)(resources.GetObject("btnDashboard.Image")));
             this.btnDashboard.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnDashboard.ImageSize = new System.Drawing.Size(35, 35);
-            this.btnDashboard.Location = new System.Drawing.Point(35, 186);
+            this.btnDashboard.Location = new System.Drawing.Point(21, 183);
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(203, 45);
             this.btnDashboard.TabIndex = 4;
             this.btnDashboard.Text = "Dashboard";
             this.btnDashboard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            this.btnDashboard.Paint += new System.Windows.Forms.PaintEventHandler(this.btnDashboard_Paint);
             // 
             // btnPeople
             // 
@@ -148,7 +153,7 @@
             this.btnPeople.Image = ((System.Drawing.Image)(resources.GetObject("btnPeople.Image")));
             this.btnPeople.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnPeople.ImageSize = new System.Drawing.Size(35, 35);
-            this.btnPeople.Location = new System.Drawing.Point(35, 237);
+            this.btnPeople.Location = new System.Drawing.Point(21, 244);
             this.btnPeople.Name = "btnPeople";
             this.btnPeople.Size = new System.Drawing.Size(203, 45);
             this.btnPeople.TabIndex = 5;
@@ -160,6 +165,9 @@
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.pnlSidebar.Controls.Add(this.btnUsers);
+            this.pnlSidebar.Controls.Add(this.btnLicenses);
+            this.pnlSidebar.Controls.Add(this.btnApplications);
             this.pnlSidebar.Controls.Add(this.panel4);
             this.pnlSidebar.Controls.Add(this.btnPeople);
             this.pnlSidebar.Controls.Add(this.btnDashboard);
@@ -170,6 +178,84 @@
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(260, 1033);
             this.pnlSidebar.TabIndex = 0;
+            // 
+            // btnUsers
+            // 
+            this.btnUsers.BackColor = System.Drawing.Color.Transparent;
+            this.btnUsers.BorderRadius = 10;
+            this.btnUsers.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnUsers.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnUsers.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnUsers.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnUsers.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnUsers.FillColor = System.Drawing.Color.Transparent;
+            this.btnUsers.Font = new System.Drawing.Font("Century Gothic", 13F, System.Drawing.FontStyle.Bold);
+            this.btnUsers.ForeColor = System.Drawing.Color.White;
+            this.btnUsers.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnUsers.HoverState.ForeColor = System.Drawing.Color.White;
+            this.btnUsers.Image = ((System.Drawing.Image)(resources.GetObject("btnUsers.Image")));
+            this.btnUsers.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnUsers.ImageSize = new System.Drawing.Size(40, 40);
+            this.btnUsers.Location = new System.Drawing.Point(21, 427);
+            this.btnUsers.Name = "btnUsers";
+            this.btnUsers.Size = new System.Drawing.Size(203, 45);
+            this.btnUsers.TabIndex = 8;
+            this.btnUsers.Text = "Users";
+            this.btnUsers.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
+            this.btnUsers.Paint += new System.Windows.Forms.PaintEventHandler(this.btnUsers_Paint_1);
+            // 
+            // btnLicenses
+            // 
+            this.btnLicenses.BackColor = System.Drawing.Color.Transparent;
+            this.btnLicenses.BorderRadius = 10;
+            this.btnLicenses.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLicenses.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLicenses.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLicenses.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLicenses.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLicenses.FillColor = System.Drawing.Color.Transparent;
+            this.btnLicenses.Font = new System.Drawing.Font("Century Gothic", 13F, System.Drawing.FontStyle.Bold);
+            this.btnLicenses.ForeColor = System.Drawing.Color.White;
+            this.btnLicenses.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnLicenses.HoverState.ForeColor = System.Drawing.Color.White;
+            this.btnLicenses.Image = ((System.Drawing.Image)(resources.GetObject("btnLicenses.Image")));
+            this.btnLicenses.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLicenses.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnLicenses.Location = new System.Drawing.Point(21, 366);
+            this.btnLicenses.Name = "btnLicenses";
+            this.btnLicenses.Size = new System.Drawing.Size(203, 45);
+            this.btnLicenses.TabIndex = 7;
+            this.btnLicenses.Text = "Licenses";
+            this.btnLicenses.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLicenses.Click += new System.EventHandler(this.btnLicenses_Click);
+            this.btnLicenses.Paint += new System.Windows.Forms.PaintEventHandler(this.btnLicenses_Paint);
+            // 
+            // btnApplications
+            // 
+            this.btnApplications.BackColor = System.Drawing.Color.Transparent;
+            this.btnApplications.BorderRadius = 10;
+            this.btnApplications.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnApplications.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnApplications.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnApplications.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnApplications.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnApplications.FillColor = System.Drawing.Color.Transparent;
+            this.btnApplications.Font = new System.Drawing.Font("Century Gothic", 13F, System.Drawing.FontStyle.Bold);
+            this.btnApplications.ForeColor = System.Drawing.Color.White;
+            this.btnApplications.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnApplications.HoverState.ForeColor = System.Drawing.Color.White;
+            this.btnApplications.Image = ((System.Drawing.Image)(resources.GetObject("btnApplications.Image")));
+            this.btnApplications.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnApplications.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnApplications.Location = new System.Drawing.Point(21, 305);
+            this.btnApplications.Name = "btnApplications";
+            this.btnApplications.Size = new System.Drawing.Size(203, 45);
+            this.btnApplications.TabIndex = 6;
+            this.btnApplications.Text = "Applications";
+            this.btnApplications.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnApplications.Click += new System.EventHandler(this.btnApplications_Click);
+            this.btnApplications.Paint += new System.Windows.Forms.PaintEventHandler(this.btnApplications_Paint);
             // 
             // panel4
             // 
@@ -279,7 +365,7 @@
             this.pnlContainer.Size = new System.Drawing.Size(1642, 963);
             this.pnlContainer.TabIndex = 1;
             // 
-            // Form1
+            // frmMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(246)))), ((int)(((byte)(249)))));
@@ -288,7 +374,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.pnlSidebar);
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "frmMain";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -320,6 +406,9 @@
         private System.Windows.Forms.Label lblDate;
         private Guna.UI2.WinForms.Guna2Button btnMenu;
         private System.Windows.Forms.Panel pnlContainer;
+        private Guna.UI2.WinForms.Guna2Button btnUsers;
+        private Guna.UI2.WinForms.Guna2Button btnLicenses;
+        private Guna.UI2.WinForms.Guna2Button btnApplications;
     }
 }
 

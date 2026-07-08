@@ -53,34 +53,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ucAddUpdatePerson.cs">
+    <Compile Include="People\ucAddUpdatePerson.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucAddUpdatePerson.Designer.cs">
+    <Compile Include="People\ucAddUpdatePerson.Designer.cs">
       <DependentUpon>ucAddUpdatePerson.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucPeople.cs">
+    <Compile Include="People\ucPeople.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucPeople.Designer.cs">
+    <Compile Include="People\ucPeople.Designer.cs">
       <DependentUpon>ucPeople.cs</DependentUpon>
     </Compile>
-    <Compile Include="ucShowDetails.cs">
+    <Compile Include="People\ucShowDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ucShowDetails.Designer.cs">
+    <Compile Include="People\ucShowDetails.Designer.cs">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Users\ucUsers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Users\ucUsers.Designer.cs">
+      <DependentUpon>ucUsers.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -91,14 +97,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ucAddUpdatePerson.resx">
+    <EmbeddedResource Include="People\ucAddUpdatePerson.resx">
       <DependentUpon>ucAddUpdatePerson.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucPeople.resx">
+    <EmbeddedResource Include="People\ucPeople.resx">
       <DependentUpon>ucPeople.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ucShowDetails.resx">
+    <EmbeddedResource Include="People\ucShowDetails.resx">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users\ucUsers.resx">
+      <DependentUpon>ucUsers.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -118,6 +127,14 @@
       <Project>{1cc23619-1d24-4c40-a937-ba5516e051e2}</Project>
       <Name>DVLD_BusinessLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Applications\" />
+    <Folder Include="Dashboard\" />
+    <Folder Include="Drivers\" />
+    <Folder Include="Licenses\" />
+    <Folder Include="Login\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

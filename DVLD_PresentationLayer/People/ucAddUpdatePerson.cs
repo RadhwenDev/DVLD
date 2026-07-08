@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DVLD_BusinessLayer.clsPerson;
@@ -393,5 +394,117 @@ namespace DVLD_PresentationLayer
         }
 
 
+        private bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
+        }
+
+        private void txtEmail_Validating_1(object sender, CancelEventArgs e)
+        {
+            string emailInput = txtEmail.Text.Trim();
+
+            // إذا كان البريد فارغاً، في سياق مشروع DVLD، نعتبره مسموحاً (لأن الإيميل حقل اختياري بالمتطلبات الأساسية)
+            if (string.IsNullOrEmpty(emailInput))
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtEmail, "");
+                return;
+            }
+
+            // فحص الصيغة إذا كانت مكتوبة
+            if (!IsValidEmail(emailInput))
+            {
+                e.Cancel = true; // منع المستخدم من الانتقال لحقل آخر حتى يصححه
+                errorProvider1.SetError(txtEmail, "Please enter a valid email address (e.g., name@example.com).");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtEmail, "");
+            }
+        }
+        string namePattern = @"^[a-zA-Z\u0600-\u06FF\s\'\s]+$";
+        private void txtFirstName_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
+            {
+                errorProvider1.SetError(txtFirstName, "First name is required.");
+                txtFirstName.Focus();
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.Match(txtFirstName.Text.Trim(), namePattern).Success)
+            {
+                errorProvider1.SetError(txtFirstName, "First name must contain letters only.");
+                txtFirstName.Focus();
+                return;
+            }
+        }
+
+        private void txtSecondName_Validating(object sender, CancelEventArgs e)
+        {
+            string input = txtSecondName.Text.Trim();
+            if (string.IsNullOrEmpty(input))
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtSecondName, "");
+                return;
+            }
+
+            // إذا كان يحتوي على نص، نتحقق من الصيغة
+            if (!System.Text.RegularExpressions.Regex.IsMatch(input, namePattern))
+            {
+                e.Cancel = true; // منع الانتقال لحقل آخر حتى يصححه أو يفرغه
+                errorProvider1.SetError(txtSecondName, "Second name must contain letters only.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtSecondName, "");
+            }
+        }
+
+        private void txtThirdName_Validating(object sender, CancelEventArgs e)
+        {
+            string input = txtThirdName.Text.Trim();
+            // 🎯 إذا قام المستخدم بتفريغ الحقل بالكامل، تختفي اللمبة الحمراء فوراً
+            if (string.IsNullOrEmpty(input))
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtThirdName, "");
+                return;
+            }
+
+            // إذا كان يحتوي على نص، نتحقق من الصيغة
+            if (!System.Text.RegularExpressions.Regex.IsMatch(input, namePattern))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtThirdName, "Third name must contain letters only.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtThirdName, "");
+            }
+        }
+
+        private void txtLastName_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtLastName.Text))
+            {
+                errorProvider1.SetError(txtLastName, "Last name is required.");
+                txtLastName.Focus();
+                return;
+            }
+            if (!System.Text.RegularExpressions.Regex.Match(txtLastName.Text.Trim(), namePattern).Success)
+            {
+                errorProvider1.SetError(txtLastName, "Last name must contain letters only.");
+                txtLastName.Focus();
+                return;
+            }
+        }
     }
 }

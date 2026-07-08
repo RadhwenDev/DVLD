@@ -7,14 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_PresentationLayer.User;
 
 namespace DVLD_PresentationLayer
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
+            btnDashboard.PerformClick();
         }
         bool isSidebarExpanded = true;
         private void btnMenu_Click(object sender, EventArgs e)
@@ -53,9 +55,10 @@ namespace DVLD_PresentationLayer
             lblBreadcrumb.Text = "DVLD > People";
             ucPeople myPeoplePage = new ucPeople();
             showUserControl(myPeoplePage);
+            pnlSidebar.Refresh();
         }
 
-        private void btnPeople_Paint(object sender, PaintEventArgs e)
+        private void DesignButton(object sender, PaintEventArgs e)
         {
             Guna.UI2.WinForms.Guna2Button btn = (Guna.UI2.WinForms.Guna2Button)sender;
             if (btn == activeSidebarButton)
@@ -85,6 +88,11 @@ namespace DVLD_PresentationLayer
             }
         }
 
+        private void btnPeople_Paint(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
+
         private void showUserControl(UserControl userControl)
         {
             pnlContainer.Controls.Clear();
@@ -96,5 +104,60 @@ namespace DVLD_PresentationLayer
             userControl.BringToFront();
         }
 
+        private void btnUsers_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnUsers;
+            lblBreadcrumb.Text = "DVLD > Users";
+            ucUsers myUsersPage = new ucUsers();
+            showUserControl(myUsersPage);
+            pnlSidebar.Refresh();
+        }
+
+        private void btnUsers_Paint_1(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnDashboard;
+            lblBreadcrumb.Text = "DVLD > Dashboard";
+            /*ucUsers myUsersPage = new ucUsers();
+            showUserControl(myUsersPage);*/
+            pnlSidebar.Refresh();
+        }
+
+        private void btnDashboard_Paint(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
+
+        private void btnApplications_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnApplications;
+            lblBreadcrumb.Text = "DVLD > Applications";
+            /*ucUsers myUsersPage = new ucUsers();
+            showUserControl(myUsersPage);*/
+            pnlSidebar.Refresh();
+        }
+
+        private void btnLicenses_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnLicenses;
+            lblBreadcrumb.Text = "DVLD > Licenses";
+            /*ucUsers myUsersPage = new ucUsers();
+            showUserControl(myUsersPage);*/
+            pnlSidebar.Refresh();
+        }
+
+        private void btnApplications_Paint(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
+
+        private void btnLicenses_Paint(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
     }
 }

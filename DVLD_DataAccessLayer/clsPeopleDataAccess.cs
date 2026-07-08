@@ -51,7 +51,7 @@ namespace DVLD_DataAccessLayer
                          SELECT SCOPE_IDENTITY();";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
-                {
+                {   
                     command.Parameters.AddWithValue("@NationalNo", NationalNo);
                     command.Parameters.AddWithValue("@FirstName", FirstName);
 
