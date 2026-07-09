@@ -79,6 +79,12 @@
     <Compile Include="People\ucShowDetails.Designer.cs">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Users\ucAddUpdateUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Users\ucAddUpdateUser.Designer.cs">
+      <DependentUpon>ucAddUpdateUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Users\ucUsers.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\ucShowDetails.resx">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users\ucAddUpdateUser.resx">
+      <DependentUpon>ucAddUpdateUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\ucUsers.resx">
       <DependentUpon>ucUsers.cs</DependentUpon>

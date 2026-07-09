@@ -28,16 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucUsers));
             this.label1 = new System.Windows.Forms.Label();
             this.lblCountActiveAndInactive = new System.Windows.Forms.Label();
             this.btnAddUser = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.dgvUsers = new Guna.UI2.WinForms.Guna2DataGridView();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
@@ -79,6 +82,7 @@
             this.btnAddUser.TabIndex = 6;
             this.btnAddUser.Text = " ➕       Add User";
             this.btnAddUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
             // 
             // guna2Panel1
             // 
@@ -161,6 +165,8 @@
             this.dgvUsers.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvUsers.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvUsers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellClick);
+            this.dgvUsers.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsers_CellMouseLeave);
+            this.dgvUsers.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvUsers_CellMouseMove);
             this.dgvUsers.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvUsers_CellPainting);
             // 
             // guna2TextBox1
@@ -187,6 +193,14 @@
             this.guna2TextBox1.TabIndex = 3;
             this.guna2TextBox1.TextChanged += new System.EventHandler(this.guna2TextBox1_TextChanged);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "show.png");
+            this.imageList1.Images.SetKeyName(1, "edit.png");
+            this.imageList1.Images.SetKeyName(2, "delete.png");
+            // 
             // ucUsers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -212,5 +226,6 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2DataGridView dgvUsers;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
