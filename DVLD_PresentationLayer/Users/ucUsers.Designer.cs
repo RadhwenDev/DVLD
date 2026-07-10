@@ -140,6 +140,7 @@
             this.dgvUsers.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvUsers.RowTemplate.Height = 60;
             this.dgvUsers.RowTemplate.ReadOnly = true;
+            this.dgvUsers.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvUsers.Size = new System.Drawing.Size(1317, 328);
             this.dgvUsers.TabIndex = 2;

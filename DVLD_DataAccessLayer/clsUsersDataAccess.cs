@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +34,90 @@ namespace DVLD_DataAccessLayer
                 }
             }
             return dt;    
+        }
+
+        public static int AddNewUser(int PersonID, string UserName, string Password, bool isActive, int Permissions)
+        {
+            int UserID = -1;
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                // 🌟 ملاحظة: تأكد إن كان الحقل في قاعدتك اسمه NationalityCountryID أو NationalCountryID وقمت بضبطه هنا
+                string query = @"INSERT INTO Users (PersonID, UserName, Password, isActive, Permissions)
+                         VALUES (@PersonID, @UserName, @Password, @isActive, @Permissions);
+                         SELECT SCOPE_IDENTITY();";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
+
+                    command.Parameters.AddWithValue("@UserName", UserName);
+                    command.Parameters.AddWithValue("@Password", Password);
+                    command.Parameters.AddWithValue("@isActive", isActive);
+                    command.Parameters.AddWithValue("@Permissions", Permissions);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int insertedID))
+                        {
+                            UserID = insertedID;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // 💡 لكي تعرف سبب المشكلة الحقيقي الآن:
+                        // ضع Breakpoint هنا واقرأ محتوى الـ ex.Message لتعرف الحقل المسبب للأزمة!
+                        System.Diagnostics.Debug.WriteLine("SQL Error: " + ex.Message);
+                        UserID = -1;
+                    }
+                }
+            }
+            return UserID;
+        }
+
+        public static bool IsUserExistForPersonID(int PersonID)
+        {
+            bool isFound = false;
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = "SELECT Found=1 FROM Users WHERE PersonID = @PersonID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+                        if (result != null) isFound = true;
+                    }
+                    catch (Exception) { isFound = false; }
+                }
+            }
+            return isFound;
+        }
+
+        public static bool IsUserNameExistForPersonID(string UserName)
+        {
+            bool isFound = false;
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = "SELECT Found=1 FROM Users WHERE UserName = @UserName";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", UserName);
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+                        if (result != null) isFound = true;
+                    }
+                    catch (Exception) { isFound = false; }
+                }
+            }
+            return isFound;
         }
     }
 }

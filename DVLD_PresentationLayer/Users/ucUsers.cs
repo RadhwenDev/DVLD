@@ -75,9 +75,7 @@ namespace DVLD_PresentationLayer.User
                 dgvUsers.RowHeadersVisible = false;
             }
 
-            // ربط حدث الـ RowPrePaint لضمان مسح الحدود قبل رسم محتوى الخلية
-            dgvUsers.RowPrePaint += dgvUsers_RowPrePaint;
-
+            // ربط حد
             UpdateRowsCount(_dtAllUsers);
         }
 
@@ -150,9 +148,9 @@ namespace DVLD_PresentationLayer.User
 
                 e.Handled = true;
             }
-
+            
             // 🎯 2. عمود الحالة (Status / IsActive)
-            if (e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "IsActive")
+           if (e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "IsActive")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.SelectionBackground);
 
@@ -357,53 +355,67 @@ namespace DVLD_PresentationLayer.User
 
         private void _RefreshPeopleList()
         {
-           /* DataTable _dtAllPeople = clsPerson.GetPeople();
+           DataTable _dtAllUsers = clsUsers.getAllUsers();
 
-            if (_dtAllPeople != null)
+            if (_dtAllUsers != null)
             {
                 // إضافة الأعمدة المحسوبة ديناميكياً
-                _dtAllPeople.Columns.Add("PERSON", typeof(string), "FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName");
-                _dtAllPeople.Columns.Add("CountryCode", typeof(string));
+                _dtAllUsers.Columns.Add("USER", typeof(string));
 
-                foreach (DataRow row in _dtAllPeople.Rows)
+                // 2. نمر على السطور ونقوم بالدمج والتنظيف معاً في الـ Loop
+                foreach (DataRow row in _dtAllUsers.Rows)
                 {
-                    string countryName = row["CountryName"].ToString().Trim();
+                    string firstName = row["FirstName"]?.ToString() ?? "";
+                    string secondName = row["SecondName"]?.ToString() ?? "";
+                    string thirdName = row["ThirdName"]?.ToString() ?? "";
+                    string lastName = row["LastName"]?.ToString() ?? "";
 
-                    if (_countryCodesCache.TryGetValue(countryName, out string code))
-                    {
-                        row["CountryCode"] = code;
-                    }
+                    string fullName = $"{firstName} {secondName} {thirdName} {lastName}";
+
+                    // تنظيف المسافات الزائدة
+                    fullName = fullName.Replace("   ", " ").Replace("  ", " ").Trim();
+
+                    row["USER"] = fullName;
                 }
             }
 
-            dgvPeople.DataSource = _dtAllPeople;
-            UpdateRowsCount();
+            dgvUsers.DataSource = _dtAllUsers;
 
-            // إخفاء الأعمدة الإضافية بعد ربط الـ DataSource الجديد
-            if (dgvPeople.Columns["CountryCode"] != null)
+            UpdateRowsCount(_dtAllUsers);
+
+            if (dgvUsers.Columns.Count > 0)
             {
-                dgvPeople.Columns["CountryCode"].Visible = false;
+                dgvUsers.Columns["UserName"].HeaderText = "USERNAME";
+                dgvUsers.Columns["IsActive"].HeaderText = "Status";
+                dgvUsers.Columns["USER"].HeaderText = "   USER";
+                dgvUsers.Columns["USER"].DefaultCellStyle.Padding = new Padding(10, 0, 0, 0);
+
+                dgvUsers.Columns["FirstName"].Visible = false;
+                dgvUsers.Columns["SecondName"].Visible = false;
+                dgvUsers.Columns["ThirdName"].Visible = false;
+                dgvUsers.Columns["LastName"].Visible = false;
+                dgvUsers.Columns["UserID"].Visible = false;
+
+                if (dgvUsers.Columns.Contains("Password")) dgvUsers.Columns["Password"].Visible = false;
+                if (dgvUsers.Columns.Contains("PersonID")) dgvUsers.Columns["PersonID"].Visible = false;
+
+                dgvUsers.Columns["UserName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+                dgvUsers.Columns["USER"].DisplayIndex = 0;
+                dgvUsers.Columns["UserName"].DisplayIndex = 1;
+
+                if (dgvUsers.Columns.Contains("Permissions")) dgvUsers.Columns["Permissions"].DisplayIndex = 2;
+
+                // 💎 تصفير الحدود تماماً من الإعدادات الأساسية
+                dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.None;
+                dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+                dgvUsers.RowHeadersVisible = false;
             }
 
-            if (dgvPeople.Rows.Count > 0)
-            {
-                dgvPeople.Columns["PersonID"].Visible = false;
-                dgvPeople.Columns["FirstName"].Visible = false;
-                dgvPeople.Columns["SecondName"].Visible = false;
-                dgvPeople.Columns["ThirdName"].Visible = false;
-                dgvPeople.Columns["LastName"].Visible = false;
-                dgvPeople.Columns["Gendor"].Visible = false;
-                dgvPeople.Columns["ImagePath"].Visible = false;
-                dgvPeople.Columns["Address"].Visible = false;
-                dgvPeople.Columns["NationalNo"].HeaderText = "NATIONAL ID";
-                dgvPeople.Columns["DateOfBirth"].DefaultCellStyle.Format = "MMM dd, yyyy";
-                dgvPeople.Columns["DateOfBirth"].HeaderText = "DATE OF BIRTH";
-                dgvPeople.Columns["Email"].HeaderText = "EMAIL";
-                dgvPeople.Columns["PERSON"].HeaderText = "  PERSON";
-                dgvPeople.Columns["PERSON"].DisplayIndex = 0;
-                dgvPeople.Columns["PERSON"].Width = 250;
-                dgvPeople.Columns["PERSON"].DefaultCellStyle.Padding = new Padding(10, 0, 0, 0);
-            }*/
+            // ربط حدث الـ RowPrePaint لضمان مسح الحدود قبل رسم محتوى الخلية
+            dgvUsers.RowPrePaint += dgvUsers_RowPrePaint;
+
+            UpdateRowsCount(_dtAllUsers);
         }
 
         private void MyAddPersonPage_DataBack(object sender, int PersonID)

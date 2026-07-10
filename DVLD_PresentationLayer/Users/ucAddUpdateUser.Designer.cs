@@ -41,7 +41,22 @@
             this.txtPassword = new Guna.UI2.WinForms.Guna2TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.guna2ToggleSwitch1 = new Guna.UI2.WinForms.Guna2ToggleSwitch();
+            this.tsIsActive = new Guna.UI2.WinForms.Guna2ToggleSwitch();
+            this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbManageDetainedLicense = new Guna.UI2.WinForms.Guna2CheckBox();
+            this.cbSuperUser = new System.Windows.Forms.CheckBox();
+            this.cbFullPermissions = new System.Windows.Forms.CheckBox();
+            this.cbManagePeople = new System.Windows.Forms.CheckBox();
+            this.cbManageUsers = new System.Windows.Forms.CheckBox();
+            this.cbManageDrivers = new System.Windows.Forms.CheckBox();
+            this.cbViewApplications = new System.Windows.Forms.CheckBox();
+            this.cbProcessApplications = new System.Windows.Forms.CheckBox();
+            this.cbManageApplicationTests = new System.Windows.Forms.CheckBox();
+            this.cbEnterTestResults = new System.Windows.Forms.CheckBox();
+            this.cbManageDetainedLicenses = new System.Windows.Forms.CheckBox();
+            this.cbManageSettings_Fees = new System.Windows.Forms.CheckBox();
+            this.cbAudit_System_Logs = new System.Windows.Forms.CheckBox();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
@@ -116,6 +131,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(180, 37);
             this.btnSave.TabIndex = 2;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
@@ -140,7 +156,7 @@
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(149)))), ((int)(((byte)(167)))));
-            this.label1.Location = new System.Drawing.Point(46, 181);
+            this.label1.Location = new System.Drawing.Point(46, 192);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 23);
             this.label1.TabIndex = 10;
@@ -155,18 +171,18 @@
             this.cbPerson.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.cbPerson.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.cbPerson.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cbPerson.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.cbPerson.ItemHeight = 30;
+            this.cbPerson.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.cbPerson.ItemHeight = 42;
             this.cbPerson.Location = new System.Drawing.Point(46, 229);
             this.cbPerson.Name = "cbPerson";
-            this.cbPerson.Size = new System.Drawing.Size(229, 36);
+            this.cbPerson.Size = new System.Drawing.Size(280, 48);
             this.cbPerson.TabIndex = 11;
             // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(149)))), ((int)(((byte)(167)))));
-            this.label2.Location = new System.Drawing.Point(46, 307);
+            this.label2.Location = new System.Drawing.Point(46, 319);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 23);
             this.label2.TabIndex = 12;
@@ -183,13 +199,14 @@
             this.txtUserName.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.txtUserName.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtUserName.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.txtUserName.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtUserName.Location = new System.Drawing.Point(46, 356);
+            this.txtUserName.Location = new System.Drawing.Point(52, 356);
             this.txtUserName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.PlaceholderText = "";
             this.txtUserName.SelectedText = "";
-            this.txtUserName.Size = new System.Drawing.Size(229, 48);
+            this.txtUserName.Size = new System.Drawing.Size(274, 48);
             this.txtUserName.TabIndex = 13;
             // 
             // txtPassword
@@ -203,13 +220,15 @@
             this.txtPassword.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.txtPassword.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txtPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.txtPassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtPassword.Location = new System.Drawing.Point(46, 495);
+            this.txtPassword.Location = new System.Drawing.Point(52, 483);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.PlaceholderText = "";
             this.txtPassword.SelectedText = "";
-            this.txtPassword.Size = new System.Drawing.Size(229, 48);
+            this.txtPassword.Size = new System.Drawing.Size(274, 48);
             this.txtPassword.TabIndex = 15;
             // 
             // label3
@@ -232,26 +251,198 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "Active";
             // 
-            // guna2ToggleSwitch1
+            // tsIsActive
             // 
-            this.guna2ToggleSwitch1.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ToggleSwitch1.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ToggleSwitch1.CheckedState.InnerBorderColor = System.Drawing.Color.White;
-            this.guna2ToggleSwitch1.CheckedState.InnerColor = System.Drawing.Color.White;
-            this.guna2ToggleSwitch1.Location = new System.Drawing.Point(208, 585);
-            this.guna2ToggleSwitch1.Name = "guna2ToggleSwitch1";
-            this.guna2ToggleSwitch1.Size = new System.Drawing.Size(56, 23);
-            this.guna2ToggleSwitch1.TabIndex = 17;
-            this.guna2ToggleSwitch1.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.guna2ToggleSwitch1.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.guna2ToggleSwitch1.UncheckedState.InnerBorderColor = System.Drawing.Color.White;
-            this.guna2ToggleSwitch1.UncheckedState.InnerColor = System.Drawing.Color.White;
+            this.tsIsActive.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tsIsActive.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.tsIsActive.CheckedState.InnerBorderColor = System.Drawing.Color.White;
+            this.tsIsActive.CheckedState.InnerColor = System.Drawing.Color.White;
+            this.tsIsActive.Location = new System.Drawing.Point(245, 585);
+            this.tsIsActive.Name = "tsIsActive";
+            this.tsIsActive.Size = new System.Drawing.Size(68, 23);
+            this.tsIsActive.TabIndex = 17;
+            this.tsIsActive.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.tsIsActive.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.tsIsActive.UncheckedState.InnerBorderColor = System.Drawing.Color.White;
+            this.tsIsActive.UncheckedState.InnerColor = System.Drawing.Color.White;
+            // 
+            // guna2VSeparator1
+            // 
+            this.guna2VSeparator1.FillThickness = 2;
+            this.guna2VSeparator1.Location = new System.Drawing.Point(344, 157);
+            this.guna2VSeparator1.Name = "guna2VSeparator1";
+            this.guna2VSeparator1.Size = new System.Drawing.Size(10, 495);
+            this.guna2VSeparator1.TabIndex = 18;
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(370, 157);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(258, 47);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "USER PERMISSIONS";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbManageDetainedLicense
+            // 
+            this.cbManageDetainedLicense.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbManageDetainedLicense.CheckedState.BorderRadius = 0;
+            this.cbManageDetainedLicense.CheckedState.BorderThickness = 0;
+            this.cbManageDetainedLicense.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbManageDetainedLicense.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbManageDetainedLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageDetainedLicense.Location = new System.Drawing.Point(401, 522);
+            this.cbManageDetainedLicense.Name = "cbManageDetainedLicense";
+            this.cbManageDetainedLicense.Size = new System.Drawing.Size(283, 35);
+            this.cbManageDetainedLicense.TabIndex = 29;
+            this.cbManageDetainedLicense.Text = "Manage Detained Licenses";
+            this.cbManageDetainedLicense.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.cbManageDetainedLicense.UncheckedState.BorderRadius = 0;
+            this.cbManageDetainedLicense.UncheckedState.BorderThickness = 0;
+            this.cbManageDetainedLicense.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            // 
+            // cbSuperUser
+            // 
+            this.cbSuperUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSuperUser.Location = new System.Drawing.Point(401, 207);
+            this.cbSuperUser.Name = "cbSuperUser";
+            this.cbSuperUser.Size = new System.Drawing.Size(283, 35);
+            this.cbSuperUser.TabIndex = 32;
+            this.cbSuperUser.Text = "Global Access (Super User)";
+            this.cbSuperUser.UseVisualStyleBackColor = true;
+            // 
+            // cbFullPermissions
+            // 
+            this.cbFullPermissions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbFullPermissions.Location = new System.Drawing.Point(401, 242);
+            this.cbFullPermissions.Name = "cbFullPermissions";
+            this.cbFullPermissions.Size = new System.Drawing.Size(316, 35);
+            this.cbFullPermissions.TabIndex = 33;
+            this.cbFullPermissions.Text = "Global Access (Full Permissions)";
+            this.cbFullPermissions.UseVisualStyleBackColor = true;
+            // 
+            // cbManagePeople
+            // 
+            this.cbManagePeople.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManagePeople.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cbManagePeople.Location = new System.Drawing.Point(401, 277);
+            this.cbManagePeople.Name = "cbManagePeople";
+            this.cbManagePeople.Size = new System.Drawing.Size(227, 35);
+            this.cbManagePeople.TabIndex = 34;
+            this.cbManagePeople.Text = "Manage People";
+            this.cbManagePeople.UseVisualStyleBackColor = true;
+            // 
+            // cbManageUsers
+            // 
+            this.cbManageUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageUsers.Location = new System.Drawing.Point(401, 312);
+            this.cbManageUsers.Name = "cbManageUsers";
+            this.cbManageUsers.Size = new System.Drawing.Size(227, 35);
+            this.cbManageUsers.TabIndex = 35;
+            this.cbManageUsers.Text = "Manage Users";
+            this.cbManageUsers.UseVisualStyleBackColor = true;
+            // 
+            // cbManageDrivers
+            // 
+            this.cbManageDrivers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageDrivers.Location = new System.Drawing.Point(401, 347);
+            this.cbManageDrivers.Name = "cbManageDrivers";
+            this.cbManageDrivers.Size = new System.Drawing.Size(227, 35);
+            this.cbManageDrivers.TabIndex = 36;
+            this.cbManageDrivers.Text = "Manage Drivers";
+            this.cbManageDrivers.UseVisualStyleBackColor = true;
+            // 
+            // cbViewApplications
+            // 
+            this.cbViewApplications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbViewApplications.Location = new System.Drawing.Point(401, 382);
+            this.cbViewApplications.Name = "cbViewApplications";
+            this.cbViewApplications.Size = new System.Drawing.Size(262, 35);
+            this.cbViewApplications.TabIndex = 37;
+            this.cbViewApplications.Text = "View Applications";
+            this.cbViewApplications.UseVisualStyleBackColor = true;
+            // 
+            // cbProcessApplications
+            // 
+            this.cbProcessApplications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbProcessApplications.Location = new System.Drawing.Point(401, 417);
+            this.cbProcessApplications.Name = "cbProcessApplications";
+            this.cbProcessApplications.Size = new System.Drawing.Size(262, 35);
+            this.cbProcessApplications.TabIndex = 38;
+            this.cbProcessApplications.Text = "Process Applications";
+            this.cbProcessApplications.UseVisualStyleBackColor = true;
+            // 
+            // cbManageApplicationTests
+            // 
+            this.cbManageApplicationTests.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageApplicationTests.Location = new System.Drawing.Point(401, 452);
+            this.cbManageApplicationTests.Name = "cbManageApplicationTests";
+            this.cbManageApplicationTests.Size = new System.Drawing.Size(283, 35);
+            this.cbManageApplicationTests.TabIndex = 39;
+            this.cbManageApplicationTests.Text = "Manage Application Tests";
+            this.cbManageApplicationTests.UseVisualStyleBackColor = true;
+            // 
+            // cbEnterTestResults
+            // 
+            this.cbEnterTestResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbEnterTestResults.Location = new System.Drawing.Point(401, 487);
+            this.cbEnterTestResults.Name = "cbEnterTestResults";
+            this.cbEnterTestResults.Size = new System.Drawing.Size(283, 35);
+            this.cbEnterTestResults.TabIndex = 40;
+            this.cbEnterTestResults.Text = "Enter Test Results";
+            this.cbEnterTestResults.UseVisualStyleBackColor = true;
+            // 
+            // cbManageDetainedLicenses
+            // 
+            this.cbManageDetainedLicenses.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageDetainedLicenses.Location = new System.Drawing.Point(401, 522);
+            this.cbManageDetainedLicenses.Name = "cbManageDetainedLicenses";
+            this.cbManageDetainedLicenses.Size = new System.Drawing.Size(283, 35);
+            this.cbManageDetainedLicenses.TabIndex = 41;
+            this.cbManageDetainedLicenses.Text = "Manage Detained Licenses";
+            this.cbManageDetainedLicenses.UseVisualStyleBackColor = true;
+            // 
+            // cbManageSettings_Fees
+            // 
+            this.cbManageSettings_Fees.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageSettings_Fees.Location = new System.Drawing.Point(401, 557);
+            this.cbManageSettings_Fees.Name = "cbManageSettings_Fees";
+            this.cbManageSettings_Fees.Size = new System.Drawing.Size(283, 35);
+            this.cbManageSettings_Fees.TabIndex = 42;
+            this.cbManageSettings_Fees.Text = "Manage Settings && Fees";
+            this.cbManageSettings_Fees.UseVisualStyleBackColor = true;
+            // 
+            // cbAudit_System_Logs
+            // 
+            this.cbAudit_System_Logs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAudit_System_Logs.Location = new System.Drawing.Point(401, 592);
+            this.cbAudit_System_Logs.Name = "cbAudit_System_Logs";
+            this.cbAudit_System_Logs.Size = new System.Drawing.Size(283, 35);
+            this.cbAudit_System_Logs.TabIndex = 43;
+            this.cbAudit_System_Logs.Text = "Audit Logs / System Logs";
+            this.cbAudit_System_Logs.UseVisualStyleBackColor = true;
             // 
             // ucAddUpdateUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.guna2ToggleSwitch1);
+            this.Controls.Add(this.cbAudit_System_Logs);
+            this.Controls.Add(this.cbManageSettings_Fees);
+            this.Controls.Add(this.cbManageDetainedLicenses);
+            this.Controls.Add(this.cbEnterTestResults);
+            this.Controls.Add(this.cbManageApplicationTests);
+            this.Controls.Add(this.cbProcessApplications);
+            this.Controls.Add(this.cbViewApplications);
+            this.Controls.Add(this.cbManageDrivers);
+            this.Controls.Add(this.cbManageUsers);
+            this.Controls.Add(this.cbManagePeople);
+            this.Controls.Add(this.cbFullPermissions);
+            this.Controls.Add(this.cbSuperUser);
+            this.Controls.Add(this.cbManageDetainedLicense);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.guna2VSeparator1);
+            this.Controls.Add(this.tsIsActive);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.label3);
@@ -285,6 +476,21 @@
         private Guna.UI2.WinForms.Guna2TextBox txtPassword;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private Guna.UI2.WinForms.Guna2ToggleSwitch guna2ToggleSwitch1;
+        private Guna.UI2.WinForms.Guna2ToggleSwitch tsIsActive;
+        private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
+        private System.Windows.Forms.Label label5;
+        private Guna.UI2.WinForms.Guna2CheckBox cbManageDetainedLicense;
+        private System.Windows.Forms.CheckBox cbSuperUser;
+        private System.Windows.Forms.CheckBox cbFullPermissions;
+        private System.Windows.Forms.CheckBox cbManagePeople;
+        private System.Windows.Forms.CheckBox cbManageUsers;
+        private System.Windows.Forms.CheckBox cbManageDrivers;
+        private System.Windows.Forms.CheckBox cbViewApplications;
+        private System.Windows.Forms.CheckBox cbProcessApplications;
+        private System.Windows.Forms.CheckBox cbManageApplicationTests;
+        private System.Windows.Forms.CheckBox cbEnterTestResults;
+        private System.Windows.Forms.CheckBox cbManageDetainedLicenses;
+        private System.Windows.Forms.CheckBox cbManageSettings_Fees;
+        private System.Windows.Forms.CheckBox cbAudit_System_Logs;
     }
 }
