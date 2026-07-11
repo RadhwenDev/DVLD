@@ -69,6 +69,16 @@ namespace DVLD_BusinessLayer
             return clsUsersDataAccess.IsUserNameExistForPersonID(UserName);
         }
 
+        public static clsUsers Find(int UserID)
+        {
+            string UserName = "", Password = "";
+            int PersonID = -1, Permissions = 0;
+            bool isActive = false;
+            if (clsUsersDataAccess.GetUserInfoByID(UserID, ref PersonID, ref UserName, ref Password, ref Permissions, ref isActive))
+                return new clsUsers(UserID, PersonID, UserName, Password, Permissions, isActive);
+            return null;
+        }
+
         public enSaveResult Save()
         {
             switch (Mode)

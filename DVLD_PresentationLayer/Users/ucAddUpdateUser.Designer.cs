@@ -100,7 +100,6 @@
             this.lblHeaderTitle.Name = "lblHeaderTitle";
             this.lblHeaderTitle.Size = new System.Drawing.Size(249, 35);
             this.lblHeaderTitle.TabIndex = 0;
-            this.lblHeaderTitle.Text = "Add New User";
             this.lblHeaderTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // guna2Panel3
@@ -253,6 +252,7 @@
             // 
             // tsIsActive
             // 
+            this.tsIsActive.Checked = true;
             this.tsIsActive.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.tsIsActive.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             this.tsIsActive.CheckedState.InnerBorderColor = System.Drawing.Color.White;
@@ -311,6 +311,7 @@
             this.cbSuperUser.TabIndex = 32;
             this.cbSuperUser.Text = "Global Access (Super User)";
             this.cbSuperUser.UseVisualStyleBackColor = true;
+            this.cbSuperUser.CheckedChanged += new System.EventHandler(this.cbSuperUser_CheckedChanged);
             // 
             // cbFullPermissions
             // 
@@ -321,6 +322,7 @@
             this.cbFullPermissions.TabIndex = 33;
             this.cbFullPermissions.Text = "Global Access (Full Permissions)";
             this.cbFullPermissions.UseVisualStyleBackColor = true;
+            this.cbFullPermissions.CheckedChanged += new System.EventHandler(this.cbFullPermissions_CheckedChanged);
             // 
             // cbManagePeople
             // 

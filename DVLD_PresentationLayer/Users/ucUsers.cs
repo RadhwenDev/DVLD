@@ -11,11 +11,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DVLD_PresentationLayer.User
 {
     public partial class ucUsers : UserControl
     {
+        enum enActions { AddNew, Show, Edit, Delete}
+        private enActions _Action;
         public ucUsers()
         {
             InitializeComponent();
@@ -246,7 +249,8 @@ namespace DVLD_PresentationLayer.User
                 }
                 else if (rectEdit.Contains(clickPoint))
                 {
-                    MessageBox.Show($"Edit User ID: {userID}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _Action = enActions.Edit;
+                    ShowUserControl();
                 }
                 else if (rectDelete.Contains(clickPoint))
                 {
@@ -317,8 +321,15 @@ namespace DVLD_PresentationLayer.User
                 }
             }
         }
-
+        int selectedPersonID = -1;
         private void btnAddUser_Click(object sender, EventArgs e)
+        {
+            _Action = enActions.AddNew;
+            ShowUserControl();
+
+        }
+
+        private void ShowUserControl()
         {
             using (Form overlay = new Form())
             {
@@ -336,7 +347,12 @@ namespace DVLD_PresentationLayer.User
                     frmContainer.BackColor = Color.White;
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
+                    if (_Action != enActions.AddNew)
+                        selectedPersonID = Convert.ToInt32(dgvUsers.CurrentRow.Cells["UserID"].Value);
+                    else
+                        selectedPersonID = -1;
                     ucAddUpdateUser myAddUpdateUser = new ucAddUpdateUser();
+                    myAddUpdateUser.LoadUserData(selectedPersonID);
                     frmContainer.Size = myAddUpdateUser.Size;
                     myAddUpdateUser.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myAddUpdateUser);
@@ -347,7 +363,8 @@ namespace DVLD_PresentationLayer.User
                     Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
                     elipse.TargetControl = frmContainer;
                     elipse.BorderRadius = 16;
-
+                    if (selectedPersonID != -1)
+                        myAddUpdateUser._LoadUpdateMode(selectedPersonID);
                     frmContainer.ShowDialog(overlay);
                 }
             }
