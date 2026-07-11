@@ -39,6 +39,34 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+
+        public static DataTable GetPeopleFullName()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"select PersonID, FirstName, SecondName, ThirdName, LastName FROM People";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                dt.Load(reader);
+                            }
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+
+            return dt;
+        }
         public static int AddNewPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalCountryID, string ImagePath)
         {
             int PersonID = -1;

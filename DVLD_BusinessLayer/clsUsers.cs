@@ -30,7 +30,16 @@ namespace DVLD_BusinessLayer
         public int Permissions {  set; get; }
         public bool isActive { set; get; }
 
-        
+        public clsUsers()
+        {
+            this.UserID = -1;
+            this.PersonID = -1;
+            this.UserName = "";
+            this.Password = "";
+            this.Permissions = 0;
+            this.isActive = false;
+            Mode = enMode.AddNew;
+        }
         public clsUsers(int UserID, int PersonID, string UserName, string Password, int Permission, bool isActive)
         {
             this.UserID = UserID;
@@ -39,6 +48,7 @@ namespace DVLD_BusinessLayer
             this.Password = Password;
             this.Permissions = Permission;
             this.isActive = isActive;
+            Mode = enMode.Update;
         }
 
 
@@ -54,8 +64,8 @@ namespace DVLD_BusinessLayer
         }
         public enSaveResult UpdatePerson()
         {
-            /*if (clsUsersDataAccess.UpdateUser(this.UserID, this.PersonID, this.UserName, this.Password, this.isActive, this.Permissions))
-                return enSaveResult.SavedSuccessfully;*/
+            if (clsUsersDataAccess.UpdateUser(this.UserID, this.UserName, this.Password, this.isActive, this.Permissions))
+                return enSaveResult.SavedSuccessfully;
             return enSaveResult.Failed;
         }
 

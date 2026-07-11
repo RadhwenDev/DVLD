@@ -43,7 +43,7 @@ namespace DVLD_PresentationLayer.Users
             // فحص إذا كان الـ ComboBox ممتلئاً بالفعل لمنع التكرار
             if (cbPerson.DataSource != null) return;
 
-            DataTable dtPeople = DVLD_BusinessLayer.clsPerson.GetPeople();
+            DataTable dtPeople = DVLD_BusinessLayer.clsPerson.GetPeopleFullName();
 
             if (dtPeople != null)
             {
@@ -95,6 +95,7 @@ namespace DVLD_PresentationLayer.Users
             }
 
             cbPerson.SelectedValue = Convert.ToInt32(_User.PersonID);
+            cbPerson.Enabled = false;
             txtUserName.Text = _User.UserName;
             txtPassword.Text = _User.Password;
             tsIsActive.Checked = _User.isActive;
@@ -193,7 +194,7 @@ namespace DVLD_PresentationLayer.Users
                 return;
             }
             // الفحص الثاني: التأكد من أن الشخص المختار ليس مستخدماً بالفعل (Déjà User)
-            else if (DVLD_BusinessLayer.clsUsers.IsUserExistForPersonID(selectedPersonID))
+            else if (DVLD_BusinessLayer.clsUsers.IsUserExistForPersonID(selectedPersonID) && _Mode != enMode.Update)
             {
                 errorProvider1.SetError(cbPerson, "This person is already a user in the system!");
                 cbPerson.Focus();
@@ -239,7 +240,14 @@ namespace DVLD_PresentationLayer.Users
             }
 
             if (_Mode == enMode.AddNew)
-                _User = new clsUsers(-1, (int)cbPerson.SelectedValue, txtUserName.Text, txtPassword.Text, calculatedPermissions, tsIsActive.Checked);
+                _User = new clsUsers();
+            _User.UserID = _UserID;
+            _User.PersonID = (int)cbPerson.SelectedValue;
+            _User.UserName = txtUserName.Text;
+            _User.Password = txtPassword.Text;
+            _User.Permissions = calculatedPermissions;
+            _User.isActive = tsIsActive.Checked;
+
             switch (_User.Save())
             {
                 case clsUsers.enSaveResult.SavedSuccessfully:

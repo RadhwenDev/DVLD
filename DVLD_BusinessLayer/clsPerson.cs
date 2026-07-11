@@ -78,6 +78,11 @@ namespace DVLD_BusinessLayer
             return clsPeopleDataAccess.GetPeople();
         }
 
+        public static DataTable GetPeopleFullName()
+        {
+            return clsPeopleDataAccess.GetPeopleFullName();
+        }
+
         public bool AddNewPerson()
         {
             this.PersonID = clsPeopleDataAccess.AddNewPerson(this.NationalNo, this.FirstName, this.SecondName, this.ThirdName, this.LastName, this.DateOfBirth, this.Gendor, this.Address, this.Phone, this.Email, this.NationalCountryID, this.ImagePath);

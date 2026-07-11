@@ -157,5 +157,32 @@ namespace DVLD_DataAccessLayer
             }
             return isFound;
         }
+
+        public static bool UpdateUser(int UserID, string UserName, string Password, bool isActive, int Permissions)
+        {
+            int rowAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"UPDATE Users SET UserName = @UserName, Password = @Password, isActive = @isActive, Permissions = @Permissions
+                            WHERE UserID = @UserID";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserID", UserID);
+            command.Parameters.AddWithValue("@UserName", UserName);
+            command.Parameters.AddWithValue("@Password", Password);
+            command.Parameters.AddWithValue("@isActive", isActive);
+            command.Parameters.AddWithValue("@Permissions", Permissions);
+
+            try
+            {
+                connection.Open();
+                rowAffected = command.ExecuteNonQuery();
+            }
+            catch (Exception) { return false; }
+            finally
+            {
+                connection.Close();
+            }
+
+            return rowAffected != 0;
+        }
     }
 }
