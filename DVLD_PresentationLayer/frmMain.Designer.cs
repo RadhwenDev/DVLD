@@ -37,13 +37,15 @@
             this.btnDashboard = new Guna.UI2.WinForms.Guna2Button();
             this.btnPeople = new Guna.UI2.WinForms.Guna2Button();
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.btnTestTypes = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLicenseClasses = new Guna.UI2.WinForms.Guna2Button();
             this.btnUsers = new Guna.UI2.WinForms.Guna2Button();
             this.btnLicenses = new Guna.UI2.WinForms.Guna2Button();
             this.btnApplications = new Guna.UI2.WinForms.Guna2Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.pbUser = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lblUser = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblBreadcrumb = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblDate = new System.Windows.Forms.Label();
@@ -53,7 +55,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlSidebar.SuspendLayout();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,6 +167,8 @@
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.pnlSidebar.Controls.Add(this.btnTestTypes);
+            this.pnlSidebar.Controls.Add(this.btnLicenseClasses);
             this.pnlSidebar.Controls.Add(this.btnUsers);
             this.pnlSidebar.Controls.Add(this.btnLicenses);
             this.pnlSidebar.Controls.Add(this.btnApplications);
@@ -178,6 +182,58 @@
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(260, 1033);
             this.pnlSidebar.TabIndex = 0;
+            // 
+            // btnTestTypes
+            // 
+            this.btnTestTypes.BackColor = System.Drawing.Color.Transparent;
+            this.btnTestTypes.BorderRadius = 10;
+            this.btnTestTypes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTestTypes.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnTestTypes.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnTestTypes.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnTestTypes.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnTestTypes.FillColor = System.Drawing.Color.Transparent;
+            this.btnTestTypes.Font = new System.Drawing.Font("Century Gothic", 13F, System.Drawing.FontStyle.Bold);
+            this.btnTestTypes.ForeColor = System.Drawing.Color.White;
+            this.btnTestTypes.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnTestTypes.HoverState.ForeColor = System.Drawing.Color.White;
+            this.btnTestTypes.Image = ((System.Drawing.Image)(resources.GetObject("btnTestTypes.Image")));
+            this.btnTestTypes.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnTestTypes.ImageSize = new System.Drawing.Size(35, 35);
+            this.btnTestTypes.Location = new System.Drawing.Point(21, 549);
+            this.btnTestTypes.Name = "btnTestTypes";
+            this.btnTestTypes.Size = new System.Drawing.Size(203, 45);
+            this.btnTestTypes.TabIndex = 10;
+            this.btnTestTypes.Text = "Test Types";
+            this.btnTestTypes.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnTestTypes.Click += new System.EventHandler(this.btnTestTypes_Click);
+            this.btnTestTypes.Paint += new System.Windows.Forms.PaintEventHandler(this.btnTestTypes_Paint);
+            // 
+            // btnLicenseClasses
+            // 
+            this.btnLicenseClasses.BackColor = System.Drawing.Color.Transparent;
+            this.btnLicenseClasses.BorderRadius = 10;
+            this.btnLicenseClasses.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLicenseClasses.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLicenseClasses.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLicenseClasses.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLicenseClasses.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLicenseClasses.FillColor = System.Drawing.Color.Transparent;
+            this.btnLicenseClasses.Font = new System.Drawing.Font("Century Gothic", 13F, System.Drawing.FontStyle.Bold);
+            this.btnLicenseClasses.ForeColor = System.Drawing.Color.White;
+            this.btnLicenseClasses.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnLicenseClasses.HoverState.ForeColor = System.Drawing.Color.White;
+            this.btnLicenseClasses.Image = ((System.Drawing.Image)(resources.GetObject("btnLicenseClasses.Image")));
+            this.btnLicenseClasses.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLicenseClasses.ImageSize = new System.Drawing.Size(37, 38);
+            this.btnLicenseClasses.Location = new System.Drawing.Point(21, 488);
+            this.btnLicenseClasses.Name = "btnLicenseClasses";
+            this.btnLicenseClasses.Size = new System.Drawing.Size(233, 45);
+            this.btnLicenseClasses.TabIndex = 9;
+            this.btnLicenseClasses.Text = "License Classes";
+            this.btnLicenseClasses.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLicenseClasses.Click += new System.EventHandler(this.btnLicenseClasses_Click);
+            this.btnLicenseClasses.Paint += new System.Windows.Forms.PaintEventHandler(this.btnLicenseClasses_Paint);
             // 
             // btnUsers
             // 
@@ -262,13 +318,24 @@
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.pbUser);
             this.panel4.Controls.Add(this.label4);
-            this.panel4.Controls.Add(this.label5);
-            this.panel4.Controls.Add(this.pictureBox2);
+            this.panel4.Controls.Add(this.lblUser);
             this.panel4.Location = new System.Drawing.Point(0, 891);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(260, 100);
             this.panel4.TabIndex = 1;
+            // 
+            // pbUser
+            // 
+            this.pbUser.ImageRotate = 0F;
+            this.pbUser.Location = new System.Drawing.Point(15, 23);
+            this.pbUser.Name = "pbUser";
+            this.pbUser.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.pbUser.Size = new System.Drawing.Size(58, 55);
+            this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbUser.TabIndex = 9;
+            this.pbUser.TabStop = false;
             // 
             // label4
             // 
@@ -280,26 +347,15 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "System Administrator";
             // 
-            // label5
+            // lblUser
             // 
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(75, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(143, 30);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Admin User";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(29, 30);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 39);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 3;
-            this.pictureBox2.TabStop = false;
+            this.lblUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUser.ForeColor = System.Drawing.Color.White;
+            this.lblUser.Location = new System.Drawing.Point(75, 23);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new System.Drawing.Size(143, 30);
+            this.lblUser.TabIndex = 4;
+            this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel3
             // 
@@ -353,7 +409,7 @@
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(44, 41);
             this.btnMenu.TabIndex = 0;
-            this.btnMenu.Text = "X";
+            this.btnMenu.Text = "✖️";
             this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // pnlContainer
@@ -382,7 +438,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlSidebar.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbUser)).EndInit();
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -399,8 +455,7 @@
         private System.Windows.Forms.Panel pnlSidebar;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Panel panel3;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBreadcrumb;
         private System.Windows.Forms.Label lblDate;
@@ -409,6 +464,9 @@
         private Guna.UI2.WinForms.Guna2Button btnUsers;
         private Guna.UI2.WinForms.Guna2Button btnLicenses;
         private Guna.UI2.WinForms.Guna2Button btnApplications;
+        private Guna.UI2.WinForms.Guna2CirclePictureBox pbUser;
+        private Guna.UI2.WinForms.Guna2Button btnTestTypes;
+        private Guna.UI2.WinForms.Guna2Button btnLicenseClasses;
     }
 }
 

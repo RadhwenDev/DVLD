@@ -32,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Guna.UI2">
       <HintPath>..\..\Daily-Coding\Calculator\packages\Guna.UI2.WinForms.2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
@@ -53,11 +54,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\ucApplications.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Applications\ucApplications.Designer.cs">
+      <DependentUpon>ucApplications.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\clsCurrentPerson.cs" />
+    <Compile Include="Global\clsCurrentUser.cs" />
+    <Compile Include="Login\LoginScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\LoginScreen.Designer.cs">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +94,12 @@
     <Compile Include="People\ucShowDetails.Designer.cs">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tests\ucTestTypes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Tests\ucTestTypes.Designer.cs">
+      <DependentUpon>ucTestTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Users\ucAddUpdateUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,8 +112,14 @@
     <Compile Include="Users\ucUsers.Designer.cs">
       <DependentUpon>ucUsers.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Applications\ucApplications.resx">
+      <DependentUpon>ucApplications.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\LoginScreen.resx">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -111,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\ucShowDetails.resx">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tests\ucTestTypes.resx">
+      <DependentUpon>ucTestTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\ucAddUpdateUser.resx">
       <DependentUpon>ucAddUpdateUser.cs</DependentUpon>
@@ -138,12 +168,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Applications\" />
     <Folder Include="Dashboard\" />
     <Folder Include="Drivers\" />
     <Folder Include="Licenses\" />
-    <Folder Include="Login\" />
-    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

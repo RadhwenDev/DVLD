@@ -1,13 +1,17 @@
-﻿using System;
+﻿using DVLD_PresentationLayer.Applications;
+using DVLD_PresentationLayer.Global;
+using DVLD_PresentationLayer.Tests;
+using DVLD_PresentationLayer.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DVLD_PresentationLayer.User;
 
 namespace DVLD_PresentationLayer
 {
@@ -32,7 +36,7 @@ namespace DVLD_PresentationLayer
             else
             {
                 pnlSidebar.Width = 260;
-                btnMenu.Text = "X";
+                btnMenu.Text = "✖️";
                 btnMenu.Font = new Font("Arial", 12, FontStyle.Bold);
                 btnMenu.ForeColor = Color.Black;
 
@@ -45,6 +49,38 @@ namespace DVLD_PresentationLayer
         private void Form1_Load(object sender, EventArgs e)
         {
             lblDate.Text = DateTime.Today.Date.ToString("ddd , MMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            /*blUser.Text = clsCurrentUser.CurrentUser.UserName;
+            if (!string.IsNullOrEmpty(clsCurrentPerson.CurrentPerson.ImagePath) && File.Exists(clsCurrentPerson.CurrentPerson.ImagePath))
+            {
+                try
+                {
+                    using (var stream = new FileStream(clsCurrentPerson.CurrentPerson.ImagePath, FileMode.Open, FileAccess.Read))
+                    {
+                        pbUser.Image = Image.FromStream(stream);
+                    }
+                }
+                catch
+                {
+                    LoadDefaultAvatar();
+                }
+            }
+            else
+            {
+                LoadDefaultAvatar();
+            }*/
+        }
+        
+
+        // دالة وضع الصورة الافتراضية المفعلة الآن بالكامل بناءً على الجنس
+        private void LoadDefaultAvatar()
+        {
+            /* if (_Person != null)
+             {
+                 if (_Person.Gendor == 0)
+                     pbImage.Image = Properties.Resources.default_male_avatar; // تأكد من مطابقة الاسم في الـ Resources لديك
+                 else
+                     pbImage.Image = Properties.Resources.default_female_avatar;
+             }*/
         }
 
         Guna.UI2.WinForms.Guna2Button activeSidebarButton = null;
@@ -136,8 +172,8 @@ namespace DVLD_PresentationLayer
         {
             activeSidebarButton = btnApplications;
             lblBreadcrumb.Text = "DVLD > Applications";
-            /*ucUsers myUsersPage = new ucUsers();
-            showUserControl(myUsersPage);*/
+            ucApplications myApplicationsPage = new ucApplications();
+            showUserControl(myApplicationsPage);
             pnlSidebar.Refresh();
         }
 
@@ -150,12 +186,40 @@ namespace DVLD_PresentationLayer
             pnlSidebar.Refresh();
         }
 
+        private void btnLicenseClasses_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnLicenses;
+            lblBreadcrumb.Text = "DVLD > License Classes";
+            /*ucUsers myUsersPage = new ucUsers();
+            showUserControl(myUsersPage);*/
+            pnlSidebar.Refresh();
+        }
+
+        private void btnTestTypes_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnTestTypes;
+            lblBreadcrumb.Text = "DVLD > Test Types";
+            ucTestTypes muTestTypesPage = new ucTestTypes();
+            showUserControl(muTestTypesPage);
+            pnlSidebar.Refresh();
+        }
+
         private void btnApplications_Paint(object sender, PaintEventArgs e)
         {
             DesignButton(sender, e);
         }
 
         private void btnLicenses_Paint(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
+
+        private void btnLicenseClasses_Paint(object sender, PaintEventArgs e)
+        {
+            DesignButton(sender, e);
+        }
+
+        private void btnTestTypes_Paint(object sender, PaintEventArgs e)
         {
             DesignButton(sender, e);
         }

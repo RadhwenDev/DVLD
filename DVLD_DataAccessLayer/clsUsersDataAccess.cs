@@ -120,6 +120,10 @@ namespace DVLD_DataAccessLayer
             return isFound;
         }
 
+        
+
+        
+
         public static bool GetUserInfoByID(int UserID, ref int PersonID, ref string UserName, ref string Password, ref int Permissions, ref bool isActive)
         {
             bool isFound = false;
@@ -138,6 +142,44 @@ namespace DVLD_DataAccessLayer
                     PersonID = (int)reader["PersonID"];
                     UserName = (string)reader["UserName"];
                     Password = (string)reader["Password"];
+                    Permissions = (int)reader["Permissions"];
+                    isActive = (bool)reader["isActive"];
+                }
+                else
+                {
+                    isFound = false;
+                }
+                reader.Close();
+            }
+            catch (Exception)
+            {
+                isFound = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return isFound;
+        }
+
+        public static bool Find(ref int UserID, ref int PersonID, string UserName, string Password, ref int Permissions, ref bool isActive)
+        {
+            bool isFound = false;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = "SELECT * FROM Users WHERE UserName = @UserName and Password = @Password";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@UserName", UserName);
+            command.Parameters.AddWithValue("@Password", Password);
+
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    isFound = true;
+                    UserID = (int)reader["UserID"];
+                    PersonID = (int)reader["PersonID"];
                     Permissions = (int)reader["Permissions"];
                     isActive = (bool)reader["isActive"];
                 }

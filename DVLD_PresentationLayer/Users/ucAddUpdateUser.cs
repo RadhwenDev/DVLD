@@ -211,7 +211,7 @@ namespace DVLD_PresentationLayer.Users
                 txtUserName.Focus();
                 return;
             }
-            else if (DVLD_BusinessLayer.clsUsers.IsUserNameExistForPersonID(txtUserName.Text))
+            else if (DVLD_BusinessLayer.clsUsers.IsUserNameExistForPersonID(txtUserName.Text) && _Mode != enMode.Update)
             {
                 errorProvider1.SetError(txtUserName, "This username is already a used in the system!");
                 txtUserName.Focus();

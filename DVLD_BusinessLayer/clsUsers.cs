@@ -89,6 +89,15 @@ namespace DVLD_BusinessLayer
             return null;
         }
 
+        public static clsUsers Find(string UserName, string Password)
+        {
+            int UserID = -1 , PersonID = -1, Permissions = 0;
+            bool isActive = false;
+            if (clsUsersDataAccess.Find(ref UserID, ref PersonID, UserName, Password, ref Permissions, ref isActive))
+                return new clsUsers(UserID, PersonID, UserName, Password, Permissions, isActive);
+            return null;
+        }
+
         public enSaveResult Save()
         {
             switch (Mode)
@@ -114,19 +123,13 @@ namespace DVLD_BusinessLayer
         }
         private bool HasChanges()
         {
-            return true;
-                /*FirstName != _OriginalPerson.FirstName ||
-                SecondName != _OriginalPerson.SecondName ||
-                ThirdName != _OriginalPerson.ThirdName ||
-                LastName != _OriginalPerson.LastName ||
-                NationalNo != _OriginalPerson.NationalNo ||
-                Phone != _OriginalPerson.Phone ||
-                Email != _OriginalPerson.Email ||
-                Address != _OriginalPerson.Address ||
-                DateOfBirth != _OriginalPerson.DateOfBirth.Date ||
-                Gendor != _OriginalPerson.Gendor ||
-                NationalCountryID != _OriginalPerson.NationalCountryID ||
-                ImagePath != _OriginalPerson.ImagePath;*/
+            return
+                UserID != _OriginalUser.UserID ||
+                PersonID != _OriginalUser.PersonID ||
+                UserName != _OriginalUser.UserName ||
+                Password != _OriginalUser.Password ||
+                Permissions != _OriginalUser.Permissions ||
+                isActive != _OriginalUser.isActive;
         }
     }
 }

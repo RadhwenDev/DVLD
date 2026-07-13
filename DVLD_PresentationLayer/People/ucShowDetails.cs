@@ -187,5 +187,6 @@ namespace DVLD_PresentationLayer
                     pbImage.Image = Properties.Resources.default_female_avatar;
             }*/
         }
+
     }
 }

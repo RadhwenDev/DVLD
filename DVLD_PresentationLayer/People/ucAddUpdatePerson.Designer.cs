@@ -99,7 +99,7 @@
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(53, 35);
             this.guna2Button1.TabIndex = 2;
-            this.guna2Button1.Text = "X";
+            this.guna2Button1.Text = "✖️";
             this.guna2Button1.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
             // pictureBox1
