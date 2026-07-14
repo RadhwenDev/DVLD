@@ -32,5 +32,32 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+
+        public static bool UpdateTestTypes(int TestTypeID,string TestTypeTitle, string TestTypeDescription, int TestTypeFees)
+        {
+            int rowAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"UPDATE TestTypes SET TestTypeTitle = @TestTypeTitle, TestTypeDescription = @TestTypeDescription, TestTypeFees = @TestTypeFees
+                            WHERE TestTypeID = @TestTypeID";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@TestTypeTitle", TestTypeTitle);
+            command.Parameters.AddWithValue("@TestTypeDescription", TestTypeDescription);
+            command.Parameters.AddWithValue("@TestTypeFees", TestTypeFees);
+            command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+            try
+            {
+                connection.Open();
+                rowAffected = command.ExecuteNonQuery();
+            }
+            catch (Exception) { return false; }
+            finally
+            {
+                connection.Close();
+            }
+
+            return rowAffected != 0;
+        }
+
+        
     }
 }

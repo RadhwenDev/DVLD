@@ -48,6 +48,16 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlShowFirstInfos = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2Separator7 = new Guna.UI2.WinForms.Guna2Separator();
+            this.lblFirstTestFee = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lblFirstDescription = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.btnFirstEdit = new Guna.UI2.WinForms.Guna2Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.guna2Separator6 = new Guna.UI2.WinForms.Guna2Separator();
+            this.lblFirstStep = new System.Windows.Forms.Label();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.lblSecondDescription = new System.Windows.Forms.Label();
             this.guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
@@ -68,19 +78,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.lblThirdStep = new System.Windows.Forms.Label();
-            this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
-            this.guna2Separator7 = new Guna.UI2.WinForms.Guna2Separator();
-            this.lblFirstTestFee = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.lblFirstDescription = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.btnFirstEdit = new Guna.UI2.WinForms.Guna2Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.guna2Separator6 = new Guna.UI2.WinForms.Guna2Separator();
-            this.lblFirstStep = new System.Windows.Forms.Label();
-            this.btnFirstSave = new Guna.UI2.WinForms.Guna2Button();
-            this.btnSecondSave = new Guna.UI2.WinForms.Guna2Button();
-            this.btnThirdSave = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -89,12 +86,12 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.pnlShowFirstInfos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.guna2Panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.guna2Panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.guna2Panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCountTotalAndPending
@@ -296,15 +293,142 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Controls.Add(this.pnlShowFirstInfos, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.guna2Panel3, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.guna2Panel2, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.guna2Panel4, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 370);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1317, 342);
             this.tableLayoutPanel1.TabIndex = 13;
+            // 
+            // pnlShowFirstInfos
+            // 
+            this.pnlShowFirstInfos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlShowFirstInfos.BackColor = System.Drawing.Color.Transparent;
+            this.pnlShowFirstInfos.BorderRadius = 20;
+            this.pnlShowFirstInfos.Controls.Add(this.guna2Separator7);
+            this.pnlShowFirstInfos.Controls.Add(this.lblFirstTestFee);
+            this.pnlShowFirstInfos.Controls.Add(this.label16);
+            this.pnlShowFirstInfos.Controls.Add(this.lblFirstDescription);
+            this.pnlShowFirstInfos.Controls.Add(this.pictureBox3);
+            this.pnlShowFirstInfos.Controls.Add(this.btnFirstEdit);
+            this.pnlShowFirstInfos.Controls.Add(this.label18);
+            this.pnlShowFirstInfos.Controls.Add(this.guna2Separator6);
+            this.pnlShowFirstInfos.Controls.Add(this.lblFirstStep);
+            this.pnlShowFirstInfos.FillColor = System.Drawing.Color.White;
+            this.pnlShowFirstInfos.Location = new System.Drawing.Point(10, 10);
+            this.pnlShowFirstInfos.Margin = new System.Windows.Forms.Padding(10);
+            this.pnlShowFirstInfos.Name = "pnlShowFirstInfos";
+            this.pnlShowFirstInfos.Padding = new System.Windows.Forms.Padding(20);
+            this.pnlShowFirstInfos.Size = new System.Drawing.Size(419, 322);
+            this.pnlShowFirstInfos.TabIndex = 27;
+            // 
+            // guna2Separator7
+            // 
+            this.guna2Separator7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Separator7.Location = new System.Drawing.Point(-7, 244);
+            this.guna2Separator7.Name = "guna2Separator7";
+            this.guna2Separator7.Size = new System.Drawing.Size(426, 17);
+            this.guna2Separator7.TabIndex = 18;
+            // 
+            // lblFirstTestFee
+            // 
+            this.lblFirstTestFee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFirstTestFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFirstTestFee.Location = new System.Drawing.Point(300, 261);
+            this.lblFirstTestFee.Name = "lblFirstTestFee";
+            this.lblFirstTestFee.Size = new System.Drawing.Size(96, 27);
+            this.lblFirstTestFee.TabIndex = 17;
+            this.lblFirstTestFee.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label16
+            // 
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(136)))), ((int)(((byte)(164)))));
+            this.label16.Location = new System.Drawing.Point(23, 262);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(130, 26);
+            this.label16.TabIndex = 16;
+            this.label16.Text = "Test Fee";
+            // 
+            // lblFirstDescription
+            // 
+            this.lblFirstDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFirstDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFirstDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(118)))), ((int)(((byte)(143)))));
+            this.lblFirstDescription.Location = new System.Drawing.Point(11, 103);
+            this.lblFirstDescription.Name = "lblFirstDescription";
+            this.lblFirstDescription.Padding = new System.Windows.Forms.Padding(10, 10, 0, 10);
+            this.lblFirstDescription.Size = new System.Drawing.Size(397, 138);
+            this.lblFirstDescription.TabIndex = 15;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox3.Location = new System.Drawing.Point(11, 20);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(44, 50);
+            this.pictureBox3.TabIndex = 14;
+            this.pictureBox3.TabStop = false;
+            // 
+            // btnFirstEdit
+            // 
+            this.btnFirstEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFirstEdit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnFirstEdit.BackgroundImage")));
+            this.btnFirstEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFirstEdit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFirstEdit.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnFirstEdit.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnFirstEdit.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnFirstEdit.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnFirstEdit.FillColor = System.Drawing.Color.Transparent;
+            this.btnFirstEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnFirstEdit.ForeColor = System.Drawing.Color.White;
+            this.btnFirstEdit.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(34)))), ((int)(((byte)(73)))), ((int)(((byte)(154)))));
+            this.btnFirstEdit.Location = new System.Drawing.Point(355, 20);
+            this.btnFirstEdit.Name = "btnFirstEdit";
+            this.btnFirstEdit.Size = new System.Drawing.Size(38, 45);
+            this.btnFirstEdit.TabIndex = 13;
+            this.btnFirstEdit.Click += new System.EventHandler(this.btnFirstEdit_Click);
+            // 
+            // label18
+            // 
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(136)))), ((int)(((byte)(164)))));
+            this.label18.Location = new System.Drawing.Point(61, 50);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(148, 26);
+            this.label18.TabIndex = 12;
+            this.label18.Text = "Step 1 of 3";
+            // 
+            // guna2Separator6
+            // 
+            this.guna2Separator6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Separator6.Location = new System.Drawing.Point(0, 83);
+            this.guna2Separator6.Name = "guna2Separator6";
+            this.guna2Separator6.Size = new System.Drawing.Size(426, 17);
+            this.guna2Separator6.TabIndex = 1;
+            // 
+            // lblFirstStep
+            // 
+            this.lblFirstStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFirstStep.Location = new System.Drawing.Point(60, 20);
+            this.lblFirstStep.Name = "lblFirstStep";
+            this.lblFirstStep.Size = new System.Drawing.Size(212, 27);
+            this.lblFirstStep.TabIndex = 0;
             // 
             // guna2Panel3
             // 
@@ -312,7 +436,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel3.BackColor = System.Drawing.Color.Transparent;
             this.guna2Panel3.BorderRadius = 20;
-            this.guna2Panel3.Controls.Add(this.btnSecondSave);
             this.guna2Panel3.Controls.Add(this.lblSecondDescription);
             this.guna2Panel3.Controls.Add(this.guna2Separator3);
             this.guna2Panel3.Controls.Add(this.lblSecondTestFee);
@@ -395,7 +518,7 @@
             this.btnSecondEdit.FillColor = System.Drawing.Color.Transparent;
             this.btnSecondEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnSecondEdit.ForeColor = System.Drawing.Color.White;
-            this.btnSecondEdit.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(34)))), ((int)(((byte)(154)))), ((int)(((byte)(73)))));
+            this.btnSecondEdit.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(34)))), ((int)(((byte)(73)))), ((int)(((byte)(154)))));
             this.btnSecondEdit.Location = new System.Drawing.Point(355, 20);
             this.btnSecondEdit.Name = "btnSecondEdit";
             this.btnSecondEdit.Size = new System.Drawing.Size(38, 45);
@@ -435,7 +558,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2Panel2.BackColor = System.Drawing.Color.Transparent;
             this.guna2Panel2.BorderRadius = 20;
-            this.guna2Panel2.Controls.Add(this.btnThirdSave);
             this.guna2Panel2.Controls.Add(this.lblThirdDescription);
             this.guna2Panel2.Controls.Add(this.guna2Separator2);
             this.guna2Panel2.Controls.Add(this.lblThirdTestFee);
@@ -518,7 +640,7 @@
             this.btnThirdEdit.FillColor = System.Drawing.Color.Transparent;
             this.btnThirdEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnThirdEdit.ForeColor = System.Drawing.Color.White;
-            this.btnThirdEdit.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(34)))), ((int)(((byte)(154)))), ((int)(((byte)(73)))));
+            this.btnThirdEdit.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(34)))), ((int)(((byte)(73)))), ((int)(((byte)(154)))));
             this.btnThirdEdit.Location = new System.Drawing.Point(355, 20);
             this.btnThirdEdit.Name = "btnThirdEdit";
             this.btnThirdEdit.Size = new System.Drawing.Size(38, 45);
@@ -552,189 +674,6 @@
             this.lblThirdStep.Size = new System.Drawing.Size(289, 27);
             this.lblThirdStep.TabIndex = 0;
             // 
-            // guna2Panel4
-            // 
-            this.guna2Panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Panel4.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Panel4.BorderRadius = 20;
-            this.guna2Panel4.Controls.Add(this.btnFirstSave);
-            this.guna2Panel4.Controls.Add(this.guna2Separator7);
-            this.guna2Panel4.Controls.Add(this.lblFirstTestFee);
-            this.guna2Panel4.Controls.Add(this.label16);
-            this.guna2Panel4.Controls.Add(this.lblFirstDescription);
-            this.guna2Panel4.Controls.Add(this.pictureBox3);
-            this.guna2Panel4.Controls.Add(this.btnFirstEdit);
-            this.guna2Panel4.Controls.Add(this.label18);
-            this.guna2Panel4.Controls.Add(this.guna2Separator6);
-            this.guna2Panel4.Controls.Add(this.lblFirstStep);
-            this.guna2Panel4.FillColor = System.Drawing.Color.White;
-            this.guna2Panel4.Location = new System.Drawing.Point(10, 10);
-            this.guna2Panel4.Margin = new System.Windows.Forms.Padding(10);
-            this.guna2Panel4.Name = "guna2Panel4";
-            this.guna2Panel4.Padding = new System.Windows.Forms.Padding(20);
-            this.guna2Panel4.Size = new System.Drawing.Size(419, 322);
-            this.guna2Panel4.TabIndex = 27;
-            // 
-            // guna2Separator7
-            // 
-            this.guna2Separator7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Separator7.Location = new System.Drawing.Point(-7, 244);
-            this.guna2Separator7.Name = "guna2Separator7";
-            this.guna2Separator7.Size = new System.Drawing.Size(426, 17);
-            this.guna2Separator7.TabIndex = 18;
-            // 
-            // lblFirstTestFee
-            // 
-            this.lblFirstTestFee.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFirstTestFee.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstTestFee.Location = new System.Drawing.Point(300, 261);
-            this.lblFirstTestFee.Name = "lblFirstTestFee";
-            this.lblFirstTestFee.Size = new System.Drawing.Size(96, 27);
-            this.lblFirstTestFee.TabIndex = 17;
-            this.lblFirstTestFee.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label16
-            // 
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(136)))), ((int)(((byte)(164)))));
-            this.label16.Location = new System.Drawing.Point(23, 262);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(130, 26);
-            this.label16.TabIndex = 16;
-            this.label16.Text = "Test Fee";
-            // 
-            // lblFirstDescription
-            // 
-            this.lblFirstDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFirstDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(118)))), ((int)(((byte)(143)))));
-            this.lblFirstDescription.Location = new System.Drawing.Point(11, 103);
-            this.lblFirstDescription.Name = "lblFirstDescription";
-            this.lblFirstDescription.Padding = new System.Windows.Forms.Padding(10, 10, 0, 10);
-            this.lblFirstDescription.Size = new System.Drawing.Size(397, 138);
-            this.lblFirstDescription.TabIndex = 15;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
-            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(11, 20);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(44, 50);
-            this.pictureBox3.TabIndex = 14;
-            this.pictureBox3.TabStop = false;
-            // 
-            // btnFirstEdit
-            // 
-            this.btnFirstEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFirstEdit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnFirstEdit.BackgroundImage")));
-            this.btnFirstEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnFirstEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFirstEdit.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnFirstEdit.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnFirstEdit.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnFirstEdit.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnFirstEdit.FillColor = System.Drawing.Color.Transparent;
-            this.btnFirstEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnFirstEdit.ForeColor = System.Drawing.Color.White;
-            this.btnFirstEdit.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(34)))), ((int)(((byte)(154)))), ((int)(((byte)(73)))));
-            this.btnFirstEdit.Location = new System.Drawing.Point(355, 20);
-            this.btnFirstEdit.Name = "btnFirstEdit";
-            this.btnFirstEdit.Size = new System.Drawing.Size(38, 45);
-            this.btnFirstEdit.TabIndex = 13;
-            this.btnFirstEdit.Click += new System.EventHandler(this.btnFirstEdit_Click);
-            // 
-            // label18
-            // 
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(136)))), ((int)(((byte)(164)))));
-            this.label18.Location = new System.Drawing.Point(61, 50);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(148, 26);
-            this.label18.TabIndex = 12;
-            this.label18.Text = "Step 1 of 3";
-            // 
-            // guna2Separator6
-            // 
-            this.guna2Separator6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Separator6.Location = new System.Drawing.Point(0, 83);
-            this.guna2Separator6.Name = "guna2Separator6";
-            this.guna2Separator6.Size = new System.Drawing.Size(426, 17);
-            this.guna2Separator6.TabIndex = 1;
-            // 
-            // lblFirstStep
-            // 
-            this.lblFirstStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstStep.Location = new System.Drawing.Point(60, 20);
-            this.lblFirstStep.Name = "lblFirstStep";
-            this.lblFirstStep.Size = new System.Drawing.Size(212, 27);
-            this.lblFirstStep.TabIndex = 0;
-            // 
-            // btnFirstSave
-            // 
-            this.btnFirstSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFirstSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnFirstSave.BackgroundImage")));
-            this.btnFirstSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnFirstSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFirstSave.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnFirstSave.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnFirstSave.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnFirstSave.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnFirstSave.FillColor = System.Drawing.Color.Transparent;
-            this.btnFirstSave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnFirstSave.ForeColor = System.Drawing.Color.White;
-            this.btnFirstSave.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(253)))), ((int)(((byte)(244)))));
-            this.btnFirstSave.Location = new System.Drawing.Point(305, 20);
-            this.btnFirstSave.Name = "btnFirstSave";
-            this.btnFirstSave.Size = new System.Drawing.Size(38, 45);
-            this.btnFirstSave.TabIndex = 19;
-            this.btnFirstSave.Visible = false;
-            // 
-            // btnSecondSave
-            // 
-            this.btnSecondSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSecondSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSecondSave.BackgroundImage")));
-            this.btnSecondSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSecondSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSecondSave.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnSecondSave.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnSecondSave.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnSecondSave.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnSecondSave.FillColor = System.Drawing.Color.Transparent;
-            this.btnSecondSave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSecondSave.ForeColor = System.Drawing.Color.White;
-            this.btnSecondSave.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(253)))), ((int)(((byte)(244)))));
-            this.btnSecondSave.Location = new System.Drawing.Point(305, 20);
-            this.btnSecondSave.Name = "btnSecondSave";
-            this.btnSecondSave.Size = new System.Drawing.Size(38, 45);
-            this.btnSecondSave.TabIndex = 20;
-            this.btnSecondSave.Visible = false;
-            // 
-            // btnThirdSave
-            // 
-            this.btnThirdSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThirdSave.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnThirdSave.BackgroundImage")));
-            this.btnThirdSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnThirdSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnThirdSave.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnThirdSave.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnThirdSave.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnThirdSave.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnThirdSave.FillColor = System.Drawing.Color.Transparent;
-            this.btnThirdSave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnThirdSave.ForeColor = System.Drawing.Color.White;
-            this.btnThirdSave.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(253)))), ((int)(((byte)(244)))));
-            this.btnThirdSave.Location = new System.Drawing.Point(305, 20);
-            this.btnThirdSave.Name = "btnThirdSave";
-            this.btnThirdSave.Size = new System.Drawing.Size(38, 45);
-            this.btnThirdSave.TabIndex = 20;
-            this.btnThirdSave.Visible = false;
-            // 
             // ucTestTypes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -755,12 +694,12 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.pnlShowFirstInfos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.guna2Panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.guna2Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.guna2Panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -777,23 +716,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
-        private System.Windows.Forms.Label lblSecondTestFee;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private Guna.UI2.WinForms.Guna2Button btnSecondEdit;
-        private System.Windows.Forms.Label label13;
-        private Guna.UI2.WinForms.Guna2Separator guna2Separator4;
-        private System.Windows.Forms.Label lblSecondStep;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
-        private System.Windows.Forms.Label lblThirdTestFee;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private Guna.UI2.WinForms.Guna2Button btnThirdEdit;
-        private System.Windows.Forms.Label label6;
-        private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        private System.Windows.Forms.Label lblThirdStep;
-        private Guna.UI2.WinForms.Guna2Panel guna2Panel4;
+        private Guna.UI2.WinForms.Guna2Panel pnlShowFirstInfos;
         private System.Windows.Forms.Label lblFirstTestFee;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label lblFirstDescription;
@@ -802,11 +725,7 @@
         private System.Windows.Forms.Label label18;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator6;
         private System.Windows.Forms.Label lblFirstStep;
-        private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator7;
-        private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
-        private System.Windows.Forms.Label lblSecondDescription;
-        private System.Windows.Forms.Label lblThirdDescription;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label lblTSThirdStep;
         private System.Windows.Forms.PictureBox pictureBox6;
@@ -816,8 +735,25 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblTSFirstStep;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private Guna.UI2.WinForms.Guna2Button btnSecondSave;
-        private Guna.UI2.WinForms.Guna2Button btnThirdSave;
-        private Guna.UI2.WinForms.Guna2Button btnFirstSave;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
+        private System.Windows.Forms.Label lblSecondDescription;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator3;
+        private System.Windows.Forms.Label lblSecondTestFee;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private Guna.UI2.WinForms.Guna2Button btnSecondEdit;
+        private System.Windows.Forms.Label label13;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator4;
+        private System.Windows.Forms.Label lblSecondStep;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
+        private System.Windows.Forms.Label lblThirdDescription;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
+        private System.Windows.Forms.Label lblThirdTestFee;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private Guna.UI2.WinForms.Guna2Button btnThirdEdit;
+        private System.Windows.Forms.Label label6;
+        private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
+        private System.Windows.Forms.Label lblThirdStep;
     }
 }
