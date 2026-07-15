@@ -182,7 +182,6 @@
             // pbTestTypeImage
             // 
             this.pbTestTypeImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
-            this.pbTestTypeImage.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbTestTypeImage.BackgroundImage")));
             this.pbTestTypeImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbTestTypeImage.Location = new System.Drawing.Point(11, 20);
             this.pbTestTypeImage.Name = "pbTestTypeImage";

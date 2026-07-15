@@ -1,5 +1,6 @@
 ﻿using DVLD_PresentationLayer.Applications;
 using DVLD_PresentationLayer.Global;
+using DVLD_PresentationLayer.Licenses;
 using DVLD_PresentationLayer.Tests;
 using DVLD_PresentationLayer.User;
 using System;
@@ -188,10 +189,10 @@ namespace DVLD_PresentationLayer
 
         private void btnLicenseClasses_Click(object sender, EventArgs e)
         {
-            activeSidebarButton = btnLicenses;
+            activeSidebarButton = btnLicenseClasses;
             lblBreadcrumb.Text = "DVLD > License Classes";
-            /*ucUsers myUsersPage = new ucUsers();
-            showUserControl(myUsersPage);*/
+            ucLicenseClasses myLicenseClassesPage = new ucLicenseClasses();
+            showUserControl(myLicenseClassesPage);
             pnlSidebar.Refresh();
         }
 

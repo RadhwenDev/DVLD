@@ -68,6 +68,30 @@
     </Compile>
     <Compile Include="Global\clsCurrentPerson.cs" />
     <Compile Include="Global\clsCurrentUser.cs" />
+    <Compile Include="Licenses\ucAddLicenseClass.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Licenses\ucAddLicenseClass.Designer.cs">
+      <DependentUpon>ucAddLicenseClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\ucEditLicenseClasses.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Licenses\ucEditLicenseClasses.Designer.cs">
+      <DependentUpon>ucEditLicenseClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\ucLicenseClasses.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Licenses\ucLicenseClasses.Designer.cs">
+      <DependentUpon>ucLicenseClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\ucShowDetailsLicenseClass.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Licenses\ucShowDetailsLicenseClass.Designer.cs">
+      <DependentUpon>ucShowDetailsLicenseClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\LoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +148,18 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\ucAddLicenseClass.resx">
+      <DependentUpon>ucAddLicenseClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\ucEditLicenseClasses.resx">
+      <DependentUpon>ucEditLicenseClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\ucLicenseClasses.resx">
+      <DependentUpon>ucLicenseClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\ucShowDetailsLicenseClass.resx">
+      <DependentUpon>ucShowDetailsLicenseClass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -179,7 +215,6 @@
   <ItemGroup>
     <Folder Include="Dashboard\" />
     <Folder Include="Drivers\" />
-    <Folder Include="Licenses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
