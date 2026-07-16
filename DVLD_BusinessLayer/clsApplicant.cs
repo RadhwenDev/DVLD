@@ -14,5 +14,15 @@ namespace DVLD_BusinessLayer
         {
             return clsApplicationsDataAccess.getAllApplicants();
         }
+
+        public static DataTable getAllApplicationTypes()
+        {
+            return clsApplicationsDataAccess.getAllApplicationTypes();
+        }
+
+        public static DataTable getAllApplicationStatus()
+        {
+            return clsApplicationsDataAccess.getAllApplicationStatus();
+        }
     }
 }

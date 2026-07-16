@@ -41,5 +41,58 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+
+        public static DataTable getAllApplicationTypes()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"SELECT ApplicationTypeID, ApplicationTypeTitle FROM ApplicationTypes;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
+
+        public static DataTable getAllApplicationStatus()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"select distinct StatusID = A.ApplicationStatus, 
+                                CASE
+                                    WHEN A.ApplicationStatus = 1 THEN 'New'
+                                    WHEN A.ApplicationStatus = 2 THEN 'Cancelled'
+                                    WHEN ApplicationStatus = 3 THEN 'Completed'
+                                ELSE 'Unknown'
+                                END as [STATUS] 
+                                from Applications A;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
     }
 }
