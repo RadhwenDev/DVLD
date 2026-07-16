@@ -220,7 +220,7 @@ namespace DVLD_PresentationLayer.User
                 int activeCount = dvFiltered.ToTable().Select("IsActive = 1").Length;
                 int totalFiltered = dvFiltered.Count;
                 int inactiveCount = totalFiltered - activeCount;
-                lblCountActiveAndInactive.Text = $"{activeCount} active . {inactiveCount} inactive";
+                lblCountActiveAndInactive.Text = $"{activeCount} active • {inactiveCount} inactive";
             }
         }
 
@@ -438,6 +438,31 @@ namespace DVLD_PresentationLayer.User
         private void MyAddPersonPage_DataBack(object sender, int PersonID)
         {
             _RefreshPeopleList();
+        }
+
+        private void dgvUsers_Paint(object sender, PaintEventArgs e)
+        {
+            if (dgvUsers.Rows.Count == 0)
+            {
+                string noDataText = "No users match your search.";
+
+                // اختيار الخط واللون المناسب (رمادي هادئ ومريح للعين)
+                using (Font font = new Font("Segoe UI", 11, FontStyle.Regular))
+                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156))) // Slate Gray
+                {
+                    // حساب قياسات النص لتوسيطه تماماً في وسط الـ Grid
+                    Size textSize = TextRenderer.MeasureText(noDataText, font);
+
+                    // نأخذ بعين الاعتبار ارتفاع الـ Headers باش يجي النص في وسط المساحة البيضاء بالظبط
+                    int headersHeight = dgvUsers.ColumnHeadersVisible ? dgvUsers.ColumnHeadersHeight : 0;
+
+                    int x = (dgvUsers.Width - textSize.Width) / 2;
+                    int y = headersHeight + (dgvUsers.Height - headersHeight - textSize.Height) / 3;
+
+                    // رسم النص
+                    e.Graphics.DrawString(noDataText, font, brush, x, y);
+                }
+            }
         }
     }
 }

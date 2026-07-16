@@ -182,8 +182,8 @@ namespace DVLD_PresentationLayer
         {
             activeSidebarButton = btnLicenses;
             lblBreadcrumb.Text = "DVLD > Licenses";
-            /*ucUsers myUsersPage = new ucUsers();
-            showUserControl(myUsersPage);*/
+            ucLicenses myLicensesPage = new ucLicenses();
+            showUserControl(myLicensesPage);
             pnlSidebar.Refresh();
         }
 

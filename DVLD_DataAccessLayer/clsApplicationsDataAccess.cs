@@ -15,7 +15,7 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                string query = @"SELECT [  ID] = A.ApplicationID, APPLICANT = (P.FirstName + P.SecondName + P.ThirdName + P.LastName), [SERVICE TYPE] = Aty.ApplicationTypeTitle, [DATE] = A.LastStatusDate, [FEES PAID] = A.PaidFees,
+                string query = @"SELECT [  ID] = A.ApplicationID, APPLICANT = (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName), [SERVICE TYPE] = Aty.ApplicationTypeTitle, [DATE] = A.LastStatusDate, [FEES PAID] = A.PaidFees,
                                  CASE
 	                                 WHEN A.ApplicationStatus = 1 THEN 'New'
                                      WHEN A.ApplicationStatus = 2 THEN 'Cancelled'

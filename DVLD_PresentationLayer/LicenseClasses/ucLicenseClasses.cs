@@ -41,6 +41,7 @@ namespace DVLD_PresentationLayer.Licenses
                         Convert.ToInt32(row["DefaultValidityLength"]),
                         Convert.ToDecimal(row["ClassFees"])
                     );
+                lblCountLicenseCategoriesConfigured.Text = dtLicenseClasses.Rows.Count.ToString() + " license categories configured";
 
                 card.Width = flowLayoutPanel1.ClientSize.Width - 20;
                 card.Margin = new Padding(0, 0, 0, 25);

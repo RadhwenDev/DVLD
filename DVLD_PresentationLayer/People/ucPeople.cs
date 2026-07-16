@@ -383,5 +383,30 @@ namespace DVLD_PresentationLayer
                 }
             }
         }
+
+        private void dgvPeople_Paint(object sender, PaintEventArgs e)
+        {
+            if (dgvPeople.Rows.Count == 0)
+            {
+                string noDataText = "No people match your search.";
+
+                // اختيار الخط واللون المناسب (رمادي هادئ ومريح للعين)
+                using (Font font = new Font("Segoe UI", 11, FontStyle.Regular))
+                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156))) // Slate Gray
+                {
+                    // حساب قياسات النص لتوسيطه تماماً في وسط الـ Grid
+                    Size textSize = TextRenderer.MeasureText(noDataText, font);
+
+                    // نأخذ بعين الاعتبار ارتفاع الـ Headers باش يجي النص في وسط المساحة البيضاء بالظبط
+                    int headersHeight = dgvPeople.ColumnHeadersVisible ? dgvPeople.ColumnHeadersHeight : 0;
+
+                    int x = (dgvPeople.Width - textSize.Width) / 2;
+                    int y = headersHeight + (dgvPeople.Height - headersHeight - textSize.Height) / 3;
+
+                    // رسم النص
+                    e.Graphics.DrawString(noDataText, font, brush, x, y);
+                }
+            }
+        }
     }
 }

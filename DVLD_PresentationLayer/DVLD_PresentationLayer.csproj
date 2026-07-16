@@ -68,29 +68,35 @@
     </Compile>
     <Compile Include="Global\clsCurrentPerson.cs" />
     <Compile Include="Global\clsCurrentUser.cs" />
-    <Compile Include="Licenses\ucAddLicenseClass.cs">
+    <Compile Include="LicenseClasses\ucAddLicenseClass.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Licenses\ucAddLicenseClass.Designer.cs">
+    <Compile Include="LicenseClasses\ucAddLicenseClass.Designer.cs">
       <DependentUpon>ucAddLicenseClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\ucEditLicenseClasses.cs">
+    <Compile Include="LicenseClasses\ucEditLicenseClasses.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Licenses\ucEditLicenseClasses.Designer.cs">
+    <Compile Include="LicenseClasses\ucEditLicenseClasses.Designer.cs">
       <DependentUpon>ucEditLicenseClasses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\ucLicenseClasses.cs">
+    <Compile Include="LicenseClasses\ucLicenseClasses.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Licenses\ucLicenseClasses.Designer.cs">
+    <Compile Include="LicenseClasses\ucLicenseClasses.Designer.cs">
       <DependentUpon>ucLicenseClasses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Licenses\ucShowDetailsLicenseClass.cs">
+    <Compile Include="LicenseClasses\ucShowDetailsLicenseClass.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Licenses\ucShowDetailsLicenseClass.Designer.cs">
+    <Compile Include="LicenseClasses\ucShowDetailsLicenseClass.Designer.cs">
       <DependentUpon>ucShowDetailsLicenseClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\ucLicenses.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Licenses\ucLicenses.Designer.cs">
+      <DependentUpon>ucLicenses.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\LoginScreen.cs">
       <SubType>Form</SubType>
@@ -148,17 +154,20 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\ucAddLicenseClass.resx">
+    <EmbeddedResource Include="LicenseClasses\ucAddLicenseClass.resx">
       <DependentUpon>ucAddLicenseClass.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\ucEditLicenseClasses.resx">
+    <EmbeddedResource Include="LicenseClasses\ucEditLicenseClasses.resx">
       <DependentUpon>ucEditLicenseClasses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\ucLicenseClasses.resx">
+    <EmbeddedResource Include="LicenseClasses\ucLicenseClasses.resx">
       <DependentUpon>ucLicenseClasses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Licenses\ucShowDetailsLicenseClass.resx">
+    <EmbeddedResource Include="LicenseClasses\ucShowDetailsLicenseClass.resx">
       <DependentUpon>ucShowDetailsLicenseClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\ucLicenses.resx">
+      <DependentUpon>ucLicenses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>

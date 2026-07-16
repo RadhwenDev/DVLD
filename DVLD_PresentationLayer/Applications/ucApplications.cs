@@ -77,7 +77,7 @@ namespace DVLD_PresentationLayer.Applications
                 DataView dvFiltered = dt.DefaultView;
                 int pendingCount = dvFiltered.ToTable().Select("STATUS = 'New'").Length;
                 int totalFiltered = dvFiltered.Count;
-                lblCountTotalAndPending.Text = $"{totalFiltered} total . {pendingCount} pending";
+                lblCountTotalAndPending.Text = $"{totalFiltered} total • {pendingCount} pending";
             }
         }
 
@@ -166,6 +166,31 @@ namespace DVLD_PresentationLayer.Applications
             {
                 dt.DefaultView.RowFilter = string.Format("APPLICANT LIKE '%{0}%' OR CONVERT([  ID], 'System.String') LIKE '%{0}%'", tbFilterNameAppID.Text.Replace("'", "''"));
                 UpdateRowsCount(dt);
+            }
+        }
+
+        private void dgvApplications_Paint(object sender, PaintEventArgs e)
+        {
+            if (dgvApplications.Rows.Count == 0)
+            {
+                string noDataText = "No applications match your search.";
+
+                // اختيار الخط واللون المناسب (رمادي هادئ ومريح للعين)
+                using (Font font = new Font("Segoe UI", 11, FontStyle.Regular))
+                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156))) // Slate Gray
+                {
+                    // حساب قياسات النص لتوسيطه تماماً في وسط الـ Grid
+                    Size textSize = TextRenderer.MeasureText(noDataText, font);
+
+                    // نأخذ بعين الاعتبار ارتفاع الـ Headers باش يجي النص في وسط المساحة البيضاء بالظبط
+                    int headersHeight = dgvApplications.ColumnHeadersVisible ? dgvApplications.ColumnHeadersHeight : 0;
+
+                    int x = (dgvApplications.Width - textSize.Width) / 2;
+                    int y = headersHeight + (dgvApplications.Height - headersHeight - textSize.Height) / 3;
+
+                    // رسم النص
+                    e.Graphics.DrawString(noDataText, font, brush, x, y);
+                }
             }
         }
     }
