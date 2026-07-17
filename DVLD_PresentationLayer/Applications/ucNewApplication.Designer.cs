@@ -148,9 +148,10 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.mainPanel.Location = new System.Drawing.Point(46, 266);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(994, 423);
+            this.mainPanel.Size = new System.Drawing.Size(900, 386);
             this.mainPanel.TabIndex = 11;
             // 
             // ucNewApplication
@@ -168,7 +169,7 @@
             this.Controls.Add(this.lblCountActiveAndExpire);
             this.Controls.Add(this.label1);
             this.Name = "ucNewApplication";
-            this.Size = new System.Drawing.Size(1362, 739);
+            this.Size = new System.Drawing.Size(1362, 687);
             this.Load += new System.EventHandler(this.ucNewApplication_Load);
             this.ResumeLayout(false);
 

@@ -60,6 +60,12 @@
     <Compile Include="Applications\ucApplications.Designer.cs">
       <DependentUpon>ucApplications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\ucApplicationTests_Second.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Applications\ucApplicationTests_Second.Designer.cs">
+      <DependentUpon>ucApplicationTests_Second.cs</DependentUpon>
+    </Compile>
     <Compile Include="Applications\ucFirstStepNewApp.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -71,6 +77,12 @@
     </Compile>
     <Compile Include="Applications\ucNewApplication.Designer.cs">
       <DependentUpon>ucNewApplication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Applications\ucSecondStepNewApp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Applications\ucSecondStepNewApp.Designer.cs">
+      <DependentUpon>ucSecondStepNewApp.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -163,11 +175,17 @@
     <EmbeddedResource Include="Applications\ucApplications.resx">
       <DependentUpon>ucApplications.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Applications\ucApplicationTests_Second.resx">
+      <DependentUpon>ucApplicationTests_Second.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Applications\ucFirstStepNewApp.resx">
       <DependentUpon>ucFirstStepNewApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ucNewApplication.resx">
       <DependentUpon>ucNewApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\ucSecondStepNewApp.resx">
+      <DependentUpon>ucSecondStepNewApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
