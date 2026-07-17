@@ -267,5 +267,24 @@ namespace DVLD_PresentationLayer.Applications
                 }
             }
         }
+
+        private void showUserControl(UserControl userControl)
+        {
+            this.Controls.Clear();
+
+            userControl.Dock = DockStyle.Fill;
+
+            this.Controls.Add(userControl);
+
+            userControl.BringToFront();
+        }
+
+        private void btnNewApplication_Click(object sender, EventArgs e)
+        {
+            ucNewApplication myNewApplication = new ucNewApplication();
+            showUserControl(myNewApplication);
+        }
+
+        
     }
 }

@@ -60,6 +60,18 @@
     <Compile Include="Applications\ucApplications.Designer.cs">
       <DependentUpon>ucApplications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\ucFirstStepNewApp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Applications\ucFirstStepNewApp.Designer.cs">
+      <DependentUpon>ucFirstStepNewApp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Applications\ucNewApplication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Applications\ucNewApplication.Designer.cs">
+      <DependentUpon>ucNewApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +162,12 @@
     </Compile>
     <EmbeddedResource Include="Applications\ucApplications.resx">
       <DependentUpon>ucApplications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\ucFirstStepNewApp.resx">
+      <DependentUpon>ucFirstStepNewApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\ucNewApplication.resx">
+      <DependentUpon>ucNewApplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
