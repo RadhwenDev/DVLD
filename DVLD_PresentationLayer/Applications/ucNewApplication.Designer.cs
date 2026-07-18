@@ -34,7 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnSecond = new Guna.UI2.WinForms.Guna2CircleButton();
-            this.guna2CircleButton1 = new Guna.UI2.WinForms.Guna2CircleButton();
+            this.btnThird = new Guna.UI2.WinForms.Guna2CircleButton();
             this.label4 = new System.Windows.Forms.Label();
             this.mainPanel = new Guna.UI2.WinForms.Guna2Panel();
             this.SuspendLayout();
@@ -116,23 +116,23 @@
             this.btnSecond.TabIndex = 9;
             this.btnSecond.Text = "2";
             // 
-            // guna2CircleButton1
+            // btnThird
             // 
-            this.guna2CircleButton1.BorderThickness = 1;
-            this.guna2CircleButton1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2CircleButton1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2CircleButton1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2CircleButton1.Enabled = false;
-            this.guna2CircleButton1.FillColor = System.Drawing.Color.Transparent;
-            this.guna2CircleButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.guna2CircleButton1.ForeColor = System.Drawing.Color.Black;
-            this.guna2CircleButton1.Location = new System.Drawing.Point(599, 159);
-            this.guna2CircleButton1.Name = "guna2CircleButton1";
-            this.guna2CircleButton1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.guna2CircleButton1.Size = new System.Drawing.Size(49, 45);
-            this.guna2CircleButton1.TabIndex = 9;
-            this.guna2CircleButton1.Text = "3";
+            this.btnThird.BorderThickness = 1;
+            this.btnThird.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnThird.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnThird.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnThird.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnThird.Enabled = false;
+            this.btnThird.FillColor = System.Drawing.Color.Transparent;
+            this.btnThird.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnThird.ForeColor = System.Drawing.Color.Black;
+            this.btnThird.Location = new System.Drawing.Point(599, 159);
+            this.btnThird.Name = "btnThird";
+            this.btnThird.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.btnThird.Size = new System.Drawing.Size(49, 45);
+            this.btnThird.TabIndex = 9;
+            this.btnThird.Text = "3";
             // 
             // label4
             // 
@@ -151,7 +151,7 @@
             this.mainPanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.mainPanel.Location = new System.Drawing.Point(46, 266);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(900, 386);
+            this.mainPanel.Size = new System.Drawing.Size(900, 470);
             this.mainPanel.TabIndex = 11;
             // 
             // ucNewApplication
@@ -162,14 +162,14 @@
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.guna2CircleButton1);
+            this.Controls.Add(this.btnThird);
             this.Controls.Add(this.btnSecond);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnFirst);
             this.Controls.Add(this.lblCountActiveAndExpire);
             this.Controls.Add(this.label1);
             this.Name = "ucNewApplication";
-            this.Size = new System.Drawing.Size(1362, 687);
+            this.Size = new System.Drawing.Size(1362, 750);
             this.Load += new System.EventHandler(this.ucNewApplication_Load);
             this.ResumeLayout(false);
 
@@ -183,7 +183,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private Guna.UI2.WinForms.Guna2CircleButton btnSecond;
-        private Guna.UI2.WinForms.Guna2CircleButton guna2CircleButton1;
+        private Guna.UI2.WinForms.Guna2CircleButton btnThird;
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2Panel mainPanel;
     }

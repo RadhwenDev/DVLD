@@ -13,12 +13,19 @@ namespace DVLD_PresentationLayer.Applications
 {
     public partial class ucFirstStepNewApp : UserControl
     {
-        // 1. تعريف المتغير العام في أعلى الكلاس خارج كل الميثودز
-        private int _selectedPersonID = -1;
+        // تغيير المتغير إلى التسمية العامة الصحيحة للوصول إليه من الحاوية الكبرى
+        public int SelectedPersonID { get; private set; } = -1;
         public event EventHandler OnStepOneCompleted;
+
         public ucFirstStepNewApp()
         {
             InitializeComponent();
+        }
+
+        // Constructor يستقبل القيمة المحفوظة مركزياً
+        public ucFirstStepNewApp(int personID) : this()
+        {
+            SelectedPersonID = personID;
         }
 
         private void ucFirstStepNewApp_Load(object sender, EventArgs e)
@@ -32,24 +39,29 @@ namespace DVLD_PresentationLayer.Applications
             cbPerson.DataSource = dtTypes;
             cbPerson.DisplayMember = "FullName";
             cbPerson.ValueMember = "PersonID";
+
+            // إعادة تحديد الشخص المختار سابقاً إن وجد
+            if (SelectedPersonID != -1)
+            {
+                cbPerson.SelectedValue = SelectedPersonID;
+                btnContinue.Enabled = true;
+            }
         }
 
         private void cbPerson_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 2. التحقق من أن القيمة الحالية ليست DataRowView (لتفادي الـ Crash وقت الـ Load)
             if (cbPerson.SelectedIndex != -1 && cbPerson.SelectedValue != null && !(cbPerson.SelectedValue is DataRowView))
             {
-                // الآن نقوم بالتحويل ونحن متأكدون أن القيمة عبارة عن رقم (PersonID)
                 int selectedPersonID = Convert.ToInt32(cbPerson.SelectedValue);
 
                 if (selectedPersonID != -1)
                 {
-                    _selectedPersonID = selectedPersonID;
+                    SelectedPersonID = selectedPersonID;
                     btnContinue.Enabled = true;
                 }
                 else
                 {
-                    _selectedPersonID = -1;
+                    SelectedPersonID = -1;
                     btnContinue.Enabled = false;
                 }
             }
@@ -57,14 +69,10 @@ namespace DVLD_PresentationLayer.Applications
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
-            if (_selectedPersonID != -1)
+            if (SelectedPersonID != -1)
             {
-                // 2. إطلاق الـ Event وتنبيه الـ UserControl الكبير
-                // (الـ ?. تضمن أن البرنامج ما يعملش كراش لو ما ثماش شكون يستمع للحدث)
                 OnStepOneCompleted?.Invoke(this, e);
             }
         }
-
-        
     }
 }

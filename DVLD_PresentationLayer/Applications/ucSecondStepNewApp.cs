@@ -13,46 +13,135 @@ namespace DVLD_PresentationLayer.Applications
 {
     public partial class ucSecondStepNewApp : UserControl
     {
-        public event EventHandler OnStepOneCompleted;
+        public int SelectedPersonID { get; private set; } = -1;
+        public int SelectedApplicationTypeID { get; private set; } = -1;
+        public int SelectedLicenseClassID { get; private set; } = -1;
+
+        public event EventHandler OnBackButtonClicked;
+        public event EventHandler OnStepTwoCompleted;
+
         public ucSecondStepNewApp()
         {
             InitializeComponent();
         }
 
+        // استقبال البيانات كافة عند إنشاء الكنترول
+        public ucSecondStepNewApp(int personID, int applicationTypeID, int licenseClassID) : this()
+        {
+            SelectedPersonID = personID;
+            SelectedApplicationTypeID = applicationTypeID;
+            SelectedLicenseClassID = licenseClassID;
+        }
+
         private void ucSecondStepNewApp_Load(object sender, EventArgs e)
         {
-            DataTable dtApplicant = clsApplicant.getAllApplicationTypes();
-            DataRow defaultRow = dtApplicant.NewRow();
+            // 🔥 1. فك ارتباط الأحداث مؤقتاً لمنع الـ ComboBox من تصفير المتغيرات الممررة تلقائياً
+            cbApplicationType.SelectedIndexChanged -= cbApplicationType_SelectedIndexChanged;
+            cbLicenseClass.SelectedIndexChanged -= cbLicenseClass_SelectedIndexChanged;
+
+            // 2. تعبئة أنواع الطلبات
+            DataTable dtApplicantType = clsApplicant.getAllApplicationTypes(SelectedPersonID);
+            DataRow defaultRow = dtApplicantType.NewRow();
             defaultRow["ApplicationTypeTitle"] = "Select the Application Type";
             defaultRow["ApplicationTypeID"] = -1;
-            dtApplicant.Rows.InsertAt(defaultRow, 0);
+            dtApplicantType.Rows.InsertAt(defaultRow, 0);
 
-            cbApplicationType.DataSource = dtApplicant;
+            cbApplicationType.DataSource = dtApplicantType;
             cbApplicationType.DisplayMember = "ApplicationTypeTitle";
             cbApplicationType.ValueMember = "ApplicationTypeID";
+
+            // 3. تعبئة أصناف الرخص
+            DataTable dtLicenseClass = clsLicenseClass.GetLicenseClassesName(SelectedPersonID);
+            DataRow defaultRow2 = dtLicenseClass.NewRow();
+            defaultRow2["ClassName"] = "Select the License Class";
+            defaultRow2["LicenseClassID"] = -1;
+            dtLicenseClass.Rows.InsertAt(defaultRow2, 0);
+
+            cbLicenseClass.DataSource = dtLicenseClass;
+            cbLicenseClass.DisplayMember = "ClassName";
+            cbLicenseClass.ValueMember = "LicenseClassID";
+
+            // 🔥 4. إعادة تعيين الحالات السابقة المخزنة مركزيّاً بدقة
+            if (SelectedApplicationTypeID != -1)
+            {
+                cbApplicationType.SelectedValue = SelectedApplicationTypeID;
+
+                if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 8)
+                {
+                    cbLicenseClass.Visible = true;
+                    if (SelectedLicenseClassID != -1)
+                    {
+                        cbLicenseClass.SelectedValue = SelectedLicenseClassID;
+                    }
+                }
+                else
+                {
+                    cbLicenseClass.Visible = false;
+                }
+            }
+            else
+            {
+                cbApplicationType.SelectedValue = -1;
+                cbLicenseClass.Visible = false;
+            }
+
+            // 🔥 5. إعادة ربط الأحداث مجدداً بعد استقرار البيانات المرجعة
+            cbApplicationType.SelectedIndexChanged += cbApplicationType_SelectedIndexChanged;
+            cbLicenseClass.SelectedIndexChanged += cbLicenseClass_SelectedIndexChanged;
         }
 
         private void cbApplicationType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 1. التأكد أن القيمة المختارة صالحة وليست السطر الافتراضي (-1)
             if (cbApplicationType.SelectedValue == null || !int.TryParse(cbApplicationType.SelectedValue.ToString(), out int selectedTypeID) || selectedTypeID == -1)
             {
                 cbLicenseClass.Visible = false;
+                SelectedApplicationTypeID = -1;
                 return;
             }
 
-            // 2. الفحص الدقيق بناءً على الـ IDs الحقيقية في قاعدة بياناتك (1 و 8)
-            if (selectedTypeID == 1 || selectedTypeID == 8)
-            {
-                // إظهار الـ ComboBox الخاص بأصناف الرخص
-                cbLicenseClass.Visible = true;
+            SelectedApplicationTypeID = selectedTypeID;
 
-                // تحريك الأزرار للأسفل ديناميكياً لتوفر مساحة للـ ComboBox
+            if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 8)
+            {
+                cbLicenseClass.Visible = true;
             }
             else
             {
-                // إخفاء الـ ComboBox وإرجاع الأزرار لمكانها الأصلي في بقية الخدمات
                 cbLicenseClass.Visible = false;
+                SelectedLicenseClassID = -1; // تصفير الصنف إن لم يكن مطلوباً
+            }
+        }
+
+       
+
+        private void btnContinue_Click(object sender, EventArgs e)
+        {
+            // التحقق من صحة المدخلات قبل الانتقال للخطوة 3
+            if (SelectedApplicationTypeID == -1)
+            {
+                MessageBox.Show("Please select an application type.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (cbLicenseClass.Visible && SelectedLicenseClassID == -1)
+            {
+                MessageBox.Show("Please select a license class.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            OnStepTwoCompleted?.Invoke(this, e);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            OnBackButtonClicked?.Invoke(this, e);
+        }
+
+        private void cbLicenseClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbLicenseClass.SelectedValue != null && int.TryParse(cbLicenseClass.SelectedValue.ToString(), out int classID))
+            {
+                SelectedLicenseClassID = classID;
             }
         }
     }

@@ -33,6 +33,62 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
+        public static DataTable GetLicenseClassesName()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"SELECT LicenseClassID, ClassName FROM LicenseClasses";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
+
+        public static DataTable GetLicenseClassesNameByID(int LicenseClassID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"SELECT LC.LicenseClassID, LC.ClassName 
+                                 FROM LicenseClasses LC
+                                 WHERE NOT EXISTS (
+                                     SELECT 1 
+                                     FROM Applications A
+                                     INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
+                                     WHERE LDLA.LicenseClassID = LC.LicenseClassID
+                                       AND A.ApplicantPersonID = @LicenseClassID
+                                       AND A.ApplicationStatus = 1
+                                 );";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
+
         public static bool UpdateLicenseClasses(int LicenseClassID, string ClassName, string ClassDescription, int MinimumAllowedAge, int DefaultValidityLength, int ClassFees)
         {
             int rowAffected = 0;

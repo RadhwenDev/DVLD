@@ -84,6 +84,7 @@
             this.btnContinue.Size = new System.Drawing.Size(180, 52);
             this.btnContinue.TabIndex = 11;
             this.btnContinue.Text = "Continue";
+            this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
             // btnBack
             // 
@@ -102,6 +103,7 @@
             this.btnBack.Size = new System.Drawing.Size(104, 52);
             this.btnBack.TabIndex = 12;
             this.btnBack.Text = "Back";
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // cbApplicationType
             // 
@@ -118,6 +120,7 @@
             this.cbApplicationType.Name = "cbApplicationType";
             this.cbApplicationType.Size = new System.Drawing.Size(803, 52);
             this.cbApplicationType.TabIndex = 13;
+            this.cbApplicationType.SelectedIndexChanged += new System.EventHandler(this.cbApplicationType_SelectedIndexChanged);
             // 
             // cbLicenseClass
             // 
@@ -135,16 +138,17 @@
             this.cbLicenseClass.Size = new System.Drawing.Size(803, 52);
             this.cbLicenseClass.TabIndex = 14;
             this.cbLicenseClass.Visible = false;
+            this.cbLicenseClass.SelectedIndexChanged += new System.EventHandler(this.cbLicenseClass_SelectedIndexChanged);
             // 
             // ucSecondStepNewApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.cbLicenseClass);
-            this.Controls.Add(this.cbApplicationType);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnContinue);
+            this.Controls.Add(this.cbLicenseClass);
+            this.Controls.Add(this.cbApplicationType);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pbIconStep);
             this.Controls.Add(this.guna2Separator1);

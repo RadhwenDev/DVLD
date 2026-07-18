@@ -84,6 +84,12 @@
     <Compile Include="Applications\ucSecondStepNewApp.Designer.cs">
       <DependentUpon>ucSecondStepNewApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Applications\ucThirdStepNewApp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Applications\ucThirdStepNewApp.Designer.cs">
+      <DependentUpon>ucThirdStepNewApp.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ucSecondStepNewApp.resx">
       <DependentUpon>ucSecondStepNewApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Applications\ucThirdStepNewApp.resx">
+      <DependentUpon>ucThirdStepNewApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

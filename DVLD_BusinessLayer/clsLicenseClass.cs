@@ -66,6 +66,16 @@ namespace DVLD_BusinessLayer
             return clsLicenseClassDataAccess.GetAllLicenseClasses();
         }
 
+        public static DataTable GetLicenseClassesName(int LicenseClassID)
+        {
+            return clsLicenseClassDataAccess.GetLicenseClassesNameByID(LicenseClassID);
+        }
+
+        public static DataTable GetLicenseClassesNameByID(int LicenseClassID)
+        {
+            return clsLicenseClassDataAccess.GetLicenseClassesNameByID(LicenseClassID);
+        }
+
         public enSaveResult UpdateTestType()
         {
             if (clsLicenseClassDataAccess.UpdateLicenseClasses(this.LicenseClassID, this.ClassName, this.ClassDescription, this.MinimumAge, this.Validity, this.Fees))
