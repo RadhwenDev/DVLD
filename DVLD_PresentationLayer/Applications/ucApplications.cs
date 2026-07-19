@@ -336,11 +336,18 @@ namespace DVLD_PresentationLayer.Applications
                 int startY = cellRect.Top + (cellRect.Height - iconSize) / 2;
 
                 Rectangle rectShow = new Rectangle(startX, startY, iconSize, iconSize);
-                int userID = Convert.ToInt32(dgvApplications.Rows[e.RowIndex].Cells["  ID"].Value);
+                int AppID = Convert.ToInt32(dgvApplications.Rows[e.RowIndex].Cells["  ID"].Value);
 
                 if (rectShow.Contains(clickPoint))
                 {
-                    MessageBox.Show($"Show Applicant ID: {userID}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucShowApplicationDetails myShowApplicationDetailsPage = new ucShowApplicationDetails(AppID);
+                    myShowApplicationDetailsPage.Dock = DockStyle.Fill;
+                    foreach (Control ctrl in this.Controls)
+                    {
+                        ctrl.Visible = false;
+                    }
+                    this.Controls.Add(myShowApplicationDetailsPage);
+                    myShowApplicationDetailsPage.BringToFront();
                 }
             }
         }

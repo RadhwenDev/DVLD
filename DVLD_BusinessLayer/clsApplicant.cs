@@ -23,6 +23,11 @@ namespace DVLD_BusinessLayer
             return clsApplicationsDataAccess.getAllApplicationTypes(ApplicantPersonID);
         }
 
+
+        public static DataTable getAllDetailsForShowButton(int ApplicationID)
+        {
+            return clsApplicationsDataAccess.getAllDetailsForShowButton(ApplicationID);
+        }
         public static DataTable getApplicationTypesTitle_Fees(int ApplicationTypeID)
         {
             return clsApplicationsDataAccess.getApplicationTypesTitle_Fees(ApplicationTypeID);

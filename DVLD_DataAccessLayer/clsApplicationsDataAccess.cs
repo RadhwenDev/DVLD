@@ -44,6 +44,48 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
+        public static DataTable getAllDetailsForShowButton(int ApplicationID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"SELECT A.ApplicationID, A.ApplicationDate, A.LastStatusDate, A.PaidFees, (P.FirstName + ' ' + P.LastName) AS FullName,
+                                    P.NationalNo, P.DateOfBirth, P.Phone, P.Address, P.ImagePath, AT.ApplicationTypeTitle, LC.ClassName, LC.MinimumAllowedAge, LC.DefaultValidityLength, LC.ClassFees, LC.ClassDescription,
+                                    CASE A.ApplicationStatus
+                                        WHEN 1 THEN 'New'
+                                        WHEN 2 THEN 'Cancelled'
+                                        WHEN 3 THEN 'Completed'
+                                        ELSE 'Unknown'
+                                    END AS StatusName,
+                                    CASE P.Gendor
+                                        WHEN 0 THEN 'Male'
+                                        WHEN 1 THEN 'Female'
+                                        ELSE 'Unknown'
+                                    END AS GenderName
+                                FROM Applications A
+                                INNER JOIN People P ON A.ApplicantPersonID = P.PersonID
+                                INNER JOIN ApplicationTypes AT ON A.ApplicationTypeID = AT.ApplicationTypeID
+                                LEFT JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
+                                LEFT JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
+                                WHERE A.ApplicationID = @ApplicationID;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
+
         public static DataTable getAllApplicationType()
         {
             DataTable dt = new DataTable();
