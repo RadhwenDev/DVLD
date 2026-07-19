@@ -245,7 +245,8 @@ namespace DVLD_PresentationLayer.User
 
                 if (rectShow.Contains(clickPoint))
                 {
-                    MessageBox.Show($"Show User ID: {userID}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _Action = enActions.Show;
+                    ShowUserControl();
                 }
                 else if (rectEdit.Contains(clickPoint))
                 {
@@ -321,7 +322,7 @@ namespace DVLD_PresentationLayer.User
                 }
             }
         }
-        int selectedPersonID = -1;
+        int selectedUserID = -1;
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             _Action = enActions.AddNew;
@@ -348,23 +349,42 @@ namespace DVLD_PresentationLayer.User
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
                     if (_Action != enActions.AddNew)
-                        selectedPersonID = Convert.ToInt32(dgvUsers.CurrentRow.Cells["UserID"].Value);
+                        selectedUserID = Convert.ToInt32(dgvUsers.CurrentRow.Cells["UserID"].Value);
                     else
-                        selectedPersonID = -1;
-                    ucAddUpdateUser myAddUpdateUser = new ucAddUpdateUser();
-                    myAddUpdateUser.LoadUserData(selectedPersonID);
-                    frmContainer.Size = myAddUpdateUser.Size;
-                    myAddUpdateUser.Dock = DockStyle.Fill;
-                    frmContainer.Controls.Add(myAddUpdateUser);
-
-                    // 🌟 السطر السحري: ربط الـ Delegate الخاص بالـ User Control بالدالة المخصصة للتحديث
-                    myAddUpdateUser.DataBack += MyAddPersonPage_DataBack;
+                        selectedUserID = -1;
+                    switch (_Action)
+                    {
+                        case enActions.AddNew:
+                            ucAddUpdateUser myAddUpdateUser = new ucAddUpdateUser();
+                            myAddUpdateUser.LoadUserData(selectedUserID);
+                            frmContainer.Size = myAddUpdateUser.Size;
+                            myAddUpdateUser.Dock = DockStyle.Fill;
+                            frmContainer.Controls.Add(myAddUpdateUser);
+                            // 🌟 السطر السحري: ربط الـ Delegate الخاص بالـ User Control بالدالة المخصصة للتحديث
+                            myAddUpdateUser.DataBack += MyAddPersonPage_DataBack;
+                            break;
+                        case enActions.Edit:
+                            ucAddUpdateUser myUpdateUser = new ucAddUpdateUser();
+                            myUpdateUser.LoadUserData(selectedUserID);
+                            frmContainer.Size = myUpdateUser.Size;
+                            myUpdateUser.Dock = DockStyle.Fill;
+                            frmContainer.Controls.Add(myUpdateUser);
+                            myUpdateUser._LoadUpdateMode(selectedUserID);
+                            break;
+                        case enActions.Show:
+                            ucShowDetailsUser myShowDetailsUserPage = new ucShowDetailsUser(selectedUserID);
+                            frmContainer.Size = myShowDetailsUserPage.Size;
+                            myShowDetailsUserPage.Dock = DockStyle.Fill;
+                            frmContainer.Controls.Add(myShowDetailsUserPage);
+                            break;
+                    }
+                    
+                    
 
                     Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
                     elipse.TargetControl = frmContainer;
                     elipse.BorderRadius = 16;
-                    if (selectedPersonID != -1)
-                        myAddUpdateUser._LoadUpdateMode(selectedPersonID);
+                    
                     frmContainer.ShowDialog(overlay);
                 }
             }

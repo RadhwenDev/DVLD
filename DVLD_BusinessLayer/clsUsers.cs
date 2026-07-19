@@ -66,6 +66,11 @@ namespace DVLD_BusinessLayer
             return clsUsersDataAccess.getAllUsers();
         }
 
+        public static DataTable getAllDetailsForShowButton(int UserID)
+        {
+            return clsUsersDataAccess.getAllDetailsForShowButton(UserID);
+        }
+
         public bool AddNewPerson()
         {
             this.PersonID = clsUsersDataAccess.AddNewUser(this.PersonID, this.UserName, this.Password, this.isActive, this.Permissions);

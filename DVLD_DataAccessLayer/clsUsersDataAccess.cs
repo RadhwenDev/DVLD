@@ -35,6 +35,49 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
+        public static DataTable getAllDetailsForShowButton(int UserID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"SELECT U.UserID, U.UserName,
+                                    CASE 
+                                        WHEN U.IsActive = 1 THEN 'Active'
+                                        ELSE 'Inactive'
+                                    END AS Status,
+                                    U.Permissions, P.PersonID, (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName) AS FullName, P.NationalNo, P.DateOfBirth, P.ImagePath,
+                                    CASE 
+                                        WHEN P.Gendor = 0 THEN 'Male'
+                                        ELSE 'Female'
+                                    END AS GenderName,
+                                    P.Phone, P.Email, P.Address, C.CountryName
+                                FROM 
+                                    Users U
+                                INNER JOIN 
+                                    People P ON U.PersonID = P.PersonID
+                                INNER JOIN 
+                                    Countries C ON P.NationalityCountryID = C.CountryID
+                                WHERE 
+                                    U.UserID = @UserID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
+
         public static int AddNewUser(int PersonID, string UserName, string Password, bool isActive, int Permissions)
         {
             int UserID = -1;
