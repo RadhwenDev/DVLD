@@ -97,6 +97,9 @@ namespace DVLD_PresentationLayer.Users
             cbPerson.SelectedValue = Convert.ToInt32(_User.PersonID);
             cbPerson.Enabled = false;
             txtUserName.Text = _User.UserName;
+            lblPassword.Visible = false;
+            txtPassword.Visible = false;
+            lblChangePassword.Visible = true;
             txtPassword.Text = _User.Password;
             tsIsActive.Checked = _User.isActive;
             int calculatedPermissions = _User.Permissions;
@@ -244,7 +247,8 @@ namespace DVLD_PresentationLayer.Users
             _User.UserID = _UserID;
             _User.PersonID = (int)cbPerson.SelectedValue;
             _User.UserName = txtUserName.Text;
-            _User.Password = txtPassword.Text;
+            string hashedPassword = clsCryptoSettings.ComputeSha256Hash(txtPassword.Text.Trim());
+            _User.Password = hashedPassword;
             _User.Permissions = calculatedPermissions;
             _User.isActive = tsIsActive.Checked;
 
@@ -328,6 +332,37 @@ namespace DVLD_PresentationLayer.Users
                 SetAllIndividualCheckBoxes(false);
                 SetAllIndividualCheckBoxesEnabled(true);
                 cbSuperUser.Enabled = true;
+            }
+        }
+
+        private void lblChangePassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucChangePassword  myChangePassword = new ucChangePassword(_User);
+                    frmContainer.Size = myChangePassword.Size;
+                    myChangePassword.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myChangePassword);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+                    frmContainer.ShowDialog(overlay);
+                }
             }
         }
     }

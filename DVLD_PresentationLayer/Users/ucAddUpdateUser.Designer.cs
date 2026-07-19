@@ -39,7 +39,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtUserName = new Guna.UI2.WinForms.Guna2TextBox();
             this.txtPassword = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tsIsActive = new Guna.UI2.WinForms.Guna2ToggleSwitch();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
@@ -57,6 +57,7 @@
             this.cbManageDetainedLicenses = new System.Windows.Forms.CheckBox();
             this.cbManageSettings_Fees = new System.Windows.Forms.CheckBox();
             this.cbAudit_System_Logs = new System.Windows.Forms.CheckBox();
+            this.lblChangePassword = new System.Windows.Forms.LinkLabel();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
             this.SuspendLayout();
@@ -230,15 +231,15 @@
             this.txtPassword.Size = new System.Drawing.Size(274, 48);
             this.txtPassword.TabIndex = 15;
             // 
-            // label3
+            // lblPassword
             // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(149)))), ((int)(((byte)(167)))));
-            this.label3.Location = new System.Drawing.Point(46, 446);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(142, 23);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Password";
+            this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(137)))), ((int)(((byte)(149)))), ((int)(((byte)(167)))));
+            this.lblPassword.Location = new System.Drawing.Point(46, 446);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(142, 23);
+            this.lblPassword.TabIndex = 14;
+            this.lblPassword.Text = "Password";
             // 
             // label4
             // 
@@ -425,10 +426,27 @@
             this.cbAudit_System_Logs.Text = "Audit Logs / System Logs";
             this.cbAudit_System_Logs.UseVisualStyleBackColor = true;
             // 
+            // lblChangePassword
+            // 
+            this.lblChangePassword.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(56)))), ((int)(((byte)(92)))));
+            this.lblChangePassword.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblChangePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChangePassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(56)))), ((int)(((byte)(92)))));
+            this.lblChangePassword.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(56)))), ((int)(((byte)(92)))));
+            this.lblChangePassword.Location = new System.Drawing.Point(52, 446);
+            this.lblChangePassword.Name = "lblChangePassword";
+            this.lblChangePassword.Size = new System.Drawing.Size(261, 23);
+            this.lblChangePassword.TabIndex = 44;
+            this.lblChangePassword.TabStop = true;
+            this.lblChangePassword.Text = "Change my password";
+            this.lblChangePassword.Visible = false;
+            this.lblChangePassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblChangePassword_LinkClicked);
+            // 
             // ucAddUpdateUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblChangePassword);
             this.Controls.Add(this.cbAudit_System_Logs);
             this.Controls.Add(this.cbManageSettings_Fees);
             this.Controls.Add(this.cbManageDetainedLicenses);
@@ -447,13 +465,14 @@
             this.Controls.Add(this.tsIsActive);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbPerson);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.guna2Panel3);
             this.Controls.Add(this.guna2Panel1);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "ucAddUpdateUser";
             this.Size = new System.Drawing.Size(720, 783);
             this.Load += new System.EventHandler(this.ucAddUpdateUser_Load);
@@ -476,7 +495,7 @@
         private System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2TextBox txtUserName;
         private Guna.UI2.WinForms.Guna2TextBox txtPassword;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Label label4;
         private Guna.UI2.WinForms.Guna2ToggleSwitch tsIsActive;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
@@ -494,5 +513,6 @@
         private System.Windows.Forms.CheckBox cbManageDetainedLicenses;
         private System.Windows.Forms.CheckBox cbManageSettings_Fees;
         private System.Windows.Forms.CheckBox cbAudit_System_Logs;
+        private System.Windows.Forms.LinkLabel lblChangePassword;
     }
 }

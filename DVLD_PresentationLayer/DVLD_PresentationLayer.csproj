@@ -178,6 +178,12 @@
     <Compile Include="Users\ucAddUpdateUser.Designer.cs">
       <DependentUpon>ucAddUpdateUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Users\ucChangePassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Users\ucChangePassword.Designer.cs">
+      <DependentUpon>ucChangePassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Users\ucUsers.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -252,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Users\ucAddUpdateUser.resx">
       <DependentUpon>ucAddUpdateUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users\ucChangePassword.resx">
+      <DependentUpon>ucChangePassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\ucUsers.resx">
       <DependentUpon>ucUsers.cs</DependentUpon>

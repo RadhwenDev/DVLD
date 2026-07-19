@@ -73,13 +73,22 @@ namespace DVLD_BusinessLayer
         }
         public enSaveResult UpdatePerson()
         {
-            if (clsUsersDataAccess.UpdateUser(this.UserID, this.UserName, this.Password, this.isActive, this.Permissions))
+            if (clsUsersDataAccess.UpdateUser(this.UserID, this.UserName, this.isActive, this.Permissions))
             {
                 _OriginalUser.UserID = this.UserID;
                 _OriginalUser.UserName = this.UserName;
-                _OriginalUser.Password = this.Password;
                 _OriginalUser.isActive = this.isActive;
                 _OriginalUser.Permissions = this.Permissions;
+                return enSaveResult.SavedSuccessfully;
+            }
+            return enSaveResult.Failed;
+        }
+
+        public enSaveResult UpdateUserPassword()
+        {
+            if (clsUsersDataAccess.UpdateUserPassword(this.UserID, this.Password))
+            {
+                _OriginalUser.Password = this.Password;
                 return enSaveResult.SavedSuccessfully;
             }
             return enSaveResult.Failed;
@@ -107,11 +116,28 @@ namespace DVLD_BusinessLayer
 
         public static clsUsers Find(string UserName, string Password)
         {
-            int UserID = -1 , PersonID = -1, Permissions = 0;
+            int UserID = -1, PersonID = -1, Permissions = 0;
+            string hashedPasswordFromDB = "";
             bool isActive = false;
-            if (clsUsersDataAccess.Find(ref UserID, ref PersonID, UserName, Password, ref Permissions, ref isActive))
-                return new clsUsers(UserID, PersonID, UserName, Password, Permissions, isActive);
+
+            // نجلب بيانات المستخدم بالـ اسم فقط
+            if (clsUsersDataAccess.GetUserInfoByUserName(UserName, ref UserID, ref PersonID, ref hashedPasswordFromDB, ref Permissions, ref isActive))
+            {
+                string hashedInput = clsCryptoSettings.ComputeSha256Hash(Password.Trim());
+
+                if (hashedInput == hashedPasswordFromDB)
+                {
+                    return new clsUsers(UserID, PersonID, UserName, hashedPasswordFromDB, Permissions, isActive);
+                }
+            }
             return null;
+        }
+
+        public enSaveResult SavePassword()
+        {
+            if (!isPasswordChanged())
+                return enSaveResult.NoChanges;
+            return UpdateUserPassword();
         }
 
         public enSaveResult Save()
@@ -140,12 +166,14 @@ namespace DVLD_BusinessLayer
         private bool HasChanges()
         {
             return
-                UserID != _OriginalUser.UserID ||
-                PersonID != _OriginalUser.PersonID ||
                 UserName != _OriginalUser.UserName ||
-                Password != _OriginalUser.Password ||
                 Permissions != _OriginalUser.Permissions ||
                 isActive != _OriginalUser.isActive;
+        }
+        private bool isPasswordChanged()
+        {
+            return Password != _OriginalUser.Password;
+
         }
     }
 }
