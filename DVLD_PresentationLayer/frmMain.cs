@@ -1,8 +1,11 @@
-﻿using DVLD_PresentationLayer.Applications;
+﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Applications;
 using DVLD_PresentationLayer.Global;
 using DVLD_PresentationLayer.Licenses;
+using DVLD_PresentationLayer.Login;
 using DVLD_PresentationLayer.Tests;
 using DVLD_PresentationLayer.User;
+using DVLD_PresentationLayer.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +53,7 @@ namespace DVLD_PresentationLayer
         private void Form1_Load(object sender, EventArgs e)
         {
             lblDate.Text = DateTime.Today.Date.ToString("ddd , MMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            /*blUser.Text = clsCurrentUser.CurrentUser.UserName;
+            lblUser.Text = clsCurrentUser.CurrentUser.UserName;
             if (!string.IsNullOrEmpty(clsCurrentPerson.CurrentPerson.ImagePath) && File.Exists(clsCurrentPerson.CurrentPerson.ImagePath))
             {
                 try
@@ -68,7 +71,7 @@ namespace DVLD_PresentationLayer
             else
             {
                 LoadDefaultAvatar();
-            }*/
+            }
         }
         
 
@@ -223,6 +226,73 @@ namespace DVLD_PresentationLayer
         private void btnTestTypes_Paint(object sender, PaintEventArgs e)
         {
             DesignButton(sender, e);
+        }
+
+        private void pbUser_Click(object sender, EventArgs e)
+        {
+            guna2ContextMenuStrip1.Show(pbUser, new Point(0, -guna2ContextMenuStrip1.Height));
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to logout?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                // 1. تنظيف الـ Remember Me (مسح الملف + مسح الـ Token من قاعدة البيانات)
+                if (clsCurrentUser.CurrentUser != null)
+                {
+                    clsUsers.Logout(clsCurrentUser.CurrentUser.UserID);
+                }
+
+                // 2. تنظيف الذاكرة (إفراغ الكلاسات العالمية)
+                clsCurrentUser.CurrentUser = null;
+                clsCurrentPerson.CurrentPerson = null;
+
+                // 3. العودة لشاشة الـ Login
+                this.Hide(); // إخفاء الشاشة الرئيسية
+                frmLogin loginForm = new frmLogin();
+
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    this.Show();
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+        }
+
+        private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucShowDetailsUser myShowDetailsUserPage = new ucShowDetailsUser(clsCurrentUser._UserID);
+                    frmContainer.Size = myShowDetailsUserPage.Size;
+                    myShowDetailsUserPage.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myShowDetailsUserPage);
+
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
         }
     }
 }

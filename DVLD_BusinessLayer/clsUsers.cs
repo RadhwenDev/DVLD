@@ -9,12 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static DVLD_BusinessLayer.clsPerson;
+using DVLD_Security;
 
 namespace DVLD_BusinessLayer
 {
     public class clsUsers
     {
         private clsUsers _OriginalUser;
+        private const int RememberMeDays = 30;
         public enum enSaveResult
         {
             SavedSuccessfully,
@@ -39,6 +41,31 @@ namespace DVLD_BusinessLayer
             this.Permissions = 0;
             this.isActive = false;
             Mode = enMode.AddNew;
+        }
+
+        public clsUsers(int UserID)
+        {
+            this.UserID = UserID;
+
+            // نستدعي الدالة Find لجلب البيانات من قاعدة البيانات وتعبئة الـ Properties
+            clsUsers user = Find(UserID);
+
+            if (user != null)
+            {
+                this.PersonID = user.PersonID;
+                this.UserName = user.UserName;
+                this.Password = user.Password;
+                this.Permissions = user.Permissions;
+                this.isActive = user.isActive;
+
+                // ونحفظ نسخة منها في الـ OriginalUser
+                _OriginalUser = new clsUsers(UserID, PersonID, UserName, Password, Permissions, isActive);
+                Mode = enMode.Update;
+            }
+            else
+            {
+                Mode = enMode.AddNew;
+            }
         }
         public clsUsers(int UserID, int PersonID, string UserName, string Password, int Permission, bool isActive)
         {
@@ -94,6 +121,11 @@ namespace DVLD_BusinessLayer
             if (clsUsersDataAccess.UpdateUserPassword(this.UserID, this.Password))
             {
                 _OriginalUser.Password = this.Password;
+
+                // تحسين: الأمن أولاً، تغيير كلمة السر يلغي الجلسة المحفوظة
+                clsUsersDataAccess.ClearRememberToken(this.UserID);
+                RememberMeManager.DeleteToken();
+
                 return enSaveResult.SavedSuccessfully;
             }
             return enSaveResult.Failed;
@@ -128,9 +160,9 @@ namespace DVLD_BusinessLayer
             // نجلب بيانات المستخدم بالـ اسم فقط
             if (clsUsersDataAccess.GetUserInfoByUserName(UserName, ref UserID, ref PersonID, ref hashedPasswordFromDB, ref Permissions, ref isActive))
             {
-                string hashedInput = clsCryptoSettings.ComputeSha256Hash(Password.Trim());
+                string hashedInput = clsCryptoSettings.ComputeSha256Hash(hashedPasswordFromDB.Trim());
 
-                if (hashedInput == hashedPasswordFromDB)
+                if (hashedInput == Password)
                 {
                     return new clsUsers(UserID, PersonID, UserName, hashedPasswordFromDB, Permissions, isActive);
                 }
@@ -179,6 +211,48 @@ namespace DVLD_BusinessLayer
         {
             return Password != _OriginalUser.Password;
 
+        }
+
+        public static bool RememberUser(int userID)
+        {
+            string plainToken = TokenHelper.GenerateToken();
+            string tokenHash = HashHelper.ComputeSHA256(plainToken); // تحسين اسم الدالة
+            DateTime expiry = DateTime.Now.AddDays(RememberMeDays);
+
+            if (clsUsersDataAccess.UpdateRememberToken(userID, tokenHash, expiry))
+            {
+                RememberMeManager.SaveToken(plainToken);
+                return true;
+            }
+            return false;
+        }
+
+        // 2. دالة TryLoginWithRememberMe
+        public static clsUsers TryLoginWithRememberMe()
+        {
+            if (!RememberMeManager.TryLoadToken(out string plainToken))
+                return null;
+
+            string tokenHash = HashHelper.ComputeSHA256(plainToken);
+            int userID = clsUsersDataAccess.GetUserByRememberTokenHash(tokenHash);
+
+            if (userID != -1)
+            {
+                return new clsUsers(userID);
+            }
+            else
+            {
+                // تحسين: إذا كان التوكن غير موجود في الـ DB أو منتهي الصلاحية، نحذف الملف التالف
+                RememberMeManager.DeleteToken();
+                return null;
+            }
+        }
+
+        // 3. دالة Logout
+        public static void Logout(int userID)
+        {
+            clsUsersDataAccess.ClearRememberToken(userID);
+            RememberMeManager.DeleteToken();
         }
     }
 }

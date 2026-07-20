@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CC23619-1D24-4C40-A937-BA5516E051E2}</ProjectGuid>
+    <ProjectGuid>{302782DB-35E5-445B-BE94-B8834D395825}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DVLD_BusinessLayer</RootNamespace>
-    <AssemblyName>DVLD_BusinessLayer</AssemblyName>
+    <RootNamespace>DVLD_Security</RootNamespace>
+    <AssemblyName>DVLD_Security</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,27 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsApplicant.cs" />
-    <Compile Include="clsCountries.cs" />
-    <Compile Include="clsCryptoSettings.cs" />
-    <Compile Include="clsLicenseClass.cs" />
-    <Compile Include="clsLicenses.cs" />
-    <Compile Include="clsLocalDrivingLicenseApplications.cs" />
-    <Compile Include="clsLoginLog.cs" />
-    <Compile Include="clsPerson.cs" />
-    <Compile Include="clsTestTypes.cs" />
-    <Compile Include="clsUsers.cs" />
+    <Compile Include="DPAPIHelper.cs" />
+    <Compile Include="HashHelper.cs" />
+    <Compile Include="RememberMeManager.cs" />
+    <Compile Include="TokenHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DVLD_DataAccessLayer\DVLD_DataAccessLayer.csproj">
-      <Project>{21404aea-fd28-4ae5-9bb5-a6cf026fc230}</Project>
-      <Name>DVLD_DataAccessLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DVLD_Security\DVLD_Security.csproj">
-      <Project>{302782db-35e5-445b-be94-b8834d395825}</Project>
-      <Name>DVLD_Security</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -51,12 +51,16 @@
             this.lblDate = new System.Windows.Forms.Label();
             this.btnMenu = new Guna.UI2.WinForms.Guna2Button();
             this.pnlContainer = new System.Windows.Forms.Panel();
+            this.guna2ContextMenuStrip1 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
+            this.showDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlSidebar.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).BeginInit();
             this.panel3.SuspendLayout();
+            this.guna2ContextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -328,6 +332,7 @@
             // 
             // pbUser
             // 
+            this.pbUser.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbUser.ImageRotate = 0F;
             this.pbUser.Location = new System.Drawing.Point(15, 23);
             this.pbUser.Name = "pbUser";
@@ -336,6 +341,7 @@
             this.pbUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbUser.TabIndex = 9;
             this.pbUser.TabStop = false;
+            this.pbUser.Click += new System.EventHandler(this.pbUser_Click);
             // 
             // label4
             // 
@@ -421,6 +427,46 @@
             this.pnlContainer.Size = new System.Drawing.Size(1642, 963);
             this.pnlContainer.TabIndex = 1;
             // 
+            // guna2ContextMenuStrip1
+            // 
+            this.guna2ContextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
+            this.guna2ContextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.guna2ContextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.guna2ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showDetailsToolStripMenuItem,
+            this.logoutToolStripMenuItem});
+            this.guna2ContextMenuStrip1.MinimumSize = new System.Drawing.Size(200, 0);
+            this.guna2ContextMenuStrip1.Name = "guna2ContextMenuStrip1";
+            this.guna2ContextMenuStrip1.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
+            this.guna2ContextMenuStrip1.RenderStyle.BorderColor = System.Drawing.Color.Gainsboro;
+            this.guna2ContextMenuStrip1.RenderStyle.ColorTable = null;
+            this.guna2ContextMenuStrip1.RenderStyle.RoundedEdges = true;
+            this.guna2ContextMenuStrip1.RenderStyle.SelectionArrowColor = System.Drawing.Color.White;
+            this.guna2ContextMenuStrip1.RenderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
+            this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.guna2ContextMenuStrip1.ShowImageMargin = false;
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(225, 104);
+            // 
+            // showDetailsToolStripMenuItem
+            // 
+            this.showDetailsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
+            this.showDetailsToolStripMenuItem.Padding = new System.Windows.Forms.Padding(5);
+            this.showDetailsToolStripMenuItem.Size = new System.Drawing.Size(234, 36);
+            this.showDetailsToolStripMenuItem.Text = "Show Details             ";
+            this.showDetailsToolStripMenuItem.Click += new System.EventHandler(this.showDetailsToolStripMenuItem_Click);
+            // 
+            // logoutToolStripMenuItem
+            // 
+            this.logoutToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            this.logoutToolStripMenuItem.Padding = new System.Windows.Forms.Padding(5);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(234, 36);
+            this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -440,6 +486,7 @@
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbUser)).EndInit();
             this.panel3.ResumeLayout(false);
+            this.guna2ContextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -467,6 +514,9 @@
         private Guna.UI2.WinForms.Guna2CirclePictureBox pbUser;
         private Guna.UI2.WinForms.Guna2Button btnTestTypes;
         private Guna.UI2.WinForms.Guna2Button btnLicenseClasses;
+        private Guna.UI2.WinForms.Guna2ContextMenuStrip guna2ContextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem showDetailsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
     }
 }
 

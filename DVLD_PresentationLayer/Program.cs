@@ -1,4 +1,6 @@
-﻿using DVLD_PresentationLayer.Login;
+﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Global;
+using DVLD_PresentationLayer.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,20 +19,35 @@ namespace DVLD_PresentationLayer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-           // frmLogin loginForm = new frmLogin();
-            Application.Run(new frmMain());
-
-         /*   // 2. فتحها كـ Dialog (لتجميد البرنامج حتى يضع بياناته)
-            if (loginForm.ShowDialog() == DialogResult.OK)
+            clsUsers rememberedUser = clsUsers.TryLoginWithRememberMe();
+            bool isLoginSuccessful = false;
+            if (rememberedUser != null)
             {
-                // 3. إذا نجح الـ Login، افتح الشاشة الرئيسية للمشروع
-                Application.Run(new frmMain()); // تأكد من كتابة اسم الفورم الرئيسي لديك بشكل صحيح
+                // إذا وجدنا مستخدماً محفوظاً، نحفظ بياناته في الـ Global مباشرة
+                clsCurrentUser.CurrentUser = rememberedUser;
+                clsCurrentPerson.CurrentPerson = clsPerson.Find(rememberedUser.PersonID);
+                isLoginSuccessful = true;
             }
             else
             {
-                // إذا أغلق شاشة الـ Login أو ضغط Cancel، يغلق التطبيق بالكامل فوراً
+                // إذا لم يوجد توكن صالح، نفتح شاشة الـ Login
+                frmLogin loginForm = new frmLogin();
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    isLoginSuccessful = true;
+                }
+            }
+            //Application.Run(new frmMain());
+
+            // 2. فتحها كـ Dialog (لتجميد البرنامج حتى يضع بياناته)
+            if (isLoginSuccessful)
+            {
+                Application.Run(new frmMain()); // تأكد من اسم الفورم الرئيسي لديك
+            }
+            else
+            {
                 Application.Exit();
-            }*/
+            }
         }
     }
 }

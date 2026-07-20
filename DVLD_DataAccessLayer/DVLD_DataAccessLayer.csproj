@@ -53,5 +53,11 @@
     <Compile Include="clsLicenseClassDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DVLD_Security\DVLD_Security.csproj">
+      <Project>{302782db-35e5-445b-be94-b8834d395825}</Project>
+      <Name>DVLD_Security</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

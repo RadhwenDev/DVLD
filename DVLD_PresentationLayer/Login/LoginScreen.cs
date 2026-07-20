@@ -51,6 +51,15 @@ namespace DVLD_PresentationLayer.Login
                 return; // نخرج ولا نسمح له بالدخول
             }
             clsLoginLog.RegisterLogin(user.UserID);
+            if (cbRememberMe.Checked)
+            {
+                clsUsers.RememberUser(user.UserID);
+            }
+            else
+            {
+                // إذا لم يفعل المستخدم الخيار، نتأكد من مسح أي توكن قديم مخزن في الجهاز
+                clsUsers.Logout(user.UserID);
+            }
             // 4. إذا تجاوز الشروط السابقة بأمان، نقوم بجلب بيانات الـ Person الآن بدون أي خوف من الـ Null
             clsPerson person = clsPerson.Find(user.PersonID);
 

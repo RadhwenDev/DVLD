@@ -10,6 +10,12 @@ namespace DVLD_PresentationLayer.Global
     public static class clsCurrentUser
     {
         public static clsUsers CurrentUser { get; set; }
-        public static int _UserID = CurrentUser.UserID;
+        public static int _UserID
+        {
+            get
+            {
+                return (CurrentUser != null) ? CurrentUser.UserID : -1;
+            }
+        }
     }
 }

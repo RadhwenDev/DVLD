@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -265,5 +266,90 @@ namespace DVLD_DataAccessLayer
             }
             return rowAffected != 0;
         }
+
+        public static bool UpdateRememberToken(int userID, string tokenHash, DateTime expiryDate)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand("SP_UpdateUserRememberToken", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@UserID", userID);
+                    command.Parameters.AddWithValue("@TokenHash", tokenHash);
+                    command.Parameters.AddWithValue("@ExpiryDate", expiryDate);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return (rowsAffected > 0);
+        }
+
+        public static int GetUserByRememberTokenHash(string tokenHash)
+        {
+            int userID = -1; // القيمة الافتراضية في حال لم نجد مستخدماً
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand("SP_GetUserByRememberTokenHash", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@TokenHash", tokenHash);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar(); // نستخدم ExecuteScalar لأننا نرجع قيمة واحدة فقط
+
+                        if (result != null && int.TryParse(result.ToString(), out int id))
+                        {
+                            userID = id;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // سجل الخطأ هنا إذا أردت
+                    }
+                }
+            }
+            return userID;
+        }
+
+        public static bool ClearRememberToken(int userID)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand("SP_ClearRememberToken", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", userID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return (rowsAffected > 0);
+        }
+        
     }
 }
