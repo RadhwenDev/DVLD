@@ -30,7 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucShowApplicationDetails));
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.pbImagePerson = new Guna.UI2.WinForms.Guna2CirclePictureBox();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.lblPhone = new System.Windows.Forms.Label();
+            this.lblGendor = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
+            this.lblBirthDay = new System.Windows.Forms.Label();
+            this.lblNationalID = new System.Windows.Forms.Label();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel9 = new Guna.UI2.WinForms.Guna2Panel();
@@ -64,24 +75,14 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.lblDescription = new System.Windows.Forms.Label();
             this.btnBack = new Guna.UI2.WinForms.Guna2Button();
             this.lblAppID = new System.Windows.Forms.Label();
             this.lblServiceType = new System.Windows.Forms.Label();
             this.statusBadge = new Guna.UI2.WinForms.Guna2Chip();
-            this.label18 = new System.Windows.Forms.Label();
-            this.lblDescription = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.lblNationalID = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.lblBirthDay = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.lblPhone = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.lblGendor = new System.Windows.Forms.Label();
-            this.pbImagePerson = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2Panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbImagePerson)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel9.SuspendLayout();
@@ -93,7 +94,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).BeginInit();
             this.pnlLicenseClassDetails.SuspendLayout();
             this.guna2Panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbImagePerson)).BeginInit();
             this.SuspendLayout();
             // 
             // guna2Panel1
@@ -119,6 +119,71 @@
             this.guna2Panel1.Size = new System.Drawing.Size(391, 429);
             this.guna2Panel1.TabIndex = 0;
             // 
+            // pbImagePerson
+            // 
+            this.pbImagePerson.FillColor = System.Drawing.Color.Transparent;
+            this.pbImagePerson.ImageRotate = 0F;
+            this.pbImagePerson.Location = new System.Drawing.Point(38, 75);
+            this.pbImagePerson.Name = "pbImagePerson";
+            this.pbImagePerson.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.pbImagePerson.Size = new System.Drawing.Size(64, 64);
+            this.pbImagePerson.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbImagePerson.TabIndex = 5;
+            this.pbImagePerson.TabStop = false;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAddress.Location = new System.Drawing.Point(17, 334);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(351, 79);
+            this.lblAddress.TabIndex = 4;
+            // 
+            // lblPhone
+            // 
+            this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPhone.Location = new System.Drawing.Point(170, 249);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(198, 31);
+            this.lblPhone.TabIndex = 4;
+            this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblGendor
+            // 
+            this.lblGendor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGendor.Location = new System.Drawing.Point(119, 115);
+            this.lblGendor.Name = "lblGendor";
+            this.lblGendor.Size = new System.Drawing.Size(151, 31);
+            this.lblGendor.TabIndex = 4;
+            // 
+            // lblName
+            // 
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(119, 60);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(249, 43);
+            this.lblName.TabIndex = 4;
+            this.lblName.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // lblBirthDay
+            // 
+            this.lblBirthDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBirthDay.Location = new System.Drawing.Point(170, 207);
+            this.lblBirthDay.Name = "lblBirthDay";
+            this.lblBirthDay.Size = new System.Drawing.Size(198, 31);
+            this.lblBirthDay.TabIndex = 4;
+            this.lblBirthDay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblNationalID
+            // 
+            this.lblNationalID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.lblNationalID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNationalID.Location = new System.Drawing.Point(170, 162);
+            this.lblNationalID.Name = "lblNationalID";
+            this.lblNationalID.Size = new System.Drawing.Size(198, 31);
+            this.lblNationalID.TabIndex = 4;
+            this.lblNationalID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // guna2PictureBox1
             // 
             this.guna2PictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("guna2PictureBox1.BackgroundImage")));
@@ -130,6 +195,50 @@
             this.guna2PictureBox1.Size = new System.Drawing.Size(40, 31);
             this.guna2PictureBox1.TabIndex = 1;
             this.guna2PictureBox1.TabStop = false;
+            // 
+            // label21
+            // 
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
+            this.label21.Location = new System.Drawing.Point(18, 291);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(131, 31);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "Address";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label19
+            // 
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
+            this.label19.Location = new System.Drawing.Point(18, 249);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(131, 31);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Phone";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
+            this.label15.Location = new System.Drawing.Point(18, 207);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(131, 31);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Date of Birth";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
+            this.label8.Location = new System.Drawing.Point(18, 162);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(131, 31);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "National ID";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
@@ -497,6 +606,27 @@
             this.label10.Text = "Class Name";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label18
+            // 
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
+            this.label18.Location = new System.Drawing.Point(19, 160);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(251, 28);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "Description";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
+            this.lblDescription.Location = new System.Drawing.Point(17, 197);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(1207, 35);
+            this.lblDescription.TabIndex = 4;
+            this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // btnBack
             // 
             this.btnBack.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -545,136 +675,6 @@
             this.statusBadge.Size = new System.Drawing.Size(177, 45);
             this.statusBadge.TabIndex = 4;
             // 
-            // label18
-            // 
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
-            this.label18.Location = new System.Drawing.Point(19, 160);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(251, 28);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "Description";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblDescription
-            // 
-            this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
-            this.lblDescription.Location = new System.Drawing.Point(17, 197);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(1207, 35);
-            this.lblDescription.TabIndex = 4;
-            this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
-            this.label8.Location = new System.Drawing.Point(18, 162);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(131, 31);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "National ID";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblNationalID
-            // 
-            this.lblNationalID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.lblNationalID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNationalID.Location = new System.Drawing.Point(170, 162);
-            this.lblNationalID.Name = "lblNationalID";
-            this.lblNationalID.Size = new System.Drawing.Size(198, 31);
-            this.lblNationalID.TabIndex = 4;
-            this.lblNationalID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
-            this.label15.Location = new System.Drawing.Point(18, 207);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(131, 31);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Date of Birth";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblBirthDay
-            // 
-            this.lblBirthDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBirthDay.Location = new System.Drawing.Point(170, 207);
-            this.lblBirthDay.Name = "lblBirthDay";
-            this.lblBirthDay.Size = new System.Drawing.Size(198, 31);
-            this.lblBirthDay.TabIndex = 4;
-            this.lblBirthDay.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label19
-            // 
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
-            this.label19.Location = new System.Drawing.Point(18, 249);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(131, 31);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "Phone";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblPhone
-            // 
-            this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(170, 249);
-            this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(198, 31);
-            this.lblPhone.TabIndex = 4;
-            this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label21
-            // 
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(119)))), ((int)(((byte)(141)))));
-            this.label21.Location = new System.Drawing.Point(18, 291);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(131, 31);
-            this.label21.TabIndex = 0;
-            this.label21.Text = "Address";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblAddress
-            // 
-            this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAddress.Location = new System.Drawing.Point(17, 334);
-            this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(351, 79);
-            this.lblAddress.TabIndex = 4;
-            // 
-            // lblName
-            // 
-            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(119, 60);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(249, 43);
-            this.lblName.TabIndex = 4;
-            this.lblName.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // lblGendor
-            // 
-            this.lblGendor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGendor.Location = new System.Drawing.Point(119, 115);
-            this.lblGendor.Name = "lblGendor";
-            this.lblGendor.Size = new System.Drawing.Size(151, 31);
-            this.lblGendor.TabIndex = 4;
-            // 
-            // pbImagePerson
-            // 
-            this.pbImagePerson.FillColor = System.Drawing.Color.Transparent;
-            this.pbImagePerson.ImageRotate = 0F;
-            this.pbImagePerson.Location = new System.Drawing.Point(38, 75);
-            this.pbImagePerson.Name = "pbImagePerson";
-            this.pbImagePerson.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
-            this.pbImagePerson.Size = new System.Drawing.Size(64, 64);
-            this.pbImagePerson.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbImagePerson.TabIndex = 5;
-            this.pbImagePerson.TabStop = false;
-            // 
             // ucShowApplicationDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -691,6 +691,7 @@
             this.Size = new System.Drawing.Size(1362, 880);
             this.Load += new System.EventHandler(this.ucShowApplicationDetails_Load);
             this.guna2Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbImagePerson)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
             this.guna2Panel2.ResumeLayout(false);
             this.guna2Panel9.ResumeLayout(false);
@@ -702,7 +703,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox2)).EndInit();
             this.pnlLicenseClassDetails.ResumeLayout(false);
             this.guna2Panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbImagePerson)).EndInit();
             this.ResumeLayout(false);
 
         }

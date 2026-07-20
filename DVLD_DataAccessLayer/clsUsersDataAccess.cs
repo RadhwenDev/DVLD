@@ -40,12 +40,12 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                string query = @"SELECT U.UserID, U.UserName,
+                string query = @"SELECT P.PersonID, U.UserName,
                                     CASE 
                                         WHEN U.IsActive = 1 THEN 'Active'
                                         ELSE 'Inactive'
                                     END AS Status,
-                                    U.Permissions, P.PersonID, (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName) AS FullName, P.NationalNo, P.DateOfBirth, P.ImagePath,
+                                    U.Permissions, (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName) AS FullName, P.NationalNo, P.DateOfBirth, P.ImagePath,
                                     CASE 
                                         WHEN P.Gendor = 0 THEN 'Male'
                                         ELSE 'Female'

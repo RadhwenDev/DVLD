@@ -294,7 +294,7 @@
             // 
             this.permissionsBadge.BorderRadius = 15;
             this.permissionsBadge.FillColor = System.Drawing.Color.Transparent;
-            this.permissionsBadge.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.permissionsBadge.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.permissionsBadge.ForeColor = System.Drawing.Color.White;
             this.permissionsBadge.IsClosable = false;
             this.permissionsBadge.Location = new System.Drawing.Point(38, 584);
@@ -346,27 +346,27 @@
             // lblAddress
             // 
             this.lblAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAddress.Location = new System.Drawing.Point(743, 445);
+            this.lblAddress.Location = new System.Drawing.Point(695, 446);
             this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(269, 24);
+            this.lblAddress.Size = new System.Drawing.Size(301, 24);
             this.lblAddress.TabIndex = 1;
             this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblMail
             // 
             this.lblMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMail.Location = new System.Drawing.Point(787, 408);
+            this.lblMail.Location = new System.Drawing.Point(695, 409);
             this.lblMail.Name = "lblMail";
-            this.lblMail.Size = new System.Drawing.Size(225, 24);
+            this.lblMail.Size = new System.Drawing.Size(301, 24);
             this.lblMail.TabIndex = 1;
             this.lblMail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblPhone
             // 
             this.lblPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhone.Location = new System.Drawing.Point(792, 372);
+            this.lblPhone.Location = new System.Drawing.Point(695, 373);
             this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(220, 24);
+            this.lblPhone.Size = new System.Drawing.Size(301, 24);
             this.lblPhone.TabIndex = 1;
             this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -395,7 +395,7 @@
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.Location = new System.Drawing.Point(730, 713);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(258, 37);
+            this.label30.Size = new System.Drawing.Size(292, 37);
             this.label30.TabIndex = 1;
             this.label30.Text = "Manage settings and fees";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -616,6 +616,7 @@
             this.pbImageUser.Name = "pbImageUser";
             this.pbImageUser.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.pbImageUser.Size = new System.Drawing.Size(78, 68);
+            this.pbImageUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbImageUser.TabIndex = 0;
             this.pbImageUser.TabStop = false;
             // 

@@ -370,6 +370,7 @@ namespace DVLD_PresentationLayer.User
                             myUpdateUser.Dock = DockStyle.Fill;
                             frmContainer.Controls.Add(myUpdateUser);
                             myUpdateUser._LoadUpdateMode(selectedUserID);
+                            myUpdateUser.DataBack += MyAddPersonPage_DataBack;
                             break;
                         case enActions.Show:
                             ucShowDetailsUser myShowDetailsUserPage = new ucShowDetailsUser(selectedUserID);

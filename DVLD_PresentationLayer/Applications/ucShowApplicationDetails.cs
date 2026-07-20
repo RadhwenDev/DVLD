@@ -158,5 +158,6 @@ namespace DVLD_PresentationLayer.Applications
                 parentPanel.Controls.Add(ucApps);
             }
         }
+
     }
 }
