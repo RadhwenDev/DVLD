@@ -1,4 +1,5 @@
 ﻿using DVLD_BusinessLayer;
+using DVLD_Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -247,7 +248,7 @@ namespace DVLD_PresentationLayer.Users
             _User.UserID = _UserID;
             _User.PersonID = (int)cbPerson.SelectedValue;
             _User.UserName = txtUserName.Text;
-            string hashedPassword = clsCryptoSettings.ComputeSha256Hash(txtPassword.Text.Trim());
+            string hashedPassword = HashHelper.ComputeSHA256(txtPassword.Text.Trim());
             _User.Password = hashedPassword;
             _User.Permissions = calculatedPermissions;
             _User.isActive = tsIsActive.Checked;

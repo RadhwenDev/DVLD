@@ -14,5 +14,10 @@ namespace DVLD_BusinessLayer
         {
             return clsLicensesDataAccess.getAllLicenses();
         }
+
+        public static int getTotalActiveLicenses()
+        {
+            return clsLicensesDataAccess.getTotalActiveLicenses();
+        }
     }
 }

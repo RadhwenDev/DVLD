@@ -1,5 +1,6 @@
 ﻿using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Applications;
+using DVLD_PresentationLayer.Dashboard;
 using DVLD_PresentationLayer.Global;
 using DVLD_PresentationLayer.Licenses;
 using DVLD_PresentationLayer.Login;
@@ -53,27 +54,42 @@ namespace DVLD_PresentationLayer
         private void Form1_Load(object sender, EventArgs e)
         {
             lblDate.Text = DateTime.Today.Date.ToString("ddd , MMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            lblUser.Text = clsCurrentUser.CurrentUser.UserName;
-            if (!string.IsNullOrEmpty(clsCurrentPerson.CurrentPerson.ImagePath) && File.Exists(clsCurrentPerson.CurrentPerson.ImagePath))
+
+            // استدعاء دالة التحديث لتعبئة البيانات أول ما يفتح البرنامج
+            UpdateUserData();
+        }
+
+        private void UpdateUserData()
+        {
+            // التأكد أن الـ CurrentUser ليس فارغاً تجنباً للـ Exception
+            if (clsCurrentUser.CurrentUser != null)
             {
-                try
+                lblUser.Text = clsCurrentUser.CurrentUser.UserName;
+
+                // التحقق من وجود الشخص وصورته
+                if (clsCurrentPerson.CurrentPerson != null &&
+                    !string.IsNullOrEmpty(clsCurrentPerson.CurrentPerson.ImagePath) &&
+                    File.Exists(clsCurrentPerson.CurrentPerson.ImagePath))
                 {
-                    using (var stream = new FileStream(clsCurrentPerson.CurrentPerson.ImagePath, FileMode.Open, FileAccess.Read))
+                    try
                     {
-                        pbUser.Image = Image.FromStream(stream);
+                        using (var stream = new FileStream(clsCurrentPerson.CurrentPerson.ImagePath, FileMode.Open, FileAccess.Read))
+                        {
+                            pbUser.Image = Image.FromStream(stream);
+                        }
+                    }
+                    catch
+                    {
+                        LoadDefaultAvatar();
                     }
                 }
-                catch
+                else
                 {
                     LoadDefaultAvatar();
                 }
             }
-            else
-            {
-                LoadDefaultAvatar();
-            }
         }
-        
+
 
         // دالة وضع الصورة الافتراضية المفعلة الآن بالكامل بناءً على الجنس
         private void LoadDefaultAvatar()
@@ -157,13 +173,14 @@ namespace DVLD_PresentationLayer
         {
             DesignButton(sender, e);
         }
-
+        
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             activeSidebarButton = btnDashboard;
             lblBreadcrumb.Text = "DVLD > Dashboard";
-            /*ucUsers myUsersPage = new ucUsers();
-            showUserControl(myUsersPage);*/
+            ucDashboard myDashboardPage = new ucDashboard();
+            showUserControl(myDashboardPage);
+            pnlContainer.BringToFront();
             pnlSidebar.Refresh();
         }
 
@@ -172,7 +189,7 @@ namespace DVLD_PresentationLayer
             DesignButton(sender, e);
         }
 
-        private void btnApplications_Click(object sender, EventArgs e)
+        public void btnApplications_Click(object sender, EventArgs e)
         {
             activeSidebarButton = btnApplications;
             lblBreadcrumb.Text = "DVLD > Applications";
@@ -181,7 +198,16 @@ namespace DVLD_PresentationLayer
             pnlSidebar.Refresh();
         }
 
-        private void btnLicenses_Click(object sender, EventArgs e)
+        public void btnNewApplication_Click(object sender, EventArgs e)
+        {
+            activeSidebarButton = btnApplications;
+            lblBreadcrumb.Text = "DVLD > Applications";
+            ucNewApplication myNewApplicationsPage = new ucNewApplication();
+            showUserControl(myNewApplicationsPage);
+            pnlSidebar.Refresh();
+        }
+
+        public void btnLicenses_Click(object sender, EventArgs e)
         {
             activeSidebarButton = btnLicenses;
             lblBreadcrumb.Text = "DVLD > Licenses";
@@ -237,22 +263,25 @@ namespace DVLD_PresentationLayer
         {
             if (MessageBox.Show("Are you sure you want to logout?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                // 1. تنظيف الـ Remember Me (مسح الملف + مسح الـ Token من قاعدة البيانات)
+                // 1. تنظيف الـ Remember Me
                 if (clsCurrentUser.CurrentUser != null)
                 {
                     clsUsers.Logout(clsCurrentUser.CurrentUser.UserID);
                 }
 
-                // 2. تنظيف الذاكرة (إفراغ الكلاسات العالمية)
+                // 2. تنظيف الذاكرة
                 clsCurrentUser.CurrentUser = null;
                 clsCurrentPerson.CurrentPerson = null;
 
                 // 3. العودة لشاشة الـ Login
-                this.Hide(); // إخفاء الشاشة الرئيسية
+                this.Hide();
                 frmLogin loginForm = new frmLogin();
 
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
+                    // <-- هنا الحل: قم بتحديث واجهة المستخدم بالبيانات الجديدة للمستخدم الذي سجل دخول للتو -->
+                    UpdateUserData();
+
                     this.Show();
                 }
                 else
@@ -294,5 +323,7 @@ namespace DVLD_PresentationLayer
                 }
             }
         }
+
+        
     }
 }

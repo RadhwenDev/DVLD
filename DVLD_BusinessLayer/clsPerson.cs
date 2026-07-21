@@ -78,7 +78,6 @@ namespace DVLD_BusinessLayer
             return clsPeopleDataAccess.GetPeople();
         }
 
-
         public static DataTable GetPeopleFullName()
         {
             return clsPeopleDataAccess.GetPeopleFullName();

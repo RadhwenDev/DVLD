@@ -156,13 +156,12 @@ namespace DVLD_BusinessLayer
             int UserID = -1, PersonID = -1, Permissions = 0;
             string hashedPasswordFromDB = "";
             bool isActive = false;
-
+            UserName = UserName.Trim().ToLower();
             // نجلب بيانات المستخدم بالـ اسم فقط
             if (clsUsersDataAccess.GetUserInfoByUserName(UserName, ref UserID, ref PersonID, ref hashedPasswordFromDB, ref Permissions, ref isActive))
             {
-                string hashedInput = clsCryptoSettings.ComputeSha256Hash(hashedPasswordFromDB.Trim());
 
-                if (hashedInput == Password)
+                if (hashedPasswordFromDB == Password)
                 {
                     return new clsUsers(UserID, PersonID, UserName, hashedPasswordFromDB, Permissions, isActive);
                 }

@@ -141,10 +141,10 @@ namespace DVLD_DataAccessLayer
             bool isFound = false;
             using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                string query = "SELECT Found=1 FROM Users WHERE UserName = @UserName";
+                string query = "SELECT Found=1 FROM Users WHERE LOWER(UserName) = LOWER(@UserName)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@UserName", UserName);
+                    command.Parameters.AddWithValue("@UserName", UserName.Trim().ToLower());
                     try
                     {
                         connection.Open();
@@ -194,10 +194,10 @@ namespace DVLD_DataAccessLayer
             bool isFound = false;
             using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                string query = "SELECT * FROM Users WHERE UserName = @UserName";
+                string query = "SELECT * FROM Users WHERE LOWER(UserName) = LOWER(@UserName)";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@UserName", UserName);
+                    command.Parameters.AddWithValue("@UserName", UserName.Trim().ToLower());
                     try
                     {
                         connection.Open();

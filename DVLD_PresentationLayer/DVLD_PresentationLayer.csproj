@@ -96,6 +96,30 @@
     <Compile Include="Applications\ucThirdStepNewApp.Designer.cs">
       <DependentUpon>ucThirdStepNewApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dashboard\ucApplicationPersonInfos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dashboard\ucApplicationPersonInfos.Designer.cs">
+      <DependentUpon>ucApplicationPersonInfos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard\ucDashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dashboard\ucDashboard.Designer.cs">
+      <DependentUpon>ucDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard\ucDashboardActiveLicense.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dashboard\ucDashboardActiveLicense.Designer.cs">
+      <DependentUpon>ucDashboardActiveLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard\ucServiceBreakdown.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Dashboard\ucServiceBreakdown.Designer.cs">
+      <DependentUpon>ucServiceBreakdown.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +241,18 @@
     <EmbeddedResource Include="Applications\ucThirdStepNewApp.resx">
       <DependentUpon>ucThirdStepNewApp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard\ucApplicationPersonInfos.resx">
+      <DependentUpon>ucApplicationPersonInfos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard\ucDashboard.resx">
+      <DependentUpon>ucDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard\ucDashboardActiveLicense.resx">
+      <DependentUpon>ucDashboardActiveLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dashboard\ucServiceBreakdown.resx">
+      <DependentUpon>ucServiceBreakdown.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -292,9 +328,12 @@
       <Project>{1cc23619-1d24-4c40-a937-ba5516e051e2}</Project>
       <Name>DVLD_BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DVLD_Security\DVLD_Security.csproj">
+      <Project>{302782db-35e5-445b-be94-b8834d395825}</Project>
+      <Name>DVLD_Security</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dashboard\" />
     <Folder Include="Drivers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

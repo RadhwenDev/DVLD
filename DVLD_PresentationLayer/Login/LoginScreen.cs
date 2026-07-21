@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_Security;
 
 namespace DVLD_PresentationLayer.Login
 {
@@ -34,7 +35,7 @@ namespace DVLD_PresentationLayer.Login
         {
             // 1. نبحث عن المستخدم أولاً بالـ Username والـ Password فقط (بدون شرط IsActive في الـ Query)
             // نصيحة: يفضل أن ترجع دالة الـ Find المستخدم حتى لو كان غير نشط، لكي نتحقق من حالته هنا
-            string hashedPassword = clsCryptoSettings.ComputeSha256Hash(txtPassword.Text.Trim());
+            string hashedPassword = HashHelper.ComputeSHA256(txtPassword.Text.Trim());
             clsUsers user = clsUsers.Find(txtUserName.Text, hashedPassword);
 
             // 2. التحقق أولاً: هل المستخدم موجود في قاعدة البيانات؟

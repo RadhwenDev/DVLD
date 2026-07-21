@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_Security;
 
 namespace DVLD_PresentationLayer.Users
 {
@@ -34,7 +35,7 @@ namespace DVLD_PresentationLayer.Users
                 MessageBox.Show("Please fill in all password fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string hashedPassword = clsCryptoSettings.ComputeSha256Hash(txtCurrentPassword.Text.Trim());
+            string hashedPassword = HashHelper.ComputeSHA256(txtCurrentPassword.Text.Trim());
 
             if (_User.Password != hashedPassword)
             {
@@ -48,7 +49,7 @@ namespace DVLD_PresentationLayer.Users
                 return;
             }
 
-            string hashedNewPassword = clsCryptoSettings.ComputeSha256Hash(txtNewPassword.Text.Trim());
+            string hashedNewPassword = HashHelper.ComputeSHA256(txtNewPassword.Text.Trim());
             _User.Password = hashedNewPassword;
 
             switch (_User.SavePassword())

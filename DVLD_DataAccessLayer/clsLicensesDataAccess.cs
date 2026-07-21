@@ -43,5 +43,30 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+        public static int getTotalActiveLicenses()
+        {
+            int totalActiveLicense = 0;
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                string query = @"select count(*) from Licenses where isActive = 1";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+
+                        object result = command.ExecuteScalar();
+                        if (result != null && int.TryParse(result.ToString(), out int insertedValue))
+                        {
+                            totalActiveLicense = insertedValue;
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+
+            return totalActiveLicense;
+        }
     }
 }
