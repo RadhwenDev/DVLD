@@ -202,6 +202,7 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+        
 
         public static int AddNewApplication(int ApplicantPersonID, DateTime ApplicationDate, int ApplicationTypeID, byte ApplicationStatus, DateTime LastStatusDate, decimal PaidFees, int CreatedByUserID)
         {
@@ -243,6 +244,29 @@ namespace DVLD_DataAccessLayer
             }
 
             return ApplicationID;
+        }
+
+        public static bool UpdateToCaancelStatus(int ApplicationID)
+        {
+            int rowAffected = 0;
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            string query = @"UPDATE Applications SET ApplicationStatus = 2  WHERE ApplicationID = @ApplicationID";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+
+            try
+            {
+                connection.Open();
+                rowAffected = command.ExecuteNonQuery();
+            }
+            catch (Exception) { return false; }
+            finally
+            {
+                connection.Close();
+            }
+
+            return rowAffected != 0;
         }
     }
 }

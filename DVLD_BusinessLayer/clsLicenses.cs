@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD_BusinessLayer
 {
@@ -18,6 +19,11 @@ namespace DVLD_BusinessLayer
         public static int getTotalActiveLicenses()
         {
             return clsLicensesDataAccess.getTotalActiveLicenses();
+        }
+
+        public static DataTable getShowLicense(int ApplicationID)
+        {
+            return clsLicensesDataAccess.getShowLicense(ApplicationID);
         }
     }
 }

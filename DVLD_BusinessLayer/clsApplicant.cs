@@ -42,5 +42,10 @@ namespace DVLD_BusinessLayer
         {
             return clsApplicationsDataAccess.getAllApplicationStatus();
         }
+        public static bool UpdateToCaancelStatus(int ApplicationID)
+        {
+            return clsApplicationsDataAccess.UpdateToCaancelStatus(ApplicationID);
+        }
+        
     }
 }

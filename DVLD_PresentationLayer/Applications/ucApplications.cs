@@ -1,4 +1,5 @@
 ﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Licenses;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -400,6 +401,97 @@ namespace DVLD_PresentationLayer.Applications
                 if (oldRow >= 0 && oldCol >= 0 && oldRow < dgvApplications.RowCount && oldCol < dgvApplications.ColumnCount)
                 {
                     dgvApplications.InvalidateCell(oldCol, oldRow);
+                }
+            }
+        }
+    
+
+    int appID = -1;
+        private void guna2ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            Point mousePos = dgvApplications.PointToClient(Control.MousePosition);
+            DataGridView.HitTestInfo hitInfo = dgvApplications.HitTest(mousePos.X, mousePos.Y);
+
+            // إذا لم يضغط المستخدم فوق صف حقيقي، نلغي فتح القائمة
+            if (hitInfo.RowIndex < 0)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            // 2. جعل الصف الذي فوقه الماوس هو المختار تلقائياً
+            dgvApplications.ClearSelection();
+            dgvApplications.Rows[hitInfo.RowIndex].Selected = true;
+
+            // 3. جلب الـ Status والـ ID بأمان تام وبدون أخطاء
+            string status = dgvApplications.Rows[hitInfo.RowIndex].Cells["STATUS"].Value.ToString();
+            appID = Convert.ToInt32(dgvApplications.Rows[hitInfo.RowIndex].Cells["  ID"].Value);
+            if (status == "New")
+            {
+                cancelApplicationToolStripMenuItem.Enabled = true;
+                scheduleTestsToolStripMenuItem.Enabled = true;
+                issueDrivingLicenseToolStripMenuItem.Enabled = false; // مثلاً رخصة السياقة ممنوعة في الحالة الجديدة
+                showLicenseToolStripMenuItem.Enabled = false;
+            }
+            else if (status == "Completed")
+            {
+                cancelApplicationToolStripMenuItem.Enabled = false; // ما تنجمش تلغى حاجة مكتملة
+                scheduleTestsToolStripMenuItem.Enabled = false;
+                issueDrivingLicenseToolStripMenuItem.Enabled = false;
+                showLicenseToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                cancelApplicationToolStripMenuItem.Enabled = false;
+                scheduleTestsToolStripMenuItem.Enabled = false;
+                issueDrivingLicenseToolStripMenuItem.Enabled = false;
+                showLicenseToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (appID == -1) return;
+            if (clsApplicant.UpdateToCaancelStatus(appID))
+            {
+                MessageBox.Show("Application Cancelled Successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); _dtAllApplicants = clsApplicant.getAllApplicants();
+                dgvApplications.DataSource = _dtAllApplicants;
+                UpdateRowsCount(_dtAllApplicants);
+            }
+            else
+            {
+                MessageBox.Show("Failed to cancel application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucShowLicense myShowLicensePage = new ucShowLicense(appID);
+                    frmContainer.Size = myShowLicensePage.Size;
+                    myShowLicensePage.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myShowLicensePage);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
                 }
             }
         }

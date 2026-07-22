@@ -158,6 +158,12 @@
     <Compile Include="Licenses\ucLicenses.Designer.cs">
       <DependentUpon>ucLicenses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Licenses\ucShowLicense.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Licenses\ucShowLicense.Designer.cs">
+      <DependentUpon>ucShowLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\LoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\ucLicenses.resx">
       <DependentUpon>ucLicenses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\ucShowLicense.resx">
+      <DependentUpon>ucShowLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>
