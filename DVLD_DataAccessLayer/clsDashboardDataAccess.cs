@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace DVLD_DataAccessLayer
 {
     public class clsDashboardDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+
         public static int getPendingApplicants()
         {
             int totalPending = 0;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select count(*) from Applications where ApplicationStatus = 1";
 
@@ -45,7 +48,7 @@ namespace DVLD_DataAccessLayer
                                AND MONTH(LastStatusDate) = MONTH(GETDATE()) 
                                AND YEAR(LastStatusDate) = YEAR(GETDATE())";
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -69,7 +72,7 @@ namespace DVLD_DataAccessLayer
         public static int GetTotalPeople()
         {
             int totalPeople = 0;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select count(*) from People";
 
@@ -95,7 +98,7 @@ namespace DVLD_DataAccessLayer
         public static int GetTotalPeopleInThisMonth()
         {
             int totalPeople = 0;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT COUNT(*) FROM People where MONTH(LoginTime) = MONTH(GETDATE()) AND YEAR(LoginTime) = YEAR(GETDATE())";
 
@@ -121,7 +124,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetApplicationPeopleInfo()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT TOP 5
                                     A.ApplicationID,
@@ -157,7 +160,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetLicensePeopleInfo()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT TOP 2
                                     Licenses.LicenseID,
@@ -186,7 +189,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetServiceBreakdown()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT TOP 5
                                     ApplicationTypes.ApplicationTypeTitle AS ServiceName,

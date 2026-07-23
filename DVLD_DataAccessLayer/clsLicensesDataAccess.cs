@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace DVLD_DataAccessLayer
 {
     public class clsLicensesDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable getAllLicenses()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT [LICENSE ID] = L.LicenseID, DRIVER = (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName), CLASS = LC.ClassName,
                                  [ISSUE DATE] = L.IssueDate, EXPIRATION = L.ExpirationDate, REASON = A_T.ApplicationTypeTitle, 
@@ -46,7 +48,7 @@ namespace DVLD_DataAccessLayer
         public static int getTotalActiveLicenses()
         {
             int totalActiveLicense = 0;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select count(*) from Licenses where isActive = 1";
 
@@ -71,7 +73,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getShowLicense(int ApplicationID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
                                     Licenses.LicenseID,

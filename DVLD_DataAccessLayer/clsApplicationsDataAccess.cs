@@ -7,15 +7,17 @@ using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace DVLD_DataAccessLayer
 {
     public class clsApplicationsDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable getAllApplicants()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT [  ID] = A.ApplicationID, APPLICANT = (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName), [SERVICE TYPE] = Aty.ApplicationTypeTitle, [DATE] = A.LastStatusDate, [FEES PAID] = A.PaidFees,
                                  CASE
@@ -49,7 +51,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getAllDetailsForShowButton(int ApplicationID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT A.ApplicationID, A.ApplicationDate, A.LastStatusDate, A.PaidFees, (P.FirstName + ' ' + P.LastName) AS FullName,
                                     P.NationalNo, P.DateOfBirth, P.Phone, P.Address, P.ImagePath, AT.ApplicationTypeTitle, LC.ClassName, LC.MinimumAllowedAge, LC.DefaultValidityLength, LC.ClassFees, LC.ClassDescription,
@@ -91,7 +93,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getAllApplicationType()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT ApplicationTypeID, ApplicationTypeTitle FROM ApplicationTypes";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -114,7 +116,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getAllApplicationTypes(int ApplicantPersonID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT A_T.ApplicationTypeID, A_T.ApplicationTypeTitle
                                 FROM ApplicationTypes A_T
@@ -152,7 +154,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getApplicationTypesTitle_Fees(int ApplicationTypeID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT ApplicationTypeTitle, ApplicationFees FROM ApplicationTypes WHERE ApplicationTypeID = @ApplicationTypeID";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -176,7 +178,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getAllApplicationStatus()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select distinct StatusID = A.ApplicationStatus, 
                                 CASE
@@ -208,7 +210,7 @@ namespace DVLD_DataAccessLayer
         {
             int ApplicationID = -1;
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 // 🌟 ملاحظة: تأكد إن كان الحقل في قاعدتك اسمه NationalityCountryID أو NationalCountryID وقمت بضبطه هنا
                 string query = @"INSERT INTO Applications (ApplicantPersonID, ApplicationDate, ApplicationTypeID, ApplicationStatus, LastStatusDate, PaidFees, CreatedByUserID)
@@ -249,7 +251,7 @@ namespace DVLD_DataAccessLayer
         public static bool UpdateToCaancelStatus(int ApplicationID)
         {
             int rowAffected = 0;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             string query = @"UPDATE Applications SET ApplicationStatus = 2  WHERE ApplicationID = @ApplicationID";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@ApplicationID", ApplicationID);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace DVLD_DataAccessLayer
 {
     public class clsTestAppointmentDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable visionTest(int ApplicationID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
                                     (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName) AS FullName, 
@@ -58,7 +60,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable visionTestDataGridView(int ApplicationID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
                                     TA.TestAppointmentID, 

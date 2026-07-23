@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace DVLD_DataAccessLayer
 {
     public class clsPeopleDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable GetPeople()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select PersonID, FirstName, SecondName, ThirdName, LastName, NationalNo, DateOfBirth, Gendor,
                          Address, Email, Phone, CountryName, ImagePath
@@ -44,7 +46,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetPeopleFullName()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select PersonID, FirstName, SecondName, ThirdName, LastName FROM People";
 
@@ -72,7 +74,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetPeopleAplicationFullName()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select PersonID, FullName = (FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName) FROM People";
 
@@ -100,7 +102,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetFullNameByID(int PersonID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select FullName = (FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName) FROM People WHERE PersonID = @PersonID";
 
@@ -129,7 +131,7 @@ namespace DVLD_DataAccessLayer
         {
             int PersonID = -1;
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 // 🌟 ملاحظة: تأكد إن كان الحقل في قاعدتك اسمه NationalityCountryID أو NationalCountryID وقمت بضبطه هنا
                 string query = @"INSERT INTO People (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gendor, Address, Phone, Email, NationalityCountryID, ImagePath)
@@ -184,7 +186,7 @@ namespace DVLD_DataAccessLayer
         public static bool IsPersonExist(string NationalNo)
         {
             bool isFound = false;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = "SELECT Found=1 FROM People WHERE NationalNo = @NationalNo";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -205,7 +207,7 @@ namespace DVLD_DataAccessLayer
         public static bool GetPeopleInfoByID(int PersonID, ref string NationalNo, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalCountryID, ref string ImagePath)
         {
             bool isFound = false;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             string query = "SELECT * FROM People WHERE PersonID = @PersonID";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -257,7 +259,7 @@ namespace DVLD_DataAccessLayer
         public static bool UpdatePerson(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
         {
             int rowAffected = 0;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             string query = @"UPDATE People SET NationalNo = @NationalNo, FirstName = @FirstName, SecondName = @SecondName, ThirdName = @ThirdName, LastName = @LastName, DateOfBirth = @DateOfBirth, Gendor = @Gendor, Address = @Address, Phone = @Phone,
                             Email = @Email, NationalityCountryID = @NationalityCountryID, ImagePath = @ImagePath
                             WHERE PersonID = @PersonID";

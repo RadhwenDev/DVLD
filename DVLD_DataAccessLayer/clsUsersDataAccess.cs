@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -11,10 +12,11 @@ namespace DVLD_DataAccessLayer
 {
     public class clsUsersDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable getAllUsers()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT P.FirstName, P.SecondName, P.ThirdName, P.LastName, U.UserID, U.UserName, U.Permissions, U.IsActive 
                                 FROM Users U inner join People P ON U.PersonID = P.PersonID";
@@ -39,7 +41,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable getAllDetailsForShowButton(int UserID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT P.PersonID, U.UserName,
                                     CASE 
@@ -82,7 +84,7 @@ namespace DVLD_DataAccessLayer
         public static int AddNewUser(int PersonID, string UserName, string Password, bool isActive, int Permissions)
         {
             int UserID = -1;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"INSERT INTO Users (PersonID, UserName, Password, isActive, Permissions)
                                  VALUES (@PersonID, @UserName, @Password, @isActive, @Permissions);
@@ -118,7 +120,7 @@ namespace DVLD_DataAccessLayer
         public static bool IsUserExistForPersonID(int PersonID)
         {
             bool isFound = false;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = "SELECT Found=1 FROM Users WHERE PersonID = @PersonID";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -139,7 +141,7 @@ namespace DVLD_DataAccessLayer
         public static bool IsUserNameExistForPersonID(string UserName)
         {
             bool isFound = false;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = "SELECT Found=1 FROM Users WHERE LOWER(UserName) = LOWER(@UserName)";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -160,7 +162,7 @@ namespace DVLD_DataAccessLayer
         public static bool GetUserInfoByID(int UserID, ref int PersonID, ref string UserName, ref string Password, ref int Permissions, ref bool isActive)
         {
             bool isFound = false;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = "SELECT * FROM Users WHERE UserID = @UserID";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -192,7 +194,7 @@ namespace DVLD_DataAccessLayer
         public static bool GetUserInfoByUserName(string UserName, ref int UserID, ref int PersonID, ref string Password, ref int Permissions, ref bool isActive)
         {
             bool isFound = false;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = "SELECT * FROM Users WHERE LOWER(UserName) = LOWER(@UserName)";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -223,7 +225,7 @@ namespace DVLD_DataAccessLayer
         public static bool UpdateUser(int UserID, string UserName, bool isActive, int Permissions)
         {
             int rowAffected = 0;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"UPDATE Users SET UserName = @UserName, isActive = @isActive, Permissions = @Permissions
                                 WHERE UserID = @UserID";
@@ -248,7 +250,7 @@ namespace DVLD_DataAccessLayer
         public static bool UpdateUserPassword(int UserID, string Password)
         {
             int rowAffected = 0;
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"UPDATE Users SET Password = @Password WHERE UserID = @UserID";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -271,7 +273,7 @@ namespace DVLD_DataAccessLayer
         {
             int rowsAffected = 0;
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand("SP_UpdateUserRememberToken", connection))
                 {
@@ -300,7 +302,7 @@ namespace DVLD_DataAccessLayer
         {
             int userID = -1; // القيمة الافتراضية في حال لم نجد مستخدماً
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand("SP_GetUserByRememberTokenHash", connection))
                 {
@@ -330,7 +332,7 @@ namespace DVLD_DataAccessLayer
         {
             int rowsAffected = 0;
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand("SP_ClearRememberToken", connection))
                 {

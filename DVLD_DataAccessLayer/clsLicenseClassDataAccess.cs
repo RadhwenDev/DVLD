@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace DVLD_DataAccessLayer
 {
     public class clsLicenseClassDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable GetAllLicenseClasses()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT * FROM LicenseClasses";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -36,7 +38,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetLicenseClassesName()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT LicenseClassID, ClassName FROM LicenseClasses";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -59,7 +61,7 @@ namespace DVLD_DataAccessLayer
         public static DataTable GetLicenseClassesNameByID(int LicenseClassID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT LC.LicenseClassID, LC.ClassName 
                                  FROM LicenseClasses LC
@@ -92,7 +94,7 @@ namespace DVLD_DataAccessLayer
         public static bool UpdateLicenseClasses(int LicenseClassID, string ClassName, string ClassDescription, int MinimumAllowedAge, int DefaultValidityLength, int ClassFees)
         {
             int rowAffected = 0;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             string query = @"UPDATE LicenseClasses SET ClassName = @ClassName, ClassDescription = @ClassDescription, MinimumAllowedAge = @MinimumAllowedAge, DefaultValidityLength = @DefaultValidityLength, ClassFees = @ClassFees
                             WHERE LicenseClassID = @LicenseClassID";
             SqlCommand command = new SqlCommand(query, connection);
@@ -120,7 +122,7 @@ namespace DVLD_DataAccessLayer
         public static bool Find(int LicenseClassID, ref string ClassName, ref string ClassDescription, ref int MinimumAllowedAge, ref int DefaultValidityLength, ref int ClassFees)
         {
             bool isFound = false;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             string query = "SELECT * FROM LicenseClasses WHERE LicenseClassID = @LicenseClassID";
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
@@ -159,7 +161,7 @@ namespace DVLD_DataAccessLayer
         {
             int LicenseClassID = -1;
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 // استعلام الإضافة مع استرجاع الـ ID المولد تلقائياً
                 string query = @"INSERT INTO LicenseClasses 

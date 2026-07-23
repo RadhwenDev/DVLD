@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace DVLD_DataAccessLayer
 {
     public class clsTestTypesDataAccess
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static DataTable getAllTestTypes()
         {
             DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT * FROM TestTypes";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -36,7 +38,7 @@ namespace DVLD_DataAccessLayer
         public static bool UpdateTestTypes(int TestTypeID,string TestTypeTitle, string TestTypeDescription, int TestTypeFees)
         {
             int rowAffected = 0;
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+            SqlConnection connection = new SqlConnection(ConnectionString);
             string query = @"UPDATE TestTypes SET TestTypeTitle = @TestTypeTitle, TestTypeDescription = @TestTypeDescription, TestTypeFees = @TestTypeFees
                             WHERE TestTypeID = @TestTypeID";
             SqlCommand command = new SqlCommand(query, connection);

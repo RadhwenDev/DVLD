@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,12 @@ namespace DVLD_DataAccessLayer
 {
     public class clsLoginLogData
     {
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         public static int AddLoginLog(int UserID)
         {
             int LogID = -1;
 
-            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"INSERT INTO LoginLogs (UserID) VALUES (@UserID);
                             SELECT SCOPE_IDENTITY()";
