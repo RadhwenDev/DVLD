@@ -1,5 +1,6 @@
 ﻿using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Licenses;
+using DVLD_PresentationLayer.TestAppointments;
 using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
@@ -428,6 +429,8 @@ namespace DVLD_PresentationLayer.Applications
             appID = Convert.ToInt32(dgvApplications.Rows[hitInfo.RowIndex].Cells["  ID"].Value);
             if (status == "New")
             {
+                editApplicationToolStripMenuItem.Enabled = true;
+                deleteApplicationToolStripMenuItem.Enabled = true;
                 cancelApplicationToolStripMenuItem.Enabled = true;
                 scheduleTestsToolStripMenuItem.Enabled = true;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false; // مثلاً رخصة السياقة ممنوعة في الحالة الجديدة
@@ -435,6 +438,8 @@ namespace DVLD_PresentationLayer.Applications
             }
             else if (status == "Completed")
             {
+                editApplicationToolStripMenuItem.Enabled = false;
+                deleteApplicationToolStripMenuItem.Enabled = false;
                 cancelApplicationToolStripMenuItem.Enabled = false; // ما تنجمش تلغى حاجة مكتملة
                 scheduleTestsToolStripMenuItem.Enabled = false;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false;
@@ -442,6 +447,8 @@ namespace DVLD_PresentationLayer.Applications
             }
             else
             {
+                editApplicationToolStripMenuItem.Enabled = false;
+                deleteApplicationToolStripMenuItem.Enabled = true;
                 cancelApplicationToolStripMenuItem.Enabled = false;
                 scheduleTestsToolStripMenuItem.Enabled = false;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false;
@@ -486,6 +493,38 @@ namespace DVLD_PresentationLayer.Applications
                     frmContainer.Size = myShowLicensePage.Size;
                     myShowLicensePage.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myShowLicensePage);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+        }
+
+        private void scheduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucVisionTest myVisionTestPage = new ucVisionTest(appID);
+                    frmContainer.Size = myVisionTestPage.Size;
+                    myVisionTestPage.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myVisionTestPage);
 
                     Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
                     elipse.TargetControl = frmContainer;

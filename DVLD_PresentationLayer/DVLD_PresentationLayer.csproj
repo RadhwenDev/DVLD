@@ -190,6 +190,12 @@
     <Compile Include="People\ucShowDetails.Designer.cs">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestAppointments\ucVisionTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestAppointments\ucVisionTest.Designer.cs">
+      <DependentUpon>ucVisionTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tests\ucEditTestTypes.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -300,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\ucShowDetails.resx">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestAppointments\ucVisionTest.resx">
+      <DependentUpon>ucVisionTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\ucEditTestTypes.resx">
       <DependentUpon>ucEditTestTypes.cs</DependentUpon>

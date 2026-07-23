@@ -1,0 +1,22 @@
+﻿using DVLD_DataAccessLayer;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DVLD_BusinessLayer
+{
+    public class clsTestAppointment
+    {
+        public static DataTable visionTest(int ApplicationID)
+        {
+            return clsTestAppointmentDataAccess.visionTest(ApplicationID);
+        }
+        public static DataTable visionTestDataGridView(int ApplicationID)
+        {
+            return clsTestAppointmentDataAccess.visionTestDataGridView(ApplicationID);
+        }
+    }
+}
