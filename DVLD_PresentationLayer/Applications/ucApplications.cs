@@ -435,6 +435,30 @@ namespace DVLD_PresentationLayer.Applications
                 scheduleTestsToolStripMenuItem.Enabled = true;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false; // مثلاً رخصة السياقة ممنوعة في الحالة الجديدة
                 showLicenseToolStripMenuItem.Enabled = false;
+                DataTable dataTable = clsTestAppointment.getTsetAppointment(appID);
+                int testAppointment = 1;
+                if (dataTable.Rows[0]["TestTypeID"] != DBNull.Value)
+                {
+                    testAppointment = Convert.ToInt32(dataTable.Rows[0]["TestTypeID"]);
+                }
+                switch (testAppointment)
+                {
+                    case 1:
+                        scheduleVisionTestToolStripMenuItem.Enabled= true;
+                        scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                        scheduleStreetTestToolStripMenuItem.Enabled = false;
+                        break;
+                    case 2:
+                        scheduleVisionTestToolStripMenuItem.Enabled = false;
+                        scheduleWrittenTestToolStripMenuItem.Enabled = true;
+                        scheduleStreetTestToolStripMenuItem.Enabled = false;
+                        break;
+                    case 3:
+                        scheduleVisionTestToolStripMenuItem.Enabled = false;
+                        scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                        scheduleStreetTestToolStripMenuItem.Enabled = true;
+                        break;
+                }
             }
             else if (status == "Completed")
             {
@@ -521,7 +545,7 @@ namespace DVLD_PresentationLayer.Applications
                     frmContainer.BackColor = Color.White;
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
-                    ucVisionTest myVisionTestPage = new ucVisionTest(appID);
+                    ucTypeTest myVisionTestPage = new ucTypeTest(appID);
                     frmContainer.Size = myVisionTestPage.Size;
                     myVisionTestPage.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myVisionTestPage);

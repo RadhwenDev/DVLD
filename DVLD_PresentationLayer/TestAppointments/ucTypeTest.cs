@@ -1,4 +1,5 @@
 ﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Tests;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,10 +14,12 @@ using System.Windows.Forms;
 
 namespace DVLD_PresentationLayer.TestAppointments
 {
-    public partial class ucVisionTest : UserControl
+    public partial class ucTypeTest : UserControl
     {
+        enum enTest { Vision, Written, Street}
+        enTest _Test;
         int _AppID = -1;
-        public ucVisionTest(int appID)
+        public ucTypeTest(int appID)
         {
             InitializeComponent();
             _AppID = appID;
@@ -76,12 +79,13 @@ namespace DVLD_PresentationLayer.TestAppointments
             switch (testTypeID)
             {
                 case 1:
-                    lblPassedTests.Text = "0/3"; break;
+                    _Test = enTest.Vision; break;
                 case 2:
-                    lblPassedTests.Text = "1/3"; break;
+                    _Test = enTest.Written; break;
                 case 3:
-                    lblPassedTests.Text = "2/3"; break;
+                    _Test = enTest.Street; break;
             }
+            testSteps();
             DataTable dgv = clsTestAppointment.visionTestDataGridView(_AppID);
             bool hasAppointments = dgv.Rows.Count > 0 && dgv.Rows[0]["TestAppointmentID"] != DBNull.Value;
 
@@ -117,6 +121,44 @@ namespace DVLD_PresentationLayer.TestAppointments
             }
         }
 
+        private void testSteps()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucTypeTest));
+            switch (_Test)
+            {
+                case enTest.Vision:
+                    lblPassedTests.Text = "0/3";
+                    break;
+                case enTest.Written:
+                    lblPassedTests.Text = "1/3";
+                    guna2Separator2.FillColor = Color.FromArgb(12, 155, 161);
+                    guna2CirclePictureBox6.Image = null;
+                    guna2CirclePictureBox6.FillColor = Color.FromArgb(12, 155, 161);
+                    guna2CirclePictureBox7.Image = (Image)resources.GetObject("Written");
+                    lblCurrentTest2.Text = "2. Vision Test (Done)";
+                    lblCurrentTest3.Text = "3. Written Test (Current)";
+                    lblPassedTestStatus2.Text = string.Empty;
+                    lblPassedTestStatus3.Text = "1/3 Passed Tests";
+                    break;
+                case enTest.Street:
+                    lblPassedTests.Text = "2/3";
+                    guna2Separator2.FillColor = Color.FromArgb(12, 155, 161);
+                    guna2Separator3.FillColor = Color.FromArgb(12, 155, 161);
+                    guna2CirclePictureBox6.Image = null;
+                    guna2CirclePictureBox6.FillColor = Color.FromArgb(12, 155, 161);
+                    guna2CirclePictureBox7.Image = null;
+                    guna2CirclePictureBox7.FillColor = Color.FromArgb(12, 155, 161);
+                    guna2CirclePictureBox8.Image = (Image)resources.GetObject("Street");
+                    lblCurrentTest2.Text = "2. Vision Test (Done)";
+                    lblCurrentTest3.Text = "3. Written Test (Done)";
+                    lblCurrentTest3.Text = "4. Street Test (Current)";
+                    lblPassedTestStatus2.Text = string.Empty;
+                    lblPassedTestStatus3.Text = string.Empty;
+                    lblPassedTestStatus3.Text = "2/3 Passed Tests";
+                    break;
+            }
+        }
+
         private void linkLblViewFullProfile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             int selectedPersonID = Convert.ToInt32(PersonID);
@@ -142,6 +184,42 @@ namespace DVLD_PresentationLayer.TestAppointments
 
                     // 🌟 هنا نقوم بتمرير الـ ID المجلوب مباشرة ليتحول الـ User Control إلى وضع الـ Update تلقائياً
                     myShowDetails.LoadPersonData(selectedPersonID);
+
+                    frmContainer.Size = myShowDetails.Size;
+                    myShowDetails.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myShowDetails);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+        }
+
+        private void btnNewAppointment_Click(object sender, EventArgs e)
+        {
+            int selectedPersonID = Convert.ToInt32(PersonID);
+
+
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucAppointmentTest myShowDetails = new ucAppointmentTest();
 
                     frmContainer.Size = myShowDetails.Size;
                     myShowDetails.Dock = DockStyle.Fill;

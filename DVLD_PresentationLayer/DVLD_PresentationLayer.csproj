@@ -190,11 +190,17 @@
     <Compile Include="People\ucShowDetails.Designer.cs">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestAppointments\ucVisionTest.cs">
+    <Compile Include="TestAppointments\ucAppointmentTest.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TestAppointments\ucVisionTest.Designer.cs">
-      <DependentUpon>ucVisionTest.cs</DependentUpon>
+    <Compile Include="TestAppointments\ucAppointmentTest.Designer.cs">
+      <DependentUpon>ucAppointmentTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestAppointments\ucTypeTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestAppointments\ucTypeTest.Designer.cs">
+      <DependentUpon>ucTypeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Tests\ucEditTestTypes.cs">
       <SubType>UserControl</SubType>
@@ -307,8 +313,11 @@
     <EmbeddedResource Include="People\ucShowDetails.resx">
       <DependentUpon>ucShowDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestAppointments\ucVisionTest.resx">
-      <DependentUpon>ucVisionTest.cs</DependentUpon>
+    <EmbeddedResource Include="TestAppointments\ucAppointmentTest.resx">
+      <DependentUpon>ucAppointmentTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestAppointments\ucTypeTest.resx">
+      <DependentUpon>ucTypeTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\ucEditTestTypes.resx">
       <DependentUpon>ucEditTestTypes.cs</DependentUpon>

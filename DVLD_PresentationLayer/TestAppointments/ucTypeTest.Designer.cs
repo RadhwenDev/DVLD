@@ -1,6 +1,6 @@
 ﻿namespace DVLD_PresentationLayer.TestAppointments
 {
-    partial class ucVisionTest
+    partial class ucTypeTest
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucVisionTest));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucTypeTest));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.pbCreator = new Guna.UI2.WinForms.Guna2CirclePictureBox();
@@ -47,17 +47,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblTotalPeople = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.guna2ShadowPanel2 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.linkLblViewFullProfile = new System.Windows.Forms.LinkLabel();
             this.lblFullName = new System.Windows.Forms.Label();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.lblPersonID = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.guna2ShadowPanel3 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.pbDollar = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.lblFees = new System.Windows.Forms.Label();
@@ -66,7 +69,6 @@
             this.guna2ShadowPanel4 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.guna2Panel7 = new Guna.UI2.WinForms.Guna2Panel();
             this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.guna2Separator3 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -74,10 +76,14 @@
             this.guna2CirclePictureBox7 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2CirclePictureBox6 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2CirclePictureBox5 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
+            this.lblPassedTestStatus4 = new System.Windows.Forms.Label();
+            this.lblPassedTestStatus3 = new System.Windows.Forms.Label();
+            this.lblPassedTestStatus2 = new System.Windows.Forms.Label();
+            this.lblCurrentTest4 = new System.Windows.Forms.Label();
+            this.lblCurrentTest3 = new System.Windows.Forms.Label();
+            this.lblCurrentTest2 = new System.Windows.Forms.Label();
             this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
             this.guna2ShadowPanel5 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.lblPassedTests = new System.Windows.Forms.Label();
@@ -88,6 +94,7 @@
             this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.btnNewApplication = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.label23 = new System.Windows.Forms.Label();
             this.lblClassName = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -95,18 +102,13 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.guna2ShadowPanel6 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.dgvAppointments = new Guna.UI2.WinForms.Guna2DataGridView();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnNewAppointment = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel6 = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.guna2CirclePictureBox4 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.label16 = new System.Windows.Forms.Label();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.guna2ShadowPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCreator)).BeginInit();
@@ -296,6 +298,16 @@
             this.guna2Panel1.Size = new System.Drawing.Size(439, 53);
             this.guna2Panel1.TabIndex = 1;
             // 
+            // panel6
+            // 
+            this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(155)))), ((int)(((byte)(161)))));
+            this.panel6.Location = new System.Drawing.Point(1, 44);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(436, 10);
+            this.panel6.TabIndex = 1;
+            // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -362,6 +374,16 @@
             this.guna2Panel2.Name = "guna2Panel2";
             this.guna2Panel2.Size = new System.Drawing.Size(404, 53);
             this.guna2Panel2.TabIndex = 1;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
+            this.panel2.Location = new System.Drawing.Point(1, 49);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(404, 10);
+            this.panel2.TabIndex = 1;
             // 
             // label4
             // 
@@ -438,6 +460,16 @@
             this.guna2Panel3.Name = "guna2Panel3";
             this.guna2Panel3.Size = new System.Drawing.Size(347, 53);
             this.guna2Panel3.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
+            this.panel1.Location = new System.Drawing.Point(1, 45);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(347, 11);
+            this.panel1.TabIndex = 1;
             // 
             // label3
             // 
@@ -517,7 +549,6 @@
             // guna2Panel7
             // 
             this.guna2Panel7.Controls.Add(this.label19);
-            this.guna2Panel7.Controls.Add(this.label20);
             this.guna2Panel7.Controls.Add(this.guna2Separator3);
             this.guna2Panel7.Controls.Add(this.guna2Separator2);
             this.guna2Panel7.Controls.Add(this.guna2Separator1);
@@ -525,9 +556,12 @@
             this.guna2Panel7.Controls.Add(this.guna2CirclePictureBox7);
             this.guna2Panel7.Controls.Add(this.guna2CirclePictureBox6);
             this.guna2Panel7.Controls.Add(this.guna2CirclePictureBox5);
-            this.guna2Panel7.Controls.Add(this.label18);
-            this.guna2Panel7.Controls.Add(this.label17);
-            this.guna2Panel7.Controls.Add(this.label25);
+            this.guna2Panel7.Controls.Add(this.lblPassedTestStatus4);
+            this.guna2Panel7.Controls.Add(this.lblPassedTestStatus3);
+            this.guna2Panel7.Controls.Add(this.lblPassedTestStatus2);
+            this.guna2Panel7.Controls.Add(this.lblCurrentTest4);
+            this.guna2Panel7.Controls.Add(this.lblCurrentTest3);
+            this.guna2Panel7.Controls.Add(this.lblCurrentTest2);
             this.guna2Panel7.Location = new System.Drawing.Point(18, 65);
             this.guna2Panel7.Name = "guna2Panel7";
             this.guna2Panel7.Size = new System.Drawing.Size(581, 153);
@@ -543,17 +577,6 @@
             this.label19.TabIndex = 3;
             this.label19.Text = "1. App Submitted";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label20
-            // 
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.Black;
-            this.label20.Location = new System.Drawing.Point(461, 53);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(107, 24);
-            this.label20.TabIndex = 2;
-            this.label20.Text = "4. Street Test";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // guna2Separator3
             // 
@@ -629,38 +652,69 @@
             this.guna2CirclePictureBox5.TabIndex = 0;
             this.guna2CirclePictureBox5.TabStop = false;
             // 
-            // label18
+            // lblPassedTestStatus4
             // 
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Black;
-            this.label18.Location = new System.Drawing.Point(145, 96);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(131, 19);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "0/3 Passed Tests";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblPassedTestStatus4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassedTestStatus4.ForeColor = System.Drawing.Color.Black;
+            this.lblPassedTestStatus4.Location = new System.Drawing.Point(445, 100);
+            this.lblPassedTestStatus4.Name = "lblPassedTestStatus4";
+            this.lblPassedTestStatus4.Size = new System.Drawing.Size(131, 19);
+            this.lblPassedTestStatus4.TabIndex = 0;
+            this.lblPassedTestStatus4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label17
+            // lblPassedTestStatus3
             // 
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(145, 53);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(124, 40);
-            this.label17.TabIndex = 0;
-            this.label17.Text = "2. Vision Test (Current)";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblPassedTestStatus3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassedTestStatus3.ForeColor = System.Drawing.Color.Black;
+            this.lblPassedTestStatus3.Location = new System.Drawing.Point(304, 100);
+            this.lblPassedTestStatus3.Name = "lblPassedTestStatus3";
+            this.lblPassedTestStatus3.Size = new System.Drawing.Size(131, 19);
+            this.lblPassedTestStatus3.TabIndex = 0;
+            this.lblPassedTestStatus3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label25
+            // lblPassedTestStatus2
             // 
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.ForeColor = System.Drawing.Color.Black;
-            this.label25.Location = new System.Drawing.Point(310, 53);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(110, 24);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "3. Written Test";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPassedTestStatus2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassedTestStatus2.ForeColor = System.Drawing.Color.Black;
+            this.lblPassedTestStatus2.Location = new System.Drawing.Point(145, 96);
+            this.lblPassedTestStatus2.Name = "lblPassedTestStatus2";
+            this.lblPassedTestStatus2.Size = new System.Drawing.Size(131, 19);
+            this.lblPassedTestStatus2.TabIndex = 0;
+            this.lblPassedTestStatus2.Text = "0/3 Passed Tests";
+            this.lblPassedTestStatus2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblCurrentTest4
+            // 
+            this.lblCurrentTest4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentTest4.ForeColor = System.Drawing.Color.Black;
+            this.lblCurrentTest4.Location = new System.Drawing.Point(445, 57);
+            this.lblCurrentTest4.Name = "lblCurrentTest4";
+            this.lblCurrentTest4.Size = new System.Drawing.Size(124, 40);
+            this.lblCurrentTest4.TabIndex = 0;
+            this.lblCurrentTest4.Text = "4. Street Test";
+            this.lblCurrentTest4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblCurrentTest3
+            // 
+            this.lblCurrentTest3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentTest3.ForeColor = System.Drawing.Color.Black;
+            this.lblCurrentTest3.Location = new System.Drawing.Point(304, 57);
+            this.lblCurrentTest3.Name = "lblCurrentTest3";
+            this.lblCurrentTest3.Size = new System.Drawing.Size(124, 40);
+            this.lblCurrentTest3.TabIndex = 0;
+            this.lblCurrentTest3.Text = "3. Written Test";
+            this.lblCurrentTest3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblCurrentTest2
+            // 
+            this.lblCurrentTest2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentTest2.ForeColor = System.Drawing.Color.Black;
+            this.lblCurrentTest2.Location = new System.Drawing.Point(145, 53);
+            this.lblCurrentTest2.Name = "lblCurrentTest2";
+            this.lblCurrentTest2.Size = new System.Drawing.Size(124, 40);
+            this.lblCurrentTest2.TabIndex = 0;
+            this.lblCurrentTest2.Text = "2. Vision Test (Current)";
+            this.lblCurrentTest2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // guna2Panel4
             // 
@@ -674,6 +728,16 @@
             this.guna2Panel4.Name = "guna2Panel4";
             this.guna2Panel4.Size = new System.Drawing.Size(614, 53);
             this.guna2Panel4.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
+            this.panel3.Location = new System.Drawing.Point(0, 45);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(614, 14);
+            this.panel3.TabIndex = 1;
             // 
             // label21
             // 
@@ -813,6 +877,16 @@
             this.guna2Panel5.Size = new System.Drawing.Size(610, 53);
             this.guna2Panel5.TabIndex = 1;
             // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
+            this.panel4.Location = new System.Drawing.Point(0, 42);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(614, 14);
+            this.panel4.TabIndex = 1;
+            // 
             // label23
             // 
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -874,7 +948,7 @@
             // 
             this.guna2ShadowPanel6.BackColor = System.Drawing.Color.Transparent;
             this.guna2ShadowPanel6.Controls.Add(this.dgvAppointments);
-            this.guna2ShadowPanel6.Controls.Add(this.guna2Button1);
+            this.guna2ShadowPanel6.Controls.Add(this.btnNewAppointment);
             this.guna2ShadowPanel6.Controls.Add(this.guna2Panel6);
             this.guna2ShadowPanel6.Controls.Add(this.guna2CirclePictureBox4);
             this.guna2ShadowPanel6.Controls.Add(this.label16);
@@ -894,47 +968,47 @@
             this.dgvAppointments.AllowUserToAddRows = false;
             this.dgvAppointments.AllowUserToResizeColumns = false;
             this.dgvAppointments.AllowUserToResizeRows = false;
-            dataGridViewCellStyle61.BackColor = System.Drawing.Color.White;
-            this.dgvAppointments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle61;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            this.dgvAppointments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvAppointments.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle62.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle62.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
-            dataGridViewCellStyle62.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle62.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            dataGridViewCellStyle62.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle62.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle62.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAppointments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle62;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAppointments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvAppointments.ColumnHeadersHeight = 40;
             this.dgvAppointments.Cursor = System.Windows.Forms.Cursors.IBeam;
-            dataGridViewCellStyle63.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle63.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle63.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle63.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle63.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle63.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle63.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvAppointments.DefaultCellStyle = dataGridViewCellStyle63;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAppointments.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvAppointments.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvAppointments.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvAppointments.Location = new System.Drawing.Point(18, 130);
             this.dgvAppointments.Name = "dgvAppointments";
             this.dgvAppointments.ReadOnly = true;
-            dataGridViewCellStyle64.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle64.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle64.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle64.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle64.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle64.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle64.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAppointments.RowHeadersDefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAppointments.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvAppointments.RowHeadersVisible = false;
             this.dgvAppointments.RowHeadersWidth = 51;
-            dataGridViewCellStyle65.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
-            dataGridViewCellStyle65.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgvAppointments.RowsDefaultCellStyle = dataGridViewCellStyle65;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvAppointments.RowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvAppointments.RowTemplate.Height = 60;
             this.dgvAppointments.RowTemplate.ReadOnly = true;
             this.dgvAppointments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -964,28 +1038,29 @@
             this.dgvAppointments.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvAppointments.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvAppointments_Paint);
             // 
-            // guna2Button1
+            // btnNewAppointment
             // 
-            this.guna2Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2Button1.BorderRadius = 10;
-            this.guna2Button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(52)))), ((int)(((byte)(90)))));
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.guna2Button1.ForeColor = System.Drawing.Color.White;
-            this.guna2Button1.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
-            this.guna2Button1.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.guna2Button1.ImageOffset = new System.Drawing.Point(10, 0);
-            this.guna2Button1.ImageSize = new System.Drawing.Size(30, 30);
-            this.guna2Button1.Location = new System.Drawing.Point(937, 65);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(276, 52);
-            this.guna2Button1.TabIndex = 12;
-            this.guna2Button1.Text = "➕   New Appointment";
-            this.guna2Button1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnNewAppointment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNewAppointment.BorderRadius = 10;
+            this.btnNewAppointment.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNewAppointment.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNewAppointment.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNewAppointment.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNewAppointment.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNewAppointment.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(52)))), ((int)(((byte)(90)))));
+            this.btnNewAppointment.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnNewAppointment.ForeColor = System.Drawing.Color.White;
+            this.btnNewAppointment.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnNewAppointment.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnNewAppointment.ImageOffset = new System.Drawing.Point(10, 0);
+            this.btnNewAppointment.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnNewAppointment.Location = new System.Drawing.Point(937, 65);
+            this.btnNewAppointment.Name = "btnNewAppointment";
+            this.btnNewAppointment.Size = new System.Drawing.Size(276, 52);
+            this.btnNewAppointment.TabIndex = 12;
+            this.btnNewAppointment.Text = "➕   New Appointment";
+            this.btnNewAppointment.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnNewAppointment.Click += new System.EventHandler(this.btnNewAppointment_Click);
             // 
             // guna2Panel6
             // 
@@ -999,6 +1074,16 @@
             this.guna2Panel6.Name = "guna2Panel6";
             this.guna2Panel6.Size = new System.Drawing.Size(1249, 53);
             this.guna2Panel6.TabIndex = 1;
+            // 
+            // panel5
+            // 
+            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
+            this.panel5.Location = new System.Drawing.Point(0, 45);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1249, 10);
+            this.panel5.TabIndex = 1;
             // 
             // label15
             // 
@@ -1057,67 +1142,7 @@
             this.btnClose.Text = "✖️";
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
-            this.panel1.Location = new System.Drawing.Point(1, 45);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(347, 11);
-            this.panel1.TabIndex = 1;
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
-            this.panel2.Location = new System.Drawing.Point(1, 49);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(404, 10);
-            this.panel2.TabIndex = 1;
-            // 
-            // panel3
-            // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
-            this.panel3.Location = new System.Drawing.Point(0, 45);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(614, 14);
-            this.panel3.TabIndex = 1;
-            // 
-            // panel4
-            // 
-            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
-            this.panel4.Location = new System.Drawing.Point(0, 42);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(614, 14);
-            this.panel4.TabIndex = 1;
-            // 
-            // panel5
-            // 
-            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(224)))), ((int)(((byte)(229)))));
-            this.panel5.Location = new System.Drawing.Point(0, 45);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1249, 10);
-            this.panel5.TabIndex = 1;
-            // 
-            // panel6
-            // 
-            this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(155)))), ((int)(((byte)(161)))));
-            this.panel6.Location = new System.Drawing.Point(1, 44);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(436, 10);
-            this.panel6.TabIndex = 1;
-            // 
-            // ucVisionTest
+            // ucTypeTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1125,7 +1150,7 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "ucVisionTest";
+            this.Name = "ucTypeTest";
             this.Size = new System.Drawing.Size(1341, 866);
             this.Load += new System.EventHandler(this.ucVisionTest_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -1196,7 +1221,6 @@
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel5;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel5;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label lblClassName;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
@@ -1208,7 +1232,7 @@
         private Guna.UI2.WinForms.Guna2Button btnNewApplication;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox3;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox2;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button btnNewAppointment;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox4;
         private System.Windows.Forms.Label label16;
         private Guna.UI2.WinForms.Guna2DataGridView dgvAppointments;
@@ -1220,10 +1244,9 @@
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox8;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox7;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox6;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label lblPassedTestStatus2;
+        private System.Windows.Forms.Label lblCurrentTest2;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label22;
         private Guna.UI2.WinForms.Guna2Button btnClose;
         private System.Windows.Forms.Label lblPassedTests;
@@ -1234,5 +1257,9 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label lblPassedTestStatus4;
+        private System.Windows.Forms.Label lblPassedTestStatus3;
+        private System.Windows.Forms.Label lblCurrentTest4;
+        private System.Windows.Forms.Label lblCurrentTest3;
     }
 }

@@ -18,5 +18,9 @@ namespace DVLD_BusinessLayer
         {
             return clsTestAppointmentDataAccess.visionTestDataGridView(ApplicationID);
         }
+        public static DataTable getTsetAppointment(int ApplicationID)
+        {
+            return clsTestAppointmentDataAccess.getTsetAppointment(ApplicationID);
+        }
     }
 }

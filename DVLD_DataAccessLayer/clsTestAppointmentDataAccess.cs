@@ -70,8 +70,7 @@ namespace DVLD_DataAccessLayer
                                         WHEN TA.IsLocked = 1 THEN 'Active'
                                         ELSE 'Inactive'
                                     END AS isLocked
-                                FROM People P 
-                                INNER JOIN Applications A ON P.PersonID = A.ApplicantPersonID
+                                FROM Applications A
                                 INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
                                 INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
                                 LEFT JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
@@ -93,5 +92,37 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+
+        public static DataTable getTsetAppointment(int ApplicationID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT 
+                                    TA.TestTypeID
+                                FROM Applications A
+                                INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
+                                INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
+                                LEFT JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                                WHERE A.ApplicationID = @ApplicationID;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
+
+
     }
 }
