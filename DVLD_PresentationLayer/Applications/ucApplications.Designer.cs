@@ -56,6 +56,9 @@
             this.btnNewApplication = new Guna.UI2.WinForms.Guna2Button();
             this.lblCountTotalAndPending = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnLocalApp = new Guna.UI2.WinForms.Guna2Button();
+            this.btnInternationalApp = new Guna.UI2.WinForms.Guna2Button();
+            this.btnRenewApp = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplications)).BeginInit();
             this.guna2ContextMenuStrip1.SuspendLayout();
@@ -387,11 +390,83 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Applications";
             // 
+            // btnLocalApp
+            // 
+            this.btnLocalApp.BorderRadius = 10;
+            this.btnLocalApp.BorderThickness = 1;
+            this.btnLocalApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLocalApp.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLocalApp.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLocalApp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLocalApp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLocalApp.FillColor = System.Drawing.Color.Transparent;
+            this.btnLocalApp.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLocalApp.ForeColor = System.Drawing.Color.Black;
+            this.btnLocalApp.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnLocalApp.Image = ((System.Drawing.Image)(resources.GetObject("btnLocalApp.Image")));
+            this.btnLocalApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLocalApp.Location = new System.Drawing.Point(24, 140);
+            this.btnLocalApp.Name = "btnLocalApp";
+            this.btnLocalApp.Size = new System.Drawing.Size(235, 52);
+            this.btnLocalApp.TabIndex = 10;
+            this.btnLocalApp.Text = "Local Applications";
+            this.btnLocalApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.btnLocalApp.Click += new System.EventHandler(this.btnNewApplication_Click);
+            // 
+            // btnInternationalApp
+            // 
+            this.btnInternationalApp.BorderRadius = 10;
+            this.btnInternationalApp.BorderThickness = 1;
+            this.btnInternationalApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInternationalApp.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnInternationalApp.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnInternationalApp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnInternationalApp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnInternationalApp.FillColor = System.Drawing.Color.Transparent;
+            this.btnInternationalApp.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnInternationalApp.ForeColor = System.Drawing.Color.Black;
+            this.btnInternationalApp.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnInternationalApp.Image = ((System.Drawing.Image)(resources.GetObject("btnInternationalApp.Image")));
+            this.btnInternationalApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnInternationalApp.Location = new System.Drawing.Point(283, 140);
+            this.btnInternationalApp.Name = "btnInternationalApp";
+            this.btnInternationalApp.Size = new System.Drawing.Size(303, 52);
+            this.btnInternationalApp.TabIndex = 10;
+            this.btnInternationalApp.Text = "International Applications";
+            this.btnInternationalApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.btnInternationalApp.Click += new System.EventHandler(this.btnNewApplication_Click);
+            // 
+            // btnRenewApp
+            // 
+            this.btnRenewApp.BorderRadius = 10;
+            this.btnRenewApp.BorderThickness = 1;
+            this.btnRenewApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRenewApp.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnRenewApp.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnRenewApp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnRenewApp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnRenewApp.FillColor = System.Drawing.Color.Transparent;
+            this.btnRenewApp.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnRenewApp.ForeColor = System.Drawing.Color.Black;
+            this.btnRenewApp.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnRenewApp.Image = ((System.Drawing.Image)(resources.GetObject("btnRenewApp.Image")));
+            this.btnRenewApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnRenewApp.Location = new System.Drawing.Point(610, 140);
+            this.btnRenewApp.Name = "btnRenewApp";
+            this.btnRenewApp.Size = new System.Drawing.Size(214, 52);
+            this.btnRenewApp.TabIndex = 10;
+            this.btnRenewApp.Text = "Renew/Services";
+            this.btnRenewApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.btnRenewApp.Click += new System.EventHandler(this.btnNewApplication_Click);
+            // 
             // ucApplications
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.guna2Panel1);
+            this.Controls.Add(this.btnInternationalApp);
+            this.Controls.Add(this.btnRenewApp);
+            this.Controls.Add(this.btnLocalApp);
             this.Controls.Add(this.btnNewApplication);
             this.Controls.Add(this.lblCountTotalAndPending);
             this.Controls.Add(this.label1);
@@ -429,5 +504,8 @@
         private System.Windows.Forms.ToolStripMenuItem deleteApplicationToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private Guna.UI2.WinForms.Guna2Button btnLocalApp;
+        private Guna.UI2.WinForms.Guna2Button btnInternationalApp;
+        private Guna.UI2.WinForms.Guna2Button btnRenewApp;
     }
 }
