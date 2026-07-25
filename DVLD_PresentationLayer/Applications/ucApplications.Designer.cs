@@ -324,6 +324,7 @@
             this.showPersonToolStripMenuItem.Name = "showPersonToolStripMenuItem";
             this.showPersonToolStripMenuItem.Size = new System.Drawing.Size(361, 30);
             this.showPersonToolStripMenuItem.Text = "Show Person License History";
+            this.showPersonToolStripMenuItem.Click += new System.EventHandler(this.showPersonToolStripMenuItem_Click);
             // 
             // tbFilterNameAppID
             // 

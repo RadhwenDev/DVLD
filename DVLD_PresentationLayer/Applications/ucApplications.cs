@@ -1,4 +1,5 @@
 ﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Drivers;
 using DVLD_PresentationLayer.Licenses;
 using DVLD_PresentationLayer.TestAppointments;
 using Guna.UI2.WinForms;
@@ -546,6 +547,38 @@ namespace DVLD_PresentationLayer.Applications
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
                     ucTypeTest myVisionTestPage = new ucTypeTest(appID);
+                    frmContainer.Size = myVisionTestPage.Size;
+                    myVisionTestPage.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myVisionTestPage);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+        }
+
+        private void showPersonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucShowPersonLicenseHistory myVisionTestPage = new ucShowPersonLicenseHistory(appID);
                     frmContainer.Size = myVisionTestPage.Size;
                     myVisionTestPage.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myVisionTestPage);

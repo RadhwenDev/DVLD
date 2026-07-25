@@ -120,6 +120,12 @@
     <Compile Include="Dashboard\ucServiceBreakdown.Designer.cs">
       <DependentUpon>ucServiceBreakdown.cs</DependentUpon>
     </Compile>
+    <Compile Include="Drivers\ucShowPersonLicenseHistory.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Drivers\ucShowPersonLicenseHistory.Designer.cs">
+      <DependentUpon>ucShowPersonLicenseHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,6 +277,9 @@
     <EmbeddedResource Include="Dashboard\ucServiceBreakdown.resx">
       <DependentUpon>ucServiceBreakdown.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Drivers\ucShowPersonLicenseHistory.resx">
+      <DependentUpon>ucShowPersonLicenseHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -360,8 +369,6 @@
       <Name>DVLD_Security</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drivers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
