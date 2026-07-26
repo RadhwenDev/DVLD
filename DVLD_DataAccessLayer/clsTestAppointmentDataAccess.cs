@@ -92,6 +92,61 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+        public static DataTable getDataAppintment(int ApplicationID, int TestTypeID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT 
+                                    -- 1. Local Application & Person Info
+                                    LDLApp.LocalDrivingLicenseApplicationID AS [D.L.App.ID],
+                                    LicenseClasses.ClassName AS [D.Class],
+                                    People.FirstName + ' ' + People.SecondName + ' ' + ISNULL(People.ThirdName, '') + ' ' + People.LastName AS [Name],
+
+                                    (
+                                        SELECT COUNT(Tests.TestID)
+                                        FROM Tests 
+                                        INNER JOIN TestAppointments ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID
+                                        WHERE TestAppointments.LocalDrivingLicenseApplicationID = LDLApp.LocalDrivingLicenseApplicationID
+                                          AND TestAppointments.TestTypeID = @TestTypeID
+                                    ) AS [Trial],
+
+                                    -- 3. Appointment Info
+                                    TestAppointments.AppointmentDate AS [Date],
+                                    TestTypes.TestTypeFees AS [Fees],
+
+                                    -- 4. Retake Test Info
+                                    ISNULL(Applications.PaidFees, 0) AS [R.App.Fees],
+                                    (TestTypes.TestTypeFees + ISNULL(Applications.PaidFees, 0)) AS [Total Fees]
+
+                                FROM LocalDrivingLicenseApplications LDLApp
+                                INNER JOIN Applications ON LDLApp.ApplicationID = Applications.ApplicationID
+                                INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+                                INNER JOIN LicenseClasses ON LDLApp.LicenseClassID = LicenseClasses.LicenseClassID
+                                CROSS JOIN TestTypes
+                                LEFT JOIN TestAppointments ON TestAppointments.LocalDrivingLicenseApplicationID = LDLApp.LocalDrivingLicenseApplicationID
+                                                          AND TestAppointments.TestTypeID = TestTypes.TestTypeID
+
+                                WHERE LDLApp.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                                  AND TestTypes.TestTypeID = @TestTypeID;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return dt;
+        }
 
         public static DataTable getTsetAppointment(int ApplicationID)
         {

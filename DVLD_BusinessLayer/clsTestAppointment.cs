@@ -22,5 +22,9 @@ namespace DVLD_BusinessLayer
         {
             return clsTestAppointmentDataAccess.getTsetAppointment(ApplicationID);
         }
+        public static DataTable getDataAppintment(int ApplicationID, int TestTypeID)
+        {
+            return clsTestAppointmentDataAccess.getDataAppintment(ApplicationID, TestTypeID);
+        }
     }
 }

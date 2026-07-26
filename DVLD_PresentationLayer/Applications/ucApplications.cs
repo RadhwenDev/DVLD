@@ -95,6 +95,7 @@ namespace DVLD_PresentationLayer.Applications
             UpdateRowsCount(_dtAllApplicants);
         }
 
+
         private void ApplyCombinedFilter()
         {
             if (_dtAllApplicants == null) return;
