@@ -54,11 +54,18 @@ namespace DVLD_PresentationLayer
         private void Form1_Load(object sender, EventArgs e)
         {
             lblDate.Text = DateTime.Today.Date.ToString("ddd , MMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            clsCurrentUser.UserDataChanged += UpdateUserData;
 
             // استدعاء دالة التحديث لتعبئة البيانات أول ما يفتح البرنامج
             UpdateUserData();
         }
-
+        private void MyAddPersonPage_DataBack(object sender, int PersonID)
+        {
+            if (clsCurrentUser.CurrentUser != null)
+            {
+                lblUser.Text = clsCurrentUser.CurrentUser.UserName;
+            }
+        }
         private void UpdateUserData()
         {
             // التأكد أن الـ CurrentUser ليس فارغاً تجنباً للـ Exception

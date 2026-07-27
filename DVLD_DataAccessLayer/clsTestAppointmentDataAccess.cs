@@ -33,12 +33,12 @@ namespace DVLD_DataAccessLayer
                                     LDLA.LocalDrivingLicenseApplicationID,
                                     LC.ClassName,
                                     TA.TestTypeID
-                                FROM People P 
-                                INNER JOIN Users U ON P.PersonID = U.PersonID
-                                INNER JOIN Applications A ON P.PersonID = A.ApplicantPersonID
-                                INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
-                                INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
-                                LEFT JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                                from LocalDrivingLicenseApplications LDLA
+                                inner join Applications A on LDLA.ApplicationID = A.ApplicationID
+                                inner join LicenseClasses LC on LDLA.LicenseClassID = LC.LicenseClassID
+                                inner join TestAppointments TA on LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                                inner join People P on A.ApplicantPersonID = P.PersonID
+                                INNER JOIN Users U ON A.CreatedByUserID = U.UserID
                                 WHERE A.ApplicationID = @ApplicationID;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

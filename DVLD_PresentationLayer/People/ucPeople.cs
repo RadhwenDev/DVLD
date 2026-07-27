@@ -71,7 +71,7 @@ namespace DVLD_PresentationLayer
             if (_dtAllPeople != null)
             {
                 // إضافة الأعمدة المحسوبة ديناميكياً
-                _dtAllPeople.Columns.Add("PERSON", typeof(string), "FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName");
+                _dtAllPeople.Columns.Add("PERSON", typeof(string),"TRIM(FirstName + " + "IIF(ISNULL(SecondName, '') = '', '', ' ' + SecondName) + " + "IIF(ISNULL(ThirdName, '') = '', '', ' ' + ThirdName) + " + "' ' + LastName)"); 
                 _dtAllPeople.Columns.Add("CountryCode", typeof(string));
 
                 foreach (DataRow row in _dtAllPeople.Rows)

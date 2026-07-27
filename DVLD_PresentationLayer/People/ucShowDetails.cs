@@ -122,8 +122,11 @@ namespace DVLD_PresentationLayer
             }
 
             // 1. دمج الاسم الكامل بشكل منسق مع مسافات
-            lblName.Text = $"{_Person.FirstName} {_Person.SecondName} {_Person.ThirdName} {_Person.LastName}".Replace("  ", " ");
+            var nameParts = new[] { _Person.FirstName, _Person.SecondName, _Person.ThirdName, _Person.LastName }
+                .Where(name => !string.IsNullOrWhiteSpace(name));
 
+            // دمج الأسماء المتبقية مع وضع مسافة واحدة بينها
+            lblName.Text = string.Join(" ", nameParts);
             // 2. إسناد البيانات للنصوص
             lblPersonID.Text = "Person ID: " + _Person.PersonID.ToString();
             lblNationalID.Text = _Person.NationalNo;

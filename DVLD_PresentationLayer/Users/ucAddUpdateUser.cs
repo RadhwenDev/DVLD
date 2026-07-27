@@ -1,4 +1,5 @@
 ﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Global;
 using DVLD_Security;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DVLD_PresentationLayer.ucAddUpdatePerson;
+
 
 namespace DVLD_PresentationLayer.Users
 {
@@ -260,6 +262,12 @@ namespace DVLD_PresentationLayer.Users
 
                     _Mode = enMode.Update; // تغيير الوضع إلى تعديل بعد النجاح الفوري
                     _UserID = _User.PersonID;
+
+                    if (clsCurrentUser.CurrentUser != null && clsCurrentUser.CurrentUser.UserID == _User.UserID)
+                    {
+                        clsCurrentUser.CurrentUser = _User; // أو تحديث الحقول يلي تغيرت فيه
+                        clsCurrentUser.RaiseUserDataChanged(); // <-- هون الأهم
+                    }
 
                     DataBack?.Invoke(this, _User.PersonID);
                     this.FindForm()?.Close();

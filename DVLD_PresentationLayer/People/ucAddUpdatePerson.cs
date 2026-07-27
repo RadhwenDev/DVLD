@@ -356,18 +356,38 @@ namespace DVLD_PresentationLayer
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
-            openFileDialog.Title = "Select Contact Image";
+            openFileDialog.Title = "Select Person Image";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // 🌟 الحل السحري: تحميل الصورة باستخدام Stream لمنع قفل الملف بنظام التشغيل
-                using (var stream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
+                try
                 {
-                    picImage.Image = Image.FromStream(stream);
-                }
+                    // 1. قراءة بايتات الصورة بالكامل لفك القفل عن الملف نهائياً
+                    byte[] imageBytes = File.ReadAllBytes(openFileDialog.FileName);
 
-                _SelectedImagePath = openFileDialog.FileName;
-                linkLblImage.Text = "Update Image";
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    {
+                        // تحرير ذاكرة الصورة القديمة إن وجدت
+                        if (picImage.Image != null)
+                        {
+                            picImage.Image.Dispose();
+                        }
+
+                        // إنشاء نسخة Bitmap جديدة في الذاكرة للـ PictureBox
+                        picImage.Image = new Bitmap(ms);
+                    }
+
+                    _SelectedImagePath = openFileDialog.FileName;
+                    linkLblImage.Text = "Edit Image";
+                }
+                catch (Exception)
+                {
+                    // 2. معالجة حالة اختيار ملف غير صالح دون إغلاق البرنامج
+                    MessageBox.Show("Invalid image or unsupported format! Please select another image.",
+                                    "Image Load Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
             }
         }
 

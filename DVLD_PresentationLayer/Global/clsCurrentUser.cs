@@ -17,5 +17,11 @@ namespace DVLD_PresentationLayer.Global
                 return (CurrentUser != null) ? CurrentUser.UserID : -1;
             }
         }
+        public static event Action UserDataChanged;
+
+        public static void RaiseUserDataChanged()
+        {
+            UserDataChanged?.Invoke();
+        }
     }
 }

@@ -92,7 +92,7 @@
             this.guna2CirclePictureBox3 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2CirclePictureBox2 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            this.btnNewApplication = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLicenseHistory = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label23 = new System.Windows.Forms.Label();
@@ -759,7 +759,7 @@
             this.guna2ShadowPanel5.Controls.Add(this.guna2CirclePictureBox3);
             this.guna2ShadowPanel5.Controls.Add(this.guna2CirclePictureBox2);
             this.guna2ShadowPanel5.Controls.Add(this.guna2CirclePictureBox1);
-            this.guna2ShadowPanel5.Controls.Add(this.btnNewApplication);
+            this.guna2ShadowPanel5.Controls.Add(this.btnLicenseHistory);
             this.guna2ShadowPanel5.Controls.Add(this.guna2Panel5);
             this.guna2ShadowPanel5.Controls.Add(this.lblClassName);
             this.guna2ShadowPanel5.Controls.Add(this.label14);
@@ -842,27 +842,28 @@
             this.guna2CirclePictureBox1.TabIndex = 2;
             this.guna2CirclePictureBox1.TabStop = false;
             // 
-            // btnNewApplication
+            // btnLicenseHistory
             // 
-            this.btnNewApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewApplication.BorderRadius = 10;
-            this.btnNewApplication.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNewApplication.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnNewApplication.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnNewApplication.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnNewApplication.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnNewApplication.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(52)))), ((int)(((byte)(90)))));
-            this.btnNewApplication.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnNewApplication.ForeColor = System.Drawing.Color.White;
-            this.btnNewApplication.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
-            this.btnNewApplication.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnNewApplication.ImageOffset = new System.Drawing.Point(10, 0);
-            this.btnNewApplication.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnNewApplication.Location = new System.Drawing.Point(47, 183);
-            this.btnNewApplication.Name = "btnNewApplication";
-            this.btnNewApplication.Size = new System.Drawing.Size(277, 35);
-            this.btnNewApplication.TabIndex = 12;
-            this.btnNewApplication.Text = "View License History";
+            this.btnLicenseHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLicenseHistory.BorderRadius = 10;
+            this.btnLicenseHistory.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLicenseHistory.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLicenseHistory.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLicenseHistory.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLicenseHistory.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLicenseHistory.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(52)))), ((int)(((byte)(90)))));
+            this.btnLicenseHistory.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLicenseHistory.ForeColor = System.Drawing.Color.White;
+            this.btnLicenseHistory.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnLicenseHistory.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnLicenseHistory.ImageOffset = new System.Drawing.Point(10, 0);
+            this.btnLicenseHistory.ImageSize = new System.Drawing.Size(30, 30);
+            this.btnLicenseHistory.Location = new System.Drawing.Point(47, 183);
+            this.btnLicenseHistory.Name = "btnLicenseHistory";
+            this.btnLicenseHistory.Size = new System.Drawing.Size(277, 35);
+            this.btnLicenseHistory.TabIndex = 12;
+            this.btnLicenseHistory.Text = "View License History";
+            this.btnLicenseHistory.Click += new System.EventHandler(this.btnLicenseHistory_Click);
             // 
             // guna2Panel5
             // 
@@ -1229,7 +1230,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel6;
         private System.Windows.Forms.Label label15;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox1;
-        private Guna.UI2.WinForms.Guna2Button btnNewApplication;
+        private Guna.UI2.WinForms.Guna2Button btnLicenseHistory;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox3;
         private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox2;
         private Guna.UI2.WinForms.Guna2Button btnNewAppointment;

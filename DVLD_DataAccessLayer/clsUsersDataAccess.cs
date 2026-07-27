@@ -280,8 +280,8 @@ namespace DVLD_DataAccessLayer
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@UserID", userID);
-                    command.Parameters.AddWithValue("@TokenHash", tokenHash);
-                    command.Parameters.AddWithValue("@ExpiryDate", expiryDate);
+                    command.Parameters.AddWithValue("@RememberTokenHash", tokenHash);
+                    command.Parameters.AddWithValue("@RememberTokenExpiry", expiryDate);
 
                     try
                     {
@@ -307,7 +307,7 @@ namespace DVLD_DataAccessLayer
                 using (SqlCommand command = new SqlCommand("SP_GetUserByRememberTokenHash", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@TokenHash", tokenHash);
+                    command.Parameters.AddWithValue("@RememberTokenHash", tokenHash);
 
                     try
                     {

@@ -221,8 +221,8 @@ namespace DVLD_DataAccessLayer
                     isFound = true;
                     NationalNo = (string)reader["NationalNo"];
                     FirstName = (string)reader["FirstName"];
-                    SecondName = (string)reader["SecondName"];
-                    ThirdName = (string)reader["ThirdName"];
+                    SecondName = reader["SecondName"] != DBNull.Value ? (string)reader["SecondName"] : "";
+                    ThirdName = reader["ThirdName"] != DBNull.Value ? (string)reader["ThirdName"] : "";
                     LastName = (string)reader["LastName"];
                     DateOfBirth = (DateTime)reader["DateOfBirth"];
                     Gendor = (byte)reader["Gendor"];
