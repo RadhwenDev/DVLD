@@ -50,7 +50,6 @@
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
             this.btnCancel = new Guna.UI2.WinForms.Guna2Button();
             this.lblFees = new System.Windows.Forms.Label();
-            this.lblDate = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -62,6 +61,7 @@
             this.lblRAppFees = new System.Windows.Forms.Label();
             this.pbtypeTest = new Guna.UI2.WinForms.Guna2PictureBox();
             this.lblTestType = new System.Windows.Forms.Label();
+            this.Date = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.lblDLAppID.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.guna2Panel2.SuspendLayout();
@@ -286,10 +286,10 @@
             // 
             this.guna2Panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Panel5.Controls.Add(this.Date);
             this.guna2Panel5.Controls.Add(this.btnSave);
             this.guna2Panel5.Controls.Add(this.btnCancel);
             this.guna2Panel5.Controls.Add(this.lblFees);
-            this.guna2Panel5.Controls.Add(this.lblDate);
             this.guna2Panel5.Controls.Add(this.label7);
             this.guna2Panel5.Controls.Add(this.label6);
             this.guna2Panel5.Controls.Add(this.groupBox1);
@@ -317,6 +317,7 @@
             this.btnSave.Size = new System.Drawing.Size(144, 37);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
@@ -348,17 +349,6 @@
             this.lblFees.Size = new System.Drawing.Size(180, 31);
             this.lblFees.TabIndex = 5;
             this.lblFees.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDate
-            // 
-            this.lblDate.BackColor = System.Drawing.Color.White;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.ForeColor = System.Drawing.Color.Black;
-            this.lblDate.Location = new System.Drawing.Point(225, 36);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(238, 31);
-            this.lblDate.TabIndex = 5;
-            this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label7
             // 
@@ -490,6 +480,26 @@
             this.lblTestType.TabIndex = 5;
             this.lblTestType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Date
+            // 
+            this.Date.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(218)))), ((int)(((byte)(223)))));
+            this.Date.BorderRadius = 10;
+            this.Date.BorderThickness = 1;
+            this.Date.Checked = true;
+            this.Date.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.Date.CustomFormat = "dd/MM/yyyy";
+            this.Date.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.Date.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Date.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.Date.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.Date.Location = new System.Drawing.Point(226, 36);
+            this.Date.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.Date.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.Date.Name = "Date";
+            this.Date.Size = new System.Drawing.Size(257, 36);
+            this.Date.TabIndex = 10;
+            this.Date.Value = new System.DateTime(2026, 7, 5, 7, 8, 22, 887);
+            // 
             // ucAppointmentTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -546,7 +556,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblTestType;
         private System.Windows.Forms.Label lblFees;
-        private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
@@ -555,5 +564,6 @@
         private System.Windows.Forms.Label lblRTestAppID;
         private System.Windows.Forms.Label lblTotalFees;
         private System.Windows.Forms.Label lblRAppFees;
+        private Guna.UI2.WinForms.Guna2DateTimePicker Date;
     }
 }

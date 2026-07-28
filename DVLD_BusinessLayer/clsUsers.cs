@@ -100,7 +100,7 @@ namespace DVLD_BusinessLayer
 
         public bool AddNewPerson()
         {
-            this.PersonID = clsUsersDataAccess.AddNewUser(this.PersonID, this.UserName, this.Password, this.isActive, this.Permissions);
+            this.UserID = clsUsersDataAccess.AddNewUser(this.PersonID, this.UserName, this.Password, this.isActive, this.Permissions);
             return (this.PersonID != -1);
         }
         public enSaveResult UpdatePerson()

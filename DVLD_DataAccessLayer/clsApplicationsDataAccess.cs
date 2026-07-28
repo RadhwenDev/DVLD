@@ -128,9 +128,9 @@ namespace DVLD_DataAccessLayer
                                       AND A.ApplicantPersonID = 1024
                                       AND A.ApplicationStatus = 1
                                       AND (
-                                          (A_T.ApplicationTypeID NOT IN (1, 8))
+                                          (A_T.ApplicationTypeID NOT IN (1, 7))
                                           OR 
-                                          (A_T.ApplicationTypeID IN (1, 8) AND LDLA.LicenseClassID = @ApplicantPersonID)
+                                          (A_T.ApplicationTypeID IN (1, 7) AND LDLA.LicenseClassID = @ApplicantPersonID)
                                       )
                                 ); ";
                 using (SqlCommand command = new SqlCommand(query, connection))

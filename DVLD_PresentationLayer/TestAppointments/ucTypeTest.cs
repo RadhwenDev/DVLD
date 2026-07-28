@@ -20,6 +20,8 @@ namespace DVLD_PresentationLayer.TestAppointments
         enum enTest { Vision, Written, Street}
         enTest _Test;
         int _AppID = -1;
+        int testTypeID = -1;
+        private clsTestAppointment _TestAppointment;
         public ucTypeTest(int appID)
         {
             InitializeComponent();
@@ -71,7 +73,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                 lblFees.Text = dt.Rows[0]["ApplicationPaidFees"].ToString();
             lblDLAppID.Text = dt.Rows[0]["LocalDrivingLicenseApplicationID"].ToString();
             lblClassName.Text = dt.Rows[0]["ClassName"].ToString();
-            int testTypeID = 1;
+            testTypeID = 1;
 
             if (dt.Rows.Count > 0 && dt.Rows[0]["TestTypeID"] != DBNull.Value)
             {
@@ -93,6 +95,17 @@ namespace DVLD_PresentationLayer.TestAppointments
             if (hasAppointments)
             {
                 dgvAppointments.DataSource = dgv;
+                if (dgv.Rows[0]["IsLocked"].ToString() == "Locked")
+                {
+                    btnNewAppointment.Enabled = true;
+                    editToolStripMenuItem.Enabled = false;
+                }
+                    
+                else
+                {
+                    btnNewAppointment.Enabled = false;
+                    editToolStripMenuItem.Enabled = true;
+                }
             }
             
         }
@@ -198,12 +211,8 @@ namespace DVLD_PresentationLayer.TestAppointments
                 }
             }
         }
-
-        private void btnNewAppointment_Click(object sender, EventArgs e)
+        private void AddEditTestAppointment(int Mode)
         {
-            int selectedPersonID = Convert.ToInt32(PersonID);
-
-
             using (Form overlay = new Form())
             {
                 overlay.StartPosition = FormStartPosition.Manual;
@@ -220,7 +229,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                     frmContainer.BackColor = Color.White;
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
-                    ucAppointmentTest myShowDetails = new ucAppointmentTest();
+                    ucAppointmentTest myShowDetails = new ucAppointmentTest(_AppID, Mode);
 
                     frmContainer.Size = myShowDetails.Size;
                     myShowDetails.Dock = DockStyle.Fill;
@@ -233,6 +242,10 @@ namespace DVLD_PresentationLayer.TestAppointments
                     frmContainer.ShowDialog(overlay);
                 }
             }
+        }
+        private void btnNewAppointment_Click(object sender, EventArgs e)
+        {
+            AddEditTestAppointment(0);
         }
 
         private void btnLicenseHistory_Click(object sender, EventArgs e)
@@ -261,6 +274,44 @@ namespace DVLD_PresentationLayer.TestAppointments
                     frmContainer.Size = myShowPersonLicenseHistory.Size;
                     myShowPersonLicenseHistory.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myShowPersonLicenseHistory);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddEditTestAppointment(1);
+        }
+
+        private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucTakeTest myTakeTest = new ucTakeTest(_AppID, testTypeID);
+
+                    frmContainer.Size = myTakeTest.Size;
+                    myTakeTest.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myTakeTest);
 
                     Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
                     elipse.TargetControl = frmContainer;

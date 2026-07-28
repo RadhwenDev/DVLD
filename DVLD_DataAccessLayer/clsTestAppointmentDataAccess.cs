@@ -28,16 +28,17 @@ namespace DVLD_DataAccessLayer
                                     END AS [STATUS],
                                     A.LastStatusDate, 
                                     A.ApplicationDate, 
+                                    A.ApplicationID,
                                     U.Username AS CreatedByUserName, 
                                     A.PaidFees AS ApplicationPaidFees,
                                     LDLA.LocalDrivingLicenseApplicationID,
                                     LC.ClassName,
                                     TA.TestTypeID
                                 from LocalDrivingLicenseApplications LDLA
-                                inner join Applications A on LDLA.ApplicationID = A.ApplicationID
-                                inner join LicenseClasses LC on LDLA.LicenseClassID = LC.LicenseClassID
-                                inner join TestAppointments TA on LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
-                                inner join People P on A.ApplicantPersonID = P.PersonID
+                                INNER JOIN Applications A ON LDLA.ApplicationID = A.ApplicationID
+                                INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
+                                INNER JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                                INNER JOIN People P ON A.ApplicantPersonID = P.PersonID
                                 INNER JOIN Users U ON A.CreatedByUserID = U.UserID
                                 WHERE A.ApplicationID = @ApplicationID;";
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -60,36 +61,49 @@ namespace DVLD_DataAccessLayer
         public static DataTable visionTestDataGridView(int ApplicationID)
         {
             DataTable dt = new DataTable();
+
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT 
-                                    TA.TestAppointmentID, 
-                                    TA.AppointmentDate, 
-                                    TA.PaidFees AS AppointmentPaidFees,
-                                    CASE
-                                        WHEN TA.IsLocked = 1 THEN 'Active'
-                                        ELSE 'Inactive'
-                                    END AS isLocked
-                                FROM Applications A
-                                INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
-                                INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
-                                LEFT JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
-                                WHERE A.ApplicationID = @ApplicationID;";
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
-                    try
+                    connection.Open();
+
+                    // 1. تسكير المواعيد اللي فات تاريخها أوتوماتيكياً قبل قراءة البيانات
+                    using (SqlCommand spCommand = new SqlCommand("LockExpiredTests", connection))
                     {
-                        connection.Open();
+                        spCommand.CommandType = CommandType.StoredProcedure;
+                        spCommand.ExecuteNonQuery();
+                    }
+
+                    // 2. تجيب البيانات المحينة للـ DataGridView
+                    string query = @"SELECT 
+                                TA.TestAppointmentID, 
+                                TA.AppointmentDate, 
+                                TA.PaidFees AS AppointmentPaidFees,
+                                CASE
+                                    WHEN TA.IsLocked = 1 THEN 'Locked'
+                                    ELSE 'Open'
+                                END AS isLocked
+                            FROM Applications A
+                            INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
+                            INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
+                            LEFT JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                            WHERE A.ApplicationID = @ApplicationID;";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.HasRows)
                                 dt.Load(reader);
                         }
                     }
-                    catch (Exception) { }
                 }
+                catch (Exception){}
             }
+
             return dt;
         }
         public static DataTable getDataAppintment(int ApplicationID, int TestTypeID)
@@ -127,7 +141,7 @@ namespace DVLD_DataAccessLayer
                                 LEFT JOIN TestAppointments ON TestAppointments.LocalDrivingLicenseApplicationID = LDLApp.LocalDrivingLicenseApplicationID
                                                           AND TestAppointments.TestTypeID = TestTypes.TestTypeID
 
-                                WHERE LDLApp.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                                WHERE Applications.ApplicationID = @ApplicationID
                                   AND TestTypes.TestTypeID = @TestTypeID;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

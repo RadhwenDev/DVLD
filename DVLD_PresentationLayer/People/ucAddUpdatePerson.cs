@@ -527,6 +527,5 @@ namespace DVLD_PresentationLayer
             }
         }
 
-       
     }
 }

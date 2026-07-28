@@ -61,11 +61,11 @@ namespace DVLD_PresentationLayer.Applications
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
-            int ApplicationID = clsApplicant.AddNewApplication(SelectedPersonID, DateTime.Now, SelectedApplicationTypeID, 1, DateTime.Now, fees, /*clsCurrentUser._UserID*/ 1);
+            int ApplicationID = clsApplicant.AddNewApplication(SelectedPersonID, DateTime.Now, SelectedApplicationTypeID, 1, DateTime.Now, fees, clsCurrentUser._UserID);
             if (ApplicationID != -1)
             {
                 MessageBox.Show($"Application saved successfully with ID = {ApplicationID}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 8)
+                if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 7)
                 {
                     int LocalDrivingLicenseAppID = clsLocalDrivingLicenseApplications.AddNewLocalDrivingLicenseApplications(ApplicationID, SelectedLicenseClassID);
                     if(LocalDrivingLicenseAppID != -1)

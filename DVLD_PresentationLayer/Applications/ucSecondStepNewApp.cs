@@ -66,7 +66,7 @@ namespace DVLD_PresentationLayer.Applications
             {
                 cbApplicationType.SelectedValue = SelectedApplicationTypeID;
 
-                if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 8)
+                if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 7)
                 {
                     cbLicenseClass.Visible = true;
                     if (SelectedLicenseClassID != -1)
@@ -101,7 +101,7 @@ namespace DVLD_PresentationLayer.Applications
 
             SelectedApplicationTypeID = selectedTypeID;
 
-            if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 8)
+            if (SelectedApplicationTypeID == 1 || SelectedApplicationTypeID == 7)
             {
                 cbLicenseClass.Visible = true;
             }
