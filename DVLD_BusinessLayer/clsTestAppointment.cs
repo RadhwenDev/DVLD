@@ -28,11 +28,17 @@ namespace DVLD_BusinessLayer
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
         public int RetakeTestApplicationID { get; set; }
+        // الخصائص هذي للعرض فقط (Read-Only من الـ UI)
+        public string ClassName { get; private set; } = "";
+        public string FullName { get; private set; } = "";
+        public int TestTrialCount { get; private set; } = 0;
+        public int TestID { get; private set; } = -1;
 
         // Navigation Property
         public clsApplicant RetakeTestAppInfo { get; set; }
 
         // Default Constructor (AddNew Mode)
+        // 1. Default Constructor (AddNew Mode)
         public clsTestAppointment()
         {
             this.TestAppointmentID = -1;
@@ -45,13 +51,29 @@ namespace DVLD_BusinessLayer
             this.RetakeTestApplicationID = -1;
             this.RetakeTestAppInfo = null;
 
+            // الخصائص المضافة للعرض في الـ UI
+            this.ClassName = "";
+            this.FullName = "";
+            this.TestTrialCount = 0;
+            this.TestID = -1;
+
             this.Mode = enMode.AddNew;
         }
 
-        // Private Constructor (Update Mode / Factory pattern via Find)
-        private clsTestAppointment(int testAppointmentID, int testTypeID,
-            int localDrivingLicenseApplicationID, DateTime appointmentDate,
-            decimal paidFees, int createdByUserID, bool isLocked, int retakeTestApplicationID)
+        // 2. Private Constructor (Update Mode / Factory pattern via Find)
+        private clsTestAppointment(
+            int testAppointmentID,
+            int testTypeID,
+            int localDrivingLicenseApplicationID,
+            DateTime appointmentDate,
+            decimal paidFees,
+            int createdByUserID,
+            bool isLocked,
+            int retakeTestApplicationID,
+            string className,
+            string fullName,
+            int testTrialCount,
+            int testID)
         {
             this.TestAppointmentID = testAppointmentID;
             this.TestTypeID = testTypeID;
@@ -62,6 +84,12 @@ namespace DVLD_BusinessLayer
             this.IsLocked = isLocked;
             this.RetakeTestApplicationID = retakeTestApplicationID;
 
+            // إسناد الخصائص المضافة للـ UI
+            this.ClassName = className;
+            this.FullName = fullName;
+            this.TestTrialCount = testTrialCount;
+            this.TestID = testID;
+
             if (this.RetakeTestApplicationID != -1)
             {
                 // this.RetakeTestAppInfo = clsApplicant.FindBaseApplication(this.RetakeTestApplicationID);
@@ -71,10 +99,12 @@ namespace DVLD_BusinessLayer
                 this.RetakeTestAppInfo = null;
             }
 
-            // Save state snapshot using MemberwiseClone
+            // Save state snapshot using MemberwiseClone or CreateSnapshot
             RefreshOriginalValues();
             this.Mode = enMode.Update;
         }
+
+        // 3. Snapshot Creation
         private clsTestAppointment CreateSnapshot()
         {
             return new clsTestAppointment
@@ -86,9 +116,16 @@ namespace DVLD_BusinessLayer
                 PaidFees = PaidFees,
                 CreatedByUserID = CreatedByUserID,
                 IsLocked = IsLocked,
-                RetakeTestApplicationID = RetakeTestApplicationID
+                RetakeTestApplicationID = RetakeTestApplicationID,
+
+                // نسخ خصائص العرض في الـ Snapshot
+                ClassName = ClassName,
+                FullName = FullName,
+                TestTrialCount = TestTrialCount,
+                TestID = TestID
             };
         }
+
         private void RefreshOriginalValues()
         {
             _OriginalTestAppointment = CreateSnapshot();
@@ -119,20 +156,100 @@ namespace DVLD_BusinessLayer
 
         public static clsTestAppointment Find(int testAppointmentID)
         {
+            // المتغيرات الأساسية لجدول TestAppointments
             int testTypeID = -1, localDrivingLicenseApplicationID = -1, createdByUserID = -1, retakeTestApplicationID = -1;
             DateTime appointmentDate = DateTime.Now;
             decimal paidFees = 0;
             bool isLocked = false;
 
+            // المتغيرات المضافة للعرض فقط (Read-Only UI Properties)
+            string className = "";
+            string fullName = "";
+            int testTrialCount = 0;
+            int testID = -1;
+
             bool isFound = clsTestAppointmentDataAccess.GetTestAppointmentInfoByID(
-                testAppointmentID, ref testTypeID, ref localDrivingLicenseApplicationID,
-                ref appointmentDate, ref paidFees, ref createdByUserID, ref isLocked, ref retakeTestApplicationID);
+                testAppointmentID,
+                ref testTypeID,
+                ref localDrivingLicenseApplicationID,
+                ref appointmentDate,
+                ref paidFees,
+                ref createdByUserID,
+                ref isLocked,
+                ref retakeTestApplicationID,
+                ref className,
+                ref fullName,
+                ref testTrialCount,
+                ref testID
+            );
 
             if (isFound)
             {
-                return new clsTestAppointment(testAppointmentID, testTypeID,
-                    localDrivingLicenseApplicationID, appointmentDate, paidFees,
-                    createdByUserID, isLocked, retakeTestApplicationID);
+                return new clsTestAppointment(
+                    testAppointmentID,
+                    testTypeID,
+                    localDrivingLicenseApplicationID,
+                    appointmentDate,
+                    paidFees,
+                    createdByUserID,
+                    isLocked,
+                    retakeTestApplicationID,
+                    className,
+                    fullName,
+                    testTrialCount,
+                    testID
+                );
+            }
+
+            return null;
+        }
+        public static clsTestAppointment FindTakeTest(int testAppointmentID)
+        {
+            int testTypeID = -1;
+            int localDrivingLicenseApplicationID = -1;
+            int createdByUserID = -1;
+            int retakeTestApplicationID = -1;
+            DateTime appointmentDate = DateTime.Now;
+            decimal paidFees = 0;
+            bool isLocked = false;
+
+            // المتغيرات الجديدة التي يجلبها الاستعلام المحدث
+            string className = "";
+            string fullName = "";
+            int testTrialCount = 0;
+            int testID = -1;
+
+            bool isFound = clsTestAppointmentDataAccess.GetTestAppointmentInfoByID(
+                testAppointmentID,
+                ref testTypeID,
+                ref localDrivingLicenseApplicationID,
+                ref appointmentDate,
+                ref paidFees,
+                ref createdByUserID,
+                ref isLocked,
+                ref retakeTestApplicationID,
+                ref className,
+                ref fullName,
+                ref testTrialCount,
+                ref testID
+            );
+
+            if (isFound)
+            {
+                return new clsTestAppointment(
+                    testAppointmentID,
+                    testTypeID,
+                    localDrivingLicenseApplicationID,
+                    appointmentDate,
+                    paidFees,
+                    createdByUserID,
+                    isLocked,
+                    retakeTestApplicationID,
+                    className,
+                    fullName,
+                    testTrialCount,
+                    testID
+                );
             }
 
             return null;
@@ -201,8 +318,39 @@ namespace DVLD_BusinessLayer
         {
             return clsTestAppointmentDataAccess.GetApplicationAppointments(localDrivingLicenseApplicationID, testTypeID);
         }
+        public static DataTable getTsetAppointment(int AppID)
+        {
+            return clsTestAppointmentDataAccess.getTsetAppointment(AppID);
+        }
+        public static DataTable getDataAppintment(int AppID, int testID)
+        {
+            return clsTestAppointmentDataAccess.getDataAppintment(AppID, testID);
+        }
 
         public static DataTable GetApplicationAppointmentsList(int localDrivingLicenseApplicationID)
+        {
+            return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(localDrivingLicenseApplicationID);
+        }
+
+        #endregion
+
+        #region Data Queries / DataGrids (Read-Only Service Operations)
+
+        // جلب تفاصيل الطلب الرئيسي
+        public static DataTable GetAppointmentDetails(int localDrivingLicenseApplicationID)
+        {
+            // يستدعي الدالة المناسبة من طبقة البيانات (DataAccessLayer)
+            return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(localDrivingLicenseApplicationID);
+            // أو قم بربطها بالدالة المخصصة لجلب تفاصيل الرخصة محلياً لديك
+        }
+
+        // جلب قائمة المواعيد المخصصة لجدول العرض
+        public static DataTable visionTestDataGridView(int localDrivingLicenseApplicationID, int testTypeID)
+        {
+            return clsTestAppointmentDataAccess.GetApplicationAppointments(localDrivingLicenseApplicationID, testTypeID);
+        }
+
+        public static DataTable visionTestDataGridView(int localDrivingLicenseApplicationID)
         {
             return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(localDrivingLicenseApplicationID);
         }

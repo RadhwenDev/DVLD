@@ -51,6 +51,7 @@
     <Compile Include="clsLoginLogData.cs" />
     <Compile Include="clsPeopleDataAccess.cs" />
     <Compile Include="clsTestAppointmentDataAccess.cs" />
+    <Compile Include="clsTestData.cs" />
     <Compile Include="clsTestTypesDataAccess.cs" />
     <Compile Include="clsUsersDataAccess.cs" />
     <Compile Include="clsLicenseClassDataAccess.cs" />

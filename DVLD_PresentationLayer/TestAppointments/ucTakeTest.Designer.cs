@@ -65,7 +65,7 @@
             this.rbPass = new System.Windows.Forms.RadioButton();
             this.rbFail = new System.Windows.Forms.RadioButton();
             this.label8 = new System.Windows.Forms.Label();
-            this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtNotes = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
             this.btnCancel = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
@@ -141,9 +141,9 @@
             // lblLicenseID
             // 
             this.lblLicenseID.BackColor = System.Drawing.Color.Transparent;
-            this.lblLicenseID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLicenseID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLicenseID.ForeColor = System.Drawing.Color.Black;
-            this.lblLicenseID.Location = new System.Drawing.Point(251, 189);
+            this.lblLicenseID.Location = new System.Drawing.Point(231, 189);
             this.lblLicenseID.Name = "lblLicenseID";
             this.lblLicenseID.Size = new System.Drawing.Size(172, 31);
             this.lblLicenseID.TabIndex = 8;
@@ -156,7 +156,7 @@
             this.label11.ForeColor = System.Drawing.Color.Black;
             this.label11.Location = new System.Drawing.Point(86, 189);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(159, 31);
+            this.label11.Size = new System.Drawing.Size(139, 31);
             this.label11.TabIndex = 9;
             this.label11.Text = "D.L.App.ID:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -181,7 +181,7 @@
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(86, 254);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(116, 31);
+            this.label5.Size = new System.Drawing.Size(101, 31);
             this.label5.TabIndex = 11;
             this.label5.Text = "Name:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -191,7 +191,7 @@
             this.lblName.BackColor = System.Drawing.Color.Transparent;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.ForeColor = System.Drawing.Color.Black;
-            this.lblName.Location = new System.Drawing.Point(212, 254);
+            this.lblName.Location = new System.Drawing.Point(192, 254);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(349, 31);
             this.lblName.TabIndex = 12;
@@ -215,9 +215,9 @@
             this.lblDClass.BackColor = System.Drawing.Color.Transparent;
             this.lblDClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDClass.ForeColor = System.Drawing.Color.Black;
-            this.lblDClass.Location = new System.Drawing.Point(794, 189);
+            this.lblDClass.Location = new System.Drawing.Point(754, 189);
             this.lblDClass.Name = "lblDClass";
-            this.lblDClass.Size = new System.Drawing.Size(342, 31);
+            this.lblDClass.Size = new System.Drawing.Size(382, 31);
             this.lblDClass.TabIndex = 14;
             this.lblDClass.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -228,7 +228,7 @@
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(640, 189);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 31);
+            this.label2.Size = new System.Drawing.Size(108, 31);
             this.label2.TabIndex = 15;
             this.label2.Text = "D. Class:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -249,9 +249,9 @@
             // lblTrial
             // 
             this.lblTrial.BackColor = System.Drawing.Color.Transparent;
-            this.lblTrial.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTrial.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTrial.ForeColor = System.Drawing.Color.Black;
-            this.lblTrial.Location = new System.Drawing.Point(830, 254);
+            this.lblTrial.Location = new System.Drawing.Point(767, 254);
             this.lblTrial.Name = "lblTrial";
             this.lblTrial.Size = new System.Drawing.Size(101, 31);
             this.lblTrial.TabIndex = 17;
@@ -264,7 +264,7 @@
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(640, 254);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(159, 31);
+            this.label3.Size = new System.Drawing.Size(108, 31);
             this.label3.TabIndex = 18;
             this.label3.Text = "Trial:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -304,7 +304,7 @@
             this.label6.ForeColor = System.Drawing.Color.Black;
             this.label6.Location = new System.Drawing.Point(86, 330);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(127, 31);
+            this.label6.Size = new System.Drawing.Size(101, 31);
             this.label6.TabIndex = 9;
             this.label6.Text = "Date:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -312,11 +312,11 @@
             // lblDate
             // 
             this.lblDate.BackColor = System.Drawing.Color.Transparent;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDate.ForeColor = System.Drawing.Color.Black;
-            this.lblDate.Location = new System.Drawing.Point(246, 330);
+            this.lblDate.Location = new System.Drawing.Point(212, 330);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(233, 31);
+            this.lblDate.Size = new System.Drawing.Size(293, 31);
             this.lblDate.TabIndex = 8;
             this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -336,11 +336,11 @@
             // lblTestID
             // 
             this.lblTestID.BackColor = System.Drawing.Color.Transparent;
-            this.lblTestID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTestID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTestID.ForeColor = System.Drawing.Color.Black;
-            this.lblTestID.Location = new System.Drawing.Point(228, 395);
+            this.lblTestID.Location = new System.Drawing.Point(197, 395);
             this.lblTestID.Name = "lblTestID";
-            this.lblTestID.Size = new System.Drawing.Size(313, 31);
+            this.lblTestID.Size = new System.Drawing.Size(308, 31);
             this.lblTestID.TabIndex = 12;
             this.lblTestID.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -351,7 +351,7 @@
             this.label9.ForeColor = System.Drawing.Color.Black;
             this.label9.Location = new System.Drawing.Point(86, 395);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(127, 31);
+            this.label9.Size = new System.Drawing.Size(116, 31);
             this.label9.TabIndex = 11;
             this.label9.Text = "Test ID:";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -376,7 +376,7 @@
             this.label10.ForeColor = System.Drawing.Color.Black;
             this.label10.Location = new System.Drawing.Point(640, 330);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(108, 31);
+            this.label10.Size = new System.Drawing.Size(88, 31);
             this.label10.TabIndex = 15;
             this.label10.Text = "Fees:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -384,11 +384,11 @@
             // lblFees
             // 
             this.lblFees.BackColor = System.Drawing.Color.Transparent;
-            this.lblFees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFees.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFees.ForeColor = System.Drawing.Color.Black;
-            this.lblFees.Location = new System.Drawing.Point(734, 330);
+            this.lblFees.Location = new System.Drawing.Point(727, 330);
             this.lblFees.Name = "lblFees";
-            this.lblFees.Size = new System.Drawing.Size(168, 31);
+            this.lblFees.Size = new System.Drawing.Size(175, 31);
             this.lblFees.TabIndex = 14;
             this.lblFees.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -446,6 +446,7 @@
             // 
             // rbPass
             // 
+            this.rbPass.Checked = true;
             this.rbPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbPass.Location = new System.Drawing.Point(217, 455);
             this.rbPass.Name = "rbPass";
@@ -454,6 +455,7 @@
             this.rbPass.TabStop = true;
             this.rbPass.Text = " Pass";
             this.rbPass.UseVisualStyleBackColor = true;
+            this.rbPass.CheckedChanged += new System.EventHandler(this.rbPass_CheckedChanged);
             // 
             // rbFail
             // 
@@ -462,9 +464,9 @@
             this.rbFail.Name = "rbFail";
             this.rbFail.Size = new System.Drawing.Size(109, 30);
             this.rbFail.TabIndex = 22;
-            this.rbFail.TabStop = true;
             this.rbFail.Text = " Fail";
             this.rbFail.UseVisualStyleBackColor = true;
+            this.rbFail.CheckedChanged += new System.EventHandler(this.rbFail_CheckedChanged);
             // 
             // label8
             // 
@@ -478,26 +480,26 @@
             this.label8.Text = "Notes:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // guna2TextBox1
+            // txtNotes
             // 
-            this.guna2TextBox1.BorderRadius = 20;
-            this.guna2TextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox1.DefaultText = "";
-            this.guna2TextBox1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2TextBox1.Location = new System.Drawing.Point(154, 519);
-            this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.guna2TextBox1.Multiline = true;
-            this.guna2TextBox1.Name = "guna2TextBox1";
-            this.guna2TextBox1.PlaceholderText = "";
-            this.guna2TextBox1.SelectedText = "";
-            this.guna2TextBox1.Size = new System.Drawing.Size(982, 143);
-            this.guna2TextBox1.TabIndex = 23;
+            this.txtNotes.BorderRadius = 20;
+            this.txtNotes.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtNotes.DefaultText = "";
+            this.txtNotes.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtNotes.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtNotes.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtNotes.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtNotes.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtNotes.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtNotes.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtNotes.Location = new System.Drawing.Point(154, 519);
+            this.txtNotes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtNotes.Multiline = true;
+            this.txtNotes.Name = "txtNotes";
+            this.txtNotes.PlaceholderText = "";
+            this.txtNotes.SelectedText = "";
+            this.txtNotes.Size = new System.Drawing.Size(982, 143);
+            this.txtNotes.TabIndex = 23;
             // 
             // btnSave
             // 
@@ -517,6 +519,7 @@
             this.btnSave.Size = new System.Drawing.Size(100, 44);
             this.btnSave.TabIndex = 25;
             this.btnSave.Text = "Save";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCancel
             // 
@@ -544,7 +547,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.guna2TextBox1);
+            this.Controls.Add(this.txtNotes);
             this.Controls.Add(this.rbFail);
             this.Controls.Add(this.rbPass);
             this.Controls.Add(this.guna2Separator4);
@@ -633,7 +636,7 @@
         private System.Windows.Forms.RadioButton rbPass;
         private System.Windows.Forms.RadioButton rbFail;
         private System.Windows.Forms.Label label8;
-        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
+        private Guna.UI2.WinForms.Guna2TextBox txtNotes;
         private Guna.UI2.WinForms.Guna2Button btnSave;
         private Guna.UI2.WinForms.Guna2Button btnCancel;
     }

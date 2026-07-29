@@ -218,13 +218,13 @@
         or/EVV/heOVO/AZHIIpegH223gAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="guna2ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  <metadata name="guna2ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
-  </data>
+  </metadata>
   <data name="editToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACUFSURBVHhe7d19
+        DwAACw8BkvkDpQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACUFSURBVHhe7d19
         tPZZWdDxCxgYwEjiZQBRJPAtCQFRQBBDolzGQjJoVctEEQNKEVpCvKkRJi9mvgYJaCokEZhRKrnQQWCB
         YiDIO0WwAhwiWMAoDMPr1Po55zAz1+znec65773v+9q/+/NZ6/tPrhXn3r999rWfZ37POREAAABwIK4X
         EbePiL8TEY+NiOdExO9FxOsi4p0RcVFEfDQi/l9EXBIRH4qId0XEH0fE70fECyLiRyPiQRHxDRFxk/w/
@@ -389,7 +389,7 @@
   <data name="takeTestToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAhlJREFUaEPt2l1uE0EQReE8sYbp8Q68BATvwMJI2CZ/2wC15Il6Pjkz14ayEcqR
+        DwAACw8BkvkDpQAAAhlJREFUaEPt2l1uE0EQReE8sYbp8Q68BATvwMJI2CZ/2wC15Il6Pjkz14ayEcqR
         6uHU1O3qSaTkwX54eOU/5HA4fGqtfZvn+dcl1TPTNH30vLtxzUsML/PV8/4qx+PxzTzPX1prP13+UnnG
         HuZfqtbaj3men/qdPGOXHvTAvfKMPcwH9egZu5x+Cj381mfypy9iX1pr7/pcv5PPdkmXdC6ZHbkkd8ns
         CoOLb9X6hH3Mnytn1ycEGHTBuVqfsI/5c+Xs+oQAg/pIxZ9f9+kxBvWR/k+tX8hL7lXPTNP0wfM67tNj
@@ -427,12 +427,5 @@
         dfUqGo/DuSMlM8TC3otNkhaRYlv8XEkhqbbzbfGLTVjCjk13E+2HhX/nq+CIzT08frtLCowZtQcXdrTf
         IUtcAHEnh5sZnDiF/yk6EyZRR83s9TDDq/W4/wsZQNEMoPRo2gAAAABJRU5ErkJggg==
 </value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Written" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Written.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Street" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Street.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

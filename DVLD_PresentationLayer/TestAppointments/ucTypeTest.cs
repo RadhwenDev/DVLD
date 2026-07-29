@@ -2,26 +2,23 @@
 using DVLD_PresentationLayer.Drivers;
 using DVLD_PresentationLayer.Tests;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DVLD_PresentationLayer.TestAppointments
 {
     public partial class ucTypeTest : UserControl
     {
-        enum enTest { Vision, Written, Street}
-        enTest _Test;
-        int _AppID = -1;
-        int testTypeID = -1;
-        private clsTestAppointment _TestAppointment;
+        public enum enTestType { Vision = 1, Written = 2, Street = 3 }
+
+        private enTestType _TestType = enTestType.Vision;
+        private int _AppID = -1;
+        private int _PersonID = -1;
+
         public ucTypeTest(int appID)
         {
             InitializeComponent();
@@ -32,118 +29,134 @@ namespace DVLD_PresentationLayer.TestAppointments
         {
             this.FindForm()?.Close();
         }
-        string PersonID = "";
+
         private void ucVisionTest_Load(object sender, EventArgs e)
         {
-            DataTable dt = clsTestAppointment.visionTest(_AppID);
-            lblStatus.Text = dt.Rows[0]["STATUS"].ToString();
-            lblFullName.Text = dt.Rows[0]["FullName"].ToString();
-            if (DateTime.TryParse(dt.Rows[0]["LastStatusDate"].ToString(), out DateTime statusDate))
-                lblStatusDate.Text = statusDate.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture);
-            else
-                lblStatusDate.Text = dt.Rows[0]["LastStatusDate"].ToString();
-            if (DateTime.TryParse(dt.Rows[0]["ApplicationDate"].ToString(), out DateTime appDate))
-                lblAppDate.Text = appDate.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture);
-            else
-                lblAppDate.Text = dt.Rows[0]["ApplicationDate"].ToString();
-            string imagePath = dt.Rows[0]["ImagePath"].ToString();
+            LoadApplicationInfo();
+            ConfigureTestSteps();
+            LoadAppointments();
+        }
 
+        #region Data Loading Methods
+
+        private void LoadApplicationInfo()
+        {
+            DataTable dt = clsTestAppointment.GetAppointmentDetails(_AppID);
+
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                MessageBox.Show("لم يتم العثور على بيانات الطلب!", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DataRow row = dt.Rows[0];
+
+            lblStatus.Text = row["STATUS"]?.ToString() ?? "";
+            lblFullName.Text = row["FullName"]?.ToString() ?? "";
+
+            // تنسيق التواريخ بشكل آمن
+            lblStatusDate.Text = FormatDate(row["LastStatusDate"]);
+            lblAppDate.Text = FormatDate(row["ApplicationDate"]);
+
+            // تحميل صورة الشخص
+            LoadPersonImage(row["ImagePath"]?.ToString());
+
+            lblUserName.Text = row["CreatedByUserName"]?.ToString() ?? "";
+
+            if (int.TryParse(row["PersonID"]?.ToString(), out int pID))
+            {
+                _PersonID = pID;
+                lblPersonID.Text = "ID: " + _PersonID;
+            }
+
+            // تنسيق الرسوم
+            if (decimal.TryParse(row["ApplicationPaidFees"]?.ToString(), out decimal classFees))
+                lblFees.Text = classFees.ToString("N2", CultureInfo.InvariantCulture);
+            else
+                lblFees.Text = row["ApplicationPaidFees"]?.ToString() ?? "0.00";
+
+            lblDLAppID.Text = row["LocalDrivingLicenseApplicationID"]?.ToString() ?? "";
+            lblClassName.Text = row["ClassName"]?.ToString() ?? "";
+
+            // تحديد نوع الاختبار
+            if (row["TestTypeID"] != DBNull.Value && int.TryParse(row["TestTypeID"].ToString(), out int tTypeID))
+            {
+                _TestType = (enTestType)tTypeID;
+            }
+        }
+
+        private void LoadAppointments()
+        {
+            // تمرير رقم الطلب ونوع الاختبار الحالي (Vision = 1, Written = 2, Street = 3)
+            DataTable dgv = clsTestAppointment.GetApplicationAppointments(_AppID, (int)_TestType);
+
+            bool hasAppointments = dgv != null && dgv.Rows.Count > 0;
+
+            if (hasAppointments)
+            {
+                dgvAppointments.DataSource = dgv;
+
+                // قراءة قيمة IsLocked لأحدث موعد (الصف الأول لأن الاستعلام مرتب DESC)
+                bool isLocked = Convert.ToBoolean(dgv.Rows[0]["IsLocked"]);
+
+                // إذا كان الموعد الأخير مغلقاً (مُنجز)، نُتيح إضافة موعد جديد ونمنع تعديل الموعد المغلق
+                btnNewAppointment.Enabled = isLocked;
+                editToolStripMenuItem.Enabled = !isLocked;
+            }
+            else
+            {
+                // لا يوجد أي موعد سابق لهذا الاختبار
+                dgvAppointments.DataSource = null;
+                btnNewAppointment.Enabled = true;
+                editToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        #endregion
+
+        #region UI & Image Helpers
+
+        private string FormatDate(object dateValue)
+        {
+            if (dateValue != null && DateTime.TryParse(dateValue.ToString(), out DateTime parsedDate))
+                return parsedDate.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture);
+
+            return dateValue?.ToString() ?? "";
+        }
+
+        private void LoadPersonImage(string imagePath)
+        {
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
                 try
                 {
                     using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
                     {
-                        pbCreator.Image = System.Drawing.Image.FromStream(stream);
+                        pbCreator.Image = Image.FromStream(stream);
                     }
                 }
                 catch
                 {
+                    pbCreator.Image = null; // أو وضع صورة افتراضية
                 }
             }
             else
             {
-            }
-            lblUserName.Text = dt.Rows[0]["CreatedByUserName"].ToString();
-            PersonID = dt.Rows[0]["PersonID"].ToString();
-            lblPersonID.Text = "ID: " + PersonID;
-            if (decimal.TryParse(dt.Rows[0]["ApplicationPaidFees"].ToString(), out decimal classFees))
-                lblFees.Text = classFees.ToString("N2", CultureInfo.InvariantCulture);
-            else
-                lblFees.Text = dt.Rows[0]["ApplicationPaidFees"].ToString();
-            lblDLAppID.Text = dt.Rows[0]["LocalDrivingLicenseApplicationID"].ToString();
-            lblClassName.Text = dt.Rows[0]["ClassName"].ToString();
-            testTypeID = 1;
-
-            if (dt.Rows.Count > 0 && dt.Rows[0]["TestTypeID"] != DBNull.Value)
-            {
-                testTypeID = Convert.ToInt32(dt.Rows[0]["TestTypeID"]);
-            }
-            switch (testTypeID)
-            {
-                case 1:
-                    _Test = enTest.Vision; break;
-                case 2:
-                    _Test = enTest.Written; break;
-                case 3:
-                    _Test = enTest.Street; break;
-            }
-            testSteps();
-            DataTable dgv = clsTestAppointment.visionTestDataGridView(_AppID);
-            bool hasAppointments = dgv.Rows.Count > 0 && dgv.Rows[0]["TestAppointmentID"] != DBNull.Value;
-
-            if (hasAppointments)
-            {
-                dgvAppointments.DataSource = dgv;
-                if (dgv.Rows[0]["IsLocked"].ToString() == "Locked")
-                {
-                    btnNewAppointment.Enabled = true;
-                    editToolStripMenuItem.Enabled = false;
-                }
-                    
-                else
-                {
-                    btnNewAppointment.Enabled = false;
-                    editToolStripMenuItem.Enabled = true;
-                }
-            }
-            
-        }
-
-        private void dgvAppointments_Paint(object sender, PaintEventArgs e)
-        {
-            if (dgvAppointments.Rows.Count == 0)
-            {
-                string noDataText = "No appointments scheduled. Click to add a new one.";
-
-                // اختيار الخط واللون المناسب (رمادي هادئ ومريح للعين)
-                using (Font font = new Font("Segoe UI", 11, FontStyle.Regular))
-                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156))) // Slate Gray
-                {
-                    // حساب قياسات النص لتوسيطه تماماً في وسط الـ Grid
-                    Size textSize = TextRenderer.MeasureText(noDataText, font);
-
-                    // نأخذ بعين الاعتبار ارتفاع الـ Headers باش يجي النص في وسط المساحة البيضاء بالظبط
-                    int headersHeight = dgvAppointments.ColumnHeadersVisible ? dgvAppointments.ColumnHeadersHeight : 0;
-
-                    int x = (dgvAppointments.Width - textSize.Width) / 2;
-                    int y = headersHeight + (dgvAppointments.Height - headersHeight - textSize.Height) - 30;
-
-                    // رسم النص
-                    e.Graphics.DrawString(noDataText, font, brush, x, y);
-                }
+                pbCreator.Image = null;
             }
         }
 
-        private void testSteps()
+        private void ConfigureTestSteps()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucTypeTest));
-            switch (_Test)
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(ucTypeTest));
+
+            switch (_TestType)
             {
-                case enTest.Vision:
+                case enTestType.Vision:
                     lblPassedTests.Text = "0/3";
                     break;
-                case enTest.Written:
+
+                case enTestType.Written:
                     lblPassedTests.Text = "1/3";
                     guna2Separator2.FillColor = Color.FromArgb(12, 155, 161);
                     guna2CirclePictureBox6.Image = null;
@@ -154,7 +167,8 @@ namespace DVLD_PresentationLayer.TestAppointments
                     lblPassedTestStatus2.Text = string.Empty;
                     lblPassedTestStatus3.Text = "1/3 Passed Tests";
                     break;
-                case enTest.Street:
+
+                case enTestType.Street:
                     lblPassedTests.Text = "2/3";
                     guna2Separator2.FillColor = Color.FromArgb(12, 155, 161);
                     guna2Separator3.FillColor = Color.FromArgb(12, 155, 161);
@@ -167,157 +181,216 @@ namespace DVLD_PresentationLayer.TestAppointments
                     lblCurrentTest3.Text = "3. Written Test (Done)";
                     lblCurrentTest3.Text = "4. Street Test (Current)";
                     lblPassedTestStatus2.Text = string.Empty;
-                    lblPassedTestStatus3.Text = string.Empty;
                     lblPassedTestStatus3.Text = "2/3 Passed Tests";
                     break;
             }
         }
 
+        private void dgvAppointments_Paint(object sender, PaintEventArgs e)
+        {
+            if (dgvAppointments.Rows.Count == 0)
+            {
+                string noDataText = "No appointments scheduled. Click to add a new one.";
+
+                using (Font font = new Font("Segoe UI", 11, FontStyle.Regular))
+                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156)))
+                {
+                    Size textSize = TextRenderer.MeasureText(noDataText, font);
+                    int headersHeight = dgvAppointments.ColumnHeadersVisible ? dgvAppointments.ColumnHeadersHeight : 0;
+
+                    int x = (dgvAppointments.Width - textSize.Width) / 2;
+                    int y = headersHeight + (dgvAppointments.Height - headersHeight - textSize.Height) - 30;
+
+                    e.Graphics.DrawString(noDataText, font, brush, x, y);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Generic Modal Helper (إلغاء التكرار)
+
+        private void ShowModalUserControl(UserControl uc)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    frmContainer.Size = uc.Size;
+                    uc.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(uc);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse
+                    {
+                        TargetControl = frmContainer,
+                        BorderRadius = 16
+                    };
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+
+            // إعادة تحديث المواعيد تلقائياً عند إغلاق النافذة المنبثقة
+            LoadAppointments();
+        }
+
+        #endregion
+
+        #region Actions & Events
+
         private void linkLblViewFullProfile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            int selectedPersonID = Convert.ToInt32(PersonID);
+            if (_PersonID <= 0) return;
 
+            ucShowDetails myShowDetails = new ucShowDetails();
+            myShowDetails.LoadPersonData(_PersonID);
 
-            using (Form overlay = new Form())
-            {
-                overlay.StartPosition = FormStartPosition.Manual;
-                overlay.FormBorderStyle = FormBorderStyle.None;
-                overlay.BackColor = Color.FromArgb(45, 55, 72);
-                overlay.Opacity = 0.45d;
-                overlay.Bounds = Screen.FromControl(this).Bounds;
-                overlay.ShowInTaskbar = false;
-                overlay.Show(this);
-
-                using (Form frmContainer = new Form())
-                {
-                    frmContainer.FormBorderStyle = FormBorderStyle.None;
-                    frmContainer.BackColor = Color.White;
-                    frmContainer.StartPosition = FormStartPosition.CenterParent;
-
-                    ucShowDetails myShowDetails = new ucShowDetails();
-
-                    // 🌟 هنا نقوم بتمرير الـ ID المجلوب مباشرة ليتحول الـ User Control إلى وضع الـ Update تلقائياً
-                    myShowDetails.LoadPersonData(selectedPersonID);
-
-                    frmContainer.Size = myShowDetails.Size;
-                    myShowDetails.Dock = DockStyle.Fill;
-                    frmContainer.Controls.Add(myShowDetails);
-
-                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
-                    elipse.TargetControl = frmContainer;
-                    elipse.BorderRadius = 16;
-
-                    frmContainer.ShowDialog(overlay);
-                }
-            }
+            ShowModalUserControl(myShowDetails);
         }
-        private void AddEditTestAppointment(int Mode)
-        {
-            using (Form overlay = new Form())
-            {
-                overlay.StartPosition = FormStartPosition.Manual;
-                overlay.FormBorderStyle = FormBorderStyle.None;
-                overlay.BackColor = Color.FromArgb(45, 55, 72);
-                overlay.Opacity = 0.45d;
-                overlay.Bounds = Screen.FromControl(this).Bounds;
-                overlay.ShowInTaskbar = false;
-                overlay.Show(this);
 
-                using (Form frmContainer = new Form())
-                {
-                    frmContainer.FormBorderStyle = FormBorderStyle.None;
-                    frmContainer.BackColor = Color.White;
-                    frmContainer.StartPosition = FormStartPosition.CenterParent;
-
-                    ucAppointmentTest myShowDetails = new ucAppointmentTest(_AppID, Mode);
-
-                    frmContainer.Size = myShowDetails.Size;
-                    myShowDetails.Dock = DockStyle.Fill;
-                    frmContainer.Controls.Add(myShowDetails);
-
-                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
-                    elipse.TargetControl = frmContainer;
-                    elipse.BorderRadius = 16;
-
-                    frmContainer.ShowDialog(overlay);
-                }
-            }
-        }
         private void btnNewAppointment_Click(object sender, EventArgs e)
         {
-            AddEditTestAppointment(0);
-        }
-
-        private void btnLicenseHistory_Click(object sender, EventArgs e)
-        {
-            int selectedPersonID = Convert.ToInt32(PersonID);
-
-
-            using (Form overlay = new Form())
-            {
-                overlay.StartPosition = FormStartPosition.Manual;
-                overlay.FormBorderStyle = FormBorderStyle.None;
-                overlay.BackColor = Color.FromArgb(45, 55, 72);
-                overlay.Opacity = 0.45d;
-                overlay.Bounds = Screen.FromControl(this).Bounds;
-                overlay.ShowInTaskbar = false;
-                overlay.Show(this);
-
-                using (Form frmContainer = new Form())
-                {
-                    frmContainer.FormBorderStyle = FormBorderStyle.None;
-                    frmContainer.BackColor = Color.White;
-                    frmContainer.StartPosition = FormStartPosition.CenterParent;
-
-                    ucShowPersonLicenseHistory myShowPersonLicenseHistory = new ucShowPersonLicenseHistory(selectedPersonID);
-
-                    frmContainer.Size = myShowPersonLicenseHistory.Size;
-                    myShowPersonLicenseHistory.Dock = DockStyle.Fill;
-                    frmContainer.Controls.Add(myShowPersonLicenseHistory);
-
-                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
-                    elipse.TargetControl = frmContainer;
-                    elipse.BorderRadius = 16;
-
-                    frmContainer.ShowDialog(overlay);
-                }
-            }
+            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 0);
+            ShowModalUserControl(ucAppointment);
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddEditTestAppointment(1);
+            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 1);
+            ShowModalUserControl(ucAppointment);
+        }
+
+        private void btnLicenseHistory_Click(object sender, EventArgs e)
+        {
+            if (_AppID <= 0) return;
+
+            ucShowPersonLicenseHistory myLicenseHistory = new ucShowPersonLicenseHistory(_AppID);
+            ShowModalUserControl(myLicenseHistory);
         }
 
         private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Form overlay = new Form())
+            ucTakeTest myTakeTest = new ucTakeTest(_AppID, (int)_TestType);
+            ShowModalUserControl(myTakeTest);
+        }
+
+        #endregion
+        private void DrawToggleSwitch(Graphics g, Rectangle bounds, bool isActive)
+        {
+            // 1. الأبعاد المستهدفة لتطابق الصورة
+            int switchWidth = 44;   // تكبير العرض
+            int switchHeight = 22;  // تكبير الارتفاع
+
+            // 2. حساب المركز لتكون في منتصف الخلية تماماً عمودياً وأفقياً
+            int x = bounds.X + (bounds.Width - switchWidth) / 4;
+            int y = bounds.Y + (bounds.Height - switchHeight) / 2;
+
+            Rectangle switchRect = new Rectangle(x, y, switchWidth, switchHeight);
+
+            // تفعيل تنعيم الحواف (Anti-aliasing) لرسم انسيابي وبدون زوايا حادة
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // 3. أخضر عند 1 (مفعل/Locked)، ورمادي/أحمر عند 0 (غير مفعل)
+            Color toggleBg = isActive ? Color.FromArgb(211, 47, 47) : Color.FromArgb(190, 200, 210);
+            using (Brush bgBrush = new SolidBrush(toggleBg))
             {
-                overlay.StartPosition = FormStartPosition.Manual;
-                overlay.FormBorderStyle = FormBorderStyle.None;
-                overlay.BackColor = Color.FromArgb(45, 55, 72);
-                overlay.Opacity = 0.45d;
-                overlay.Bounds = Screen.FromControl(this).Bounds;
-                overlay.ShowInTaskbar = false;
-                overlay.Show(this);
-
-                using (Form frmContainer = new Form())
+                using (System.Drawing.Drawing2D.GraphicsPath path = GetRoundedPath(switchRect, switchHeight))
                 {
-                    frmContainer.FormBorderStyle = FormBorderStyle.None;
-                    frmContainer.BackColor = Color.White;
-                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+                    g.FillPath(bgBrush, path);
+                }
+            }
 
-                    ucTakeTest myTakeTest = new ucTakeTest(_AppID, testTypeID);
+            // 4. رسم الدائرة البيضاء داخل الـ Toggle
+            int circleMargin = 2;
+            int circleSize = switchHeight - (circleMargin * 2);
 
-                    frmContainer.Size = myTakeTest.Size;
-                    myTakeTest.Dock = DockStyle.Fill;
-                    frmContainer.Controls.Add(myTakeTest);
+            int circleX = isActive ? (switchRect.Right - circleSize - circleMargin) : (switchRect.Left + circleMargin);
+            Rectangle circleRect = new Rectangle(circleX, y + circleMargin, circleSize, circleSize);
 
-                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
-                    elipse.TargetControl = frmContainer;
-                    elipse.BorderRadius = 16;
+            using (Brush circleBrush = new SolidBrush(Color.White))
+            {
+                g.FillEllipse(circleBrush, circleRect);
+            }
+        }
+        private System.Drawing.Drawing2D.GraphicsPath GetRoundedPath(Rectangle rect, int radius)
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
+            path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90);
+            path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
+        private void dgvAppointments_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                e.Handled = true; // التحكم في الرسم يدوياً
 
-                    frmContainer.ShowDialog(overlay);
+                // 1. رسم خلفية الجدول الأصلية
+                using (Brush backBrush = new SolidBrush(dgvAppointments.BackgroundColor))
+                {
+                    e.Graphics.FillRectangle(backBrush, e.CellBounds);
+                }
+
+                // 2. تحديد أبعاد الكارت الداخلي
+                Rectangle cardBounds = new Rectangle(
+                    e.CellBounds.X,
+                    e.CellBounds.Y + 3,
+                    e.CellBounds.Width,
+                    e.CellBounds.Height - 6
+                );
+
+                bool isSelected = dgvAppointments.Rows[e.RowIndex].Selected;
+                Color cardColor = isSelected ? Color.FromArgb(210, 224, 242) : Color.FromArgb(228, 236, 247);
+
+                using (Brush cardBrush = new SolidBrush(cardColor))
+                {
+                    e.Graphics.FillRectangle(cardBrush, cardBounds);
+                }
+
+                // 3. فحص ما إذا كانت الخلية هي IsLocked أو IsActive لرسم الـ Toggle Switch
+                string columnName = dgvAppointments.Columns[e.ColumnIndex].Name;
+                string headerText = dgvAppointments.Columns[e.ColumnIndex].HeaderText;
+
+                if (columnName.Equals("IsLocked", StringComparison.OrdinalIgnoreCase) ||
+                    headerText.Equals("Is Locked", StringComparison.OrdinalIgnoreCase) ||
+                    columnName.Equals("IsActive", StringComparison.OrdinalIgnoreCase) ||
+                    headerText.Equals("Is Active", StringComparison.OrdinalIgnoreCase))
+                {
+                    bool isLocked = false;
+                    if (e.Value != null && e.Value != DBNull.Value)
+                    {
+                        isLocked = Convert.ToBoolean(e.Value); // 0 ستعطي false, و 1 ستعطي true
+                    }
+
+                    // استدعاء دالة الرسم بالمتغير الجديد
+                    DrawToggleSwitch(e.Graphics, cardBounds, isLocked);
+                }
+                else
+                {
+                    // رسم النصوص العادية متناسقة في الوسط
+                    TextRenderer.DrawText(
+                        e.Graphics,
+                        e.Value?.ToString() ?? "",
+                        e.CellStyle.Font,
+                        cardBounds,
+                        e.CellStyle.ForeColor,
+                        TextFormatFlags.VerticalCenter | TextFormatFlags.Left
+                    );
                 }
             }
         }
