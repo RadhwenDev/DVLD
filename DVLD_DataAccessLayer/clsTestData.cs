@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DVLD_DataAccessLayer
 {
@@ -12,27 +8,30 @@ namespace DVLD_DataAccessLayer
     {
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
 
-        public static int AddNewTest(int testAppointmentID, bool testResult, string notes, int createdByUserID)
+        public static int AddNewTest(int testAppointmentID, bool testResult, string notes, int createdByUserID, int testTypeID)
         {
             int testID = -1;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                // Stored Procedure أو Query لإضافة الاختبار وتحديث IsLocked في نفس الوقت
-                string query = @"
-                    INSERT INTO Tests (TestAppointmentID, TestResult, Notes, CreatedByUserID)
-                    VALUES (@TestAppointmentID, @TestResult, @Notes, @CreatedByUserID);
-                    SELECT SCOPE_IDENTITY();
+                string query = @"INSERT INTO Tests (TestAppointmentID, TestResult, Notes, CreatedByUserID)
+                                 VALUES (@TestAppointmentID, @TestResult, @Notes, @CreatedByUserID);
+                                 SELECT SCOPE_IDENTITY();
 
-                    -- تحديث الموعد ليصبح مغلقاً بعد تسجيل النتيجة
-                    UPDATE TestAppointments 
-                    SET IsLocked = 1 
-                    WHERE TestAppointmentID = @TestAppointmentID;";
+                                 -- تحديث الموعد ليصبح مغلقاً وتحديث نوع الاختبار
+                                 UPDATE TestAppointments 
+                                 SET IsLocked = 1,
+                                     TestTypeID = CASE 
+                                        WHEN @TestResult = 1 THEN @TestTypeID + 1 
+                                        ELSE @TestTypeID 
+                                     END
+                                 WHERE TestAppointmentID = @TestAppointmentID;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@TestAppointmentID", testAppointmentID);
                     command.Parameters.AddWithValue("@TestResult", testResult);
+                    command.Parameters.AddWithValue("@TestTypeID", testTypeID);
 
                     if (string.IsNullOrEmpty(notes))
                         command.Parameters.AddWithValue("@Notes", DBNull.Value);
@@ -53,7 +52,6 @@ namespace DVLD_DataAccessLayer
                     }
                     catch (Exception)
                     {
-                        // Log error if needed
                         testID = -1;
                     }
                 }

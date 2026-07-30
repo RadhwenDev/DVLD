@@ -17,6 +17,7 @@ namespace DVLD_BusinessLayer
         public bool TestResult { get; set; }
         public string Notes { get; set; }
         public int CreatedByUserID { get; set; }
+        public int TestTypeID { get; set; }
 
         public clsTest()
         {
@@ -25,6 +26,7 @@ namespace DVLD_BusinessLayer
             this.TestResult = false;
             this.Notes = "";
             this.CreatedByUserID = -1;
+            this.TestTypeID = -1;
 
             Mode = enMode.AddNew;
         }
@@ -42,7 +44,7 @@ namespace DVLD_BusinessLayer
 
         private bool _AddNewTest()
         {
-            this.TestID = clsTestData.AddNewTest(this.TestAppointmentID, this.TestResult, this.Notes, this.CreatedByUserID);
+            this.TestID = clsTestData.AddNewTest(this.TestAppointmentID, this.TestResult, this.Notes, this.CreatedByUserID, this.TestTypeID);
             return (this.TestID != -1);
         }
 
@@ -79,7 +81,6 @@ namespace DVLD_BusinessLayer
                     }
 
                 case enMode.Update:
-                    // في DVLD الاختبار بعد ما يتسجل ما يتبدلش عادة
                     return false;
             }
 

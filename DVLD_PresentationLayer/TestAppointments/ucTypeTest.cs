@@ -42,10 +42,9 @@ namespace DVLD_PresentationLayer.TestAppointments
         private void LoadApplicationInfo()
         {
             DataTable dt = clsTestAppointment.GetAppointmentDetails(_AppID);
-
             if (dt == null || dt.Rows.Count == 0)
             {
-                MessageBox.Show("لم يتم العثور على بيانات الطلب!", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No application data found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -102,6 +101,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                 // إذا كان الموعد الأخير مغلقاً (مُنجز)، نُتيح إضافة موعد جديد ونمنع تعديل الموعد المغلق
                 btnNewAppointment.Enabled = isLocked;
                 editToolStripMenuItem.Enabled = !isLocked;
+                takeTestToolStripMenuItem.Enabled = !isLocked;
             }
             else
             {
@@ -109,6 +109,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                 dgvAppointments.DataSource = null;
                 btnNewAppointment.Enabled = true;
                 editToolStripMenuItem.Enabled = false;
+                takeTestToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -293,10 +294,9 @@ namespace DVLD_PresentationLayer.TestAppointments
 
             if (appointmentID == -1)
             {
-                MessageBox.Show("الرجاء تحديد موعد للتعديل!", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select an appointment to edit!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             // إرسال الموعد المستهدف للتعديل (Mode = 1)
             ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 1, appointmentID);
             ShowModalUserControl(ucAppointment);
@@ -316,13 +316,22 @@ namespace DVLD_PresentationLayer.TestAppointments
 
             if (appointmentID == -1)
             {
-                MessageBox.Show("الرجاء تحديد موعد لإجراء الاختبار!", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select an appointment to take the test!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // هنا نمرر appointmentID بدلاً من _AppID لأن إجراء الاختبار يتبع للموعد المنجز
             ucTakeTest myTakeTest = new ucTakeTest(appointmentID, (int)_TestType);
+            myTakeTest.OnTestSaved += MyTakeTest_OnTestSaved;
             ShowModalUserControl(myTakeTest);
+        }
+
+        private void MyTakeTest_OnTestSaved(object sender, bool isSuccess)
+        {
+            if (isSuccess)
+            {
+                this.FindForm()?.Close();
+            }
         }
 
         #endregion

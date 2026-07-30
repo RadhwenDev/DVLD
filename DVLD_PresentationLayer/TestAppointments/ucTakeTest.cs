@@ -18,6 +18,8 @@ namespace DVLD_PresentationLayer.TestAppointments
         private int _TestAppointmentID = -1;
         private int _TestTypeID = -1;
         private clsTestAppointment _TestAppointment;
+        public delegate void DataBackEventHandler(object sender, bool isSuccess);
+        public event DataBackEventHandler OnTestSaved;
         public ucTakeTest(int testAppointmentID, int testTypeID)
         {
             InitializeComponent();
@@ -124,17 +126,18 @@ namespace DVLD_PresentationLayer.TestAppointments
                 return;
             }
 
-            // Create a new test object for recording the result
             clsTest test = new clsTest();
             test.TestAppointmentID = _TestAppointmentID;
-            test.TestResult = rbPass.Checked; // true if Passed, false if Failed
+            test.TestResult = rbPass.Checked;
             test.Notes = txtNotes.Text.Trim();
-            test.CreatedByUserID = clsCurrentUser.CurrentUser?.UserID ?? 1; // Current system user
+            test.CreatedByUserID = clsCurrentUser.CurrentUser?.UserID ?? 1;
+            test.TestTypeID = _TestTypeID; // <--- اسناد قيمة TestTypeID قبل الحفظ
 
             if (test.Save())
             {
                 MessageBox.Show("Test result saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnSave.Enabled = false;
+                OnTestSaved?.Invoke(this, true);
                 this.FindForm()?.Close();
             }
             else
