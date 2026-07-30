@@ -531,6 +531,11 @@ namespace DVLD_PresentationLayer.Applications
 
         private void scheduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            TestAppointment();
+        }
+
+        private void TestAppointment()
+        {
             using (Form overlay = new Form())
             {
                 overlay.StartPosition = FormStartPosition.Manual;
@@ -591,6 +596,16 @@ namespace DVLD_PresentationLayer.Applications
                     frmContainer.ShowDialog(overlay);
                 }
             }
+        }
+
+        private void scheduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestAppointment();
+        }
+
+        private void scheduleStreetTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestAppointment();
         }
     }
 }

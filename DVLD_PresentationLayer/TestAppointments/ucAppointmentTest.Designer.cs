@@ -47,6 +47,7 @@
             this.lblTrial = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
+            this.Date = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
             this.btnCancel = new Guna.UI2.WinForms.Guna2Button();
             this.lblFees = new System.Windows.Forms.Label();
@@ -61,7 +62,7 @@
             this.lblRAppFees = new System.Windows.Forms.Label();
             this.pbtypeTest = new Guna.UI2.WinForms.Guna2PictureBox();
             this.lblTestType = new System.Windows.Forms.Label();
-            this.Date = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            this.cbTimeSlots = new Guna.UI2.WinForms.Guna2ComboBox();
             this.lblDLAppID.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             this.guna2Panel2.SuspendLayout();
@@ -286,6 +287,7 @@
             // 
             this.guna2Panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2Panel5.Controls.Add(this.cbTimeSlots);
             this.guna2Panel5.Controls.Add(this.Date);
             this.guna2Panel5.Controls.Add(this.btnSave);
             this.guna2Panel5.Controls.Add(this.btnCancel);
@@ -298,6 +300,26 @@
             this.guna2Panel5.Name = "guna2Panel5";
             this.guna2Panel5.Size = new System.Drawing.Size(1146, 307);
             this.guna2Panel5.TabIndex = 6;
+            // 
+            // Date
+            // 
+            this.Date.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(218)))), ((int)(((byte)(223)))));
+            this.Date.BorderRadius = 10;
+            this.Date.BorderThickness = 1;
+            this.Date.Checked = true;
+            this.Date.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.Date.CustomFormat = "dd/MM/yyyy";
+            this.Date.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.Date.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Date.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.Date.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.Date.Location = new System.Drawing.Point(186, 31);
+            this.Date.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
+            this.Date.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
+            this.Date.Name = "Date";
+            this.Date.Size = new System.Drawing.Size(257, 36);
+            this.Date.TabIndex = 10;
+            this.Date.Value = new System.DateTime(2026, 7, 5, 7, 8, 22, 887);
             // 
             // btnSave
             // 
@@ -480,25 +502,22 @@
             this.lblTestType.TabIndex = 5;
             this.lblTestType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Date
+            // cbTimeSlots
             // 
-            this.Date.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(218)))), ((int)(((byte)(223)))));
-            this.Date.BorderRadius = 10;
-            this.Date.BorderThickness = 1;
-            this.Date.Checked = true;
-            this.Date.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Date.CustomFormat = "dd/MM/yyyy";
-            this.Date.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.Date.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Date.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Date.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.Date.Location = new System.Drawing.Point(226, 36);
-            this.Date.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
-            this.Date.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.Date.Name = "Date";
-            this.Date.Size = new System.Drawing.Size(257, 36);
-            this.Date.TabIndex = 10;
-            this.Date.Value = new System.DateTime(2026, 7, 5, 7, 8, 22, 887);
+            this.cbTimeSlots.BackColor = System.Drawing.Color.Transparent;
+            this.cbTimeSlots.BorderRadius = 10;
+            this.cbTimeSlots.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbTimeSlots.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTimeSlots.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbTimeSlots.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbTimeSlots.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.cbTimeSlots.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
+            this.cbTimeSlots.ItemHeight = 30;
+            this.cbTimeSlots.Location = new System.Drawing.Point(459, 31);
+            this.cbTimeSlots.Name = "cbTimeSlots";
+            this.cbTimeSlots.Size = new System.Drawing.Size(150, 36);
+            this.cbTimeSlots.TabIndex = 11;
+            this.cbTimeSlots.TextOffset = new System.Drawing.Point(5, 0);
             // 
             // ucAppointmentTest
             // 
@@ -565,5 +584,6 @@
         private System.Windows.Forms.Label lblTotalFees;
         private System.Windows.Forms.Label lblRAppFees;
         private Guna.UI2.WinForms.Guna2DateTimePicker Date;
+        private Guna.UI2.WinForms.Guna2ComboBox cbTimeSlots;
     }
 }

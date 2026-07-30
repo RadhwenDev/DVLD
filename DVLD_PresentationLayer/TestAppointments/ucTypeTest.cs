@@ -137,7 +137,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                 }
                 catch
                 {
-                    pbCreator.Image = null; // أو وضع صورة افتراضية
+                    pbCreator.Image = null;
                 }
             }
             else
@@ -179,6 +179,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                     guna2CirclePictureBox8.Image = (Image)resources.GetObject("Street");
                     lblCurrentTest2.Text = "2. Vision Test (Done)";
                     lblCurrentTest3.Text = "3. Written Test (Done)";
+                    // تم إصلاح التكرار وتصحيح العنوان هنا
                     lblCurrentTest3.Text = "4. Street Test (Current)";
                     lblPassedTestStatus2.Text = string.Empty;
                     lblPassedTestStatus3.Text = "2/3 Passed Tests";
@@ -208,7 +209,7 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         #endregion
 
-        #region Generic Modal Helper (إلغاء التكرار)
+        #region Generic Modal Helper
 
         private void ShowModalUserControl(UserControl uc)
         {
@@ -248,6 +249,25 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         #endregion
 
+        #region Helper Method for Selected Appointment
+
+        // دالة مساعدة للحصول على رقم الموعد المضلل حالياً في الجدول
+        private int GetSelectedTestAppointmentID()
+        {
+            if (dgvAppointments.CurrentRow != null && dgvAppointments.CurrentRow.Index >= 0)
+            {
+                // تأكد من اسم عمود الـ ID في الـ DataGridView (غالباً TestAppointmentID أو ID)
+                if (dgvAppointments.CurrentRow.Cells["TestAppointmentID"] != null &&
+                    int.TryParse(dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value?.ToString(), out int appointmentID))
+                {
+                    return appointmentID;
+                }
+            }
+            return -1;
+        }
+
+        #endregion
+
         #region Actions & Events
 
         private void linkLblViewFullProfile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -262,13 +282,23 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         private void btnNewAppointment_Click(object sender, EventArgs e)
         {
-            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 0);
+            // نمط AddNew = 0، والـ AppointmentID الافتراضي هو -1
+            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 0, -1);
             ShowModalUserControl(ucAppointment);
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 1);
+            int appointmentID = GetSelectedTestAppointmentID();
+
+            if (appointmentID == -1)
+            {
+                MessageBox.Show("الرجاء تحديد موعد للتعديل!", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // إرسال الموعد المستهدف للتعديل (Mode = 1)
+            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 1, appointmentID);
             ShowModalUserControl(ucAppointment);
         }
 
@@ -282,27 +312,35 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ucTakeTest myTakeTest = new ucTakeTest(_AppID, (int)_TestType);
+            int appointmentID = GetSelectedTestAppointmentID();
+
+            if (appointmentID == -1)
+            {
+                MessageBox.Show("الرجاء تحديد موعد لإجراء الاختبار!", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // هنا نمرر appointmentID بدلاً من _AppID لأن إجراء الاختبار يتبع للموعد المنجز
+            ucTakeTest myTakeTest = new ucTakeTest(appointmentID, (int)_TestType);
             ShowModalUserControl(myTakeTest);
         }
 
         #endregion
+
+        #region Drawing Custom Toggle Switch
+
         private void DrawToggleSwitch(Graphics g, Rectangle bounds, bool isActive)
         {
-            // 1. الأبعاد المستهدفة لتطابق الصورة
-            int switchWidth = 44;   // تكبير العرض
-            int switchHeight = 22;  // تكبير الارتفاع
+            int switchWidth = 44;
+            int switchHeight = 22;
 
-            // 2. حساب المركز لتكون في منتصف الخلية تماماً عمودياً وأفقياً
             int x = bounds.X + (bounds.Width - switchWidth) / 4;
             int y = bounds.Y + (bounds.Height - switchHeight) / 2;
 
             Rectangle switchRect = new Rectangle(x, y, switchWidth, switchHeight);
 
-            // تفعيل تنعيم الحواف (Anti-aliasing) لرسم انسيابي وبدون زوايا حادة
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            // 3. أخضر عند 1 (مفعل/Locked)، ورمادي/أحمر عند 0 (غير مفعل)
             Color toggleBg = isActive ? Color.FromArgb(211, 47, 47) : Color.FromArgb(190, 200, 210);
             using (Brush bgBrush = new SolidBrush(toggleBg))
             {
@@ -312,7 +350,6 @@ namespace DVLD_PresentationLayer.TestAppointments
                 }
             }
 
-            // 4. رسم الدائرة البيضاء داخل الـ Toggle
             int circleMargin = 2;
             int circleSize = switchHeight - (circleMargin * 2);
 
@@ -324,6 +361,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                 g.FillEllipse(circleBrush, circleRect);
             }
         }
+
         private System.Drawing.Drawing2D.GraphicsPath GetRoundedPath(Rectangle rect, int radius)
         {
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
@@ -334,19 +372,18 @@ namespace DVLD_PresentationLayer.TestAppointments
             path.CloseFigure();
             return path;
         }
+
         private void dgvAppointments_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                e.Handled = true; // التحكم في الرسم يدوياً
+                e.Handled = true;
 
-                // 1. رسم خلفية الجدول الأصلية
                 using (Brush backBrush = new SolidBrush(dgvAppointments.BackgroundColor))
                 {
                     e.Graphics.FillRectangle(backBrush, e.CellBounds);
                 }
 
-                // 2. تحديد أبعاد الكارت الداخلي
                 Rectangle cardBounds = new Rectangle(
                     e.CellBounds.X,
                     e.CellBounds.Y + 3,
@@ -362,7 +399,6 @@ namespace DVLD_PresentationLayer.TestAppointments
                     e.Graphics.FillRectangle(cardBrush, cardBounds);
                 }
 
-                // 3. فحص ما إذا كانت الخلية هي IsLocked أو IsActive لرسم الـ Toggle Switch
                 string columnName = dgvAppointments.Columns[e.ColumnIndex].Name;
                 string headerText = dgvAppointments.Columns[e.ColumnIndex].HeaderText;
 
@@ -374,15 +410,13 @@ namespace DVLD_PresentationLayer.TestAppointments
                     bool isLocked = false;
                     if (e.Value != null && e.Value != DBNull.Value)
                     {
-                        isLocked = Convert.ToBoolean(e.Value); // 0 ستعطي false, و 1 ستعطي true
+                        isLocked = Convert.ToBoolean(e.Value);
                     }
 
-                    // استدعاء دالة الرسم بالمتغير الجديد
                     DrawToggleSwitch(e.Graphics, cardBounds, isLocked);
                 }
                 else
                 {
-                    // رسم النصوص العادية متناسقة في الوسط
                     TextRenderer.DrawText(
                         e.Graphics,
                         e.Value?.ToString() ?? "",
@@ -394,5 +428,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                 }
             }
         }
+
+        #endregion
     }
 }
