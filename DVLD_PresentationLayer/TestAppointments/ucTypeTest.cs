@@ -150,14 +150,15 @@ namespace DVLD_PresentationLayer.TestAppointments
         private void ConfigureTestSteps()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ucTypeTest));
+            byte passedTests = clsTestAppointment.GetPassedTestsCount(_AppID);
 
-            switch (_TestType)
+            switch (passedTests)
             {
-                case enTestType.Vision:
+                case 0:
                     lblPassedTests.Text = "0/3";
                     break;
 
-                case enTestType.Written:
+                case 1:
                     lblPassedTests.Text = "1/3";
                     guna2Separator2.FillColor = Color.FromArgb(12, 155, 161);
                     guna2CirclePictureBox6.Image = null;
@@ -169,7 +170,7 @@ namespace DVLD_PresentationLayer.TestAppointments
                     lblPassedTestStatus3.Text = "1/3 Passed Tests";
                     break;
 
-                case enTestType.Street:
+                case 2:
                     lblPassedTests.Text = "2/3";
                     guna2Separator2.FillColor = Color.FromArgb(12, 155, 161);
                     guna2Separator3.FillColor = Color.FromArgb(12, 155, 161);

@@ -1,6 +1,7 @@
 ﻿using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Applications;
 using DVLD_PresentationLayer.Global;
+using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace DVLD_PresentationLayer.TestAppointments
         private enMode _Mode;
 
         // يمكنك تغيير هذا الحقل ليمثل نوع الاختبار الحركي (1 = Vision, 2 = Written, 3 = Street)
-        private int _TestTypeID = 1;
+        private int _TestTypeID;
 
         public ucAppointmentTest(int AppID, int Mode, int testAppointmentID = -1)
         {
@@ -45,8 +46,29 @@ namespace DVLD_PresentationLayer.TestAppointments
         private void ucAppointmentTest_Load(object sender, EventArgs e)
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucAppointmentTest));
-            pbtypeTest.Image = (Image)resources.GetObject("visionAppointment");
-            lblTestType.Text = "Vision Test";
+            
+
+            byte passedTests = clsTestAppointment.GetPassedTestsCount(_AppID);
+
+            switch (passedTests)
+            {
+                case 0:
+                    pbtypeTest.Image = (Image)resources.GetObject("visionAppointment");
+                    lblTestType.Text = "Vision Test";
+                    _TestTypeID = 1;
+                    break;
+
+                case 1:
+                    pbtypeTest.Image = (Image)resources.GetObject("writtenAppointment");
+                    lblTestType.Text = "Written Test";
+                    _TestTypeID =  2;
+                    break;
+                case 2:
+                    pbtypeTest.Image = (Image)resources.GetObject("streetAppointment");
+                    lblTestType.Text = "Street Test";
+                    _TestTypeID = 3;
+                    break;
+            }
 
             // إعداد عناصر التاريخ
             Date.FillColor = Color.FromArgb(248, 250, 252);
@@ -70,12 +92,21 @@ namespace DVLD_PresentationLayer.TestAppointments
                         lblFees.Text = classFees.ToString("N2", CultureInfo.InvariantCulture);
                     else
                         lblFees.Text = dt.Rows[0]["Fees"].ToString();
+                    if (lblTrial.Text != "0")
+                    {
+                        lblRAppFees.Text = dt.Rows[0]["R.App.Fees"].ToString();
+                        lblTotalFees.Text = dt.Rows[0]["Total Fees"].ToString();
+                    }
+                    else
+                    {
+                        lblRAppFees.Text = "0";
+                        lblTotalFees.Text = lblFees.Text;
+                    }
+                    lblRTestAppID.Text = "N/A";
                 }
 
                 Date.Value = DateTime.Now;
-                lblRAppFees.Text = "0";
-                lblTotalFees.Text = lblFees.Text;
-                lblRTestAppID.Text = "N/A";
+                
             }
             else // Edit Mode
             {
@@ -98,10 +129,11 @@ namespace DVLD_PresentationLayer.TestAppointments
                     cbTimeSlots.SelectedItem = savedTime;
                 else
                     cbTimeSlots.Text = savedTime;
-                lblRAppFees.Text = "0";
-                lblTotalFees.Text = lblFees.Text;
-                lblRTestAppID.Text = _TestAppointment.RetakeTestApplicationID == -1 ? "N/A" : _TestAppointment.RetakeTestApplicationID.ToString();
+                
             }
+
+            
+            
         }
         private void FillTimeSlots()
         {
@@ -143,11 +175,14 @@ namespace DVLD_PresentationLayer.TestAppointments
             _TestAppointment.TestTypeID = _TestTypeID;
             _TestAppointment.LocalDrivingLicenseApplicationID = _AppID;
 
-            if (decimal.TryParse(lblFees.Text, out decimal fees))
+            if (decimal.TryParse(lblFees.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal fees))
+            {
                 _TestAppointment.PaidFees = fees;
+            }
 
             // قم بتغيير هذا المعرف بـ User الحالي الحاصل على التسجيل (مثلاً clsGlobal.CurrentUser.UserID)
             _TestAppointment.CreatedByUserID = clsCurrentUser._UserID;
+
 
             // 2. الحفظ والتحقق من النتيجة
             clsTestAppointment.enSaveResult result = _TestAppointment.Save();

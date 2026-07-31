@@ -44,11 +44,11 @@ namespace DVLD_PresentationLayer.TestAppointments
                     break;
                 case 2:
                     lblTestType.Text = "Written Test";
-                    pbtypeTest.Image = (Image)resources.GetObject("Written");
+                    pbtypeTest.Image = (Image)resources.GetObject("writtenAppointment");
                     break;
                 case 3:
                     lblTestType.Text = "Street Test";
-                    pbtypeTest.Image = (Image)resources.GetObject("Street");
+                    pbtypeTest.Image = (Image)resources.GetObject("streetAppointment");
                     break;
             }
         }

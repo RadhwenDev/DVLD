@@ -180,14 +180,11 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"select distinct StatusID = A.ApplicationStatus, 
-                                CASE
-                                    WHEN A.ApplicationStatus = 1 THEN 'New'
-                                    WHEN A.ApplicationStatus = 2 THEN 'Cancelled'
-                                    WHEN ApplicationStatus = 3 THEN 'Completed'
-                                ELSE 'Unknown'
-                                END as [STATUS] 
-                                from Applications A;";
+                string query = @"SELECT 1 AS StatusID, 'New' AS [Status]
+                                 UNION ALL
+                                 SELECT 2, 'Cancelled'
+                                 UNION ALL
+                                 SELECT 3, 'Completed';";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try

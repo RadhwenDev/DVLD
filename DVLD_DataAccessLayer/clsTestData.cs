@@ -17,14 +17,9 @@ namespace DVLD_DataAccessLayer
                 string query = @"INSERT INTO Tests (TestAppointmentID, TestResult, Notes, CreatedByUserID)
                                  VALUES (@TestAppointmentID, @TestResult, @Notes, @CreatedByUserID);
                                  SELECT SCOPE_IDENTITY();
-
-                                 -- تحديث الموعد ليصبح مغلقاً وتحديث نوع الاختبار
+                                 
                                  UPDATE TestAppointments 
-                                 SET IsLocked = 1,
-                                     TestTypeID = CASE 
-                                        WHEN @TestResult = 1 THEN @TestTypeID + 1 
-                                        ELSE @TestTypeID 
-                                     END
+                                 SET IsLocked = 1
                                  WHERE TestAppointmentID = @TestAppointmentID;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))

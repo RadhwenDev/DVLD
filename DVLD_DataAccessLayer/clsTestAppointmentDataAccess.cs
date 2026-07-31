@@ -101,7 +101,7 @@ namespace DVLD_DataAccessLayer
                         }
                     }
                 }
-                catch (Exception){}
+                catch (Exception) { }
             }
 
             return dt;
@@ -161,25 +161,25 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
-                public static bool GetTestAppointmentInfoByID(
-            int TestAppointmentID,
-            ref int TestTypeID,
-            ref int LocalDrivingLicenseApplicationID,
-            ref DateTime AppointmentDate,
-            ref decimal PaidFees,
-            ref int CreatedByUserID,
-            ref bool IsLocked,
-            ref int RetakeTestApplicationID,
-            ref string ClassName,
-            ref string FullName,
-            ref int TestTrialCount,
-            ref int TestID)
-             {
-                 bool isFound = false;
+        public static bool GetTestAppointmentInfoByID(
+    int TestAppointmentID,
+    ref int TestTypeID,
+    ref int LocalDrivingLicenseApplicationID,
+    ref DateTime AppointmentDate,
+    ref decimal PaidFees,
+    ref int CreatedByUserID,
+    ref bool IsLocked,
+    ref int RetakeTestApplicationID,
+    ref string ClassName,
+    ref string FullName,
+    ref int TestTrialCount,
+    ref int TestID)
+        {
+            bool isFound = false;
 
-                 using (SqlConnection connection = new SqlConnection(ConnectionString))
-                 {
-                     string query = @"SELECT 
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT 
                                  TA.TestTypeID,
                                  TA.LocalDrivingLicenseApplicationID,
                                  TA.AppointmentDate,
@@ -206,72 +206,84 @@ namespace DVLD_DataAccessLayer
                              LEFT JOIN Tests T ON TA.TestAppointmentID = T.TestAppointmentID
                              WHERE TA.TestAppointmentID = @TestAppointmentID;";
 
-                     using (SqlCommand command = new SqlCommand(query, connection))
-                     {
-                         command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
-
-                         try
-                         {
-                             connection.Open();
-                             using (SqlDataReader reader = command.ExecuteReader())
-                             {
-                                 if (reader.Read())
-                                 {
-                                     isFound = true;
-
-                                     TestTypeID = (int)reader["TestTypeID"];
-                                     LocalDrivingLicenseApplicationID = (int)reader["LocalDrivingLicenseApplicationID"];
-                                     AppointmentDate = (DateTime)reader["AppointmentDate"];
-                                     PaidFees = (decimal)reader["PaidFees"];
-                                     CreatedByUserID = (int)reader["CreatedByUserID"];
-                                     IsLocked = (bool)reader["IsLocked"];
-                                     RetakeTestApplicationID = reader["RetakeTestApplicationID"] != DBNull.Value ? (int)reader["RetakeTestApplicationID"] : -1;
-
-                                     ClassName = reader["ClassName"].ToString();
-                                     FullName = reader["FullName"].ToString();
-                                     TestTrialCount = (int)reader["TestTrialCount"];
-                                     TestID = (int)reader["TestID"];
-                                 }
-                             }
-                         }
-                         catch
-                         {
-                             isFound = false;
-                         }
-                     }
-                 }
-
-            return isFound;
-        }
-
-        public static DataTable getTsetAppointment(int ApplicationID)
-        {
-            DataTable dt = new DataTable();
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                string query = @"SELECT 
-                                    TA.TestTypeID
-                                FROM Applications A
-                                INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
-                                INNER JOIN LicenseClasses LC ON LDLA.LicenseClassID = LC.LicenseClassID
-                                LEFT JOIN TestAppointments TA ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
-                                WHERE A.ApplicationID = @ApplicationID;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    command.Parameters.AddWithValue("@TestAppointmentID", TestAppointmentID);
+
                     try
                     {
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            if (reader.HasRows)
-                                dt.Load(reader);
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                TestTypeID = (int)reader["TestTypeID"];
+                                LocalDrivingLicenseApplicationID = (int)reader["LocalDrivingLicenseApplicationID"];
+                                AppointmentDate = (DateTime)reader["AppointmentDate"];
+                                PaidFees = (decimal)reader["PaidFees"];
+                                CreatedByUserID = (int)reader["CreatedByUserID"];
+                                IsLocked = (bool)reader["IsLocked"];
+                                RetakeTestApplicationID = reader["RetakeTestApplicationID"] != DBNull.Value ? (int)reader["RetakeTestApplicationID"] : -1;
+
+                                ClassName = reader["ClassName"].ToString();
+                                FullName = reader["FullName"].ToString();
+                                TestTrialCount = (int)reader["TestTrialCount"];
+                                TestID = (int)reader["TestID"];
+                            }
                         }
                     }
-                    catch (Exception) { }
+                    catch
+                    {
+                        isFound = false;
+                    }
                 }
             }
-            return dt;
+
+            return isFound;
+        }
+
+        public static byte GetPassedTestCount(int ApplicationID)
+        {
+            byte passedTestCount = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT COUNT(*) 
+                         FROM Applications A
+                         INNER JOIN LocalDrivingLicenseApplications LDLA
+                             ON A.ApplicationID = LDLA.ApplicationID
+                         INNER JOIN TestAppointments TA
+                             ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                         INNER JOIN Tests T
+                             ON TA.TestAppointmentID = T.TestAppointmentID
+                         WHERE A.ApplicationID = @ApplicationID
+                         AND T.TestResult = 1;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int count))
+                        {
+                            passedTestCount = (byte)count;
+                        }
+                    }
+                    catch (Exception )
+                    {
+                        // يمكنك تسجيل الخطأ هنا عند الحاجة
+                        passedTestCount = 0;
+                    }
+                }
+            }
+
+            return passedTestCount;
         }
 
         public static bool GetTestAppointmentInfoByID(
@@ -451,26 +463,43 @@ namespace DVLD_DataAccessLayer
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
-                            LDL.LocalDrivingLicenseApplicationID,
-                            LicenseClasses.ClassName,
-                            People.PersonID,
-                            (People.FirstName + ' ' + ISNULL(People.SecondName, '') + ' ' + ISNULL(People.ThirdName, '') + ' ' + People.LastName) AS FullName,
-                            Applications.ApplicationDate,
-                            Applications.LastStatusDate,
-                            Applications.PaidFees AS ApplicationPaidFees,
-                            Applications.ApplicationStatus AS STATUS,
-                            Users.UserName AS CreatedByUserName,
-                            People.ImagePath,
-                            ISNULL((SELECT TOP 1 TestTypeID 
-                                    FROM TestAppointments 
-                                    WHERE LocalDrivingLicenseApplicationID = LDL.LocalDrivingLicenseApplicationID 
-                                    ORDER BY TestAppointmentID DESC), 1) AS TestTypeID
-                        FROM LocalDrivingLicenseApplications LDL
-                        INNER JOIN Applications ON LDL.ApplicationID = Applications.ApplicationID
-                        INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
-                        INNER JOIN LicenseClasses ON LDL.LicenseClassID = LicenseClasses.LicenseClassID
-                        INNER JOIN Users ON Applications.CreatedByUserID = Users.UserID
-                        WHERE LDL.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+                                    LDL.LocalDrivingLicenseApplicationID,
+                                    LicenseClasses.ClassName,
+                                    People.PersonID,
+                                    (People.FirstName + ' ' + ISNULL(People.SecondName, '') + ' ' + ISNULL(People.ThirdName, '') + ' ' + People.LastName) AS FullName,
+                                    Applications.ApplicationDate,
+                                    Applications.LastStatusDate,
+                                    Applications.PaidFees AS ApplicationPaidFees,
+                                    Applications.ApplicationStatus AS STATUS,
+                                    Users.UserName AS CreatedByUserName,
+                                    People.ImagePath,
+
+                                    CASE 
+                                        WHEN (
+                                            SELECT COUNT(*) 
+                                            FROM TestAppointments TA
+                                            INNER JOIN Tests T ON TA.TestAppointmentID = T.TestAppointmentID
+                                            WHERE TA.LocalDrivingLicenseApplicationID = LDL.LocalDrivingLicenseApplicationID
+                                            AND T.TestResult = 1
+                                        ) = 0 THEN 1 
+        
+                                        WHEN (
+                                            SELECT COUNT(*) 
+                                            FROM TestAppointments TA
+                                            INNER JOIN Tests T ON TA.TestAppointmentID = T.TestAppointmentID
+                                            WHERE TA.LocalDrivingLicenseApplicationID = LDL.LocalDrivingLicenseApplicationID
+                                            AND T.TestResult = 1
+                                        ) = 1 THEN 2
+        
+                                        ELSE 3 
+                                    END AS TestTypeID
+
+                                FROM LocalDrivingLicenseApplications LDL
+                                INNER JOIN Applications ON LDL.ApplicationID = Applications.ApplicationID
+                                INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
+                                INNER JOIN LicenseClasses ON LDL.LicenseClassID = LicenseClasses.LicenseClassID
+                                INNER JOIN Users ON Applications.CreatedByUserID = Users.UserID
+                                WHERE LDL.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -550,6 +579,49 @@ namespace DVLD_DataAccessLayer
             }
 
             return (rowsAffected > 0);
+        }
+        public static int GetTotalTrialsPerTest(int LocalDrivingLicenseApplicationID, int TestTypeID)
+        {
+            int totalTrials = 0;
+
+            // يمكنك تغيير اسم كلاس الاتصال بحسب ما هو معرف لديك في المشروع (مثل clsDataAccessSettings.ConnectionString)
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                // تحسب هذه الاستعلامات عدد الاختبارات الفاشلة (Total Failed Trials)
+                // التي أداها الطالب لنفس الطلب ونوع الاختبار
+                string query = @"SELECT COUNT(*) 
+                                 FROM Tests 
+                                 INNER JOIN TestAppointments 
+                                     ON Tests.TestAppointmentID = TestAppointments.TestAppointmentID
+                                 WHERE TestAppointments.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                                   AND TestAppointments.TestTypeID = @TestTypeID
+                                   AND Tests.TestResult = 0;"; // 0 تعني فاشل (Failed)
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
+                    command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int count))
+                        {
+                            totalTrials = count;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // يمكنك تسجيل الخطأ هنا حسب نظام Logging لديك
+                        // Console.WriteLine("Error: " + ex.Message);
+                        totalTrials = 0;
+                    }
+                }
+            }
+
+            return totalTrials;
         }
     }
 }

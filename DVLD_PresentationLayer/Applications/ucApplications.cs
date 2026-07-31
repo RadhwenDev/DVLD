@@ -407,9 +407,9 @@ namespace DVLD_PresentationLayer.Applications
                 }
             }
         }
-    
 
-    int appID = -1;
+
+        int appID = -1;
         private void guna2ContextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
             Point mousePos = dgvApplications.PointToClient(Control.MousePosition);
@@ -437,25 +437,21 @@ namespace DVLD_PresentationLayer.Applications
                 scheduleTestsToolStripMenuItem.Enabled = true;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false; // مثلاً رخصة السياقة ممنوعة في الحالة الجديدة
                 showLicenseToolStripMenuItem.Enabled = false;
-                DataTable dataTable = clsTestAppointment.getTsetAppointment(appID);
-                int testAppointment = 1;
-                if (dataTable.Rows[0]["TestTypeID"] != DBNull.Value)
+                byte passedTests = clsTestAppointment.GetPassedTestsCount(appID);
+
+                switch (passedTests)
                 {
-                    testAppointment = Convert.ToInt32(dataTable.Rows[0]["TestTypeID"]);
-                }
-                switch (testAppointment)
-                {
-                    case 1:
-                        scheduleVisionTestToolStripMenuItem.Enabled= true;
+                    case 0:
+                        scheduleVisionTestToolStripMenuItem.Enabled = true;
                         scheduleWrittenTestToolStripMenuItem.Enabled = false;
                         scheduleStreetTestToolStripMenuItem.Enabled = false;
                         break;
-                    case 2:
+                    case 1:
                         scheduleVisionTestToolStripMenuItem.Enabled = false;
                         scheduleWrittenTestToolStripMenuItem.Enabled = true;
                         scheduleStreetTestToolStripMenuItem.Enabled = false;
                         break;
-                    case 3:
+                    case 2:
                         scheduleVisionTestToolStripMenuItem.Enabled = false;
                         scheduleWrittenTestToolStripMenuItem.Enabled = false;
                         scheduleStreetTestToolStripMenuItem.Enabled = true;

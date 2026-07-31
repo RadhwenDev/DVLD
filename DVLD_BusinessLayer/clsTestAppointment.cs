@@ -254,6 +254,11 @@ namespace DVLD_BusinessLayer
 
             return null;
         }
+        // دالة لجلب عدد المحاولات السابقة لنفس نوع الاختبار والطلب
+        public static int GetTotalTrialsPerTest(int LocalDrivingLicenseApplicationID, int TestTypeID)
+        {
+            return clsTestAppointmentDataAccess.GetTotalTrialsPerTest(LocalDrivingLicenseApplicationID, TestTypeID);
+        }
 
         private bool _AddNewTestAppointment()
         {
@@ -281,6 +286,34 @@ namespace DVLD_BusinessLayer
             switch (Mode)
             {
                 case enMode.AddNew:
+                    this.TestTrialCount = GetTotalTrialsPerTest(this.LocalDrivingLicenseApplicationID, this.TestTypeID);
+                    if (this.TestTrialCount > 0)
+                    {
+                        // 1. استخدام دالة البحث التي أنشأناها توّاً
+                        clsLocalDrivingLicenseApplications localApp = clsLocalDrivingLicenseApplications.FindByLocalDrivingAppID(this.LocalDrivingLicenseApplicationID);
+
+                        if (localApp != null)
+                        {
+                            // 2. إنشاء طلب الإعادة بأسلوب OOP
+                            clsApplicant retakeApp = new clsApplicant();
+                            retakeApp.ApplicantPersonID = localApp.ApplicantPersonID;
+                            retakeApp.ApplicationDate = DateTime.Now;
+                            retakeApp.ApplicationTypeID = (int)clsApplicant.enApplicationType.RetakeTest; // 7
+                            retakeApp.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
+                            retakeApp.LastStatusDate = DateTime.Now;
+                            retakeApp.PaidFees = 5.00m; // أو جلبها من DB
+                            retakeApp.CreatedByUserID = this.CreatedByUserID;
+
+                            if (retakeApp.Save())
+                            {
+                                this.RetakeTestApplicationID = retakeApp.ApplicationID;
+                            }
+                            else
+                            {
+                                return enSaveResult.Failed;
+                            }
+                        }
+                    }
                     if (_AddNewTestAppointment())
                     {
                         Mode = enMode.Update;
@@ -318,9 +351,9 @@ namespace DVLD_BusinessLayer
         {
             return clsTestAppointmentDataAccess.GetApplicationAppointments(localDrivingLicenseApplicationID, testTypeID);
         }
-        public static DataTable getTsetAppointment(int AppID)
+        public static byte GetPassedTestsCount(int AppID)
         {
-            return clsTestAppointmentDataAccess.getTsetAppointment(AppID);
+            return clsTestAppointmentDataAccess.GetPassedTestCount(AppID);
         }
         public static DataTable getDataAppintment(int AppID, int testID)
         {

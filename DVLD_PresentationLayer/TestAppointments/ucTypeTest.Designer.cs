@@ -617,6 +617,7 @@
             this.guna2CirclePictureBox8.Name = "guna2CirclePictureBox8";
             this.guna2CirclePictureBox8.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.guna2CirclePictureBox8.Size = new System.Drawing.Size(39, 36);
+            this.guna2CirclePictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.guna2CirclePictureBox8.TabIndex = 0;
             this.guna2CirclePictureBox8.TabStop = false;
             // 
@@ -628,6 +629,7 @@
             this.guna2CirclePictureBox7.Name = "guna2CirclePictureBox7";
             this.guna2CirclePictureBox7.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.guna2CirclePictureBox7.Size = new System.Drawing.Size(39, 36);
+            this.guna2CirclePictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.guna2CirclePictureBox7.TabIndex = 0;
             this.guna2CirclePictureBox7.TabStop = false;
             // 

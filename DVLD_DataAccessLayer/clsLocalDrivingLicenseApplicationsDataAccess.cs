@@ -46,5 +46,51 @@ namespace DVLD_DataAccessLayer
 
             return LocalDrivingLicenseApplications;
         }
+        public static bool GetLocalDrivingLicenseApplicationInfoByID(
+    int LocalDrivingLicenseApplicationID,
+    ref int ApplicationID,
+    ref int ApplicantPersonID,
+    ref int LicenseClassID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                // نربط مع جدول Applications لجلب ApplicantPersonID في نفس الاستعلام
+                string query = @"SELECT LDL.LocalDrivingLicenseApplicationID, 
+                                LDL.ApplicationID, 
+                                LDL.LicenseClassID, 
+                                A.ApplicantPersonID
+                         FROM LocalDrivingLicenseApplications LDL
+                         INNER JOIN Applications A ON LDL.ApplicationID = A.ApplicationID
+                         WHERE LDL.LocalDrivingLicenseApplicationID = @LDLAppID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LDLAppID", LocalDrivingLicenseApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                isFound = true;
+                                ApplicationID = (int)reader["ApplicationID"];
+                                LicenseClassID = (int)reader["LicenseClassID"];
+                                ApplicantPersonID = (int)reader["ApplicantPersonID"];
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
     }
 }
