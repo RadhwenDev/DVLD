@@ -623,5 +623,45 @@ namespace DVLD_DataAccessLayer
 
             return totalTrials;
         }
+         public static bool IsRetakeTest(int LocalDrivingLicenseApplicationID, int TestTypeID)
+         {
+             bool isRetake = false;
+
+             using (SqlConnection connection = new SqlConnection(ConnectionString))
+             {
+                 // الاستعلام يفحص ما إذا كان هناك اختبار سابق بنفس النوع والطلب وكانت نتيجته رسوب (0)
+                 string query = @"SELECT TOP 1 1
+                                  FROM TestAppointments TA
+                                  INNER JOIN Tests T
+                                      ON T.TestAppointmentID = TA.TestAppointmentID
+                                  WHERE TA.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                                    AND TA.TestTypeID = @TestTypeID
+                                    AND T.TestResult = 0;";
+
+                 using (SqlCommand command = new SqlCommand(query, connection))
+                 {
+                     command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
+                     command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
+
+                     try
+                     {
+                         connection.Open();
+                         object result = command.ExecuteScalar();
+
+                         if (result != null && result != DBNull.Value)
+                         {
+                             isRetake = true;
+                         }
+                     }
+                     catch (Exception)
+                     {
+                         // Logging handling logic...
+                         isRetake = false;
+                     }
+                 }
+             }
+
+             return isRetake;
+         }
     }
 }

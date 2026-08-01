@@ -388,6 +388,11 @@ namespace DVLD_BusinessLayer
             return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(localDrivingLicenseApplicationID);
         }
 
+        public static bool IsRetakeTest(int LocalDrivingLicenseApplicationID, int TestTypeID)
+        {
+            return clsTestAppointmentDataAccess.IsRetakeTest(LocalDrivingLicenseApplicationID, TestTypeID);
+        }
+
         #endregion
     }
 }
