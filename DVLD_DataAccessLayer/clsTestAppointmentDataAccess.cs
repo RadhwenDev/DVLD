@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD_DataAccessLayer
 {
@@ -623,26 +624,21 @@ namespace DVLD_DataAccessLayer
 
             return totalTrials;
         }
-         public static bool IsRetakeTest(int LocalDrivingLicenseApplicationID, int TestTypeID)
+         public static bool IsRetakeTest(int ApplicationID)
          {
              bool isRetake = false;
 
              using (SqlConnection connection = new SqlConnection(ConnectionString))
              {
                  // الاستعلام يفحص ما إذا كان هناك اختبار سابق بنفس النوع والطلب وكانت نتيجته رسوب (0)
-                 string query = @"SELECT TOP 1 1
-                                  FROM TestAppointments TA
-                                  INNER JOIN Tests T
-                                      ON T.TestAppointmentID = TA.TestAppointmentID
-                                  WHERE TA.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
-                                    AND TA.TestTypeID = @TestTypeID
-                                    AND T.TestResult = 0;";
+                 string query = @"SELECT TOP 1 Found = 1
+                                  FROM Applications
+                                  WHERE ApplicationID = @ApplicationID
+                                    AND ApplicationTypeID = 7;";
 
                  using (SqlCommand command = new SqlCommand(query, connection))
                  {
-                     command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
-                     command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
-
+                     command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
                      try
                      {
                          connection.Open();

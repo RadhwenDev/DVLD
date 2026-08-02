@@ -465,10 +465,9 @@ namespace DVLD_PresentationLayer.Applications
                 cancelApplicationToolStripMenuItem.Enabled = false; // ما تنجمش تلغى حاجة مكتملة
                 scheduleTestsToolStripMenuItem.Enabled = false;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false;
-                
-                bool hasDriverLicense = clsTestAppointment.IsRetakeTest(appID, 2);
-                showPersonToolStripMenuItem.Enabled = hasDriverLicense;
-                showLicenseToolStripMenuItem.Enabled = hasDriverLicense;
+                bool hasDriverLicense = clsTestAppointment.IsRetakeTest(appID);
+                showPersonToolStripMenuItem.Enabled = !hasDriverLicense;
+                showLicenseToolStripMenuItem.Enabled = !hasDriverLicense;
             }
             else
             {
