@@ -34,7 +34,13 @@ namespace DVLD_BusinessLayer
             this.LicenseClassID = licenseClassID;
             this.Mode = enMode.Update;
         }
-
+        public clsLicenseClass LicenseClassInfo
+        {
+            get
+            {
+                return clsLicenseClass.Find(this.LicenseClassID);
+            }
+        }
         // دالة الإضافة السابقة الخاصة بك
         public static int AddNewLocalDrivingLicenseApplications(int ApplicationID, int LicenseClassID)
         {
@@ -62,5 +68,10 @@ namespace DVLD_BusinessLayer
                 return null;
             }
         }
+        public bool SetComplete()
+        {
+            return clsApplicant.UpdateStatus(this.ApplicationID, 3); // 3 = Completed
+        }
+
     }
 }

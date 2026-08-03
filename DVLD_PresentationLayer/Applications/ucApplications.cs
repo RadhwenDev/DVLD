@@ -93,6 +93,7 @@ namespace DVLD_PresentationLayer.Applications
             cbStatuses.SelectedIndexChanged += cbStatuses_SelectedIndexChanged;
 
             UpdateRowsCount(_dtAllApplicants);
+
         }
 
 
@@ -175,7 +176,7 @@ namespace DVLD_PresentationLayer.Applications
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.SelectionBackground);
 
                 System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucApplications));
-                Image imgShow = (Image)resources.GetObject("show");
+                Image imgShow = (Image)resources.GetObject("scheduleVisionTestToolStripMenuItem.Image");
 
                 int iconSize = 20;
                 int totalWidth = iconSize; // بما أنك حالياً ترسم أيقونة واحدة فقط (Show) الرسم يتمحور حولها
@@ -483,9 +484,24 @@ namespace DVLD_PresentationLayer.Applications
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (appID == -1) return;
+
+            // سؤال التأكيد قبل الإلغاء
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to cancel this application?",
+                "Confirm Cancellation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            // إذا اختار المستخدم "No" نخرج من الدالة بدون تنفيذ الإلغاء
+            if (result == DialogResult.No) return;
+
+            // تنفيذ عملية الإلغاء في حال الموافقة
             if (clsApplicant.UpdateToCaancelStatus(appID))
             {
-                MessageBox.Show("Application Cancelled Successfully", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); _dtAllApplicants = clsApplicant.getAllApplicants();
+                MessageBox.Show("Application Cancelled Successfully.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                _dtAllApplicants = clsApplicant.getAllApplicants();
                 dgvApplications.DataSource = _dtAllApplicants;
                 UpdateRowsCount(_dtAllApplicants);
             }
@@ -551,6 +567,7 @@ namespace DVLD_PresentationLayer.Applications
                     frmContainer.StartPosition = FormStartPosition.CenterParent;
 
                     ucTypeTest myVisionTestPage = new ucTypeTest(appID);
+                    myVisionTestPage.DataBack += Uc_DataBack;
                     frmContainer.Size = myVisionTestPage.Size;
                     myVisionTestPage.Dock = DockStyle.Fill;
                     frmContainer.Controls.Add(myVisionTestPage);
@@ -562,6 +579,12 @@ namespace DVLD_PresentationLayer.Applications
                     frmContainer.ShowDialog(overlay);
                 }
             }
+        }
+        private void Uc_DataBack(object sender, int testAppointmentID)
+        {
+            _dtAllApplicants = clsApplicant.getAllApplicants();
+            dgvApplications.DataSource = _dtAllApplicants;
+            UpdateRowsCount(_dtAllApplicants);
         }
 
         private void showPersonToolStripMenuItem_Click(object sender, EventArgs e)
@@ -605,5 +628,6 @@ namespace DVLD_PresentationLayer.Applications
         {
             TestAppointment();
         }
+
     }
 }

@@ -46,7 +46,16 @@ namespace DVLD_BusinessLayer
         private bool _AddNewTest()
         {
             this.TestID = clsTestData.AddNewTest(this.TestAppointmentID, this.TestResult, this.Notes, this.CreatedByUserID, this.TestTypeID);
-            return (this.TestID != -1);
+            if (this.TestID != -1)
+            {
+                if (this.TestTypeID == 3 && this.TestResult)
+                {
+                    _HandlePassingFinalStreetTest();
+                }
+                return true;
+            }
+
+            return false;
         }
 
         public static clsTest Find(int testID)
@@ -63,6 +72,63 @@ namespace DVLD_BusinessLayer
             else
             {
                 return null;
+            }
+        }
+
+        private void _HandlePassingFinalStreetTest()
+        {
+            // 1. جلب تفاصيل موعد الاختبار للحصول على LocalDrivingLicenseApplicationID
+            clsTestAppointment appointment = clsTestAppointment.Find(this.TestAppointmentID);
+            if (appointment == null) return;
+
+            clsLocalDrivingLicenseApplications localApp = clsLocalDrivingLicenseApplications.FindByLocalDrivingAppID(appointment.LocalDrivingLicenseApplicationID);
+            if (localApp == null) return;
+
+            // 2. إضافة Driver جديد إن لم يكن موجوداً من قبل
+            int driverID = -1;
+            clsDriver driver = clsDriver.FindByPersonID(localApp.ApplicantPersonID);
+
+            if (driver == null)
+            {
+                driver = new clsDriver();
+                driver.PersonID = localApp.ApplicantPersonID;
+                driver.CreatedByUserID = this.CreatedByUserID;
+                driver.CreatedDate = DateTime.Now;
+
+                if (driver.Save())
+                {
+                    driverID = driver.DriverID;
+                }
+            }
+            else
+            {
+                driverID = driver.DriverID;
+            }
+
+            // 3. إنشاء وإضافة الرخصة الجديدة (License)
+            if (driverID != -1)
+            {
+                clsLicenses license = new clsLicenses();
+                license.ApplicationID = localApp.ApplicationID;
+                license.DriverID = driverID;
+                license.LicenseClass = localApp.LicenseClassID;
+                license.IssueDate = DateTime.Now;
+                clsLicenseClass licenseClass = clsLicenseClass.Find(localApp.LicenseClassID);
+                if (licenseClass != null)
+                {
+                    license.ExpirationDate = DateTime.Now.AddYears(licenseClass.Validity);
+                    license.PaidFees = localApp.LicenseClassInfo.Fees;
+                }
+                license.Notes = this.Notes;
+                license.IsActive = true;
+                license.IssueReason = clsLicenses.enIssueReason.FirstTime; // 1 - FirstTime
+                license.CreatedByUserID = this.CreatedByUserID;
+
+                if (license.Save())
+                {
+                    // 4. تحديث حالة الطلب إلى Completed (3)
+                    localApp.SetComplete();
+                }
             }
         }
 

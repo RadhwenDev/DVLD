@@ -87,7 +87,10 @@ namespace DVLD_BusinessLayer
             return false;
         }
 
-
+        public static bool UpdateStatus(int applicationID, short newStatus)
+        {
+            return clsApplicationsDataAccess.UpdateStatus(applicationID, newStatus);
+        }
 
         #endregion
 

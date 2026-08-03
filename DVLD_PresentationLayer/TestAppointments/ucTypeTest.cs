@@ -13,6 +13,7 @@ namespace DVLD_PresentationLayer.TestAppointments
 {
     public partial class ucTypeTest : UserControl
     {
+        public event ucAppointmentTest.DataBackEventHandler DataBack;
         public enum enTestType { Vision = 1, Written = 2, Street = 3 }
 
         private enTestType _TestType = enTestType.Vision;
@@ -286,7 +287,14 @@ namespace DVLD_PresentationLayer.TestAppointments
         {
             // نمط AddNew = 0، والـ AppointmentID الافتراضي هو -1
             ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 0, -1);
+            ucAppointment.DataBack += Uc_DataBack;
             ShowModalUserControl(ucAppointment);
+        }
+
+
+        private void Uc_DataBack(object sender, int testAppointmentID)
+        {
+            DataBack?.Invoke(this, testAppointmentID);
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
@@ -300,6 +308,7 @@ namespace DVLD_PresentationLayer.TestAppointments
             }
             // إرسال الموعد المستهدف للتعديل (Mode = 1)
             ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 1, appointmentID);
+            ucAppointment.DataBack += Uc_DataBack;
             ShowModalUserControl(ucAppointment);
         }
 
@@ -331,6 +340,7 @@ namespace DVLD_PresentationLayer.TestAppointments
         {
             if (isSuccess)
             {
+                DataBack?.Invoke(this, _AppID);
                 this.FindForm()?.Close();
             }
         }
