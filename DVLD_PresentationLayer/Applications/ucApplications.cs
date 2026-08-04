@@ -438,7 +438,8 @@ namespace DVLD_PresentationLayer.Applications
                 scheduleTestsToolStripMenuItem.Enabled = true;
                 issueDrivingLicenseToolStripMenuItem.Enabled = false; // مثلاً رخصة السياقة ممنوعة في الحالة الجديدة
                 showLicenseToolStripMenuItem.Enabled = false;
-                byte passedTests = clsTestAppointment.GetPassedTestsCount(appID);
+                showPersonToolStripMenuItem.Enabled = true;
+                byte passedTests = clsTestAppointment.GetPassedTestCountApplication(appID);
 
                 switch (passedTests)
                 {

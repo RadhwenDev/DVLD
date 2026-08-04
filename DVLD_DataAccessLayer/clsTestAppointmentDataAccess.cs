@@ -107,7 +107,7 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        public static DataTable getDataAppintment(int ApplicationID, int TestTypeID)
+        public static DataTable getDataAppintment(int LocalDrivingLicenseApplicationID, int TestTypeID)
         {
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -142,11 +142,11 @@ namespace DVLD_DataAccessLayer
                                 LEFT JOIN TestAppointments ON TestAppointments.LocalDrivingLicenseApplicationID = LDLApp.LocalDrivingLicenseApplicationID
                                                           AND TestAppointments.TestTypeID = TestTypes.TestTypeID
 
-                                WHERE Applications.ApplicationID = @ApplicationID
+                                WHERE LDLApp.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
                                   AND TestTypes.TestTypeID = @TestTypeID;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
                     command.Parameters.AddWithValue("@TestTypeID", TestTypeID);
                     try
                     {
@@ -189,7 +189,7 @@ namespace DVLD_DataAccessLayer
                                  TA.IsLocked,
                                  TA.RetakeTestApplicationID,
                                  LC.ClassName,
-                                 (P.FirstName + ' ' + P.SecondName + ' ' + ISNULL(P.ThirdName, '') + ' ' + P.LastName) AS FullName,
+                                 (P.FirstName + ' ' + ISNULL(P.SecondName, '') + ' ' + ISNULL(P.ThirdName, '') + ' ' + P.LastName) AS FullName,
                                  (
                                      SELECT COUNT(*) 
                                      FROM TestAppointments TA2
@@ -245,7 +245,48 @@ namespace DVLD_DataAccessLayer
             return isFound;
         }
 
-        public static byte GetPassedTestCount(int ApplicationID)
+        public static byte GetPassedTestCount(int LocalDrivingLicenseApplicationID)
+        {
+            byte passedTestCount = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT COUNT(*) 
+                         FROM Applications A
+                         INNER JOIN LocalDrivingLicenseApplications LDLA
+                             ON A.ApplicationID = LDLA.ApplicationID
+                         INNER JOIN TestAppointments TA
+                             ON LDLA.LocalDrivingLicenseApplicationID = TA.LocalDrivingLicenseApplicationID
+                         INNER JOIN Tests T
+                             ON TA.TestAppointmentID = T.TestAppointmentID
+                         WHERE LDLA.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                         AND T.TestResult = 1;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", LocalDrivingLicenseApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int count))
+                        {
+                            passedTestCount = (byte)count;
+                        }
+                    }
+                    catch (Exception )
+                    {
+                        // يمكنك تسجيل الخطأ هنا عند الحاجة
+                        passedTestCount = 0;
+                    }
+                }
+            }
+
+            return passedTestCount;
+        }
+        public static byte GetPassedTestCountApplication(int ApplicationID)
         {
             byte passedTestCount = 0;
 
@@ -457,7 +498,7 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
-        public static DataTable GetApplicationAppointmentsList(int localDrivingLicenseApplicationID)
+        public static DataTable GetApplicationAppointmentsList(int ApplicationID)
         {
             DataTable dt = new DataTable();
 
@@ -500,11 +541,11 @@ namespace DVLD_DataAccessLayer
                                 INNER JOIN People ON Applications.ApplicantPersonID = People.PersonID
                                 INNER JOIN LicenseClasses ON LDL.LicenseClassID = LicenseClasses.LicenseClassID
                                 INNER JOIN Users ON Applications.CreatedByUserID = Users.UserID
-                                WHERE LDL.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID";
+                                WHERE Applications.ApplicationID = @ApplicationID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@LocalDrivingLicenseApplicationID", localDrivingLicenseApplicationID);
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
 
                     try
                     {

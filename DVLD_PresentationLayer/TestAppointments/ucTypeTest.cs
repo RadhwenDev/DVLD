@@ -18,6 +18,7 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         private enTestType _TestType = enTestType.Vision;
         private int _AppID = -1;
+        private int _LocalDrivingLicenseApplicationID = -1; // تم إضافة المتغير هنا
         private int _PersonID = -1;
 
         public ucTypeTest(int appID)
@@ -75,7 +76,17 @@ namespace DVLD_PresentationLayer.TestAppointments
             else
                 lblFees.Text = row["ApplicationPaidFees"]?.ToString() ?? "0.00";
 
-            lblDLAppID.Text = row["LocalDrivingLicenseApplicationID"]?.ToString() ?? "";
+            // قراءة وحفظ LocalDrivingLicenseApplicationID
+            if (int.TryParse(row["LocalDrivingLicenseApplicationID"]?.ToString(), out int localDLAppID))
+            {
+                _LocalDrivingLicenseApplicationID = localDLAppID;
+                lblDLAppID.Text = _LocalDrivingLicenseApplicationID.ToString();
+            }
+            else
+            {
+                lblDLAppID.Text = "";
+            }
+
             lblClassName.Text = row["ClassName"]?.ToString() ?? "";
 
             // تحديد نوع الاختبار
@@ -83,12 +94,13 @@ namespace DVLD_PresentationLayer.TestAppointments
             {
                 _TestType = (enTestType)tTypeID;
             }
+
         }
 
         private void LoadAppointments()
         {
-            // تمرير رقم الطلب ونوع الاختبار الحالي (Vision = 1, Written = 2, Street = 3)
-            DataTable dgv = clsTestAppointment.GetApplicationAppointments(_AppID, (int)_TestType);
+            // تم التعديل: تمرير _LocalDrivingLicenseApplicationID بدلاً من _AppID
+            DataTable dgv = clsTestAppointment.GetApplicationAppointments(_LocalDrivingLicenseApplicationID, (int)_TestType);
 
             bool hasAppointments = dgv != null && dgv.Rows.Count > 0;
 
@@ -101,17 +113,26 @@ namespace DVLD_PresentationLayer.TestAppointments
 
                 // إذا كان الموعد الأخير مغلقاً (مُنجز)، نُتيح إضافة موعد جديد ونمنع تعديل الموعد المغلق
                 btnNewAppointment.Enabled = isLocked;
-                editToolStripMenuItem.Enabled = !isLocked;
-                takeTestToolStripMenuItem.Enabled = !isLocked;
             }
             else
             {
                 // لا يوجد أي موعد سابق لهذا الاختبار
                 dgvAppointments.DataSource = null;
                 btnNewAppointment.Enabled = true;
+            }
+            UpdateContextMenu();
+        }
+        private void UpdateContextMenu()
+        {
+            if (dgvAppointments.CurrentRow == null)
+            {
                 editToolStripMenuItem.Enabled = false;
                 takeTestToolStripMenuItem.Enabled = false;
+                return;
             }
+            bool isLocked = Convert.ToBoolean(dgvAppointments.CurrentRow.Cells["IsLocked"].Value);
+            editToolStripMenuItem.Enabled = !isLocked;
+            takeTestToolStripMenuItem.Enabled = !isLocked;
         }
 
         #endregion
@@ -151,7 +172,7 @@ namespace DVLD_PresentationLayer.TestAppointments
         private void ConfigureTestSteps()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(ucTypeTest));
-            byte passedTests = clsTestAppointment.GetPassedTestsCount(_AppID);
+            byte passedTests = clsTestAppointment.GetPassedTestCountApplication(_AppID);
 
             switch (passedTests)
             {
@@ -182,10 +203,10 @@ namespace DVLD_PresentationLayer.TestAppointments
                     guna2CirclePictureBox8.Image = (Image)resources.GetObject("Street");
                     lblCurrentTest2.Text = "2. Vision Test (Done)";
                     lblCurrentTest3.Text = "3. Written Test (Done)";
-                    // تم إصلاح التكرار وتصحيح العنوان هنا
-                    lblCurrentTest3.Text = "4. Street Test (Current)";
+                    lblCurrentTest4.Text = "4. Street Test (Current)";
                     lblPassedTestStatus2.Text = string.Empty;
-                    lblPassedTestStatus3.Text = "2/3 Passed Tests";
+                    lblPassedTestStatus3.Text = string.Empty;
+                    lblPassedTestStatus4.Text = "2/3 Passed Tests";
                     break;
             }
         }
@@ -254,12 +275,10 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         #region Helper Method for Selected Appointment
 
-        // دالة مساعدة للحصول على رقم الموعد المضلل حالياً في الجدول
         private int GetSelectedTestAppointmentID()
         {
             if (dgvAppointments.CurrentRow != null && dgvAppointments.CurrentRow.Index >= 0)
             {
-                // تأكد من اسم عمود الـ ID في الـ DataGridView (غالباً TestAppointmentID أو ID)
                 if (dgvAppointments.CurrentRow.Cells["TestAppointmentID"] != null &&
                     int.TryParse(dgvAppointments.CurrentRow.Cells["TestAppointmentID"].Value?.ToString(), out int appointmentID))
                 {
@@ -285,12 +304,16 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         private void btnNewAppointment_Click(object sender, EventArgs e)
         {
-            // نمط AddNew = 0، والـ AppointmentID الافتراضي هو -1
-            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 0, -1);
+            if (_LocalDrivingLicenseApplicationID <= 0)
+            {
+                MessageBox.Show("Invalid Local Driving License Application ID!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ucAppointmentTest ucAppointment = new ucAppointmentTest(_LocalDrivingLicenseApplicationID, 0, -1);
             ucAppointment.DataBack += Uc_DataBack;
             ShowModalUserControl(ucAppointment);
         }
-
 
         private void Uc_DataBack(object sender, int testAppointmentID)
         {
@@ -306,8 +329,14 @@ namespace DVLD_PresentationLayer.TestAppointments
                 MessageBox.Show("Please select an appointment to edit!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // إرسال الموعد المستهدف للتعديل (Mode = 1)
-            ucAppointmentTest ucAppointment = new ucAppointmentTest(_AppID, 1, appointmentID);
+
+            if (_LocalDrivingLicenseApplicationID <= 0)
+            {
+                MessageBox.Show("Invalid Local Driving License Application ID!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ucAppointmentTest ucAppointment = new ucAppointmentTest(_LocalDrivingLicenseApplicationID, 1, appointmentID);
             ucAppointment.DataBack += Uc_DataBack;
             ShowModalUserControl(ucAppointment);
         }
@@ -330,7 +359,6 @@ namespace DVLD_PresentationLayer.TestAppointments
                 return;
             }
 
-            // هنا نمرر appointmentID بدلاً من _AppID لأن إجراء الاختبار يتبع للموعد المنجز
             ucTakeTest myTakeTest = new ucTakeTest(appointmentID, (int)_TestType);
             myTakeTest.OnTestSaved += MyTakeTest_OnTestSaved;
             ShowModalUserControl(myTakeTest);
@@ -338,11 +366,12 @@ namespace DVLD_PresentationLayer.TestAppointments
 
         private void MyTakeTest_OnTestSaved(object sender, bool isSuccess)
         {
-            if (isSuccess)
-            {
-                DataBack?.Invoke(this, _AppID);
-                this.FindForm()?.Close();
-            }
+            if (!isSuccess)
+                return;
+
+            DataBack?.Invoke(this, _AppID);
+
+            this.FindForm()?.Close();
         }
 
         #endregion
@@ -450,5 +479,10 @@ namespace DVLD_PresentationLayer.TestAppointments
         }
 
         #endregion
+
+        private void dgvAppointments_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateContextMenu();
+        }
     }
 }

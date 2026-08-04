@@ -294,6 +294,7 @@ namespace DVLD_BusinessLayer
 
                         if (localApp != null)
                         {
+
                             // 2. إنشاء طلب الإعادة بأسلوب OOP
                             clsApplicant retakeApp = new clsApplicant();
                             retakeApp.ApplicantPersonID = localApp.ApplicantPersonID;
@@ -301,7 +302,7 @@ namespace DVLD_BusinessLayer
                             retakeApp.ApplicationTypeID = (int)clsApplicant.enApplicationType.RetakeTest; // 7
                             retakeApp.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
                             retakeApp.LastStatusDate = DateTime.Now;
-                            retakeApp.PaidFees = 5.00m; // أو جلبها من DB
+                            retakeApp.PaidFees = this.PaidFees;
                             retakeApp.CreatedByUserID = this.CreatedByUserID;
 
                             if (retakeApp.Save())
@@ -351,13 +352,17 @@ namespace DVLD_BusinessLayer
         {
             return clsTestAppointmentDataAccess.GetApplicationAppointments(localDrivingLicenseApplicationID, testTypeID);
         }
-        public static byte GetPassedTestsCount(int AppID)
+        public static byte GetPassedTestsCount(int LocalDrivingLicenseApplicationID)
         {
-            return clsTestAppointmentDataAccess.GetPassedTestCount(AppID);
+            return clsTestAppointmentDataAccess.GetPassedTestCount(LocalDrivingLicenseApplicationID);
         }
-        public static DataTable getDataAppintment(int AppID, int testID)
+        public static byte GetPassedTestCountApplication(int appID)
         {
-            return clsTestAppointmentDataAccess.getDataAppintment(AppID, testID);
+            return clsTestAppointmentDataAccess.GetPassedTestCountApplication(appID);
+        }
+        public static DataTable getDataAppintment(int LocalDrivingLicenseApplicationID, int testID)
+        {
+            return clsTestAppointmentDataAccess.getDataAppintment(LocalDrivingLicenseApplicationID, testID);
         }
 
         public static DataTable GetApplicationAppointmentsList(int localDrivingLicenseApplicationID)
@@ -370,10 +375,10 @@ namespace DVLD_BusinessLayer
         #region Data Queries / DataGrids (Read-Only Service Operations)
 
         // جلب تفاصيل الطلب الرئيسي
-        public static DataTable GetAppointmentDetails(int localDrivingLicenseApplicationID)
+        public static DataTable GetAppointmentDetails(int appID)
         {
             // يستدعي الدالة المناسبة من طبقة البيانات (DataAccessLayer)
-            return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(localDrivingLicenseApplicationID);
+            return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(appID);
             // أو قم بربطها بالدالة المخصصة لجلب تفاصيل الرخصة محلياً لديك
         }
 

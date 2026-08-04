@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace DVLD_PresentationLayer.TestAppointments
         public delegate void DataBackEventHandler(object sender, int testAppointmentID);
         public event DataBackEventHandler DataBack;
 
-        private int _AppID = -1;
+        private int _LocalDrivingLicenseApplicationID = -1;
         private int _TestAppointmentID = -1;
         private clsTestAppointment _TestAppointment;
 
@@ -30,10 +31,10 @@ namespace DVLD_PresentationLayer.TestAppointments
         // يمكنك تغيير هذا الحقل ليمثل نوع الاختبار الحركي (1 = Vision, 2 = Written, 3 = Street)
         private int _TestTypeID;
 
-        public ucAppointmentTest(int AppID, int Mode, int testAppointmentID = -1)
+        public ucAppointmentTest(int LocalDrivingLicenseApplicationID, int Mode, int testAppointmentID = -1)
         {
             InitializeComponent();
-            this._AppID = AppID;
+            this._LocalDrivingLicenseApplicationID = LocalDrivingLicenseApplicationID;
             this._Mode = (enMode)Mode;
             this._TestAppointmentID = testAppointmentID;
         }
@@ -46,10 +47,7 @@ namespace DVLD_PresentationLayer.TestAppointments
         private void ucAppointmentTest_Load(object sender, EventArgs e)
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucAppointmentTest));
-            
-
-            byte passedTests = clsTestAppointment.GetPassedTestsCount(_AppID);
-
+            byte passedTests = clsTestAppointment.GetPassedTestsCount(_LocalDrivingLicenseApplicationID);
             switch (passedTests)
             {
                 case 0:
@@ -61,8 +59,9 @@ namespace DVLD_PresentationLayer.TestAppointments
                 case 1:
                     pbtypeTest.Image = (Image)resources.GetObject("writtenAppointment");
                     lblTestType.Text = "Written Test";
-                    _TestTypeID =  2;
+                    _TestTypeID = 2;
                     break;
+
                 case 2:
                     pbtypeTest.Image = (Image)resources.GetObject("streetAppointment");
                     lblTestType.Text = "Street Test";
@@ -76,11 +75,12 @@ namespace DVLD_PresentationLayer.TestAppointments
             Date.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             Date.HoverState.FillColor = Color.FromArgb(248, 250, 252);
             FillTimeSlots();
+
             if (_Mode == enMode.Add)
             {
                 _TestAppointment = new clsTestAppointment();
 
-                DataTable dt = clsTestAppointment.getDataAppintment(_AppID, _TestTypeID);
+                DataTable dt = clsTestAppointment.getDataAppintment(_LocalDrivingLicenseApplicationID, _TestTypeID);
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     lblLicenseID.Text = dt.Rows[0]["D.L.App.ID"].ToString();
@@ -92,21 +92,22 @@ namespace DVLD_PresentationLayer.TestAppointments
                         lblFees.Text = classFees.ToString("N2", CultureInfo.InvariantCulture);
                     else
                         lblFees.Text = dt.Rows[0]["Fees"].ToString();
+
+
                     if (lblTrial.Text != "0")
                     {
+                        groupBox1.Visible = true;
                         lblRAppFees.Text = dt.Rows[0]["R.App.Fees"].ToString();
                         lblTotalFees.Text = dt.Rows[0]["Total Fees"].ToString();
                     }
                     else
                     {
-                        lblRAppFees.Text = "0";
-                        lblTotalFees.Text = lblFees.Text;
+                        groupBox1.Visible = false;
                     }
                     lblRTestAppID.Text = "N/A";
                 }
 
                 Date.Value = DateTime.Now;
-                
             }
             else // Edit Mode
             {
@@ -129,12 +130,10 @@ namespace DVLD_PresentationLayer.TestAppointments
                     cbTimeSlots.SelectedItem = savedTime;
                 else
                     cbTimeSlots.Text = savedTime;
-                
+                groupBox1.Visible = false;
             }
-
-            
-            
         }
+
         private void FillTimeSlots()
         {
             cbTimeSlots.Items.Clear();
@@ -173,18 +172,22 @@ namespace DVLD_PresentationLayer.TestAppointments
             }
 
             _TestAppointment.TestTypeID = _TestTypeID;
-            _TestAppointment.LocalDrivingLicenseApplicationID = _AppID;
 
-            if (decimal.TryParse(lblFees.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal fees))
+            // السطر المعدل
+            _TestAppointment.LocalDrivingLicenseApplicationID = _LocalDrivingLicenseApplicationID;
+
+            string cleanText = "";
+            if(lblTrial.Text == "0")
+                cleanText = lblFees.Text.Replace(',', '.');
+            else
+                cleanText = lblTotalFees.Text.Replace(',', '.');
+            if (decimal.TryParse(cleanText, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal testFees))
             {
-                _TestAppointment.PaidFees = fees;
+                _TestAppointment.PaidFees = testFees;
             }
-
-            // قم بتغيير هذا المعرف بـ User الحالي الحاصل على التسجيل (مثلاً clsGlobal.CurrentUser.UserID)
             _TestAppointment.CreatedByUserID = clsCurrentUser._UserID;
 
-
-            // 2. الحفظ والتحقق من النتيجة
+            // 3. الحفظ والتحقق من النتيجة
             clsTestAppointment.enSaveResult result = _TestAppointment.Save();
 
             switch (result)

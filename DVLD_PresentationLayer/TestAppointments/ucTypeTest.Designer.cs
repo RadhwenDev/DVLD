@@ -1045,6 +1045,7 @@
             this.dgvAppointments.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvAppointments.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvAppointments.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvAppointments_CellPainting);
+            this.dgvAppointments.SelectionChanged += new System.EventHandler(this.dgvAppointments_SelectionChanged);
             this.dgvAppointments.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvAppointments_Paint);
             // 
             // guna2ContextMenuStrip1

@@ -117,7 +117,7 @@ namespace DVLD_BusinessLayer
                 if (licenseClass != null)
                 {
                     license.ExpirationDate = DateTime.Now.AddYears(licenseClass.Validity);
-                    license.PaidFees = localApp.LicenseClassInfo.Fees;
+                    license.PaidFees = licenseClass.Fees;
                 }
                 license.Notes = this.Notes;
                 license.IsActive = true;
