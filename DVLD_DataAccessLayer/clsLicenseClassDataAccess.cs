@@ -136,9 +136,9 @@ namespace DVLD_DataAccessLayer
                     isFound = true;
                     ClassName = (string)reader["ClassName"];
                     ClassDescription = (string)reader["ClassDescription"];
-                    MinimumAllowedAge = (int)reader["MinimumAllowedAge"];
-                    DefaultValidityLength = (int)reader["DefaultValidityLength"];
-                    ClassFees = (int)reader["ClassFees"];
+                    MinimumAllowedAge = Convert.ToInt32(reader["MinimumAllowedAge"]);
+                    DefaultValidityLength = Convert.ToInt32(reader["DefaultValidityLength"]);
+                    ClassFees = Convert.ToInt32(reader["ClassFees"]);
                 }
                 else
                 {
