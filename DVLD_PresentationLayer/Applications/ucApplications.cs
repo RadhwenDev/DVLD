@@ -32,8 +32,10 @@ namespace DVLD_PresentationLayer.Applications
                null, dgvApplications, new object[] { true });
 
             _dtAllApplicants = clsApplicant.getAllApplicants();
-            dgvApplications.DataSource = _dtAllApplicants;
+            _dtAllApplicants.DefaultView.RowFilter = "[SERVICE TYPE] <> 'Retake Test'";
 
+            // 2. ربط الـ DataSource بالـ DefaultView المفلتر
+            dgvApplications.DataSource = _dtAllApplicants.DefaultView;
             if (!dgvApplications.Columns.Contains("ACTIONS"))
             {
                 DataGridViewImageColumn actionsCol = new DataGridViewImageColumn();

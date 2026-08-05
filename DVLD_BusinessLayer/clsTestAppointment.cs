@@ -381,6 +381,12 @@ namespace DVLD_BusinessLayer
             return clsTestAppointmentDataAccess.GetApplicationAppointmentsList(appID);
             // أو قم بربطها بالدالة المخصصة لجلب تفاصيل الرخصة محلياً لديك
         }
+        public static string GetImageUserCreation(int appID)
+        {
+            // يستدعي الدالة المناسبة من طبقة البيانات (DataAccessLayer)
+            return clsTestAppointmentDataAccess.GetImageUserCreation(appID);
+            // أو قم بربطها بالدالة المخصصة لجلب تفاصيل الرخصة محلياً لديك
+        }
 
         // جلب قائمة المواعيد المخصصة لجدول العرض
         public static DataTable visionTestDataGridView(int localDrivingLicenseApplicationID, int testTypeID)

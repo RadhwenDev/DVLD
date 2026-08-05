@@ -60,7 +60,7 @@ namespace DVLD_PresentationLayer.TestAppointments
             lblAppDate.Text = FormatDate(row["ApplicationDate"]);
 
             // تحميل صورة الشخص
-            LoadPersonImage(row["ImagePath"]?.ToString());
+            LoadPersonImage();
 
             lblUserName.Text = row["CreatedByUserName"]?.ToString() ?? "";
 
@@ -147,8 +147,9 @@ namespace DVLD_PresentationLayer.TestAppointments
             return dateValue?.ToString() ?? "";
         }
 
-        private void LoadPersonImage(string imagePath)
+        private void LoadPersonImage()
         {
+            string imagePath = clsTestAppointment.GetImageUserCreation(_AppID);
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
                 try

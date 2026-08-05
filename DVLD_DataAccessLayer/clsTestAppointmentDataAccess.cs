@@ -512,9 +512,13 @@ namespace DVLD_DataAccessLayer
                                     Applications.ApplicationDate,
                                     Applications.LastStatusDate,
                                     Applications.PaidFees AS ApplicationPaidFees,
-                                    Applications.ApplicationStatus AS STATUS,
+                                    CASE Applications.ApplicationStatus
+                                        WHEN 1 THEN 'New'
+                                        WHEN 2 THEN 'Canceled'
+                                        WHEN 3 THEN 'Completed'
+                                        ELSE 'Unknown'
+                                    END AS STATUS,
                                     Users.UserName AS CreatedByUserName,
-                                    People.ImagePath,
 
                                     CASE 
                                         WHEN (
@@ -566,6 +570,38 @@ namespace DVLD_DataAccessLayer
             }
 
             return dt;
+        }
+        public static string GetImageUserCreation(int ApplicationID)
+        {
+            string imagePath = "";
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT P.ImagePath
+                                 FROM Applications A
+                                 inner join Users U on A.CreatedByUserID = U.UserID
+                                 inner join People P on U.PersonID = P.PersonID
+                                 WHERE A.ApplicationID = @ApplicationID";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            imagePath = result.ToString();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Handling Exception
+                    }
+                }
+            }
+            return imagePath;
         }
         public static bool UpdateTestAppointment(
             int testAppointmentID,
