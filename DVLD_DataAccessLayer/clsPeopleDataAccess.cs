@@ -76,7 +76,7 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"select PersonID, FullName = (FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName) FROM People";
+                string query = @"select PersonID, FullName = FirstName + ISNULL(' ' + NULLIF(SecondName, ''), '') + ISNULL(' ' + NULLIF(ThirdName, ''), '') + ISNULL(' ' + NULLIF(LastName, ''), '') FROM People";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

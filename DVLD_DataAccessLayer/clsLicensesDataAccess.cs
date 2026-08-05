@@ -17,7 +17,7 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT [LICENSE ID] = L.LicenseID, DRIVER = (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName), CLASS = LC.ClassName,
+                string query = @"SELECT [LICENSE ID] = L.LicenseID, DRIVER =P.FirstName + ISNULL(' ' + NULLIF(P.SecondName, ''), '')  + ISNULL(' ' + NULLIF(P.ThirdName, ''), '') + ISNULL(' ' + NULLIF(P.LastName, ''), ''), CLASS = LC.ClassName,
                                  [ISSUE DATE] = L.IssueDate, EXPIRATION = L.ExpirationDate, REASON = A_T.ApplicationTypeTitle, 
                                   CASE
                                       WHEN L.IsActive = 0 THEN 'Expired'
@@ -78,7 +78,7 @@ namespace DVLD_DataAccessLayer
                 string query = @"SELECT 
                                     Licenses.LicenseID,
                                     Licenses.DriverID,
-                                    People.FirstName + ' ' + People.SecondName + ' ' + People.ThirdName + ' ' + People.LastName AS FullName,
+                                    People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
                                     People.NationalNo,
 	                                CASE 
                                         WHEN People.Gendor = 0 THEN 'Male' 

@@ -121,7 +121,7 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT P.PersonID, FullName = (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName),
+                string query = @"SELECT P.PersonID, FullName = P.FirstName + ISNULL(' ' + NULLIF(P.SecondName, ''), '')  + ISNULL(' ' + NULLIF(P.ThirdName, ''), '') + ISNULL(' ' + NULLIF(P.LastName, ''), ''),
                                  NationalNo, DateOfBirth, Address, Email, Phone, CountryName, ImagePath,
                                  CASE
                                     WHEN P.Gendor = 0 THEN 'Male'

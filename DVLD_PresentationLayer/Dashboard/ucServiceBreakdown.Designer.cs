@@ -48,9 +48,9 @@
             this.lblTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotal.ForeColor = System.Drawing.Color.Black;
-            this.lblTotal.Location = new System.Drawing.Point(386, 0);
+            this.lblTotal.Location = new System.Drawing.Point(368, 0);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(30, 17);
+            this.lblTotal.Size = new System.Drawing.Size(48, 17);
             this.lblTotal.TabIndex = 3;
             this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 

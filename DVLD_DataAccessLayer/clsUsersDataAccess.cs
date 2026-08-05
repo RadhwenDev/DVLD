@@ -48,7 +48,7 @@ namespace DVLD_DataAccessLayer
                                         WHEN U.IsActive = 1 THEN 'Active'
                                         ELSE 'Inactive'
                                     END AS Status,
-                                    U.Permissions, (P.FirstName + ' ' + P.SecondName + ' ' + P.ThirdName + ' ' + P.LastName) AS FullName, P.NationalNo, P.DateOfBirth, P.ImagePath,
+                                    U.Permissions, P.FirstName + ISNULL(' ' + NULLIF(P.SecondName, ''), '')  + ISNULL(' ' + NULLIF(P.ThirdName, ''), '') + ISNULL(' ' + NULLIF(P.LastName, ''), '') AS FullName, P.NationalNo, P.DateOfBirth, P.ImagePath,
                                     CASE 
                                         WHEN P.Gendor = 0 THEN 'Male'
                                         ELSE 'Female'

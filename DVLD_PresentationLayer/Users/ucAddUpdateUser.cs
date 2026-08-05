@@ -59,7 +59,7 @@ namespace DVLD_PresentationLayer.Users
                     string thirdName = row["ThirdName"]?.ToString() ?? "";
                     string lastName = row["LastName"]?.ToString() ?? "";
 
-                    string fullName = $"{firstName} {secondName} {thirdName} {lastName}";
+                    string fullName = string.Join(" ", new[] { firstName, secondName, thirdName, lastName }.Where(s => !string.IsNullOrWhiteSpace(s)));
                     fullName = fullName.Replace("    ", " ").Replace("  ", " ").Trim();
 
                     row["USER"] = fullName;
