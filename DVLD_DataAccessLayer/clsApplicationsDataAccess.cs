@@ -113,29 +113,20 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
-        public static DataTable getAllApplicationTypes(int ApplicantPersonID)
+        public static DataTable getAllApplicationTypes(bool hasLicense)
         {
+            int row = hasLicense ? 6 : 1;
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT A_T.ApplicationTypeID, A_T.ApplicationTypeTitle
-                                FROM ApplicationTypes A_T
-                                WHERE NOT EXISTS (
-                                    SELECT 1 
-                                    FROM Applications A
-                                    INNER JOIN LocalDrivingLicenseApplications LDLA ON A.ApplicationID = LDLA.ApplicationID
-                                    WHERE A.ApplicationTypeID = A_T.ApplicationTypeID
-                                      AND A.ApplicantPersonID = 1024
-                                      AND A.ApplicationStatus = 1
-                                      AND (
-                                          (A_T.ApplicationTypeID NOT IN (1, 7))
-                                          OR 
-                                          (A_T.ApplicationTypeID IN (1, 7) AND LDLA.LicenseClassID = @ApplicantPersonID)
-                                      )
-                                ); ";
+                string query = @"SELECT TOP (@row) ApplicationTypeID, ApplicationTypeTitle
+                                 FROM ApplicationTypes
+                                 WHERE ApplicationTypeID != 7
+                                 ORDER BY ApplicationTypeID
+                                 ";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicantPersonID", ApplicantPersonID);
+                    command.Parameters.AddWithValue("@row", row);
                     try
                     {
                         connection.Open();

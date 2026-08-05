@@ -133,9 +133,9 @@ namespace DVLD_BusinessLayer
         {
             return clsApplicationsDataAccess.getAllApplicationType();
         }
-        public static DataTable getAllApplicationTypes(int ApplicantPersonID)
+        public static DataTable getAllApplicationTypes(bool hasLicense)
         {
-            return clsApplicationsDataAccess.getAllApplicationTypes(ApplicantPersonID);
+            return clsApplicationsDataAccess.getAllApplicationTypes(hasLicense);
         }
 
 

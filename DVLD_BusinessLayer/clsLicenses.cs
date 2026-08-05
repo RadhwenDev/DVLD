@@ -89,21 +89,27 @@ namespace DVLD_BusinessLayer
 
 
         public static int getTotalActiveLicenses()
-
         {
-
             return clsLicensesDataAccess.getTotalActiveLicenses();
-
+        }
+        public static int GetLicenseIDByApplicationID(int DriverID)
+        {
+            return clsLicensesDataAccess.GetLicenseIDByApplicationID(DriverID);
         }
 
+        public static bool hasLicense(int personID)
+        {
+            return clsLicensesDataAccess.hasLicense(personID);
+        }
 
+        public static bool hasInternationalLicense(int personID)
+        {
+            return clsLicensesDataAccess.hasInternationalLicense(personID);
+        }
 
         public static DataTable getShowLicense(int ApplicationID)
-
         {
-
             return clsLicensesDataAccess.getShowLicense(ApplicationID);
-
         }
     }
 }

@@ -40,7 +40,13 @@ namespace DVLD_PresentationLayer.Applications
             cbLicenseClass.SelectedIndexChanged -= cbLicenseClass_SelectedIndexChanged;
 
             // 2. تعبئة أنواع الطلبات
-            DataTable dtApplicantType = clsApplicant.getAllApplicationTypes(SelectedPersonID);
+            bool hasLicense = clsLicenses.hasLicense(SelectedPersonID);
+            DataTable dtApplicantType = clsApplicant.getAllApplicationTypes(hasLicense);
+            bool hasInternationalLicense = clsLicenses.hasInternationalLicense(SelectedPersonID);
+            if (hasInternationalLicense)
+            {
+                dtApplicantType.DefaultView.RowFilter = "[ApplicationTypeTitle] <> 'New International License'";
+            }
             DataRow defaultRow = dtApplicantType.NewRow();
             defaultRow["ApplicationTypeTitle"] = "Select the Application Type";
             defaultRow["ApplicationTypeID"] = -1;

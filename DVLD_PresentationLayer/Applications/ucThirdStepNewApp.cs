@@ -61,7 +61,12 @@ namespace DVLD_PresentationLayer.Applications
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
-            int ApplicationID = clsApplicant.AddNewApplication(SelectedPersonID, DateTime.Now, SelectedApplicationTypeID, 1, DateTime.Now, fees, clsCurrentUser._UserID);
+            byte ApplicationStatus = 1;
+            if (SelectedApplicationTypeID != 1)
+            {
+                ApplicationStatus = 3;
+            }
+            int ApplicationID = clsApplicant.AddNewApplication(SelectedPersonID, DateTime.Now, SelectedApplicationTypeID, ApplicationStatus, DateTime.Now, fees, clsCurrentUser._UserID);
             if (ApplicationID != -1)
             {
                 MessageBox.Show($"Application saved successfully with ID = {ApplicationID}!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -78,9 +83,47 @@ namespace DVLD_PresentationLayer.Applications
                         return;
                     }
                 }
+                else if (SelectedApplicationTypeID == 6)
+                {
+                    clsInternationalLicense internationalLicense = new clsInternationalLicense();
 
-                // 🌟 إرسال الـ ID عبر الـ DataBack المخصص للإرسال الخارجي
-                DataBack?.Invoke(this, ApplicationID);
+                    // تعبئة البيانات المطلوبة
+                    internationalLicense.ApplicationID = ApplicationID;
+                    clsDriver driver = clsDriver.FindByPersonID(SelectedPersonID);
+                    if (driver == null)
+                    {
+                        MessageBox.Show("Failed to find this Driver record.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    int activeLocalLicenseID = clsLicenses.GetLicenseIDByApplicationID(driver.DriverID);
+
+                    if (activeLocalLicenseID == -1)
+                    {
+                        MessageBox.Show("No active local license found for this person to issue an international license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    internationalLicense.DriverID = driver.DriverID; // تأكد من الحصول على DriverID المطلوب
+                    internationalLicense.IssuedUsingLocalLicenseID = activeLocalLicenseID; // ID الرخصة المحلية المستند عليها
+                    internationalLicense.IssueDate = DateTime.Now;
+                    internationalLicense.ExpirationDate = DateTime.Now.AddYears(1); // عادة مدة الرخصة الدولية سنة
+                    internationalLicense.IsActive = true;
+                    internationalLicense.CreatedByUserID = clsCurrentUser._UserID;
+
+                    if (internationalLicense.Save())
+                    {
+                        MessageBox.Show($"International License saved successfully with ID = {internationalLicense.InternationalLicenseID}!",
+                                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to save International License data.",
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                    // 🌟 إرسال الـ ID عبر الـ DataBack المخصص للإرسال الخارجي
+                    DataBack?.Invoke(this, ApplicationID);
 
                 // 🌟 إطلاق حدث اكتمال الخطوة الثالثة ليتحرك الـ Wizard
                 OnStepThirdCompleted?.Invoke(this, EventArgs.Empty);

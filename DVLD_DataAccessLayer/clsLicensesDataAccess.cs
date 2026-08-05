@@ -127,6 +127,74 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+        public static bool hasLicense(int personID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Found = 1 FROM Licenses L
+                                 INNER JOIN Applications A ON L.ApplicationID = A.ApplicationID
+                                 WHERE A.ApplicantPersonID = @PersonID
+                                 And L.IsActive = 1";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            isFound = true;
+                        }
+                    }
+                    catch (Exception )
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
+        public static bool hasInternationalLicense(int personID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Found = 1 FROM InternationalLicenses IL
+                                 INNER JOIN Drivers D ON IL.DriverID = D.DriverID
+                                 WHERE D.PersonID = @PersonID
+                                 AND IL.IsActive = 1";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            isFound = true;
+                        }
+                    }
+                    catch (Exception )
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
         public static int AddNewLicense(int ApplicationID, int DriverID, int LicenseClass,
             DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees,
             bool IsActive, byte IssueReason, int CreatedByUserID)
@@ -177,6 +245,37 @@ namespace DVLD_DataAccessLayer
             }
 
             return LicenseID;
+        }
+        public static int GetLicenseIDByApplicationID(int DriverID)
+        {
+            int licenseID = -1;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT LicenseClass FROM Licenses L INNER JOIN Drivers D ON L.DriverID = D.DriverID WHERE D.DriverID = @DriverID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", DriverID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int foundID))
+                        {
+                            licenseID = foundID;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        licenseID = -1;
+                    }
+                }
+            }
+
+            return licenseID;
         }
     }
 }
