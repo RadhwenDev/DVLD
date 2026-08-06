@@ -17,6 +17,7 @@ namespace DVLD_PresentationLayer.Drivers
     public partial class ucShowPersonLicenseHistory : UserControl
     {
         int _AppID = -1;
+        int PersonID = -1;
 
         public ucShowPersonLicenseHistory(int AppID)
         {
@@ -64,9 +65,9 @@ namespace DVLD_PresentationLayer.Drivers
                 lblCountry.Text = dt.Rows[0]["CountryName"].ToString();
                 lblAddress.Text = dt.Rows[0]["Address"].ToString();
             }
-
+            PersonID = Convert.ToInt32(lblPersonID.Text);
             // 3. ربط الجدول بالبيانات
-            DataTable dgvL = clsDriver.getLocalLicenseHistory(_AppID);
+            DataTable dgvL = clsDriver.getLocalLicenseHistory(PersonID);
             if (dgvL != null && dgvL.Rows.Count > 0)
             {
                 dgvLocalLicense.DataSource = dgvL;
@@ -76,8 +77,7 @@ namespace DVLD_PresentationLayer.Drivers
                 dgvLocalLicense.Columns["App.ID"].Width = 100;
                 dgvLocalLicense.Columns["Lic.ID"].Width = 100;
             }
-
-            DataTable dgvI = clsDriver.getInternationalLicenseHistory(_AppID);
+            DataTable dgvI = clsDriver.getInternationalLicenseHistory(PersonID);
             if (dgvI != null && dgvI.Rows.Count > 0)
             {
                 dgvInternationalLicense.DataSource = dgvI;

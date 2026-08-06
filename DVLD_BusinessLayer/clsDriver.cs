@@ -94,13 +94,13 @@ namespace DVLD_BusinessLayer
         {
             return clsDriverDataAccess.getLicenseHistory(AppID);
         }
-        public static DataTable getLocalLicenseHistory(int AppID)
+        public static DataTable getLocalLicenseHistory(int PersonID)
         {
-            return clsDriverDataAccess.getLocalLicenseHistory(AppID);
+            return clsDriverDataAccess.getLocalLicenseHistory(PersonID);
         }
-        public static DataTable getInternationalLicenseHistory(int AppID)
+        public static DataTable getInternationalLicenseHistory(int PersonID)
         {
-            return clsDriverDataAccess.getInternationalLicenseHistory(AppID);
+            return clsDriverDataAccess.getInternationalLicenseHistory(PersonID);
         }
     }
 }

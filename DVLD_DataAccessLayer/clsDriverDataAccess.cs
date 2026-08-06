@@ -148,25 +148,26 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
-        public static DataTable getLocalLicenseHistory(int ApplicationID)
+        public static DataTable getLocalLicenseHistory(int PersonID)
         {
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
-                                    Licenses.LicenseID AS [Lic.ID],
-                                    Licenses.ApplicationID AS [App.ID],
-                                    LC.ClassName AS [Class Name],
-                                    Licenses.IssueDate AS [Issue Date],
-                                    Licenses.ExpirationDate AS [Expiration Date],
-                                    Licenses.IsActive AS [Is Active]
-                                FROM Licenses 
-                                INNER JOIN LicenseClasses LC ON Licenses.LicenseClass = LC.LicenseClassID
-                                INNER JOIN Drivers D ON Licenses.DriverID = D.DriverID
-                                WHERE Licenses.ApplicationID = @ApplicationID";
+                                     L.LicenseID AS [Lic.ID],
+                                     L.ApplicationID AS [App.ID],
+                                     LC.ClassName AS [Class Name],
+                                     L.IssueDate AS [Issue Date],
+                                     L.ExpirationDate AS [Expiration Date],
+                                     L.IsActive AS [Is Active]
+                                 FROM People P
+                                 INNER JOIN Drivers D on P.PersonID = D.PersonID
+                                 INNER JOIN Licenses L on D.DriverID = L.DriverID
+                                 INNER JOIN LicenseClasses LC ON L.LicenseID = LC.LicenseClassID
+                                 WHERE P.PersonID = @PersonID";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
                     try
                     {
                         connection.Open();
@@ -182,24 +183,25 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
-        public static DataTable getInternationalLicenseHistory(int ApplicationID)
+        public static DataTable getInternationalLicenseHistory(int PersonID)
         {
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
-                                    IL.InternationalLicenseID AS [Int.Lic.ID],
-                                    IL.ApplicationID AS [App.ID],
-                                    IL.IssuedUsingLocalLicenseID AS [L.Lic.ID],
-                                    IL.IssueDate AS [Issue Date],
-                                    IL.ExpirationDate AS [Expiration Date],
-                                    IL.IsActive AS [Is Active]
-                                FROM InternationalLicenses IL
-                                INNER JOIN Drivers D ON IL.DriverID = D.DriverID
-                                WHERE IL.ApplicationID = @ApplicationID";
+                                     IL.InternationalLicenseID AS [Int.Lic.ID],
+                                     IL.ApplicationID AS [App.ID],
+                                     IL.IssuedUsingLocalLicenseID AS [L.Lic.ID],
+                                     IL.IssueDate AS [Issue Date],
+                                     IL.ExpirationDate AS [Expiration Date],
+                                     IL.IsActive AS [Is Active]
+                                 FROM People P
+                                 INNER JOIN Drivers D ON P.PersonID = D.PersonID
+                                 INNER JOIN InternationalLicenses IL ON D.DriverID = IL.DriverID
+                                 WHERE P.PersonID = @PersonID";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
                     try
                     {
                         connection.Open();
