@@ -66,9 +66,24 @@ namespace DVLD_BusinessLayer
             return clsLicenseClassDataAccess.GetAllLicenseClasses();
         }
 
-        public static DataTable GetLicenseClassesName(int LicenseClassID)
+        public static DataTable GetLicenseClassesName(int personID)
         {
-            return clsLicenseClassDataAccess.GetLicenseClassesNameByID(LicenseClassID);
+            // 1. جلب كل الأصناف
+            DataTable dtAllClasses = clsLicenseClassDataAccess.GetAllLicenseClassesName();
+
+            // 2. جلب الأصناف التي يملكها هذا الشخص
+            List<int> personClassIDs = clsLicenseClassDataAccess.GetPersonLicenseClassIDs(personID);
+
+            // إذا كان الشخص لا يملك أي رخصة، أرجع القائمة كاملة
+            if (personClassIDs == null || personClassIDs.Count == 0)
+                return dtAllClasses;
+
+            // 3. عمل التصفية (Filter) باستعمال LINQ: الروابط الموجودة في dtAllClasses والتي ليست في personClassIDs
+            var filteredRows = dtAllClasses.AsEnumerable()
+                .Where(row => !personClassIDs.Contains(row.Field<int>("LicenseClassID")));
+
+            // 4. تحويل النتيجة المفلترة إلى DataTable جديدة
+            return filteredRows.Any() ? filteredRows.CopyToDataTable() : dtAllClasses.Clone();
         }
 
         public static DataTable GetLicenseClassesNameByID(int LicenseClassID)

@@ -35,12 +35,13 @@ namespace DVLD_DataAccessLayer
             return dt;
         }
 
-        public static DataTable GetLicenseClassesName()
+        public static DataTable GetAllLicenseClassesName()
         {
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT LicenseClassID, ClassName FROM LicenseClasses";
+                string query = @"SELECT LC.LicenseClassID, LC.ClassName FROM LicenseClasses LC";
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try
@@ -52,10 +53,41 @@ namespace DVLD_DataAccessLayer
                                 dt.Load(reader);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception ) { }
                 }
             }
             return dt;
+        }
+
+        public static List<int> GetPersonLicenseClassIDs(int PersonID)
+        {
+            List<int> personClassIDs = new List<int>();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT LC.LicenseClassID, LC.ClassName FROM LicenseClasses LC
+                                 inner join Licenses L on LC.LicenseClassID = L.LicenseClass
+                                 inner join Drivers D on L.DriverID = D.DriverID
+                                 where D.PersonID = @PersonID
+                                 AND L.IsActive = 1;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                personClassIDs.Add(Convert.ToInt32(reader["LicenseClassID"]));
+                            }
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return personClassIDs;
         }
 
         public static DataTable GetLicenseClassesNameByID(int LicenseClassID)
