@@ -224,5 +224,9 @@ namespace DVLD_PresentationLayer.Licenses
             }
         }
 
+        private void renewLocalDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

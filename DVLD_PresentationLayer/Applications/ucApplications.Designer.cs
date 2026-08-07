@@ -57,8 +57,8 @@
             this.lblCountTotalAndPending = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnLocalApp = new Guna.UI2.WinForms.Guna2Button();
-            this.btnInternationalApp = new Guna.UI2.WinForms.Guna2Button();
             this.btnRenewApp = new Guna.UI2.WinForms.Guna2Button();
+            this.btnInternationalApp = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvApplications)).BeginInit();
             this.guna2ContextMenuStrip1.SuspendLayout();
@@ -235,7 +235,7 @@
             this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(362, 254);
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(362, 226);
             this.guna2ContextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.guna2ContextMenuStrip1_Opening);
             // 
             // editApplicationToolStripMenuItem
@@ -416,29 +416,6 @@
             this.btnLocalApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.btnLocalApp.Click += new System.EventHandler(this.btnNewApplication_Click);
             // 
-            // btnInternationalApp
-            // 
-            this.btnInternationalApp.BorderRadius = 10;
-            this.btnInternationalApp.BorderThickness = 1;
-            this.btnInternationalApp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnInternationalApp.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnInternationalApp.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnInternationalApp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnInternationalApp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnInternationalApp.FillColor = System.Drawing.Color.Transparent;
-            this.btnInternationalApp.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnInternationalApp.ForeColor = System.Drawing.Color.Black;
-            this.btnInternationalApp.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
-            this.btnInternationalApp.Image = ((System.Drawing.Image)(resources.GetObject("btnInternationalApp.Image")));
-            this.btnInternationalApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnInternationalApp.Location = new System.Drawing.Point(283, 140);
-            this.btnInternationalApp.Name = "btnInternationalApp";
-            this.btnInternationalApp.Size = new System.Drawing.Size(303, 52);
-            this.btnInternationalApp.TabIndex = 10;
-            this.btnInternationalApp.Text = "International Applications";
-            this.btnInternationalApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.btnInternationalApp.Click += new System.EventHandler(this.btnNewApplication_Click);
-            // 
             // btnRenewApp
             // 
             this.btnRenewApp.BorderRadius = 10;
@@ -461,6 +438,29 @@
             this.btnRenewApp.Text = "Renew/Services";
             this.btnRenewApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.btnRenewApp.Click += new System.EventHandler(this.btnNewApplication_Click);
+            // 
+            // btnInternationalApp
+            // 
+            this.btnInternationalApp.BorderRadius = 10;
+            this.btnInternationalApp.BorderThickness = 1;
+            this.btnInternationalApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInternationalApp.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnInternationalApp.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnInternationalApp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnInternationalApp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnInternationalApp.FillColor = System.Drawing.Color.Transparent;
+            this.btnInternationalApp.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnInternationalApp.ForeColor = System.Drawing.Color.Black;
+            this.btnInternationalApp.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnInternationalApp.Image = ((System.Drawing.Image)(resources.GetObject("btnInternationalApp.Image")));
+            this.btnInternationalApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnInternationalApp.Location = new System.Drawing.Point(283, 140);
+            this.btnInternationalApp.Name = "btnInternationalApp";
+            this.btnInternationalApp.Size = new System.Drawing.Size(303, 52);
+            this.btnInternationalApp.TabIndex = 10;
+            this.btnInternationalApp.Text = "International Applications";
+            this.btnInternationalApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.btnInternationalApp.Click += new System.EventHandler(this.btnNewApplication_Click);
             // 
             // ucApplications
             // 
@@ -508,7 +508,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private Guna.UI2.WinForms.Guna2Button btnLocalApp;
-        private Guna.UI2.WinForms.Guna2Button btnInternationalApp;
         private Guna.UI2.WinForms.Guna2Button btnRenewApp;
+        private Guna.UI2.WinForms.Guna2Button btnInternationalApp;
     }
 }
