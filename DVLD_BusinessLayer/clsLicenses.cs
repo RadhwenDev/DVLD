@@ -41,6 +41,54 @@ namespace DVLD_BusinessLayer
             Mode = enMode.AddNew;
         }
 
+        private clsLicenses(int licenseID, int applicationID, int driverID, int licenseClass,
+                    DateTime issueDate, DateTime expirationDate, string notes,
+                    decimal paidFees, bool isActive, enIssueReason issueReason, int createdByUserID)
+        {
+            this.LicenseID = licenseID;
+            this.ApplicationID = applicationID;
+            this.DriverID = driverID;
+            this.LicenseClass = licenseClass;
+            this.IssueDate = issueDate;
+            this.ExpirationDate = expirationDate;
+            this.Notes = notes;
+            this.PaidFees = paidFees;
+            this.IsActive = isActive;
+            this.IssueReason = issueReason;
+            this.CreatedByUserID = createdByUserID;
+
+            this.Mode = enMode.Update;
+        }
+        public static clsLicenses Find(int licenseID)
+        {
+            int applicationID = -1;
+            int driverID = -1;
+            int licenseClass = -1;
+            DateTime issueDate = DateTime.Now;
+            DateTime expirationDate = DateTime.Now;
+            string notes = "";
+            decimal paidFees = 0;
+            bool isActive = false;
+            byte issueReason = 1;
+            int createdByUserID = -1;
+
+            if (clsLicensesDataAccess.GetLicenseInfoByID(
+                    licenseID, ref applicationID, ref driverID, ref licenseClass,
+                    ref issueDate, ref expirationDate, ref notes, ref paidFees,
+                    ref isActive, ref issueReason, ref createdByUserID))
+            {
+                return new clsLicenses(
+                    licenseID, applicationID, driverID, licenseClass,
+                    issueDate, expirationDate, notes, paidFees,
+                    isActive, (enIssueReason)issueReason, createdByUserID
+                );
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private bool _AddNewLicense()
         {
             this.LicenseID = clsLicensesDataAccess.AddNewLicense(
@@ -79,14 +127,14 @@ namespace DVLD_BusinessLayer
             return false;
         }
         public static DataTable getAllLicenses()
-
         {
-
             return clsLicensesDataAccess.getAllLicenses();
-
         }
 
-
+        public static bool Deactivate(int licenseID)
+        {
+            return clsLicensesDataAccess.DeactivateLicense(licenseID);
+        }
 
         public static int getTotalActiveLicenses()
         {

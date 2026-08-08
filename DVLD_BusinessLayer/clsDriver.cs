@@ -102,5 +102,9 @@ namespace DVLD_BusinessLayer
         {
             return clsDriverDataAccess.getInternationalLicenseHistory(PersonID);
         }
+        public static int FindPersonIDByDriverID(int DriverID)
+        {
+            return clsDriverDataAccess.FindPersonIDByDriverID(DriverID);
+        }
     }
 }

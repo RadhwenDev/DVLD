@@ -33,6 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLicenses));
             this.lblCountActiveAndExpire = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
@@ -241,6 +242,7 @@
             this.dgvLicenses.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvLicenses.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvLicenses.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvLicenses_CellFormatting);
+            this.dgvLicenses.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvLicenses_CellMouseDown);
             this.dgvLicenses.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvLicenses_CellPainting);
             this.dgvLicenses.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvLicenses_Paint);
             // 
@@ -260,13 +262,14 @@
             this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(319, 62);
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(323, 34);
             // 
             // renewLocalDrivingLicenseToolStripMenuItem
             // 
             this.renewLocalDrivingLicenseToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.renewLocalDrivingLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("renewLocalDrivingLicenseToolStripMenuItem.Image")));
             this.renewLocalDrivingLicenseToolStripMenuItem.Name = "renewLocalDrivingLicenseToolStripMenuItem";
-            this.renewLocalDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(318, 30);
+            this.renewLocalDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(322, 30);
             this.renewLocalDrivingLicenseToolStripMenuItem.Text = "Renew Local Driving License";
             this.renewLocalDrivingLicenseToolStripMenuItem.Click += new System.EventHandler(this.renewLocalDrivingLicenseToolStripMenuItem_Click);
             // 

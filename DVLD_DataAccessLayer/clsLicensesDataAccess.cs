@@ -45,6 +45,7 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+
         public static int getTotalActiveLicenses()
         {
             int totalActiveLicense = 0;
@@ -276,6 +277,91 @@ namespace DVLD_DataAccessLayer
             }
 
             return licenseID;
+        }
+        public static bool DeactivateLicense(int LicenseID)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"UPDATE Licenses 
+                         SET IsActive = 0 
+                         WHERE LicenseID = @LicenseID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseID", LicenseID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return (rowsAffected > 0);
+        }
+        public static bool GetLicenseInfoByID(
+    int LicenseID,
+    ref int ApplicationID,
+    ref int DriverID,
+    ref int LicenseClass,
+    ref DateTime IssueDate,
+    ref DateTime ExpirationDate,
+    ref string Notes,
+    ref decimal PaidFees,
+    ref bool IsActive,
+    ref byte IssueReason,
+    ref int CreatedByUserID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = "SELECT * FROM Licenses WHERE LicenseID = @LicenseID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseID", LicenseID);
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Record found
+                                isFound = true;
+
+                                ApplicationID = (int)reader["ApplicationID"];
+                                DriverID = (int)reader["DriverID"];
+                                LicenseClass = (int)reader["LicenseClass"];
+                                IssueDate = (DateTime)reader["IssueDate"];
+                                ExpirationDate = (DateTime)reader["ExpirationDate"];
+
+                                Notes = reader["Notes"] != DBNull.Value ? (string)reader["Notes"] : "";
+                                PaidFees = Convert.ToDecimal(reader["PaidFees"]);
+                                IsActive = (bool)reader["IsActive"];
+                                IssueReason = Convert.ToByte(reader["IssueReason"]);
+                                CreatedByUserID = (int)reader["CreatedByUserID"];
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                        // يمكنك تسجيل الخطأ هنا (Logging) حسب نظام المشروع لديك
+                    }
+                }
+            }
+
+            return isFound;
         }
     }
 }

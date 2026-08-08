@@ -1,4 +1,5 @@
 ﻿using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Global;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -223,10 +224,114 @@ namespace DVLD_PresentationLayer.Licenses
                 }
             }
         }
-
+        int licenseID = -1;
         private void renewLocalDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (dgvLicenses.CurrentRow != null && dgvLicenses.CurrentRow.Index >= 0)
+            {
+                licenseID = Convert.ToInt32(dgvLicenses.CurrentRow.Cells["LICENSE ID"].Value);
 
+                // 1. جلب بيانات الرخصة القديمة كاملة مرة واحدة فقط
+                clsLicenses oldLicense = clsLicenses.Find(licenseID);
+
+                if (oldLicense == null)
+                {
+                    MessageBox.Show("License not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 2. التحقق مما إذا كانت الرخصة نشطة وغير منتهية
+                if (!oldLicense.IsActive)
+                {
+                    MessageBox.Show("This license is expired and cannot be renewed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (oldLicense.ExpirationDate > DateTime.Now)
+                {
+                    MessageBox.Show("This license is still active and has not expired yet!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 3. جلب PersonID الخاص بالسائق والتأكد من صحته
+                int personID = clsDriver.FindPersonIDByDriverID(oldLicense.DriverID);
+                if (personID == -1)
+                {
+                    MessageBox.Show("Driver/Person details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 4. قراءة رسوم طلب التجديد من جدول الأنواع
+                DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)clsApplicant.enApplicationType.RenewDrivingLicense);
+                decimal renewalAppFees = Convert.ToDecimal(dtAppType.Rows[0]["ApplicationFees"]);
+
+                // 5. إنشاء وتعبئة طلب التجديد (Application)
+                clsApplicant newApplication = new clsApplicant();
+                newApplication.ApplicantPersonID = personID;
+                newApplication.ApplicationDate = DateTime.Now;
+                newApplication.ApplicationTypeID = (int)clsApplicant.enApplicationType.RenewDrivingLicense;
+                newApplication.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
+                newApplication.LastStatusDate = DateTime.Now;
+                newApplication.PaidFees = renewalAppFees;
+                newApplication.CreatedByUserID = clsCurrentUser._UserID;
+
+                // 6. حفظ الطلب ثم إلغاء تفعيل الرخصة القديمة وإصدار الجديدة
+                if (newApplication.Save())
+                {
+                    if (clsLicenses.Deactivate(licenseID))
+                    {
+                        clsLicenses newLicense = new clsLicenses();
+                        newLicense.ApplicationID = newApplication.ApplicationID;
+                        newLicense.DriverID = oldLicense.DriverID;
+                        newLicense.LicenseClass = oldLicense.LicenseClass;
+                        newLicense.IssueDate = DateTime.Now;
+                        newLicense.ExpirationDate = DateTime.Now.AddYears(10);
+                        newLicense.Notes = oldLicense.Notes;
+                        newLicense.PaidFees = oldLicense.PaidFees; // رسوم الفئة
+                        newLicense.IsActive = true;
+                        newLicense.IssueReason = clsLicenses.enIssueReason.Renew;
+                        newLicense.CreatedByUserID = clsCurrentUser._UserID;
+
+                        if (newLicense.Save())
+                        {
+                            MessageBox.Show($"License renewed successfully! New License ID: {newLicense.LicenseID}",
+                                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // تحديث الواجهة والـ GridView
+                            _dtAllLicenses = clsLicenses.getAllLicenses();
+                            dgvLicenses.DataSource = _dtAllLicenses;
+                            ApplyCombinedFilter();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to issue the new license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to deactivate the old license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Failed to create the renewal application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void dgvLicenses_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                // إلغاء تحديد كافة الأسطر المحددة سابقاً
+                dgvLicenses.ClearSelection();
+
+                // تحديد السطر الذي تم النقر عليه بالزر الأيمن
+                dgvLicenses.Rows[e.RowIndex].Selected = true;
+
+                // جعل السطر المنقور هو الـ CurrentRow
+                dgvLicenses.CurrentCell = dgvLicenses.Rows[e.RowIndex].Cells[e.ColumnIndex >= 0 ? e.ColumnIndex : 0];
+            }
         }
     }
 }

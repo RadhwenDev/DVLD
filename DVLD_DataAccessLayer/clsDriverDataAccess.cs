@@ -154,17 +154,18 @@ namespace DVLD_DataAccessLayer
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT 
-                                     L.LicenseID AS [Lic.ID],
-                                     L.ApplicationID AS [App.ID],
-                                     LC.ClassName AS [Class Name],
-                                     L.IssueDate AS [Issue Date],
-                                     L.ExpirationDate AS [Expiration Date],
-                                     L.IsActive AS [Is Active]
-                                 FROM People P
-                                 INNER JOIN Drivers D on P.PersonID = D.PersonID
-                                 INNER JOIN Licenses L on D.DriverID = L.DriverID
-                                 INNER JOIN LicenseClasses LC ON L.LicenseID = LC.LicenseClassID
-                                 WHERE P.PersonID = @PersonID";
+                             L.LicenseID AS [Lic.ID],
+                             L.ApplicationID AS [App.ID],
+                             LC.ClassName AS [Class Name],
+                             L.IssueDate AS [Issue Date],
+                             L.ExpirationDate AS [Expiration Date],
+                             L.IsActive AS [Is Active]
+                         FROM Licenses L
+                         INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                         INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
+                         WHERE D.PersonID = @PersonID
+                         ORDER BY L.LicenseID DESC";
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -177,7 +178,9 @@ namespace DVLD_DataAccessLayer
                                 dt.Load(reader);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
             return dt;
@@ -215,6 +218,36 @@ namespace DVLD_DataAccessLayer
                 }
             }
             return dt;
+        }
+        public static int FindPersonIDByDriverID(int DriverID)
+        {
+            int personID = -1;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = "SELECT PersonID FROM Drivers WHERE DriverID = @DriverID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", DriverID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int id))
+                        {
+                            personID = id;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+
+            return personID;
         }
     }
 }
