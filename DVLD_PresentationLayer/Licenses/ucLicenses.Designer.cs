@@ -45,6 +45,8 @@
             this.guna2ContextMenuStrip1 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
             this.renewLocalDrivingLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbFilterNameLicenseID = new Guna.UI2.WinForms.Guna2TextBox();
+            this.replacementForDamagedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replacementForLostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guna2Panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLicenses)).BeginInit();
@@ -250,7 +252,9 @@
             // 
             this.guna2ContextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.guna2ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.renewLocalDrivingLicenseToolStripMenuItem});
+            this.renewLocalDrivingLicenseToolStripMenuItem,
+            this.replacementForDamagedToolStripMenuItem,
+            this.replacementForLostToolStripMenuItem});
             this.guna2ContextMenuStrip1.Name = "guna2ContextMenuStrip1";
             this.guna2ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.guna2ContextMenuStrip1.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
@@ -262,7 +266,7 @@
             this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(323, 34);
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(323, 122);
             // 
             // renewLocalDrivingLicenseToolStripMenuItem
             // 
@@ -299,6 +303,22 @@
             this.tbFilterNameLicenseID.TabIndex = 3;
             this.tbFilterNameLicenseID.TextChanged += new System.EventHandler(this.tbFilterNameLicenseID_TextChanged);
             // 
+            // replacementForDamagedToolStripMenuItem
+            // 
+            this.replacementForDamagedToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.replacementForDamagedToolStripMenuItem.Name = "replacementForDamagedToolStripMenuItem";
+            this.replacementForDamagedToolStripMenuItem.Size = new System.Drawing.Size(322, 30);
+            this.replacementForDamagedToolStripMenuItem.Text = "Replacement For Damaged";
+            this.replacementForDamagedToolStripMenuItem.Click += new System.EventHandler(this.replacementForDamagedToolStripMenuItem_Click);
+            // 
+            // replacementForLostToolStripMenuItem
+            // 
+            this.replacementForLostToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.replacementForLostToolStripMenuItem.Name = "replacementForLostToolStripMenuItem";
+            this.replacementForLostToolStripMenuItem.Size = new System.Drawing.Size(322, 30);
+            this.replacementForLostToolStripMenuItem.Text = "Replacement For Lost";
+            this.replacementForLostToolStripMenuItem.Click += new System.EventHandler(this.replacementForLostToolStripMenuItem_Click);
+            // 
             // ucLicenses
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -330,5 +350,7 @@
         private Guna.UI2.WinForms.Guna2Button btnAll;
         private Guna.UI2.WinForms.Guna2ContextMenuStrip guna2ContextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem renewLocalDrivingLicenseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem replacementForDamagedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem replacementForLostToolStripMenuItem;
     }
 }

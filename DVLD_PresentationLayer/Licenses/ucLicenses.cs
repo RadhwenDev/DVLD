@@ -1,4 +1,5 @@
-﻿using DVLD_BusinessLayer;
+﻿using DVLD_Business;
+using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Global;
 using System;
 using System.Collections.Generic;
@@ -252,6 +253,15 @@ namespace DVLD_PresentationLayer.Licenses
                     MessageBox.Show("This license is still active and has not expired yet!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                DialogResult result = MessageBox.Show($"Are you sure you want to renew License ID [{licenseID}]?",
+                                              "Confirm Renewal",
+                                              MessageBoxButtons.YesNo,
+                                              MessageBoxIcon.Question);
+
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
 
                 // 3. جلب PersonID الخاص بالسائق والتأكد من صحته
                 int personID = clsDriver.FindPersonIDByDriverID(oldLicense.DriverID);
@@ -332,6 +342,137 @@ namespace DVLD_PresentationLayer.Licenses
                 // جعل السطر المنقور هو الـ CurrentRow
                 dgvLicenses.CurrentCell = dgvLicenses.Rows[e.RowIndex].Cells[e.ColumnIndex >= 0 ? e.ColumnIndex : 0];
             }
+        }
+        public enum enReplacementReason { Damaged = 1, Lost = 2 }
+
+        private void ReplaceLicense(enReplacementReason replacementReason)
+        {
+            if (dgvLicenses.CurrentRow == null || dgvLicenses.CurrentRow.Index < 0)
+                return;
+
+            int licenseID = Convert.ToInt32(dgvLicenses.CurrentRow.Cells["LICENSE ID"].Value);
+
+            // 1. جلب بيانات الرخصة القديمة
+            clsLicenses oldLicense = clsLicenses.Find(licenseID);
+
+            if (oldLicense == null)
+            {
+                MessageBox.Show("License not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 2. التحقق من أن الرخصة نشطة (لا يمكن استبدال رخصة غير نشطة)
+            if (!oldLicense.IsActive)
+            {
+                MessageBox.Show("This license is not active and cannot be replaced!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (oldLicense.ExpirationDate < DateTime.Now)
+            {
+                MessageBox.Show("This license is expired! You should renew it instead of replacing it.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string issueReasonText = (replacementReason == enReplacementReason.Damaged) ? "Damaged" : "Lost";
+            DialogResult result = MessageBox.Show($"Are you sure you want to issue a replacement for a {issueReasonText} license?",
+                                                  "Confirm Replacement",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Question);
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+            // 3. جلب الـ PersonID الخص بالسائق
+            int personID = clsDriver.FindPersonIDByDriverID(oldLicense.DriverID);
+            if (personID == -1)
+            {
+                MessageBox.Show("Driver/Person details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 4. تحديد نوع الطلب والرسوم وسبب الإصدار بناءً على اختيار المستخدم
+            clsApplicant.enApplicationType appType;
+            clsLicenses.enIssueReason issueReason;
+
+            if (replacementReason == enReplacementReason.Damaged)
+            {
+                appType = clsApplicant.enApplicationType.ReplaceDamagedDrivingLicense;
+                issueReason = clsLicenses.enIssueReason.ReplacementForDamaged;
+            }
+            else
+            {
+                appType = clsApplicant.enApplicationType.ReplaceLostDrivingLicense;
+                issueReason = clsLicenses.enIssueReason.ReplacementForLost;
+            }
+
+            // قراءة رسوم طلب الاستبدال
+            DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)appType);
+            decimal replacementAppFees = Convert.ToDecimal(dtAppType.Rows[0]["ApplicationFees"]);
+
+            // 5. إنشاء طلب الاستبدال (Application)
+            clsApplicant newApplication = new clsApplicant();
+            newApplication.ApplicantPersonID = personID;
+            newApplication.ApplicationDate = DateTime.Now;
+            newApplication.ApplicationTypeID = (int)appType;
+            newApplication.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
+            newApplication.LastStatusDate = DateTime.Now;
+            newApplication.PaidFees = replacementAppFees;
+            newApplication.CreatedByUserID = clsCurrentUser._UserID;
+
+            // 6. حفظ الطلب ثم إلغاء تفعيل الرخصة القديمة وإصدار الرخصة الجديدة
+            if (newApplication.Save())
+            {
+                if (clsLicenses.Deactivate(licenseID))
+                {
+                    clsLicenses newLicense = new clsLicenses();
+                    newLicense.ApplicationID = newApplication.ApplicationID;
+                    newLicense.DriverID = oldLicense.DriverID;
+                    newLicense.LicenseClass = oldLicense.LicenseClass;
+                    newLicense.IssueDate = DateTime.Now;
+
+                    // 🌟 تنبيه هام: تاريخ الانتهاء هو نفسه تاريخ انتهاء الرخصة القديمة
+                    newLicense.ExpirationDate = oldLicense.ExpirationDate;
+
+                    newLicense.Notes = oldLicense.Notes;
+                    newLicense.PaidFees = 0; // عادة تكون رسوم الرخصة 0 في البدل ويُكتفي برسوم الطلب
+                    newLicense.IsActive = true;
+                    newLicense.IssueReason = issueReason; // ReplacementForLost أو ReplacementForDamaged
+                    newLicense.CreatedByUserID = clsCurrentUser._UserID;
+
+                    if (newLicense.Save())
+                    {
+                        MessageBox.Show($"License replaced successfully! New License ID: {newLicense.LicenseID}",
+                                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // تحديث الـ GridView بالشاشة
+                        _dtAllLicenses = clsLicenses.getAllLicenses();
+                        dgvLicenses.DataSource = _dtAllLicenses;
+                        ApplyCombinedFilter();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to issue the new replacement license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Failed to deactivate the old license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to create the replacement application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void replacementForDamagedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReplaceLicense(enReplacementReason.Damaged);
+        }
+
+        private void replacementForLostToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReplaceLicense(enReplacementReason.Lost);
         }
     }
 }
