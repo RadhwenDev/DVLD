@@ -120,6 +120,12 @@
     <Compile Include="Dashboard\ucServiceBreakdown.Designer.cs">
       <DependentUpon>ucServiceBreakdown.cs</DependentUpon>
     </Compile>
+    <Compile Include="DetainLicense\ucDetainLicense.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DetainLicense\ucDetainLicense.Designer.cs">
+      <DependentUpon>ucDetainLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Drivers\ucShowPersonLicenseHistory.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -134,6 +140,7 @@
     </Compile>
     <Compile Include="Global\clsCurrentPerson.cs" />
     <Compile Include="Global\clsCurrentUser.cs" />
+    <Compile Include="Global\clsUtility.cs" />
     <Compile Include="LicenseClasses\ucAddLicenseClass.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -282,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dashboard\ucServiceBreakdown.resx">
       <DependentUpon>ucServiceBreakdown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetainLicense\ucDetainLicense.resx">
+      <DependentUpon>ucDetainLicense.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Drivers\ucShowPersonLicenseHistory.resx">
       <DependentUpon>ucShowPersonLicenseHistory.cs</DependentUpon>

@@ -287,5 +287,37 @@ namespace DVLD_DataAccessLayer
 
             return rowAffected != 0;
         }
+        public static bool IsReleaseApplication(int ApplicationID)
+        {
+            bool isRelease = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Found = 1 FROM Applications 
+                        WHERE ApplicationID = @ApplicationID AND ApplicationTypeID = 5;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            isRelease = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isRelease = false;
+                    }
+                }
+            }
+
+            return isRelease;
+        }
     }
 }

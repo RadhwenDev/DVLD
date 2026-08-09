@@ -25,7 +25,16 @@ namespace DVLD_PresentationLayer.Licenses
 
         private void ucShowLicense_Load(object sender, EventArgs e)
         {
-            DataTable dt = clsLicenses.getShowLicense(_ApplicationID);
+            DataTable dt = new DataTable();
+            if (clsApplicant.IsReleaseApplication(_ApplicationID))
+            {
+                dt = clsLicenses.getShowLicenseRelease(_ApplicationID);
+            }
+            else
+            {
+                dt = clsLicenses.getShowLicense(_ApplicationID);
+
+            }
             if (dt != null && dt.Rows.Count > 0)
             {
                 lblClassName.Text = dt.Rows[0]["LicenseClass"].ToString();

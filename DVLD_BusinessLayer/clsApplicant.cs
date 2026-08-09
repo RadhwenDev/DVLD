@@ -157,6 +157,11 @@ namespace DVLD_BusinessLayer
             return clsApplicationsDataAccess.getAllApplicationStatus();
         }
 
+        public static bool IsReleaseApplication(int ApplicationID)
+        {
+            return clsApplicationsDataAccess.IsReleaseApplication(ApplicationID);
+        }
+
         #endregion
     }
 }

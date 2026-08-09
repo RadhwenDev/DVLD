@@ -173,5 +173,9 @@ namespace DVLD_BusinessLayer
                 Validity != _OriginalLicenseClass.Validity ||
                 Fees != _OriginalLicenseClass.Fees;
         }
+        public static int GetDefaultValidityLength(int licenseClassID)
+        {
+            return clsLicenseClassDataAccess.GetDefaultValidityLength(licenseClassID);
+        }
     }
 }

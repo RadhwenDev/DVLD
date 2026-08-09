@@ -128,6 +128,62 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+        public static DataTable getShowLicenseRelease(int ApplicationID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT 
+	                                Licenses.LicenseID,
+                                    Licenses.DriverID,
+	                                People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
+                                    People.NationalNo,
+	                                CASE 
+                                        WHEN People.Gendor = 0 THEN 'Male' 
+                                        ELSE 'Female' 
+                                    END AS Gender,
+                                    People.DateOfBirth,
+                                    People.ImagePath,
+	                                LC.ClassName AS LicenseClass,
+	                                Licenses.IssueDate,
+                                    Licenses.ExpirationDate,
+	                                CASE 
+                                        WHEN Licenses.IsActive = 0 THEN 'No' 
+                                        ELSE 'Yes' 
+                                    END AS IsActive,
+                                    Licenses.Notes,
+                                    Licenses.PaidFees,
+	                                A_T.ApplicationTypeTitle AS IssueReason,
+	                                CASE 
+                                        WHEN DL.LicenseID IS NULL THEN 'No' 
+                                        ELSE 'Yes' 
+                                    END AS IsDetained
+                                FROM Applications A
+                                INNER JOIN People ON A.ApplicantPersonID = People.PersonID
+                                INNER JOIN DetainedLicenses DL ON A.ApplicationID = DL.ReleaseApplicationID		
+                                INNER JOIN Licenses ON DL.LicenseID = Licenses.LicenseID
+                                INNER JOIN LicenseClasses LC ON Licenses.LicenseClass = LC.LicenseClassID
+                                INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
+                                WHERE A.ApplicationID = @ApplicationID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+
+            return dt;
+        }
         public static bool hasLicense(int personID)
         {
             bool isFound = false;

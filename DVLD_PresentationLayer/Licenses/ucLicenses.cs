@@ -1,5 +1,7 @@
 ﻿using DVLD_Business;
 using DVLD_BusinessLayer;
+using DVLD_PresentationLayer.Applications;
+using DVLD_PresentationLayer.DetainLicense;
 using DVLD_PresentationLayer.Global;
 using System;
 using System.Collections.Generic;
@@ -240,11 +242,16 @@ namespace DVLD_PresentationLayer.Licenses
                     MessageBox.Show("License not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
+                if (clsDetainedLicense.IsLicenseDetained(oldLicense.LicenseID))
+                {
+                    MessageBox.Show("This license is currently detained! You must release it before renewing.",
+                                    "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 // 2. التحقق مما إذا كانت الرخصة نشطة وغير منتهية
                 if (!oldLicense.IsActive)
                 {
-                    MessageBox.Show("This license is expired and cannot be renewed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("This license is inactive and cannot be renewed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -295,7 +302,8 @@ namespace DVLD_PresentationLayer.Licenses
                         newLicense.DriverID = oldLicense.DriverID;
                         newLicense.LicenseClass = oldLicense.LicenseClass;
                         newLicense.IssueDate = DateTime.Now;
-                        newLicense.ExpirationDate = DateTime.Now.AddYears(10);
+                        int defaultValidityYears = clsLicenseClass.GetDefaultValidityLength(oldLicense.LicenseClass);
+                        newLicense.ExpirationDate = DateTime.Now.AddYears(defaultValidityYears > 0 ? defaultValidityYears : 10);
                         newLicense.Notes = oldLicense.Notes;
                         newLicense.PaidFees = oldLicense.PaidFees; // رسوم الفئة
                         newLicense.IsActive = true;
@@ -358,6 +366,13 @@ namespace DVLD_PresentationLayer.Licenses
             if (oldLicense == null)
             {
                 MessageBox.Show("License not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (clsDetainedLicense.IsLicenseDetained(oldLicense.LicenseID))
+            {
+                MessageBox.Show("This license is currently detained! You must release it before renewing.",
+                                "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -473,6 +488,103 @@ namespace DVLD_PresentationLayer.Licenses
         private void replacementForLostToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReplaceLicense(enReplacementReason.Lost);
+        }
+
+        private void btnDetainLicense_Click(object sender, EventArgs e)
+        {
+            ucDetainLicense myDetainLicensen = new ucDetainLicense();
+            myDetainLicensen.Dock = DockStyle.Fill;
+            myDetainLicensen.Name = "ucDetainLicense";
+
+            foreach (Control ctrl in this.Controls)
+            {
+                ctrl.Visible = false;
+            }
+
+            this.Controls.Add(myDetainLicensen);
+            myDetainLicensen.BringToFront();    
+        }
+
+        private void detainLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvLicenses.CurrentRow == null || dgvLicenses.CurrentRow.Index < 0)
+                return;
+
+            int licenseID = Convert.ToInt32(dgvLicenses.CurrentRow.Cells["LICENSE ID"].Value);
+
+            // 1. جلب بيانات الرخصة والتأكد من وجودها
+            clsLicenses license = clsLicenses.Find(licenseID);
+
+            if (license == null)
+            {
+                MessageBox.Show("License not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (clsDetainedLicense.IsLicenseDetained(license.LicenseID))
+            {
+                MessageBox.Show("This license is currently detained! You must release it before renewing.",
+                                "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. التحقق مما إذا كانت الرخصة نشطة
+            if (!license.IsActive)
+            {
+                MessageBox.Show("This license is not active and cannot be detained!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 3. التحقق مما إذا كانت الرخصة محجوزة بالفعل من قبل
+            if (clsDetainedLicense.IsLicenseDetained(licenseID))
+            {
+                MessageBox.Show("This license is already detained!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 4. طلب قيمة الغرامة (Fine Fees) من المستخدم عبر InputBox أو نموذج إدخال بسيط
+            string inputFees = clsUtility.ShowInputBox("Please enter the fine fees for detaining this license:", "Enter Fine Fees");
+            if (string.IsNullOrWhiteSpace(inputFees))
+                return; // قام المستخدم بالضغط على Cancel أو ترك الحقل فارغاً
+
+            if (!decimal.TryParse(inputFees, out decimal fineFees) || fineFees < 0)
+            {
+                MessageBox.Show("Invalid fee amount. Please enter a valid non-negative number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 5. تأكيد العملية من المستخدم
+            DialogResult result = MessageBox.Show($"Are you sure you want to detain License ID [{licenseID}] with Fine Fees: {fineFees:C}?",
+                                                  "Confirm Detain",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Question);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            // 6. إنشاء كائن الحجز وتعبئة البيانات
+            clsDetainedLicense detainedLicense = new clsDetainedLicense();
+            detainedLicense.LicenseID = licenseID;
+            detainedLicense.DetainDate = DateTime.Now;
+            detainedLicense.FineFees = fineFees;
+            detainedLicense.CreatedByUserID = clsCurrentUser._UserID;
+            detainedLicense.IsReleased = false;
+
+            // 7. حفظ بيانات الحجز وتحديث الواجهة
+            if (detainedLicense.Save())
+            {
+                MessageBox.Show($"License ID [{licenseID}] has been detained successfully with Detain ID [{detainedLicense.DetainID}].",
+                                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // إعادة تحميل البيانات وتطبيق الفلتر المشترك لإنعاش الـ GridView
+                _dtAllLicenses = clsLicenses.getAllLicenses();
+                dgvLicenses.DataSource = _dtAllLicenses;
+                ApplyCombinedFilter();
+            }
+            else
+            {
+                MessageBox.Show("Failed to detain the license. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

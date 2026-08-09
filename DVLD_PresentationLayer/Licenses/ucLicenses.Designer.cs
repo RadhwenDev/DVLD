@@ -44,9 +44,11 @@
             this.dgvLicenses = new Guna.UI2.WinForms.Guna2DataGridView();
             this.guna2ContextMenuStrip1 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
             this.renewLocalDrivingLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbFilterNameLicenseID = new Guna.UI2.WinForms.Guna2TextBox();
             this.replacementForDamagedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replacementForLostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbFilterNameLicenseID = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnDetainLicense = new Guna.UI2.WinForms.Guna2Button();
+            this.detainLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guna2Panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLicenses)).BeginInit();
@@ -250,11 +252,13 @@
             // 
             // guna2ContextMenuStrip1
             // 
+            this.guna2ContextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.guna2ContextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.guna2ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renewLocalDrivingLicenseToolStripMenuItem,
             this.replacementForDamagedToolStripMenuItem,
-            this.replacementForLostToolStripMenuItem});
+            this.replacementForLostToolStripMenuItem,
+            this.detainLicenseToolStripMenuItem});
             this.guna2ContextMenuStrip1.Name = "guna2ContextMenuStrip1";
             this.guna2ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.guna2ContextMenuStrip1.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
@@ -266,16 +270,34 @@
             this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(323, 122);
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(326, 152);
             // 
             // renewLocalDrivingLicenseToolStripMenuItem
             // 
             this.renewLocalDrivingLicenseToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.renewLocalDrivingLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("renewLocalDrivingLicenseToolStripMenuItem.Image")));
             this.renewLocalDrivingLicenseToolStripMenuItem.Name = "renewLocalDrivingLicenseToolStripMenuItem";
-            this.renewLocalDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(322, 30);
+            this.renewLocalDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
             this.renewLocalDrivingLicenseToolStripMenuItem.Text = "Renew Local Driving License";
             this.renewLocalDrivingLicenseToolStripMenuItem.Click += new System.EventHandler(this.renewLocalDrivingLicenseToolStripMenuItem_Click);
+            // 
+            // replacementForDamagedToolStripMenuItem
+            // 
+            this.replacementForDamagedToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.replacementForDamagedToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replacementForDamagedToolStripMenuItem.Image")));
+            this.replacementForDamagedToolStripMenuItem.Name = "replacementForDamagedToolStripMenuItem";
+            this.replacementForDamagedToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
+            this.replacementForDamagedToolStripMenuItem.Text = "Replacement For Damaged";
+            this.replacementForDamagedToolStripMenuItem.Click += new System.EventHandler(this.replacementForDamagedToolStripMenuItem_Click);
+            // 
+            // replacementForLostToolStripMenuItem
+            // 
+            this.replacementForLostToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.replacementForLostToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replacementForLostToolStripMenuItem.Image")));
+            this.replacementForLostToolStripMenuItem.Name = "replacementForLostToolStripMenuItem";
+            this.replacementForLostToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
+            this.replacementForLostToolStripMenuItem.Text = "Replacement For Lost";
+            this.replacementForLostToolStripMenuItem.Click += new System.EventHandler(this.replacementForLostToolStripMenuItem_Click);
             // 
             // tbFilterNameLicenseID
             // 
@@ -303,26 +325,43 @@
             this.tbFilterNameLicenseID.TabIndex = 3;
             this.tbFilterNameLicenseID.TextChanged += new System.EventHandler(this.tbFilterNameLicenseID_TextChanged);
             // 
-            // replacementForDamagedToolStripMenuItem
+            // btnDetainLicense
             // 
-            this.replacementForDamagedToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.replacementForDamagedToolStripMenuItem.Name = "replacementForDamagedToolStripMenuItem";
-            this.replacementForDamagedToolStripMenuItem.Size = new System.Drawing.Size(322, 30);
-            this.replacementForDamagedToolStripMenuItem.Text = "Replacement For Damaged";
-            this.replacementForDamagedToolStripMenuItem.Click += new System.EventHandler(this.replacementForDamagedToolStripMenuItem_Click);
+            this.btnDetainLicense.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDetainLicense.BorderRadius = 10;
+            this.btnDetainLicense.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDetainLicense.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnDetainLicense.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnDetainLicense.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnDetainLicense.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnDetainLicense.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(52)))), ((int)(((byte)(90)))));
+            this.btnDetainLicense.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnDetainLicense.ForeColor = System.Drawing.Color.White;
+            this.btnDetainLicense.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnDetainLicense.Image = ((System.Drawing.Image)(resources.GetObject("btnDetainLicense.Image")));
+            this.btnDetainLicense.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnDetainLicense.ImageOffset = new System.Drawing.Point(5, -1);
+            this.btnDetainLicense.Location = new System.Drawing.Point(1034, 105);
+            this.btnDetainLicense.Name = "btnDetainLicense";
+            this.btnDetainLicense.Size = new System.Drawing.Size(298, 52);
+            this.btnDetainLicense.TabIndex = 13;
+            this.btnDetainLicense.Text = "Manage Detain License";
+            this.btnDetainLicense.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.btnDetainLicense.Click += new System.EventHandler(this.btnDetainLicense_Click);
             // 
-            // replacementForLostToolStripMenuItem
+            // detainLicenseToolStripMenuItem
             // 
-            this.replacementForLostToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.replacementForLostToolStripMenuItem.Name = "replacementForLostToolStripMenuItem";
-            this.replacementForLostToolStripMenuItem.Size = new System.Drawing.Size(322, 30);
-            this.replacementForLostToolStripMenuItem.Text = "Replacement For Lost";
-            this.replacementForLostToolStripMenuItem.Click += new System.EventHandler(this.replacementForLostToolStripMenuItem_Click);
+            this.detainLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("detainLicenseToolStripMenuItem.Image")));
+            this.detainLicenseToolStripMenuItem.Name = "detainLicenseToolStripMenuItem";
+            this.detainLicenseToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
+            this.detainLicenseToolStripMenuItem.Text = "Detain License";
+            this.detainLicenseToolStripMenuItem.Click += new System.EventHandler(this.detainLicenseToolStripMenuItem_Click);
             // 
             // ucLicenses
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDetainLicense);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.lblCountActiveAndExpire);
             this.Controls.Add(this.label1);
@@ -352,5 +391,7 @@
         private System.Windows.Forms.ToolStripMenuItem renewLocalDrivingLicenseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replacementForDamagedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem replacementForLostToolStripMenuItem;
+        private Guna.UI2.WinForms.Guna2Button btnDetainLicense;
+        private System.Windows.Forms.ToolStripMenuItem detainLicenseToolStripMenuItem;
     }
 }

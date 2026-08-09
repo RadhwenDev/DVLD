@@ -245,7 +245,11 @@ namespace DVLD_DataAccess
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = "SELECT * FROM DetainedLicenses_View ORDER BY IsReleased, DetainID DESC";
+                string query = @"SELECT [Detain ID] = DetainID, [License ID] = DetainedLicenses.LicenseID, 
+                                 [Driver Name] = P.FirstName + ISNULL(' ' + NULLIF(P.SecondName, ''), '')  + ISNULL(' ' + NULLIF(P.ThirdName, ''), '') + ISNULL(' ' + NULLIF(P.LastName, ''), ''),
+                                 [Detain Date] = DetainDate, [Fine Fees] = FineFees, [Status] = CASE WHEN IsReleased = 1 THEN 'Released' ELSE 'Detained' END FROM DetainedLicenses 
+                                 INNER JOIN Licenses L ON DetainedLicenses.LicenseID = L.LicenseID INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                                 INNER JOIN People P ON D.PersonID = P.PersonID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

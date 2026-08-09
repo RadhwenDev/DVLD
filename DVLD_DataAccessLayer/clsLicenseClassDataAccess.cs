@@ -230,5 +230,35 @@ namespace DVLD_DataAccessLayer
 
             return LicenseClassID;
         }
+        public static int GetDefaultValidityLength(int licenseClassID)
+        {
+            int defaultValidityLength = 10; 
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = "SELECT DefaultValidityLength FROM LicenseClasses WHERE LicenseClassID = @LicenseClassID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseClassID", licenseClassID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int length))
+                        {
+                            defaultValidityLength = length;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+
+            return defaultValidityLength;
+        }
     }
 }
