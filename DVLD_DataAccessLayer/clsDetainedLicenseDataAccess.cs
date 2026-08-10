@@ -301,7 +301,8 @@ namespace DVLD_DataAccess
                                  [Driver Name] = P.FirstName + ISNULL(' ' + NULLIF(P.SecondName, ''), '')  + ISNULL(' ' + NULLIF(P.ThirdName, ''), '') + ISNULL(' ' + NULLIF(P.LastName, ''), ''),
                                  [Detain Date] = DetainDate, [Fine Fees] = FineFees, [Status] = CASE WHEN IsReleased = 1 THEN 'Released' ELSE 'Detained' END FROM DetainedLicenses 
                                  INNER JOIN Licenses L ON DetainedLicenses.LicenseID = L.LicenseID INNER JOIN Drivers D ON L.DriverID = D.DriverID
-                                 INNER JOIN People P ON D.PersonID = P.PersonID";
+                                 INNER JOIN People P ON D.PersonID = P.PersonID
+                                 ORDER BY DetainID DESC;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

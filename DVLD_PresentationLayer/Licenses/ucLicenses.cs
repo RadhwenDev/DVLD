@@ -11,9 +11,12 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static DVLD_BusinessLayer.clsLicenses;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD_PresentationLayer.Licenses
 {
@@ -601,6 +604,115 @@ namespace DVLD_PresentationLayer.Licenses
 
             this.Controls.Add(myInternationalLicensen);
             myInternationalLicensen.BringToFront();
+        }
+
+        private void newInternationalApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 1. التأكد من تحديد صف في الـ DataGridView
+            if (dgvLicenses.CurrentRow == null || dgvLicenses.CurrentRow.Index < 0)
+                return;
+
+            int licenseID = Convert.ToInt32(dgvLicenses.CurrentRow.Cells["LICENSE ID"].Value);
+            clsLicenses license = clsLicenses.Find(licenseID);
+
+            if (license == null)
+            {
+                MessageBox.Show("License details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 2. التحقق من أن الرخصة نشطة
+            if (!license.IsActive)
+            {
+                MessageBox.Show("Selected local license is not active! Cannot issue an international license.",
+                                "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 3. التحقق من أن الرخصة من الصنف 3 (Ordinary Driving License)
+            if (license.LicenseClass != 3)
+            {
+                MessageBox.Show("International licenses can only be issued for Ordinary Driving Licenses (Class 3).",
+                                "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 4. التحقق مما إذا كانت الرخصة محتجزة
+            if (clsDetainedLicense.IsLicenseDetained(license.LicenseID))
+            {
+                MessageBox.Show("This local license is currently detained! You must release it first.",
+                                "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 5. التحقق مما إذا كان لدى السائق رخصة دولية نشطة بالفعل
+            if (clsInternationalLicense.hasInternationalLicense(license.DriverID))
+            {
+                MessageBox.Show("This driver already has an active International License!",
+                                "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DialogResult confirmResult = MessageBox.Show(
+        $"Are you sure you want to issue an International License for Local License ID [{license.LicenseID}]?",
+        "Confirm Issuance",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question);
+
+            if (confirmResult != DialogResult.Yes)
+                return;
+            // 6. الحصول على الشخص المرتبط بالسائق
+            int personID = clsDriver.FindPersonIDByDriverID(license.DriverID);
+            if (personID == -1)
+            {
+                MessageBox.Show("Driver/Person details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // 7. جلب رسوم الطلب
+            DataTable dtFees = clsApplicant.getApplicationTypesTitle_Fees((int)clsApplicant.enApplicationType.NewInternationalLicense);
+            decimal fees = Convert.ToDecimal(dtFees.Rows[0]["ApplicationFees"]);
+
+            // 8. إنشاء الطلب الرئيسي (Application)
+            clsApplicant newApplication = new clsApplicant();
+            newApplication.ApplicantPersonID = personID;
+            newApplication.ApplicationDate = DateTime.Now;
+            newApplication.ApplicationTypeID = (int)clsApplicant.enApplicationType.NewInternationalLicense;
+            newApplication.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
+            newApplication.LastStatusDate = DateTime.Now;
+            newApplication.PaidFees = fees;
+            newApplication.CreatedByUserID = clsCurrentUser._UserID;
+
+            if (newApplication.Save())
+            {
+                // 9. إنشاء سجل الرخصة الدولية
+                clsInternationalLicense internationalLicense = new clsInternationalLicense();
+                internationalLicense.ApplicationID = newApplication.ApplicationID; // 👈 ربطه بالطلب المنشأ
+                internationalLicense.DriverID = license.DriverID;
+                internationalLicense.IssuedUsingLocalLicenseID = license.LicenseID; // 👈 ربطها برخصة القيادة المحلية المحددة
+                internationalLicense.IssueDate = DateTime.Now;
+                internationalLicense.ExpirationDate = DateTime.Now.AddYears(1);
+                internationalLicense.IsActive = true;
+                internationalLicense.CreatedByUserID = clsCurrentUser._UserID;
+
+                if (internationalLicense.Save())
+                {
+                    MessageBox.Show($"International License issued successfully with ID = {internationalLicense.InternationalLicenseID}!",
+                                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 10. تحديث الجدول بالشاشة
+                    _dtAllLicenses = clsLicenses.getAllLicenses();
+                    dgvLicenses.DataSource = _dtAllLicenses;
+                    ApplyCombinedFilter();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to save International License data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to create the International License application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

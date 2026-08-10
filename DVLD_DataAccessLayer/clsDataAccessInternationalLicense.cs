@@ -130,6 +130,38 @@ namespace DVLD_DataAccess
 
             return dt;
         }
+        public static bool hasInternationalLicense(int DriverID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Found = 1 FROM InternationalLicenses
+                                 WHERE DriverID = @DriverID
+                                 AND IsActive = 1";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DriverID", DriverID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            isFound = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+            return isFound;
+        }
 
         public static int AddNewInternationalLicense(int applicationID, int driverID,
             int issuedUsingLocalLicenseID, DateTime issueDate, DateTime expirationDate,

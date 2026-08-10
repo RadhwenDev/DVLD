@@ -122,5 +122,9 @@ namespace DVLD_BusinessLayer
         {
             return clsDataAccessInternationalLicense.GetActiveInternationalLicenseIDByDriverID(driverID);
         }
+        public static bool hasInternationalLicense(int personID)
+        {
+            return clsLicensesDataAccess.hasInternationalLicense(personID);
+        }
     }
 }
