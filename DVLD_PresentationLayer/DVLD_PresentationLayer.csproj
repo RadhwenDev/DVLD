@@ -141,6 +141,12 @@
     <Compile Include="Global\clsCurrentPerson.cs" />
     <Compile Include="Global\clsCurrentUser.cs" />
     <Compile Include="Global\clsUtility.cs" />
+    <Compile Include="InternationalApplication\ucInternationalApplication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InternationalApplication\ucInternationalApplication.Designer.cs">
+      <DependentUpon>ucInternationalApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="LicenseClasses\ucAddLicenseClass.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -298,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InternationalApplication\ucInternationalApplication.resx">
+      <DependentUpon>ucInternationalApplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LicenseClasses\ucAddLicenseClass.resx">
       <DependentUpon>ucAddLicenseClass.cs</DependentUpon>

@@ -76,10 +76,9 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT 
-                                    Licenses.LicenseID,
-                                    Licenses.DriverID,
-                                    People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
+                string query = @"select L.LicenseID,
+                                    L.DriverID,
+	                                People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
                                     People.NationalNo,
 	                                CASE 
                                         WHEN People.Gendor = 0 THEN 'Male' 
@@ -87,27 +86,24 @@ namespace DVLD_DataAccessLayer
                                     END AS Gender,
                                     People.DateOfBirth,
                                     People.ImagePath,
-                                    LicenseClasses.ClassName AS LicenseClass,
-                                    Licenses.IssueDate,
-                                    Licenses.ExpirationDate,
+	                                LC.ClassName AS LicenseClass,
+	                                L.IssueDate,
+                                    L.ExpirationDate,
 	                                CASE 
-                                        WHEN Licenses.IsActive = 0 THEN 'No' 
+                                        WHEN L.IsActive = 0 THEN 'No' 
                                         ELSE 'Yes' 
                                     END AS IsActive,
-                                    Licenses.Notes,
-                                    Licenses.PaidFees,
-                                    ApplicationTypes.ApplicationTypeTitle AS IssueReason,
-                                    CASE 
-                                        WHEN DetainedLicenses.LicenseID IS NULL THEN 'No' 
-                                        ELSE 'Yes' 
-                                    END AS IsDetained
-                                FROM Licenses
-                                INNER JOIN Drivers ON Licenses.DriverID = Drivers.DriverID
-                                INNER JOIN People ON Drivers.PersonID = People.PersonID
-                                INNER JOIN LicenseClasses ON Licenses.LicenseClass = LicenseClasses.LicenseClassID
-                                INNER JOIN Applications ON Licenses.ApplicationID = Applications.ApplicationID
-                                INNER JOIN ApplicationTypes ON Applications.ApplicationTypeID = ApplicationTypes.ApplicationTypeID
-                                LEFT JOIN DetainedLicenses ON Licenses.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
+                                    L.Notes,
+                                    L.PaidFees,
+	                                A_T.ApplicationTypeTitle AS IssueReason
+								from Applications A
+								INNER JOIN People ON A.ApplicantPersonID = People.PersonID
+								inner join InternationalLicenses IL on A.ApplicationID = IL.ApplicationID
+								inner join Drivers D on IL.DriverID = D.DriverID
+								INNER JOIN Licenses L on D.DriverID = L.DriverID
+								INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
+                                INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
+								LEFT JOIN DetainedLicenses ON L.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
                                 WHERE Licenses.ApplicationID = @ApplicationID;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -165,6 +161,63 @@ namespace DVLD_DataAccessLayer
                                 INNER JOIN LicenseClasses LC ON Licenses.LicenseClass = LC.LicenseClassID
                                 INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
                                 WHERE A.ApplicationID = @ApplicationID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+
+            return dt;
+        }
+        public static DataTable getShowInternationalLicense(int ApplicationID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT L.LicenseID,
+                                    L.DriverID,
+	                                People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
+                                    People.NationalNo,
+	                                CASE 
+                                        WHEN People.Gendor = 0 THEN 'Male' 
+                                        ELSE 'Female' 
+                                    END AS Gender,
+                                    People.DateOfBirth,
+                                    People.ImagePath,
+	                                LC.ClassName AS LicenseClass,
+	                                L.IssueDate,
+                                    L.ExpirationDate,
+	                                CASE 
+                                        WHEN L.IsActive = 0 THEN 'No' 
+                                        ELSE 'Yes' 
+                                    END AS IsActive,
+                                    L.Notes,
+                                    L.PaidFees,
+	                                A_T.ApplicationTypeTitle AS IssueReason,
+									CASE 
+                                        WHEN DetainedLicenses.LicenseID IS NULL THEN 'No' 
+                                        ELSE 'Yes' 
+                                    END AS IsDetained
+								FROM Applications A
+								INNER JOIN People ON A.ApplicantPersonID = People.PersonID
+								INNER JOIN InternationalLicenses IL ON A.ApplicationID = IL.ApplicationID
+								inner join Drivers D ON IL.DriverID = D.DriverID
+								INNER JOIN Licenses L ON D.DriverID = L.DriverID
+								INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
+                                INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
+								LEFT JOIN DetainedLicenses ON L.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
+                                WHERE A.ApplicationID = @ApplicationID AND L.IsActive = 1;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

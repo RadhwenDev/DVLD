@@ -86,6 +86,50 @@ namespace DVLD_DataAccess
 
             return dt;
         }
+        public static DataTable GetInternationalLicenses()
+        {
+            DataTable dt = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT 
+                                     [Int.License ID] = IL.InternationalLicenseID, 
+                                     [Application ID] = IL.ApplicationID,
+                                     [Driver Name] = P.FirstName + ISNULL(' ' + NULLIF(P.SecondName, ''), '') + ISNULL(' ' + NULLIF(P.ThirdName, ''), '') + ISNULL(' ' + NULLIF(P.LastName, ''), ''),
+                                     [L.License ID] = IL.IssuedUsingLocalLicenseID, 
+                                     [Issue Date] = IL.IssueDate, 
+                                     [Expiration Date] = IL.ExpirationDate, 
+                                     [Status] = CASE 
+                                                     WHEN IL.IsActive = 1 AND IL.ExpirationDate > GETDATE() THEN 'Active' 
+                                                     ELSE 'Expired' 
+                                                END
+                                 FROM InternationalLicenses IL
+                                 INNER JOIN Drivers D ON IL.DriverID = D.DriverID
+                                 INNER JOIN People P ON D.PersonID = P.PersonID
+                                 ORDER BY IL.InternationalLicenseID DESC";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                dt.Load(reader);
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Handle exceptions
+                    }
+                }
+            }
+
+            return dt;
+        }
 
         public static int AddNewInternationalLicense(int applicationID, int driverID,
             int issuedUsingLocalLicenseID, DateTime issueDate, DateTime expirationDate,

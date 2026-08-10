@@ -163,5 +163,9 @@ namespace DVLD_BusinessLayer
         {
             return clsLicensesDataAccess.getShowLicenseRelease(ApplicationID);
         }
+        public static DataTable getShowInternationalLicense(int ApplicationID)
+        {
+            return clsLicensesDataAccess.getShowInternationalLicense(ApplicationID);
+        }
     }
 }

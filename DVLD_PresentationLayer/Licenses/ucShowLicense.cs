@@ -30,6 +30,10 @@ namespace DVLD_PresentationLayer.Licenses
             {
                 dt = clsLicenses.getShowLicenseRelease(_ApplicationID);
             }
+            else if (clsApplicant.IsInternationalApplication(_ApplicationID))
+            {
+                dt = clsLicenses.getShowInternationalLicense(_ApplicationID);
+            }
             else
             {
                 dt = clsLicenses.getShowLicense(_ApplicationID);

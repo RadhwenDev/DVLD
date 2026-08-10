@@ -66,18 +66,11 @@ namespace DVLD_PresentationLayer.DetainLicense
             UpdateRowsCount(_dtDetainedLicenses);
         }
         private void UpdateRowsCount(DataTable dt)
-        {
-            if (dt.Rows.Count > 0)
-            {
-                DataView dvFiltered = dt.DefaultView;
-                int detainCount = dvFiltered.ToTable().Select("Status = 'Detained'").Length;
-                int releasedCount = dvFiltered.Count - detainCount;
-                lblTotalRecords.Text = $"{detainCount} currently detained • {releasedCount} released";
-            }
-            else
-            {
-                lblTotalRecords.Text = "No applications found";
-            }
+        {            
+            DataView dvFiltered = dt.DefaultView;
+            int detainCount = dvFiltered.ToTable().Select("Status = 'Detained'").Length;
+            int releasedCount = dvFiltered.Count - detainCount;
+            lblTotalRecords.Text = $"{detainCount} currently detained • {releasedCount} released";
         }
         
         private void ucDetainLicense_Load(object sender, EventArgs e)

@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLicenses));
             this.lblCountActiveAndExpire = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,12 +43,14 @@
             this.btnAll = new Guna.UI2.WinForms.Guna2Button();
             this.dgvLicenses = new Guna.UI2.WinForms.Guna2DataGridView();
             this.guna2ContextMenuStrip1 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
+            this.newInternationalApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renewLocalDrivingLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replacementForDamagedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replacementForLostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.detainLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbFilterNameLicenseID = new Guna.UI2.WinForms.Guna2TextBox();
             this.btnDetainLicense = new Guna.UI2.WinForms.Guna2Button();
-            this.detainLicenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnInternationalApp = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLicenses)).BeginInit();
@@ -84,7 +86,7 @@
             this.guna2Panel1.Controls.Add(this.dgvLicenses);
             this.guna2Panel1.Controls.Add(this.tbFilterNameLicenseID);
             this.guna2Panel1.FillColor = System.Drawing.Color.White;
-            this.guna2Panel1.Location = new System.Drawing.Point(24, 203);
+            this.guna2Panel1.Location = new System.Drawing.Point(24, 215);
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Padding = new System.Windows.Forms.Padding(20);
             this.guna2Panel1.Size = new System.Drawing.Size(1317, 460);
@@ -120,7 +122,7 @@
             this.guna2Button1.FillColor = System.Drawing.Color.Transparent;
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.guna2Button1.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button1.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(58)))), ((int)(((byte)(95)))));
+            this.guna2Button1.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(217)))), ((int)(((byte)(87)))), ((int)(((byte)(74)))));
             this.guna2Button1.HoverState.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Location = new System.Drawing.Point(212, 5);
             this.guna2Button1.Name = "guna2Button1";
@@ -141,7 +143,7 @@
             this.btnActive.FillColor = System.Drawing.Color.Transparent;
             this.btnActive.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnActive.ForeColor = System.Drawing.Color.Black;
-            this.btnActive.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(58)))), ((int)(((byte)(95)))));
+            this.btnActive.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(152)))), ((int)(((byte)(109)))));
             this.btnActive.HoverState.ForeColor = System.Drawing.Color.White;
             this.btnActive.Location = new System.Drawing.Point(96, 5);
             this.btnActive.Name = "btnActive";
@@ -176,48 +178,48 @@
             this.dgvLicenses.AllowUserToAddRows = false;
             this.dgvLicenses.AllowUserToResizeColumns = false;
             this.dgvLicenses.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.dgvLicenses.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            this.dgvLicenses.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvLicenses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvLicenses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvLicenses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvLicenses.ColumnHeadersHeight = 40;
             this.dgvLicenses.ContextMenuStrip = this.guna2ContextMenuStrip1;
             this.dgvLicenses.Cursor = System.Windows.Forms.Cursors.IBeam;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvLicenses.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvLicenses.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvLicenses.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvLicenses.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.dgvLicenses.Location = new System.Drawing.Point(0, 117);
             this.dgvLicenses.Name = "dgvLicenses";
             this.dgvLicenses.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvLicenses.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvLicenses.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgvLicenses.RowHeadersVisible = false;
             this.dgvLicenses.RowHeadersWidth = 51;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgvLicenses.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(251)))), ((int)(((byte)(253)))));
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial Narrow", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgvLicenses.RowsDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvLicenses.RowTemplate.Height = 60;
             this.dgvLicenses.RowTemplate.ReadOnly = true;
             this.dgvLicenses.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -255,6 +257,7 @@
             this.guna2ContextMenuStrip1.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.guna2ContextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.guna2ContextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newInternationalApplicationToolStripMenuItem,
             this.renewLocalDrivingLicenseToolStripMenuItem,
             this.replacementForDamagedToolStripMenuItem,
             this.replacementForLostToolStripMenuItem,
@@ -270,14 +273,21 @@
             this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(326, 152);
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(341, 154);
+            // 
+            // newInternationalApplicationToolStripMenuItem
+            // 
+            this.newInternationalApplicationToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newInternationalApplicationToolStripMenuItem.Image")));
+            this.newInternationalApplicationToolStripMenuItem.Name = "newInternationalApplicationToolStripMenuItem";
+            this.newInternationalApplicationToolStripMenuItem.Size = new System.Drawing.Size(340, 30);
+            this.newInternationalApplicationToolStripMenuItem.Text = "New International Application";
             // 
             // renewLocalDrivingLicenseToolStripMenuItem
             // 
             this.renewLocalDrivingLicenseToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.renewLocalDrivingLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("renewLocalDrivingLicenseToolStripMenuItem.Image")));
             this.renewLocalDrivingLicenseToolStripMenuItem.Name = "renewLocalDrivingLicenseToolStripMenuItem";
-            this.renewLocalDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
+            this.renewLocalDrivingLicenseToolStripMenuItem.Size = new System.Drawing.Size(340, 30);
             this.renewLocalDrivingLicenseToolStripMenuItem.Text = "Renew Local Driving License";
             this.renewLocalDrivingLicenseToolStripMenuItem.Click += new System.EventHandler(this.renewLocalDrivingLicenseToolStripMenuItem_Click);
             // 
@@ -286,7 +296,7 @@
             this.replacementForDamagedToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.replacementForDamagedToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replacementForDamagedToolStripMenuItem.Image")));
             this.replacementForDamagedToolStripMenuItem.Name = "replacementForDamagedToolStripMenuItem";
-            this.replacementForDamagedToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
+            this.replacementForDamagedToolStripMenuItem.Size = new System.Drawing.Size(340, 30);
             this.replacementForDamagedToolStripMenuItem.Text = "Replacement For Damaged";
             this.replacementForDamagedToolStripMenuItem.Click += new System.EventHandler(this.replacementForDamagedToolStripMenuItem_Click);
             // 
@@ -295,9 +305,17 @@
             this.replacementForLostToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.replacementForLostToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replacementForLostToolStripMenuItem.Image")));
             this.replacementForLostToolStripMenuItem.Name = "replacementForLostToolStripMenuItem";
-            this.replacementForLostToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
+            this.replacementForLostToolStripMenuItem.Size = new System.Drawing.Size(340, 30);
             this.replacementForLostToolStripMenuItem.Text = "Replacement For Lost";
             this.replacementForLostToolStripMenuItem.Click += new System.EventHandler(this.replacementForLostToolStripMenuItem_Click);
+            // 
+            // detainLicenseToolStripMenuItem
+            // 
+            this.detainLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("detainLicenseToolStripMenuItem.Image")));
+            this.detainLicenseToolStripMenuItem.Name = "detainLicenseToolStripMenuItem";
+            this.detainLicenseToolStripMenuItem.Size = new System.Drawing.Size(340, 30);
+            this.detainLicenseToolStripMenuItem.Text = "Detain License";
+            this.detainLicenseToolStripMenuItem.Click += new System.EventHandler(this.detainLicenseToolStripMenuItem_Click);
             // 
             // tbFilterNameLicenseID
             // 
@@ -349,18 +367,34 @@
             this.btnDetainLicense.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.btnDetainLicense.Click += new System.EventHandler(this.btnDetainLicense_Click);
             // 
-            // detainLicenseToolStripMenuItem
+            // btnInternationalApp
             // 
-            this.detainLicenseToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("detainLicenseToolStripMenuItem.Image")));
-            this.detainLicenseToolStripMenuItem.Name = "detainLicenseToolStripMenuItem";
-            this.detainLicenseToolStripMenuItem.Size = new System.Drawing.Size(325, 30);
-            this.detainLicenseToolStripMenuItem.Text = "Detain License";
-            this.detainLicenseToolStripMenuItem.Click += new System.EventHandler(this.detainLicenseToolStripMenuItem_Click);
+            this.btnInternationalApp.BorderRadius = 10;
+            this.btnInternationalApp.BorderThickness = 1;
+            this.btnInternationalApp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInternationalApp.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnInternationalApp.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnInternationalApp.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnInternationalApp.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnInternationalApp.FillColor = System.Drawing.Color.Transparent;
+            this.btnInternationalApp.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnInternationalApp.ForeColor = System.Drawing.Color.Black;
+            this.btnInternationalApp.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(76)))), ((int)(((byte)(110)))));
+            this.btnInternationalApp.Image = ((System.Drawing.Image)(resources.GetObject("btnInternationalApp.Image")));
+            this.btnInternationalApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnInternationalApp.Location = new System.Drawing.Point(24, 140);
+            this.btnInternationalApp.Name = "btnInternationalApp";
+            this.btnInternationalApp.Size = new System.Drawing.Size(303, 52);
+            this.btnInternationalApp.TabIndex = 14;
+            this.btnInternationalApp.Text = "International Applications";
+            this.btnInternationalApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.btnInternationalApp.Click += new System.EventHandler(this.btnInternationalApp_Click);
             // 
             // ucLicenses
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnInternationalApp);
             this.Controls.Add(this.btnDetainLicense);
             this.Controls.Add(this.guna2Panel1);
             this.Controls.Add(this.lblCountActiveAndExpire);
@@ -393,5 +427,7 @@
         private System.Windows.Forms.ToolStripMenuItem replacementForLostToolStripMenuItem;
         private Guna.UI2.WinForms.Guna2Button btnDetainLicense;
         private System.Windows.Forms.ToolStripMenuItem detainLicenseToolStripMenuItem;
+        private Guna.UI2.WinForms.Guna2Button btnInternationalApp;
+        private System.Windows.Forms.ToolStripMenuItem newInternationalApplicationToolStripMenuItem;
     }
 }

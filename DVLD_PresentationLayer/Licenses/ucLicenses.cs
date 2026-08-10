@@ -3,6 +3,7 @@ using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Applications;
 using DVLD_PresentationLayer.DetainLicense;
 using DVLD_PresentationLayer.Global;
+using DVLD_PresentationLayer.InternationalApplication;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -585,6 +586,21 @@ namespace DVLD_PresentationLayer.Licenses
             {
                 MessageBox.Show("Failed to detain the license. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnInternationalApp_Click(object sender, EventArgs e)
+        {
+            ucInternationalApplication myInternationalLicensen = new ucInternationalApplication();
+            myInternationalLicensen.Dock = DockStyle.Fill;
+            myInternationalLicensen.Name = "ucDetainLicense";
+
+            foreach (Control ctrl in this.Controls)
+            {
+                ctrl.Visible = false;
+            }
+
+            this.Controls.Add(myInternationalLicensen);
+            myInternationalLicensen.BringToFront();
         }
     }
 }
