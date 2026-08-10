@@ -305,6 +305,41 @@ namespace DVLD_DataAccessLayer
 
             return isFound;
         }
+        public static bool hasDetainedLicense(int personID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Found = 1 FROM DetainedLicenses DL
+                                 inner join Licenses L ON DL.LicenseID = L.LicenseID
+                                 INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                                 WHERE D.PersonID = @PersonID
+                                 AND DL.IsReleased = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            isFound = true;
+                        }
+                    }
+                    catch (Exception )
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
         public static int AddNewLicense(int ApplicationID, int DriverID, int LicenseClass,
             DateTime IssueDate, DateTime ExpirationDate, string Notes, decimal PaidFees,
             bool IsActive, byte IssueReason, int CreatedByUserID)

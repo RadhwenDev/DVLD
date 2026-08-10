@@ -42,10 +42,20 @@ namespace DVLD_PresentationLayer.Applications
             // 2. تعبئة أنواع الطلبات
             bool hasLicense = clsLicenses.hasLicense(SelectedPersonID);
             DataTable dtApplicantType = clsApplicant.getAllApplicationTypes(hasLicense);
+            List<string> filters = new List<string>();
             bool hasInternationalLicense = clsLicenses.hasInternationalLicense(SelectedPersonID);
             if (hasInternationalLicense)
             {
-                dtApplicantType.DefaultView.RowFilter = "[ApplicationTypeTitle] <> 'New International License'";
+                filters.Add("[ApplicationTypeTitle] <> 'New International License'");
+            }
+            bool hasDetainedLicense = clsLicenses.hasDetainedLicense(SelectedPersonID);
+            if (!hasDetainedLicense)
+            {
+                filters.Add("[ApplicationTypeTitle] <> 'Release Detained Driving Licsense'");
+            }
+            if (filters.Count > 0)
+            {
+                dtApplicantType.DefaultView.RowFilter = string.Join(" AND ", filters);
             }
             DataRow defaultRow = dtApplicantType.NewRow();
             defaultRow["ApplicationTypeTitle"] = "Select the Application Type";

@@ -154,6 +154,10 @@ namespace DVLD_BusinessLayer
         {
             return clsLicensesDataAccess.hasInternationalLicense(personID);
         }
+        public static bool hasDetainedLicense(int personID)
+        {
+            return clsLicensesDataAccess.hasDetainedLicense(personID);
+        }
 
         public static DataTable getShowLicense(int ApplicationID)
         {
