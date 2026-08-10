@@ -64,11 +64,17 @@ namespace DVLD_DataAccessLayer
             List<int> personClassIDs = new List<int>();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT LC.LicenseClassID, LC.ClassName FROM LicenseClasses LC
-                                 inner join Licenses L on LC.LicenseClassID = L.LicenseClass
-                                 inner join Drivers D on L.DriverID = D.DriverID
-                                 where D.PersonID = @PersonID
-                                 AND L.IsActive = 1;";
+                string query = @"SELECT L.LicenseClass
+                                 FROM Licenses L
+                                 INNER JOIN Applications A ON L.ApplicationID = A.ApplicationID
+                                 WHERE A.ApplicantPersonID = @PersonID AND L.IsActive = 1
+                                 
+                                 UNION
+                                 
+                                 SELECT LDL.LicenseClassID 
+                                 FROM LocalDrivingLicenseApplications LDL
+                                 INNER JOIN Applications A ON LDL.ApplicationID = A.ApplicationID
+                                 WHERE A.ApplicantPersonID = @PersonID AND A.ApplicationStatus IN (1, 2)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -80,7 +86,7 @@ namespace DVLD_DataAccessLayer
                         {
                             while (reader.Read())
                             {
-                                personClassIDs.Add(Convert.ToInt32(reader["LicenseClassID"]));
+                                personClassIDs.Add(Convert.ToInt32(reader["LicenseClass"]));
                             }
                         }
                     }

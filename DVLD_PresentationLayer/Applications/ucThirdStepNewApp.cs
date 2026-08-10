@@ -1,5 +1,6 @@
 ﻿using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Global;
+using DVLD_PresentationLayer.Licenses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -132,6 +133,17 @@ namespace DVLD_PresentationLayer.Applications
             {
                 MessageBox.Show("Failed to save Application data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            ucApplications myApplicationPage = new ucApplications();
+            myApplicationPage.Dock = DockStyle.Fill;
+
+            foreach (Control ctrl in this.Controls)
+            {
+                ctrl.Visible = false;
+            }
+
+          //  myApplicationPage.OnApplicationSaved += MyNewApplication_OnApplicationSaved;
+            this.Controls.Add(myApplicationPage);
+            myApplicationPage.BringToFront();
         }
     }
 }
