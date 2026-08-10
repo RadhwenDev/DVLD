@@ -1,4 +1,5 @@
-﻿using DVLD_BusinessLayer;
+﻿using DVLD_Business;
+using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Global;
 using DVLD_PresentationLayer.Licenses;
 using System;
@@ -83,6 +84,66 @@ namespace DVLD_PresentationLayer.Applications
                         MessageBox.Show("Failed to save Local Driving License Application data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+                }
+                else if (SelectedApplicationTypeID == 5)
+                {
+                    clsDetainedLicense detainedLicense = clsDetainedLicense.FindByPersonID(SelectedPersonID);
+                    if (detainedLicense == null || detainedLicense.IsReleased)
+                    {
+                        MessageBox.Show("No active detained license found for this person.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    DialogResult result = MessageBox.Show($"Are you sure you want to release Detained License ID [{detainedLicense.DetainID}]?",
+                                                  "Confirm Release",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Question);
+
+                    if (result != DialogResult.Yes)
+                        return;
+                    clsLicenses license = clsLicenses.Find(detainedLicense.LicenseID);
+                    if (license == null)
+                    {
+                        MessageBox.Show("Associated license details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    int personID = clsDriver.FindPersonIDByDriverID(license.DriverID);
+                    DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)clsApplicant.enApplicationType.ReleaseDetainedDrivingLicsense);
+                    decimal releaseAppFees = Convert.ToDecimal(dtAppType.Rows[0]["ApplicationFees"]);
+
+                    // 5. إنشاء طلب جديد لفك الحجز
+                    clsApplicant releaseApp = new clsApplicant();
+                    releaseApp.ApplicantPersonID = personID;
+                    releaseApp.ApplicationDate = DateTime.Now;
+                    releaseApp.ApplicationTypeID = (int)clsApplicant.enApplicationType.ReleaseDetainedDrivingLicsense;
+                    releaseApp.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
+                    releaseApp.LastStatusDate = DateTime.Now;
+                    releaseApp.PaidFees = releaseAppFees;
+                    releaseApp.CreatedByUserID = clsCurrentUser._UserID;
+
+                    if (releaseApp.Save())
+                    {
+                        // 6. تحديث سجل الحجز وتحويله إلى Released
+                        detainedLicense.IsReleased = true;
+                        detainedLicense.ReleaseDate = DateTime.Now;
+                        detainedLicense.ReleasedByUserID = clsCurrentUser._UserID;
+                        detainedLicense.ReleaseApplicationID = releaseApp.ApplicationID;
+
+                        if (detainedLicense.Save())
+                        {
+                            MessageBox.Show($"Detained License released successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to update detained record status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to create the release application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
                 }
                 else if (SelectedApplicationTypeID == 6)
                 {

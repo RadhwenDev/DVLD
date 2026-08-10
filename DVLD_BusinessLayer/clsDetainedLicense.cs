@@ -117,6 +117,31 @@ namespace DVLD_Business
                 return null;
             }
         }
+        public static clsDetainedLicense FindByPersonID(int personID)
+        {
+            int detainID = -1;
+            int licenseID = -1;
+            DateTime detainDate = DateTime.Now;
+            decimal fineFees = 0;
+            int createdByUserID = -1;
+            bool isReleased = false;
+            DateTime? releaseDate = null;
+            int? releasedByUserID = null;
+            int? releaseApplicationID = null;
+
+            if (clsDetainedLicenseDataAccess.GetDetainedLicenseInfoByPersonID(
+                    personID, ref detainID, ref licenseID, ref detainDate,
+                    ref fineFees, ref createdByUserID, ref isReleased,
+                    ref releaseDate, ref releasedByUserID, ref releaseApplicationID))
+            {
+                return new clsDetainedLicense(detainID, licenseID, detainDate, fineFees,
+                    createdByUserID, isReleased, releaseDate, releasedByUserID, releaseApplicationID);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         // جلب جميع الرخص المحتجزة
         public static DataTable GetAllDetainedLicenses()

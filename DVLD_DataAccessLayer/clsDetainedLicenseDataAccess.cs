@@ -94,6 +94,58 @@ namespace DVLD_DataAccess
 
             return isFound;
         }
+        public static bool GetDetainedLicenseInfoByPersonID(
+    int personID, ref int detainID, ref int licenseID, ref DateTime detainDate,
+    ref decimal fineFees, ref int createdByUserID, ref bool isReleased,
+    ref DateTime? releaseDate, ref int? releasedByUserID, ref int? releaseApplicationID)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"
+            SELECT TOP 1 DL.* 
+            FROM DetainedLicenses DL
+            INNER JOIN Licenses L ON DL.LicenseID = L.LicenseID
+            INNER JOIN Drivers D ON L.DriverID = D.DriverID
+            WHERE D.PersonID = @PersonID AND DL.IsReleased = 0
+            ORDER BY DL.DetainID DESC";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", personID);
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                detainID = (int)reader["DetainID"];
+                                licenseID = (int)reader["LicenseID"];
+                                detainDate = (DateTime)reader["DetainDate"];
+                                fineFees = (decimal)reader["FineFees"];
+                                createdByUserID = (int)reader["CreatedByUserID"];
+                                isReleased = (bool)reader["IsReleased"];
+
+                                releaseDate = reader["ReleaseDate"] == DBNull.Value ? null : (DateTime?)reader["ReleaseDate"];
+                                releasedByUserID = reader["ReleasedByUserID"] == DBNull.Value ? null : (int?)reader["ReleasedByUserID"];
+                                releaseApplicationID = reader["ReleaseApplicationID"] == DBNull.Value ? null : (int?)reader["ReleaseApplicationID"];
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
 
         // 3. إضافة سجل احتجاز جديد
         public static int AddNewDetainedLicense(int LicenseID, DateTime DetainDate, decimal FineFees, int CreatedByUserID)
