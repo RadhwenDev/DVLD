@@ -53,6 +53,11 @@ namespace DVLD_PresentationLayer.Applications
             {
                 filters.Add("[ApplicationTypeTitle] <> 'Release Detained Driving Licsense'");
             }
+            bool canRenewLocalLicense = clsLicenses.canRenewLocalLicense(SelectedPersonID);
+            if (canRenewLocalLicense)
+            {
+                filters.Add("[ApplicationTypeTitle] <> 'Renew Driving License Service'");
+            }
             if (filters.Count > 0)
             {
                 dtApplicantType.DefaultView.RowFilter = string.Join(" AND ", filters);

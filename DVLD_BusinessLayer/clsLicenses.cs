@@ -158,6 +158,10 @@ namespace DVLD_BusinessLayer
         {
             return clsLicensesDataAccess.hasDetainedLicense(personID);
         }
+        public static bool canRenewLocalLicense(int personID)
+        {
+            return clsLicensesDataAccess.canRenewLocalLicense(personID);
+        }
 
         public static DataTable getShowLicense(int ApplicationID)
         {
