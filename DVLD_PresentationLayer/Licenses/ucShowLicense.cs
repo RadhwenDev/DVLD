@@ -34,6 +34,10 @@ namespace DVLD_PresentationLayer.Licenses
             {
                 dt = clsLicenses.getShowInternationalLicense(_ApplicationID);
             }
+            else if (clsApplicant.IsRenewApplication(_ApplicationID))
+            {
+                dt = clsLicenses.getShowRenewLicense(_ApplicationID);
+            }
             else
             {
                 dt = clsLicenses.getShowLicense(_ApplicationID);

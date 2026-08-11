@@ -88,6 +88,36 @@ namespace DVLD_BusinessLayer
                 return null;
             }
         }
+        public static clsLicenses FindLastLicenseByPersonIDAndClass(int personID, int licenseClassID)
+        {
+            int licenseID = -1;
+            int applicationID = -1;
+            int driverID = -1;
+            int licenseClass = -1;
+            DateTime issueDate = DateTime.Now;
+            DateTime expirationDate = DateTime.Now;
+            string notes = "";
+            decimal paidFees = 0;
+            bool isActive = false;
+            byte issueReason = 1;
+            int createdByUserID = -1;
+
+            if (clsLicensesDataAccess.GetLastLicenseByPersonIDAndClass(
+                    personID, licenseClassID, ref licenseID, ref applicationID, ref driverID, ref licenseClass,
+                    ref issueDate, ref expirationDate, ref notes, ref paidFees,
+                    ref isActive, ref issueReason, ref createdByUserID))
+            {
+                return new clsLicenses(
+                    licenseID, applicationID, driverID, licenseClass,
+                    issueDate, expirationDate, notes, paidFees,
+                    isActive, (enIssueReason)issueReason, createdByUserID
+                );
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         private bool _AddNewLicense()
         {

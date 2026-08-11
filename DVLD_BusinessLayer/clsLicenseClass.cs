@@ -85,10 +85,30 @@ namespace DVLD_BusinessLayer
             // 4. تحويل النتيجة المفلترة إلى DataTable جديدة
             return filteredRows.Any() ? filteredRows.CopyToDataTable() : dtAllClasses.Clone();
         }
+        public static int GetLicenseClassIDByPersonID(int personID)
+        {
+            int licenseClassID = -1;
+            string className = "", classDescription = "";
+            byte minimumAllowedAge = 0, defaultValidityLength = 0;
+            int classFees = 0;
+
+            if (clsLicenseClassDataAccess.GetLicenseClassInfoByPersonID(
+                    personID, ref licenseClassID, ref className, ref classDescription,
+                    ref minimumAllowedAge, ref defaultValidityLength, ref classFees))
+            {
+                return licenseClassID;
+            }
+
+            return -1; // في حالة عدم وجود رخصة
+        }
 
         public static DataTable GetLicenseClassesNameByID(int LicenseClassID)
         {
             return clsLicenseClassDataAccess.GetLicenseClassesNameByID(LicenseClassID);
+        }
+        public static decimal GetClassFees(int licenseClassID)
+        {
+            return clsLicenseClassDataAccess.GetClassFees(licenseClassID);
         }
 
         public enSaveResult UpdateTestType()

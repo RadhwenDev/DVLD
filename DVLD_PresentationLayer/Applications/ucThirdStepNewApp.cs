@@ -85,6 +85,103 @@ namespace DVLD_PresentationLayer.Applications
                         return;
                     }
                 }
+                else if (SelectedApplicationTypeID == 2) // Renew Driving License
+                {
+                    // 1. التثبت من الـ LicenseClass وجلب آخر رخصة خاصة بهذا الصنف تحديداً
+                    SelectedLicenseClassID = clsLicenseClass.GetLicenseClassIDByPersonID(SelectedPersonID);
+                    clsLicenses oldLicense = clsLicenses.FindLastLicenseByPersonIDAndClass(SelectedPersonID, SelectedLicenseClassID);
+
+                    if (oldLicense == null)
+                    {
+                        MessageBox.Show("No license found for this person with the selected License Class!",
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 2. التثبت أن الرخصة من نفس الصنف المحدد (إضافي للأمان)
+                    if (oldLicense.LicenseClass != SelectedLicenseClassID)
+                    {
+                        MessageBox.Show("The retrieved license class does not match the selected license class!",
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 3. التحقق مما إذا كانت الرخصة محجوزة
+                    if (clsDetainedLicense.IsLicenseDetained(oldLicense.LicenseID))
+                    {
+                        MessageBox.Show("This license is currently detained! You must release it before renewing.",
+                                        "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 4. التحقق من حالة الرخصة (يلزم تكون Active لكي تُجدد)
+                    if (!oldLicense.IsActive)
+                    {
+                        MessageBox.Show("This license is inactive and cannot be renewed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 5. التحقق من انتهاء الصلاحية
+                    if (oldLicense.ExpirationDate > DateTime.Now)
+                    {
+                        MessageBox.Show($"This license is still valid until {oldLicense.ExpirationDate.ToShortDateString()} and cannot be renewed yet!",
+                                        "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 6. تأكيد التجديد من المستخدم
+                    DialogResult result = MessageBox.Show($"Are you sure you want to renew License ID [{oldLicense.LicenseID}] for Class [{oldLicense.LicenseClass}]?",
+                                                  "Confirm Renewal",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Question);
+
+                    if (result != DialogResult.Yes)
+                    {
+                        return;
+                    }
+
+                    // 7. جلب رسوم طلب التجديد الصحيحة
+                    DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)clsApplicant.enApplicationType.RenewDrivingLicense);
+                    if (dtAppType == null || dtAppType.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Failed to load application fees.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    
+
+                    // 9. إلغاء تفعيل الرخصة القديمة (Deactivate)
+                    if (!clsLicenses.Deactivate(oldLicense.LicenseID))
+                    {
+                        MessageBox.Show("Failed to deactivate the old license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 10. إنشاء وتفعيل الرخصة الجديدة بنفس الـ LicenseClass
+                    clsLicenses newLicense = new clsLicenses();
+                    newLicense.ApplicationID = ApplicationID;
+                    newLicense.DriverID = oldLicense.DriverID;
+                    newLicense.LicenseClass = oldLicense.LicenseClass; // إسناد صنف الرخصة القديمة
+                    newLicense.IssueDate = DateTime.Now;
+
+                    int defaultValidityYears = clsLicenseClass.GetDefaultValidityLength(oldLicense.LicenseClass);
+                    newLicense.ExpirationDate = DateTime.Now.AddYears(defaultValidityYears > 0 ? defaultValidityYears : 10);
+
+                    newLicense.Notes = oldLicense.Notes;
+                    newLicense.PaidFees = clsLicenseClass.GetClassFees(oldLicense.LicenseClass);
+                    newLicense.IsActive = true;
+                    newLicense.IssueReason = clsLicenses.enIssueReason.Renew;
+                    newLicense.CreatedByUserID = clsCurrentUser._UserID;
+
+                    if (newLicense.Save())
+                    {
+                        MessageBox.Show($"License renewed successfully!\nNew License ID: {newLicense.LicenseID}",
+                                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to issue the new license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
                 else if (SelectedApplicationTypeID == 5)
                 {
                     clsDetainedLicense detainedLicense = clsDetainedLicense.FindByPersonID(SelectedPersonID);
@@ -107,44 +204,25 @@ namespace DVLD_PresentationLayer.Applications
                         MessageBox.Show("Associated license details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    int personID = clsDriver.FindPersonIDByDriverID(license.DriverID);
-                    DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)clsApplicant.enApplicationType.ReleaseDetainedDrivingLicsense);
-                    decimal releaseAppFees = Convert.ToDecimal(dtAppType.Rows[0]["ApplicationFees"]);
+                    
+                     // 6. تحديث سجل الحجز وتحويله إلى Released
+                     detainedLicense.IsReleased = true;
+                     detainedLicense.ReleaseDate = DateTime.Now;
+                     detainedLicense.ReleasedByUserID = clsCurrentUser._UserID;
+                     detainedLicense.ReleaseApplicationID = ApplicationID;
 
-                    // 5. إنشاء طلب جديد لفك الحجز
-                    clsApplicant releaseApp = new clsApplicant();
-                    releaseApp.ApplicantPersonID = personID;
-                    releaseApp.ApplicationDate = DateTime.Now;
-                    releaseApp.ApplicationTypeID = (int)clsApplicant.enApplicationType.ReleaseDetainedDrivingLicsense;
-                    releaseApp.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
-                    releaseApp.LastStatusDate = DateTime.Now;
-                    releaseApp.PaidFees = releaseAppFees;
-                    releaseApp.CreatedByUserID = clsCurrentUser._UserID;
+                     if (detainedLicense.Save())
+                     {
+                         MessageBox.Show($"Detained License released successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (releaseApp.Save())
-                    {
-                        // 6. تحديث سجل الحجز وتحويله إلى Released
-                        detainedLicense.IsReleased = true;
-                        detainedLicense.ReleaseDate = DateTime.Now;
-                        detainedLicense.ReleasedByUserID = clsCurrentUser._UserID;
-                        detainedLicense.ReleaseApplicationID = releaseApp.ApplicationID;
-
-                        if (detainedLicense.Save())
-                        {
-                            MessageBox.Show($"Detained License released successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        }
-                        else
-                        {
-                            MessageBox.Show("Failed to update detained record status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to create the release application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                     }
+                     else
+                     {
+                         MessageBox.Show("Failed to update detained record status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     }
 
                 }
+                
                 else if (SelectedApplicationTypeID == 6)
                 {
                     clsInternationalLicense internationalLicense = new clsInternationalLicense();

@@ -180,7 +180,126 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+        public static bool GetLastLicenseByPersonIDAndClass(
+            int PersonID,
+            int LicenseClassID,
+            ref int LicenseID,
+            ref int ApplicationID,
+            ref int DriverID,
+            ref int LicenseClass,
+            ref DateTime IssueDate,
+            ref DateTime ExpirationDate,
+            ref string Notes,
+            ref decimal PaidFees,
+            ref bool IsActive,
+            ref byte IssueReason,
+            ref int CreatedByUserID)
+        {
+            bool isFound = false;
+
+            string query = @"SELECT TOP 1 Licenses.* 
+                             FROM Licenses 
+                             INNER JOIN Drivers ON Licenses.DriverID = Drivers.DriverID
+                             WHERE Drivers.PersonID = @PersonID AND Licenses.LicenseClass = @LicenseClassID
+                             ORDER BY Licenses.LicenseID DESC;";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
+                    command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                LicenseID = (int)reader["LicenseID"];
+                                ApplicationID = (int)reader["ApplicationID"];
+                                DriverID = (int)reader["DriverID"];
+                                LicenseClass = (int)reader["LicenseClass"];
+                                IssueDate = (DateTime)reader["IssueDate"];
+                                ExpirationDate = (DateTime)reader["ExpirationDate"];
+                                Notes = reader["Notes"] != DBNull.Value ? (string)reader["Notes"] : "";
+                                PaidFees = Convert.ToDecimal(reader["PaidFees"]);
+                                IsActive = (bool)reader["IsActive"];
+                                IssueReason = Convert.ToByte(reader["IssueReason"]);
+                                CreatedByUserID = (int)reader["CreatedByUserID"];
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
         public static DataTable getShowInternationalLicense(int ApplicationID)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT L.LicenseID,
+                                    L.DriverID,
+	                                People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
+                                    People.NationalNo,
+	                                CASE 
+                                        WHEN People.Gendor = 0 THEN 'Male' 
+                                        ELSE 'Female' 
+                                    END AS Gender,
+                                    People.DateOfBirth,
+                                    People.ImagePath,
+	                                LC.ClassName AS LicenseClass,
+	                                L.IssueDate,
+                                    L.ExpirationDate,
+	                                CASE 
+                                        WHEN L.IsActive = 0 THEN 'No' 
+                                        ELSE 'Yes' 
+                                    END AS IsActive,
+                                    L.Notes,
+                                    L.PaidFees,
+	                                A_T.ApplicationTypeTitle AS IssueReason,
+									CASE 
+                                        WHEN DetainedLicenses.LicenseID IS NULL THEN 'No' 
+                                        ELSE 'Yes' 
+                                    END AS IsDetained
+								FROM Applications A
+								INNER JOIN People ON A.ApplicantPersonID = People.PersonID
+								INNER JOIN InternationalLicenses IL ON A.ApplicationID = IL.ApplicationID
+								inner join Drivers D ON IL.DriverID = D.DriverID
+								INNER JOIN Licenses L ON D.DriverID = L.DriverID
+								INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
+                                INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
+								LEFT JOIN DetainedLicenses ON L.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
+                                WHERE A.ApplicationID = @ApplicationID AND L.IsActive = 1;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                                dt.Load(reader);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+
+            return dt;
+        }
+        public static DataTable getShowRenewLicense(int ApplicationID)
         {
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))

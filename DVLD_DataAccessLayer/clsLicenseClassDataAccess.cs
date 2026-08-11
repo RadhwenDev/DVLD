@@ -96,6 +96,66 @@ namespace DVLD_DataAccessLayer
             return personClassIDs;
         }
 
+        public static bool GetLicenseClassInfoByPersonID(
+    int PersonID,
+    ref int LicenseClassID,
+    ref string ClassName,
+    ref string ClassDescription,
+    ref byte MinimumAllowedAge,
+    ref byte DefaultValidityLength,
+    ref int ClassFees)
+        {
+            bool isFound = false;
+
+            // جلب صنف آخر رخصة مسجلة للشخص
+            string query = @"
+        SELECT TOP 1 
+            LC.LicenseClassID, 
+            LC.ClassName, 
+            LC.ClassDescription, 
+            LC.MinimumAllowedAge, 
+            LC.DefaultValidityLength, 
+            LC.ClassFees
+        FROM LicenseClasses LC
+        INNER JOIN Licenses L ON LC.LicenseClassID = L.LicenseClass
+        INNER JOIN Drivers D ON L.DriverID = D.DriverID
+        WHERE D.PersonID = @PersonID
+        ORDER BY L.LicenseID DESC;";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
+
+                    try
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                LicenseClassID = (int)reader["LicenseClassID"];
+                                ClassName = (string)reader["ClassName"];
+                                ClassDescription = reader["ClassDescription"] != DBNull.Value ? (string)reader["ClassDescription"] : "";
+                                MinimumAllowedAge = Convert.ToByte(reader["MinimumAllowedAge"]);
+                                DefaultValidityLength = Convert.ToByte(reader["DefaultValidityLength"]);
+                                ClassFees = Convert.ToInt32(reader["ClassFees"]);
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
+
         public static DataTable GetLicenseClassesNameByID(int LicenseClassID)
         {
             DataTable dt = new DataTable();
@@ -128,7 +188,38 @@ namespace DVLD_DataAccessLayer
             }
             return dt;
         }
+        public static decimal GetClassFees(int LicenseClassID)
+        {
+            decimal classFees = 0;
 
+            string query = @"SELECT ClassFees 
+                    FROM LicenseClasses 
+                    WHERE LicenseClassID = @LicenseClassID;";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && decimal.TryParse(result.ToString(), out decimal fees))
+                        {
+                            classFees = fees;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+
+            return classFees;
+        }
         public static bool UpdateLicenseClasses(int LicenseClassID, string ClassName, string ClassDescription, int MinimumAllowedAge, int DefaultValidityLength, int ClassFees)
         {
             int rowAffected = 0;
