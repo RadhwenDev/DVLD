@@ -328,15 +328,13 @@ namespace DVLD_DataAccessLayer
                                         WHEN DetainedLicenses.LicenseID IS NULL THEN 'No' 
                                         ELSE 'Yes' 
                                     END AS IsDetained
-								FROM Applications A
-								INNER JOIN People ON A.ApplicantPersonID = People.PersonID
-								INNER JOIN InternationalLicenses IL ON A.ApplicationID = IL.ApplicationID
-								inner join Drivers D ON IL.DriverID = D.DriverID
-								INNER JOIN Licenses L ON D.DriverID = L.DriverID
+								FROM Licenses L
 								INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
-                                INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
+								INNER JOIN Applications A ON L.ApplicationID = A.ApplicationID
+								INNER JOIN People ON A.ApplicantPersonID = People.PersonID
+								INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
 								LEFT JOIN DetainedLicenses ON L.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
-                                WHERE A.ApplicationID = @ApplicationID AND L.IsActive = 1;";
+								WHERE  A.ApplicationID = @ApplicationID AND A.ApplicationTypeID = 2";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
