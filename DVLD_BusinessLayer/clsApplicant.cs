@@ -169,6 +169,10 @@ namespace DVLD_BusinessLayer
         {
             return clsApplicationsDataAccess.IsRenewApplication(ApplicationID);
         }
+        public static bool IsReplacementApplication(int ApplicationID)
+        {
+            return clsApplicationsDataAccess.IsReplacementApplication(ApplicationID);
+        }
 
         #endregion
     }

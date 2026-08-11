@@ -383,5 +383,37 @@ namespace DVLD_DataAccessLayer
 
             return isInter;
         }
+        public static bool IsReplacementApplication(int ApplicationID)
+        {
+            bool isInter = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT Found = 1 FROM Applications 
+                        WHERE ApplicationID = @ApplicationID AND ApplicationTypeID in (3, 4);";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            isInter = true;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isInter = false;
+                    }
+                }
+            }
+
+            return isInter;
+        }
     }
 }

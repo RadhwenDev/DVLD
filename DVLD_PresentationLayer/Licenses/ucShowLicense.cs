@@ -38,6 +38,10 @@ namespace DVLD_PresentationLayer.Licenses
             {
                 dt = clsLicenses.getShowRenewLicense(_ApplicationID);
             }
+            else if (clsApplicant.IsReplacementApplication(_ApplicationID))
+            {
+                dt = clsLicenses.getShowReplacementLicense(_ApplicationID);
+            }
             else
             {
                 dt = clsLicenses.getShowLicense(_ApplicationID);
