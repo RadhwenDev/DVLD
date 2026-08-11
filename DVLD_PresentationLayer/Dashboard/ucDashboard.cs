@@ -24,9 +24,10 @@ namespace DVLD_PresentationLayer.Dashboard
         {
             if (this.TopLevelControl is frmMain mainForm)
             {
-                mainForm.btnNewApplication_Click(sender, e);
+                mainForm.OpenNewApplicationWizard();
             }
         }
+       
 
         private void ucDashboard_Load(object sender, EventArgs e)
         {

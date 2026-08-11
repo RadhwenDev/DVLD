@@ -17,6 +17,7 @@ namespace DVLD_PresentationLayer.Applications
         public int SelectedPersonID { get; set; } = -1;
         public int SelectedApplicationTypeID { get; set; } = -1;
         public int SelectedLicenseClassID { get; set; } = -1;
+        public int CreatedApplicationID { get; private set; } = -1;
 
         public ucNewApplication()
         {
@@ -90,11 +91,12 @@ namespace DVLD_PresentationLayer.Applications
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucNewApplication));
             btnThird.Image = (Image)resources.GetObject("check_white");
+            OnApplicationSaved?.Invoke(this, CreatedApplicationID);
         }
 
         private void ucThirdStepNewApp1_DataBack(object sender, int ApplicationID)
         {
-            OnApplicationSaved?.Invoke(this, ApplicationID);
+            CreatedApplicationID = ApplicationID;
         }
 
         private void UcThirdStepNewApp1_OnBackButtonClicked(object sender, EventArgs e)

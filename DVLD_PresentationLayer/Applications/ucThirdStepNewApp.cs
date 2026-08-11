@@ -19,8 +19,7 @@ namespace DVLD_PresentationLayer.Applications
 {
     public partial class ucThirdStepNewApp : UserControl
     {
-        public delegate void DataBackEventHandler(object sender, int PersonID);
-        public event DataBackEventHandler DataBack;
+        public event EventHandler<int> DataBack;
         public int SelectedPersonID { get; private set; } = -1;
         public int SelectedApplicationTypeID { get; private set; } = -1;
         public int SelectedLicenseClassID { get; private set; } = -1;
@@ -258,22 +257,6 @@ namespace DVLD_PresentationLayer.Applications
                     }
                     decimal replacementAppFees = Convert.ToDecimal(dtAppType.Rows[0]["ApplicationFees"]);
 
-                    // 9. إنشاء طلب استبدال جديد (Application)
-                    clsApplicant newApplication = new clsApplicant();
-                    newApplication.ApplicantPersonID = SelectedPersonID;
-                    newApplication.ApplicationDate = DateTime.Now;
-                    newApplication.ApplicationTypeID = (int)appType;
-                    newApplication.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
-                    newApplication.LastStatusDate = DateTime.Now;
-                    newApplication.PaidFees = replacementAppFees;
-                    newApplication.CreatedByUserID = clsCurrentUser._UserID;
-
-                    if (!newApplication.Save())
-                    {
-                        MessageBox.Show("Failed to create the replacement application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
                     // 10. إلغاء تفعيل الرخصة القديمة (Deactivate)
                     if (!clsLicenses.Deactivate(oldLicense.LicenseID))
                     {
@@ -283,7 +266,7 @@ namespace DVLD_PresentationLayer.Applications
 
                     // 11. إنشاء وتفعيل الرخصة الجديدة
                     clsLicenses newLicense = new clsLicenses();
-                    newLicense.ApplicationID = newApplication.ApplicationID;
+                    newLicense.ApplicationID = ApplicationID;
                     newLicense.DriverID = oldLicense.DriverID;
                     newLicense.LicenseClass = oldLicense.LicenseClass;
                     newLicense.IssueDate = DateTime.Now;

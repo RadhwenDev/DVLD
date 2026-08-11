@@ -7,6 +7,7 @@ using DVLD_PresentationLayer.Login;
 using DVLD_PresentationLayer.Tests;
 using DVLD_PresentationLayer.User;
 using DVLD_PresentationLayer.Users;
+using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,6 +96,57 @@ namespace DVLD_PresentationLayer
                     LoadDefaultAvatar();
                 }
             }
+        }
+        // داخل frmMain.cs
+
+        public void OpenNewApplicationWizard()
+        {
+            SetActiveSidebarButton(btnApplications, "DVLD > Applications");
+            ucNewApplication myNewApplication = new ucNewApplication
+            {
+                Dock = DockStyle.Fill,
+                Name = "ucNewApplicationWizard"
+            };
+
+            myNewApplication.OnApplicationSaved += MyNewApplication_OnApplicationSaved;
+
+            // اخفاء عناصر الحاوية الرئيسية فقط بدون لمس الـ Sidebar
+            foreach (Control ctrl in pnlContainer.Controls)
+            {
+                ctrl.Visible = false;
+            }
+
+            pnlContainer.Controls.Add(myNewApplication);
+            myNewApplication.BringToFront();
+        }
+
+        private void MyNewApplication_OnApplicationSaved(object sender, int ApplicationID)
+        {
+            // 1. حذف الـ Wizard وتفريغ الـ Memory
+            Control wizardCtrl = pnlContainer.Controls["ucNewApplicationWizard"];
+            if (wizardCtrl != null)
+            {
+                pnlContainer.Controls.Remove(wizardCtrl);
+                wizardCtrl.Dispose();
+            }
+
+            // 2. تحديث التحديد على زر الـ Applications في القائمة الجانبية
+            SetActiveSidebarButton(btnApplications, "DVLD > Applications");
+            // 3. فتح صفحة Applications جديدة داخل الحاوية
+            pnlContainer.Controls.Clear();
+            ucApplications appPage = new ucApplications
+            {
+                Dock = DockStyle.Fill
+            };
+            pnlContainer.Controls.Add(appPage);
+            appPage.BringToFront();
+        }
+
+        public void SetActiveSidebarButton(Guna2Button btn, string breadcrumbText)
+        {
+            activeSidebarButton = btn;
+            lblBreadcrumb.Text = breadcrumbText;
+            pnlSidebar.Refresh(); // إعادة استدعاء Paint لكل الأزرار لتطبيق التصميم الجديد
         }
 
 
