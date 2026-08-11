@@ -8,9 +8,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static DVLD_BusinessLayer.clsLicenses;
+using static DVLD_PresentationLayer.Licenses.ucLicenses;
 
 namespace DVLD_PresentationLayer.Applications
 {
@@ -140,14 +143,6 @@ namespace DVLD_PresentationLayer.Applications
                         return;
                     }
 
-                    // 7. جلب رسوم طلب التجديد الصحيحة
-                    DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)clsApplicant.enApplicationType.RenewDrivingLicense);
-                    if (dtAppType == null || dtAppType.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Failed to load application fees.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    
 
                     // 9. إلغاء تفعيل الرخصة القديمة (Deactivate)
                     if (!clsLicenses.Deactivate(oldLicense.LicenseID))
@@ -182,6 +177,137 @@ namespace DVLD_PresentationLayer.Applications
                         MessageBox.Show("Failed to issue the new license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+                else if (SelectedApplicationTypeID == 3 || SelectedApplicationTypeID == 4)
+                {
+                    // 1. جلب صنف الرخصة والرخصة القديمة
+                    SelectedLicenseClassID = clsLicenseClass.GetLicenseClassIDByPersonID(SelectedPersonID);
+                    clsLicenses oldLicense = clsLicenses.FindLastLicenseByPersonIDAndClass(SelectedPersonID, SelectedLicenseClassID);
+
+                    if (oldLicense == null)
+                    {
+                        MessageBox.Show("No license found for this person with the selected License Class!",
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 2. التثبت أن الرخصة من نفس الصنف المحدد
+                    if (oldLicense.LicenseClass != SelectedLicenseClassID)
+                    {
+                        MessageBox.Show("The retrieved license class does not match the selected license class!",
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 3. التحقق مما إذا كانت الرخصة محجوزة
+                    if (clsDetainedLicense.IsLicenseDetained(oldLicense.LicenseID))
+                    {
+                        MessageBox.Show("This license is currently detained! You must release it before replacing.",
+                                        "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 4. التحقق من حالة الرخصة (يلزم تكون Active)
+                    if (!oldLicense.IsActive)
+                    {
+                        MessageBox.Show("This license is inactive and cannot be replaced!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 5. التحقق من انتهاء الصلاحية
+                    if (oldLicense.ExpirationDate < DateTime.Now)
+                    {
+                        MessageBox.Show("This license is expired! You must renew it instead of replacing it.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 6. تحديد نوع الطلب وسبب الإصدار والرسالة المناسبة
+                    string issueReasonText = ((enReplacementReason)SelectedApplicationTypeID == enReplacementReason.Damaged) ? "Damaged" : "Lost";
+
+                    // 🎯 تصليح الرسالة: تغيير Renew إلى Replace
+                    DialogResult result = MessageBox.Show($"Are you sure you want to replace License ID [{oldLicense.LicenseID}] (Reason: Replacement for {issueReasonText})?",
+                                                   "Confirm Replacement",
+                                                   MessageBoxButtons.YesNo,
+                                                   MessageBoxIcon.Question);
+
+                    if (result != DialogResult.Yes)
+                    {
+                        return;
+                    }
+
+                    // 7. تحديد نوع الـ Application والـ IssueReason
+                    clsApplicant.enApplicationType appType;
+                    clsLicenses.enIssueReason issueReason;
+
+                    if ((enReplacementReason)SelectedApplicationTypeID == enReplacementReason.Damaged)
+                    {
+                        appType = clsApplicant.enApplicationType.ReplaceDamagedDrivingLicense;
+                        issueReason = clsLicenses.enIssueReason.ReplacementForDamaged;
+                    }
+                    else
+                    {
+                        appType = clsApplicant.enApplicationType.ReplaceLostDrivingLicense;
+                        issueReason = clsLicenses.enIssueReason.ReplacementForLost;
+                    }
+
+                    // 8. جلب رسوم طلب البدل
+                    DataTable dtAppType = clsApplicant.getApplicationTypesTitle_Fees((int)appType);
+                    if (dtAppType == null || dtAppType.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Failed to load application fees.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    decimal replacementAppFees = Convert.ToDecimal(dtAppType.Rows[0]["ApplicationFees"]);
+
+                    // 9. إنشاء طلب استبدال جديد (Application)
+                    clsApplicant newApplication = new clsApplicant();
+                    newApplication.ApplicantPersonID = SelectedPersonID;
+                    newApplication.ApplicationDate = DateTime.Now;
+                    newApplication.ApplicationTypeID = (int)appType;
+                    newApplication.ApplicationStatus = clsApplicant.enApplicationStatus.Completed;
+                    newApplication.LastStatusDate = DateTime.Now;
+                    newApplication.PaidFees = replacementAppFees;
+                    newApplication.CreatedByUserID = clsCurrentUser._UserID;
+
+                    if (!newApplication.Save())
+                    {
+                        MessageBox.Show("Failed to create the replacement application.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 10. إلغاء تفعيل الرخصة القديمة (Deactivate)
+                    if (!clsLicenses.Deactivate(oldLicense.LicenseID))
+                    {
+                        MessageBox.Show("Failed to deactivate the old license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // 11. إنشاء وتفعيل الرخصة الجديدة
+                    clsLicenses newLicense = new clsLicenses();
+                    newLicense.ApplicationID = newApplication.ApplicationID;
+                    newLicense.DriverID = oldLicense.DriverID;
+                    newLicense.LicenseClass = oldLicense.LicenseClass;
+                    newLicense.IssueDate = DateTime.Now;
+
+                    // ⚠️ في بدل التالف/المفقود نحافظ على نفس تاريخ الانتهاء القديم
+                    newLicense.ExpirationDate = oldLicense.ExpirationDate;
+
+                    newLicense.Notes = oldLicense.Notes;
+                    newLicense.PaidFees = 0; // عادة تكون رسوم إصدار بدل التالف/المفقود للرخصة 0 لأن الرسوم تُدفع في الـ Application
+                    newLicense.IsActive = true;
+                    newLicense.IssueReason = issueReason;
+                    newLicense.CreatedByUserID = clsCurrentUser._UserID;
+
+                    if (newLicense.Save())
+                    {
+                        // 🎯 تصليح الرسالة النهائية
+                        MessageBox.Show($"License replaced successfully!\nNew License ID: {newLicense.LicenseID}",
+                                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to issue the replacement license.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
                 else if (SelectedApplicationTypeID == 5)
                 {
                     clsDetainedLicense detainedLicense = clsDetainedLicense.FindByPersonID(SelectedPersonID);
@@ -204,25 +330,25 @@ namespace DVLD_PresentationLayer.Applications
                         MessageBox.Show("Associated license details not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    
-                     // 6. تحديث سجل الحجز وتحويله إلى Released
-                     detainedLicense.IsReleased = true;
-                     detainedLicense.ReleaseDate = DateTime.Now;
-                     detainedLicense.ReleasedByUserID = clsCurrentUser._UserID;
-                     detainedLicense.ReleaseApplicationID = ApplicationID;
 
-                     if (detainedLicense.Save())
-                     {
-                         MessageBox.Show($"Detained License released successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // 6. تحديث سجل الحجز وتحويله إلى Released
+                    detainedLicense.IsReleased = true;
+                    detainedLicense.ReleaseDate = DateTime.Now;
+                    detainedLicense.ReleasedByUserID = clsCurrentUser._UserID;
+                    detainedLicense.ReleaseApplicationID = ApplicationID;
 
-                     }
-                     else
-                     {
-                         MessageBox.Show("Failed to update detained record status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                     }
+                    if (detainedLicense.Save())
+                    {
+                        MessageBox.Show($"Detained License released successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to update detained record status.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                 }
-                
+
                 else if (SelectedApplicationTypeID == 6)
                 {
                     clsInternationalLicense internationalLicense = new clsInternationalLicense();
@@ -267,22 +393,14 @@ namespace DVLD_PresentationLayer.Applications
 
                 // 🌟 إطلاق حدث اكتمال الخطوة الثالثة ليتحرك الـ Wizard
                 OnStepThirdCompleted?.Invoke(this, EventArgs.Empty);
+                btnContinue.Enabled = false;
+                btnBack.Enabled = false;
             }
             else
             {
                 MessageBox.Show("Failed to save Application data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            ucApplications myApplicationPage = new ucApplications();
-            myApplicationPage.Dock = DockStyle.Fill;
-
-            foreach (Control ctrl in this.Controls)
-            {
-                ctrl.Visible = false;
-            }
-
-          //  myApplicationPage.OnApplicationSaved += MyNewApplication_OnApplicationSaved;
-            this.Controls.Add(myApplicationPage);
-            myApplicationPage.BringToFront();
+            
         }
     }
 }

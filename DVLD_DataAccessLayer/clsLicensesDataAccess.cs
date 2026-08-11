@@ -28,7 +28,8 @@ namespace DVLD_DataAccessLayer
                                  INNER JOIN People P ON D.PersonID = P.PersonID
                                  INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
                                  INNER JOIN Applications A ON L.ApplicationID = A.ApplicationID
-                                 INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID;";
+                                 INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
+                                 ORDER BY L.LicenseID DESC;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try

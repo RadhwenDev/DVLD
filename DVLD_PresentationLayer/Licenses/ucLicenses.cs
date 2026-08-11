@@ -375,7 +375,7 @@ namespace DVLD_PresentationLayer.Licenses
 
             if (clsDetainedLicense.IsLicenseDetained(oldLicense.LicenseID))
             {
-                MessageBox.Show("This license is currently detained! You must release it before renewing.",
+                MessageBox.Show("This license is currently detained! You must release it before replacing.",
                                 "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
