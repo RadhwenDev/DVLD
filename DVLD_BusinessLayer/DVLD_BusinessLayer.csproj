@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsApplicant.cs" />
+    <Compile Include="clsApplicationTypes.cs" />
     <Compile Include="clsCountries.cs" />
     <Compile Include="clsDashboard.cs" />
     <Compile Include="clsDetainedLicense.cs" />

@@ -632,5 +632,36 @@ namespace DVLD_PresentationLayer.Applications
             TestAppointment();
         }
 
+        private void btnApplicationTypes_Click(object sender, EventArgs e)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    ucApplicationTypes myVisionTestPage = new ucApplicationTypes();
+                    frmContainer.Size = myVisionTestPage.Size;
+                    myVisionTestPage.Dock = DockStyle.Fill;
+                    frmContainer.Controls.Add(myVisionTestPage);
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+        }
     }
 }

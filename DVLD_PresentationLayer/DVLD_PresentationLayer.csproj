@@ -96,6 +96,12 @@
     <Compile Include="Applications\ucThirdStepNewApp.Designer.cs">
       <DependentUpon>ucThirdStepNewApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationTypes\ucEditApplication.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ApplicationTypes\ucEditApplication.Designer.cs">
+      <DependentUpon>ucEditApplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard\ucApplicationPersonInfos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -239,6 +245,12 @@
     <Compile Include="Tests\ucTestTypes.Designer.cs">
       <DependentUpon>ucTestTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationTypes\ucApplicationTypes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ApplicationTypes\ucApplicationTypes.Designer.cs">
+      <DependentUpon>ucApplicationTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Users\ucAddUpdateUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -283,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Applications\ucThirdStepNewApp.resx">
       <DependentUpon>ucThirdStepNewApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationTypes\ucEditApplication.resx">
+      <DependentUpon>ucEditApplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dashboard\ucApplicationPersonInfos.resx">
       <DependentUpon>ucApplicationPersonInfos.cs</DependentUpon>
@@ -361,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tests\ucTestTypes.resx">
       <DependentUpon>ucTestTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ApplicationTypes\ucApplicationTypes.resx">
+      <DependentUpon>ucApplicationTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\ucAddUpdateUser.resx">
       <DependentUpon>ucAddUpdateUser.cs</DependentUpon>
