@@ -173,7 +173,10 @@ namespace DVLD_BusinessLayer
         {
             return clsApplicationsDataAccess.IsReplacementApplication(ApplicationID);
         }
-
+        public static bool DeleteApplication(int ApplicationID)
+        {
+            return clsApplicationsDataAccess.DeleteApplication(ApplicationID);
+        }
         #endregion
     }
 }

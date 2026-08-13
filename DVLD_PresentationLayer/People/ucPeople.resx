@@ -124,7 +124,7 @@
   <data name="showDetailsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADg7SURBVHhe7d0L
+        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADg7SURBVHhe7d0L
         2H7VnP/xD6KD0kHpSCORJEUklbPkmFA5hxjHv3GYGTmNxDAoUlyGCTOKCWEQIkUqKocSlaRCkQ5KJZXT
         //+/PrWe8fS1fufn3vu71n6/rutzXV39fr/nWXuvfe/7vvda67skAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -371,7 +371,7 @@
   <data name="editToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DgAACw4BQL7hQQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACUFSURBVHhe7d19
+        DQAACw0B7QfALAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACUFSURBVHhe7d19
         tPZZWdDxCxgYwEjiZQBRJPAtCQFRQBBDolzGQjJoVctEEQNKEVpCvKkRJi9mvgYJaCokEZhRKrnQQWCB
         YiDIO0WwAhwiWMAoDMPr1Po55zAz1+znec65773v+9q/+/NZ6/tPrhXn3r999rWfZ37POREAAABwIK4X
         EbePiL8TEY+NiOdExO9FxOsi4p0RcVFEfDQi/l9EXBIRH4qId0XEH0fE70fECyLiRyPiQRHxDRFxk/w/
@@ -536,7 +536,7 @@
   <data name="deleteToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAC7pSURBVHhe7d15
+        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAC7pSURBVHhe7d15
         2Pb1nP/xd4uQZSZrKUIha4gRIiFZxpalGLKHyF7NWJJ1GPtSxNi3apJoLDNSdpFdUyJlTRJJpb3f7/gc
         nR3qdb+r+76v63y9P5/z+3wcx/M45p/R69t5fb5n931d1/eMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

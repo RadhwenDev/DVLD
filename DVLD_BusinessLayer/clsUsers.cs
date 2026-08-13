@@ -140,7 +140,10 @@ namespace DVLD_BusinessLayer
         {
             return clsUsersDataAccess.IsUserNameExistForPersonID(UserName);
         }
-
+        public static bool DeleteUser(int UserID)
+        {
+            return clsUsersDataAccess.DeleteUser(UserID);
+        }
         public static clsUsers Find(int UserID)
         {
             string UserName = "", Password = "";

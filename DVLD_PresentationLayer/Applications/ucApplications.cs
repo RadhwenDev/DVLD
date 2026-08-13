@@ -663,5 +663,37 @@ namespace DVLD_PresentationLayer.Applications
                 }
             }
         }
+
+        private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (appID == -1) return;
+
+            // تأكيد عملية الحذف مع المستخدم
+            DialogResult result = MessageBox.Show(
+                $"Are you sure you want to delete Application [{appID}]?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2
+            );
+
+            if (result == DialogResult.No) return;
+
+            // تنفيذ الحذف
+            if (clsApplicant.DeleteApplication(appID))
+            {
+                MessageBox.Show("Application Deleted Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // إعادة تحديث الـ DataGridView
+                _dtAllApplicants = clsApplicant.getAllApplicants();
+                dgvApplications.DataSource = _dtAllApplicants;
+                UpdateRowsCount(_dtAllApplicants);
+            }
+            else
+            {
+                MessageBox.Show("Cannot delete this application because it is linked to other data (e.g., Tests or Licenses).",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

@@ -408,5 +408,25 @@ namespace DVLD_PresentationLayer
                 }
             }
         }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvPeople.CurrentRow == null) return;
+
+            int selectedPersonID = Convert.ToInt32(dgvPeople.CurrentRow.Cells["PersonID"].Value);
+
+            if (MessageBox.Show($"Are you sure you want to delete Person [{selectedPersonID}]?", "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                if (clsPerson.DeletePerson(selectedPersonID))
+                {
+                    MessageBox.Show("Person Deleted Successfully.", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _RefreshPeopleList(); // استدعي دالة إعادة تحميل الجدول
+                }
+                else
+                {
+                    MessageBox.Show("Person was not deleted because it has data linked to it in the system.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

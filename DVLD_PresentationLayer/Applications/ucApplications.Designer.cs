@@ -233,7 +233,7 @@
             this.guna2ContextMenuStrip1.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.guna2ContextMenuStrip1.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.guna2ContextMenuStrip1.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(362, 226);
+            this.guna2ContextMenuStrip1.Size = new System.Drawing.Size(362, 254);
             this.guna2ContextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.guna2ContextMenuStrip1_Opening);
             // 
             // editApplicationToolStripMenuItem
@@ -249,6 +249,7 @@
             this.deleteApplicationToolStripMenuItem.Name = "deleteApplicationToolStripMenuItem";
             this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(361, 30);
             this.deleteApplicationToolStripMenuItem.Text = "Delete Application";
+            this.deleteApplicationToolStripMenuItem.Click += new System.EventHandler(this.deleteApplicationToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -405,7 +406,6 @@
             this.btnApplicationTypes.FillColor = System.Drawing.Color.Tan;
             this.btnApplicationTypes.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
             this.btnApplicationTypes.ForeColor = System.Drawing.Color.White;
-            this.btnApplicationTypes.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(57)))), ((int)(((byte)(163)))));
             this.btnApplicationTypes.HoverState.ForeColor = System.Drawing.Color.White;
             this.btnApplicationTypes.Image = ((System.Drawing.Image)(resources.GetObject("btnApplicationTypes.Image")));
             this.btnApplicationTypes.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;

@@ -299,5 +299,38 @@ namespace DVLD_DataAccessLayer
 
             return rowAffected != 0;
         }
+        public static bool DeletePerson(int PersonID)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"DELETE FROM People WHERE PersonID = @PersonID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@PersonID", PersonID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        // إذا حاول حذف شخص مرتبط بـ Users أو Applications يرجع false من غير كراش
+                        System.Diagnostics.Debug.WriteLine("SQL Delete Error: " + ex.Message);
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("General Error: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+
+            return (rowsAffected > 0);
+        }
     }
 }

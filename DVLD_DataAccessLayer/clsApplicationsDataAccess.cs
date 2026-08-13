@@ -415,5 +415,36 @@ namespace DVLD_DataAccessLayer
 
             return isInter;
         }
+        public static bool DeleteApplication(int ApplicationID)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"-- إلغاء أو حذف السجلات المرتبطة بالطلب المحلي أولاً إن وجدت
+                         DELETE FROM LocalDrivingLicenseApplications WHERE ApplicationID = @ApplicationID;
+                         
+                         -- ثم حذف الطلب الأساسي
+                         DELETE FROM Applications WHERE ApplicationID = @ApplicationID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ApplicationID", ApplicationID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Delete Application Error: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+
+            return rowsAffected > 0;
+        }
     }
 }

@@ -163,5 +163,9 @@ namespace DVLD_BusinessLayer
                 NationalCountryID != _OriginalPerson.NationalCountryID ||
                 ImagePath != _OriginalPerson.ImagePath;
         }
+        public static bool DeletePerson(int PersonID)
+        {
+            return clsPeopleDataAccess.DeletePerson(PersonID);
+        }
     }
 }

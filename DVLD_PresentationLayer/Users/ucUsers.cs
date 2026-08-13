@@ -255,7 +255,20 @@ namespace DVLD_PresentationLayer.User
                 }
                 else if (rectDelete.Contains(clickPoint))
                 {
-                    MessageBox.Show($"Delete User ID: {userID}", "Confirm", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (MessageBox.Show($"Are you sure you want to delete User [{userID}]?", "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        if (clsUsers.DeleteUser(userID))
+                        {
+                            MessageBox.Show("User Deleted Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // استدعاء دالة تحديث قائمة المستخدمين لتنعكس التغيرات فوراً
+                            _RefreshPeopleList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("User was not deleted because it is linked to other records in the system.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
         }

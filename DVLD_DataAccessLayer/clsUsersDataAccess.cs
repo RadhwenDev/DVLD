@@ -352,6 +352,40 @@ namespace DVLD_DataAccessLayer
             }
             return (rowsAffected > 0);
         }
-        
+
+        public static bool DeleteUser(int UserID)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"DELETE FROM Users WHERE UserID = @UserID;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        // في حال كان الـ User مرتبطاً ببيانات أخرى (مثل Applications أو Tests أو Logs)
+                        System.Diagnostics.Debug.WriteLine("SQL Delete User Error: " + ex.Message);
+                        return false;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("General Delete User Error: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+
+            return (rowsAffected > 0);
+        }
+
     }
 }
