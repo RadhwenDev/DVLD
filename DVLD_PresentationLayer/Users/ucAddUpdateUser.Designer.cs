@@ -49,13 +49,13 @@
             this.cbFullPermissions = new System.Windows.Forms.CheckBox();
             this.cbManagePeople = new System.Windows.Forms.CheckBox();
             this.cbManageUsers = new System.Windows.Forms.CheckBox();
-            this.cbManageDrivers = new System.Windows.Forms.CheckBox();
-            this.cbViewApplications = new System.Windows.Forms.CheckBox();
-            this.cbProcessApplications = new System.Windows.Forms.CheckBox();
-            this.cbManageApplicationTests = new System.Windows.Forms.CheckBox();
-            this.cbEnterTestResults = new System.Windows.Forms.CheckBox();
+            this.cbManageInternationalApp = new System.Windows.Forms.CheckBox();
+            this.cbManageApplications = new System.Windows.Forms.CheckBox();
+            this.cbManageLicenseClasses = new System.Windows.Forms.CheckBox();
+            this.cbManageTestTypes = new System.Windows.Forms.CheckBox();
+            this.cbNewApplications = new System.Windows.Forms.CheckBox();
             this.cbManageDetainedLicenses = new System.Windows.Forms.CheckBox();
-            this.cbManageSettings_Fees = new System.Windows.Forms.CheckBox();
+            this.cbManageApplicationTypes = new System.Windows.Forms.CheckBox();
             this.cbAudit_System_Logs = new System.Windows.Forms.CheckBox();
             this.lblChangePassword = new System.Windows.Forms.LinkLabel();
             this.guna2Panel1.SuspendLayout();
@@ -346,55 +346,55 @@
             this.cbManageUsers.Text = "Manage Users";
             this.cbManageUsers.UseVisualStyleBackColor = true;
             // 
-            // cbManageDrivers
+            // cbManageInternationalApp
             // 
-            this.cbManageDrivers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbManageDrivers.Location = new System.Drawing.Point(401, 347);
-            this.cbManageDrivers.Name = "cbManageDrivers";
-            this.cbManageDrivers.Size = new System.Drawing.Size(227, 35);
-            this.cbManageDrivers.TabIndex = 36;
-            this.cbManageDrivers.Text = "Manage Drivers";
-            this.cbManageDrivers.UseVisualStyleBackColor = true;
+            this.cbManageInternationalApp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageInternationalApp.Location = new System.Drawing.Point(401, 557);
+            this.cbManageInternationalApp.Name = "cbManageInternationalApp";
+            this.cbManageInternationalApp.Size = new System.Drawing.Size(316, 35);
+            this.cbManageInternationalApp.TabIndex = 36;
+            this.cbManageInternationalApp.Text = "Manage International Applications";
+            this.cbManageInternationalApp.UseVisualStyleBackColor = true;
             // 
-            // cbViewApplications
+            // cbManageApplications
             // 
-            this.cbViewApplications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbViewApplications.Location = new System.Drawing.Point(401, 382);
-            this.cbViewApplications.Name = "cbViewApplications";
-            this.cbViewApplications.Size = new System.Drawing.Size(262, 35);
-            this.cbViewApplications.TabIndex = 37;
-            this.cbViewApplications.Text = "View Applications";
-            this.cbViewApplications.UseVisualStyleBackColor = true;
+            this.cbManageApplications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageApplications.Location = new System.Drawing.Point(401, 347);
+            this.cbManageApplications.Name = "cbManageApplications";
+            this.cbManageApplications.Size = new System.Drawing.Size(262, 35);
+            this.cbManageApplications.TabIndex = 37;
+            this.cbManageApplications.Text = "Manage Applications";
+            this.cbManageApplications.UseVisualStyleBackColor = true;
             // 
-            // cbProcessApplications
+            // cbManageLicenseClasses
             // 
-            this.cbProcessApplications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbProcessApplications.Location = new System.Drawing.Point(401, 417);
-            this.cbProcessApplications.Name = "cbProcessApplications";
-            this.cbProcessApplications.Size = new System.Drawing.Size(262, 35);
-            this.cbProcessApplications.TabIndex = 38;
-            this.cbProcessApplications.Text = "Process Applications";
-            this.cbProcessApplications.UseVisualStyleBackColor = true;
+            this.cbManageLicenseClasses.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageLicenseClasses.Location = new System.Drawing.Point(401, 487);
+            this.cbManageLicenseClasses.Name = "cbManageLicenseClasses";
+            this.cbManageLicenseClasses.Size = new System.Drawing.Size(262, 35);
+            this.cbManageLicenseClasses.TabIndex = 38;
+            this.cbManageLicenseClasses.Text = "Manage License Classes\n";
+            this.cbManageLicenseClasses.UseVisualStyleBackColor = true;
             // 
-            // cbManageApplicationTests
+            // cbManageTestTypes
             // 
-            this.cbManageApplicationTests.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbManageApplicationTests.Location = new System.Drawing.Point(401, 452);
-            this.cbManageApplicationTests.Name = "cbManageApplicationTests";
-            this.cbManageApplicationTests.Size = new System.Drawing.Size(283, 35);
-            this.cbManageApplicationTests.TabIndex = 39;
-            this.cbManageApplicationTests.Text = "Manage Application Tests";
-            this.cbManageApplicationTests.UseVisualStyleBackColor = true;
+            this.cbManageTestTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageTestTypes.Location = new System.Drawing.Point(401, 452);
+            this.cbManageTestTypes.Name = "cbManageTestTypes";
+            this.cbManageTestTypes.Size = new System.Drawing.Size(237, 35);
+            this.cbManageTestTypes.TabIndex = 39;
+            this.cbManageTestTypes.Text = "Manage Test Types\n";
+            this.cbManageTestTypes.UseVisualStyleBackColor = true;
             // 
-            // cbEnterTestResults
+            // cbNewApplications
             // 
-            this.cbEnterTestResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbEnterTestResults.Location = new System.Drawing.Point(401, 487);
-            this.cbEnterTestResults.Name = "cbEnterTestResults";
-            this.cbEnterTestResults.Size = new System.Drawing.Size(283, 35);
-            this.cbEnterTestResults.TabIndex = 40;
-            this.cbEnterTestResults.Text = "Enter Test Results";
-            this.cbEnterTestResults.UseVisualStyleBackColor = true;
+            this.cbNewApplications.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbNewApplications.Location = new System.Drawing.Point(401, 382);
+            this.cbNewApplications.Name = "cbNewApplications";
+            this.cbNewApplications.Size = new System.Drawing.Size(283, 35);
+            this.cbNewApplications.TabIndex = 40;
+            this.cbNewApplications.Text = "New Applications";
+            this.cbNewApplications.UseVisualStyleBackColor = true;
             // 
             // cbManageDetainedLicenses
             // 
@@ -406,15 +406,15 @@
             this.cbManageDetainedLicenses.Text = "Manage Detained Licenses";
             this.cbManageDetainedLicenses.UseVisualStyleBackColor = true;
             // 
-            // cbManageSettings_Fees
+            // cbManageApplicationTypes
             // 
-            this.cbManageSettings_Fees.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbManageSettings_Fees.Location = new System.Drawing.Point(401, 557);
-            this.cbManageSettings_Fees.Name = "cbManageSettings_Fees";
-            this.cbManageSettings_Fees.Size = new System.Drawing.Size(283, 35);
-            this.cbManageSettings_Fees.TabIndex = 42;
-            this.cbManageSettings_Fees.Text = "Manage Settings && Fees";
-            this.cbManageSettings_Fees.UseVisualStyleBackColor = true;
+            this.cbManageApplicationTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbManageApplicationTypes.Location = new System.Drawing.Point(401, 417);
+            this.cbManageApplicationTypes.Name = "cbManageApplicationTypes";
+            this.cbManageApplicationTypes.Size = new System.Drawing.Size(283, 35);
+            this.cbManageApplicationTypes.TabIndex = 42;
+            this.cbManageApplicationTypes.Text = "Manage Application Types";
+            this.cbManageApplicationTypes.UseVisualStyleBackColor = true;
             // 
             // cbAudit_System_Logs
             // 
@@ -448,13 +448,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblChangePassword);
             this.Controls.Add(this.cbAudit_System_Logs);
-            this.Controls.Add(this.cbManageSettings_Fees);
+            this.Controls.Add(this.cbManageApplicationTypes);
             this.Controls.Add(this.cbManageDetainedLicenses);
-            this.Controls.Add(this.cbEnterTestResults);
-            this.Controls.Add(this.cbManageApplicationTests);
-            this.Controls.Add(this.cbProcessApplications);
-            this.Controls.Add(this.cbViewApplications);
-            this.Controls.Add(this.cbManageDrivers);
+            this.Controls.Add(this.cbNewApplications);
+            this.Controls.Add(this.cbManageTestTypes);
+            this.Controls.Add(this.cbManageLicenseClasses);
+            this.Controls.Add(this.cbManageApplications);
+            this.Controls.Add(this.cbManageInternationalApp);
             this.Controls.Add(this.cbManageUsers);
             this.Controls.Add(this.cbManagePeople);
             this.Controls.Add(this.cbFullPermissions);
@@ -505,13 +505,13 @@
         private System.Windows.Forms.CheckBox cbFullPermissions;
         private System.Windows.Forms.CheckBox cbManagePeople;
         private System.Windows.Forms.CheckBox cbManageUsers;
-        private System.Windows.Forms.CheckBox cbManageDrivers;
-        private System.Windows.Forms.CheckBox cbViewApplications;
-        private System.Windows.Forms.CheckBox cbProcessApplications;
-        private System.Windows.Forms.CheckBox cbManageApplicationTests;
-        private System.Windows.Forms.CheckBox cbEnterTestResults;
+        private System.Windows.Forms.CheckBox cbManageInternationalApp;
+        private System.Windows.Forms.CheckBox cbManageApplications;
+        private System.Windows.Forms.CheckBox cbManageLicenseClasses;
+        private System.Windows.Forms.CheckBox cbManageTestTypes;
+        private System.Windows.Forms.CheckBox cbNewApplications;
         private System.Windows.Forms.CheckBox cbManageDetainedLicenses;
-        private System.Windows.Forms.CheckBox cbManageSettings_Fees;
+        private System.Windows.Forms.CheckBox cbManageApplicationTypes;
         private System.Windows.Forms.CheckBox cbAudit_System_Logs;
         private System.Windows.Forms.LinkLabel lblChangePassword;
     }

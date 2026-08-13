@@ -1,24 +1,20 @@
 ﻿using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Users;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace DVLD_PresentationLayer.User
 {
     public partial class ucUsers : UserControl
     {
-        enum enActions { AddNew, Show, Edit, Delete}
+        private enum enActions { AddNew, Show, Edit, Delete }
         private enActions _Action;
+        private int _hoveredRowIndex = -1;
+        private int _hoveredColumnIndex = -1;
+        private int _hoveredIconIndex = -1;
+
         public ucUsers()
         {
             InitializeComponent();
@@ -26,18 +22,38 @@ namespace DVLD_PresentationLayer.User
 
         private void ucUsers_Load_1(object sender, EventArgs e)
         {
-            // 🚀 سر المهنة: تفعيل الـ Double Buffering برمجياً للـ DataGridView لمنع الوميض وبقايا الخطوط عند حركة الماوس
+            // 🚀 تفعيل الـ Double Buffering لمنع الوميض
             typeof(DataGridView).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.SetProperty,
                 null, dgvUsers, new object[] { true });
 
-            DataTable _dtAllUsers = clsUsers.getAllUsers();
+            // تحميل وتنسيق البيانات لأول مرة
+            _RefreshPeopleList();
+        }
 
-            if (_dtAllUsers != null)
+        private void _RefreshPeopleList()
+        {
+            DataTable dtAllUsers = clsUsers.getAllUsers();
+
+            if (dtAllUsers != null)
             {
-                _dtAllUsers.Columns.Add("USER", typeof(string), "FirstName + ' ' + SecondName + ' ' + ThirdName + ' ' + LastName");
+                dtAllUsers.Columns.Add("USER", typeof(string));
+
+                foreach (DataRow row in dtAllUsers.Rows)
+                {
+                    string firstName = row["FirstName"]?.ToString() ?? "";
+                    string secondName = row["SecondName"]?.ToString() ?? "";
+                    string thirdName = row["ThirdName"]?.ToString() ?? "";
+                    string lastName = row["LastName"]?.ToString() ?? "";
+
+                    string fullName = $"{firstName} {secondName} {thirdName} {lastName}";
+                    fullName = fullName.Replace("    ", " ").Replace("  ", " ").Trim();
+
+                    row["USER"] = fullName;
+                }
             }
-            dgvUsers.DataSource = _dtAllUsers;
+
+            dgvUsers.DataSource = dtAllUsers;
 
             if (!dgvUsers.Columns.Contains("Actions"))
             {
@@ -72,35 +88,160 @@ namespace DVLD_PresentationLayer.User
 
                 if (dgvUsers.Columns.Contains("Permissions")) dgvUsers.Columns["Permissions"].DisplayIndex = 2;
 
-                // 💎 تصفير الحدود تماماً من الإعدادات الأساسية
+
                 dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.None;
                 dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
                 dgvUsers.RowHeadersVisible = false;
             }
 
-            // ربط حد
-            UpdateRowsCount(_dtAllUsers);
+            UpdateRowsCount(dtAllUsers);
         }
 
-        // 🎯 الحدث السحري: يلغي رسم حدود الأسطر تماماً بشكل مسبق، فلا تظهر خطوط حتى لو تحرك الماوس
+        private void dgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "Actions")
+            {
+                Point clickPoint = dgvUsers.PointToClient(Cursor.Position);
+                Rectangle cellRect = dgvUsers.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+                int iconSize = 20, margin = 8;
+                int totalWidth = (iconSize * 3) + (margin * 2);
+                int startX = cellRect.Left + (cellRect.Width - totalWidth) / 2;
+                int startY = cellRect.Top + (cellRect.Height - iconSize) / 2;
+
+                Rectangle rectShow = new Rectangle(startX, startY, iconSize, iconSize);
+                Rectangle rectEdit = new Rectangle(startX + iconSize + margin, startY, iconSize, iconSize);
+                Rectangle rectDelete = new Rectangle(startX + (iconSize * 2) + (margin * 2), startY, iconSize, iconSize);
+
+                int userID = Convert.ToInt32(dgvUsers.Rows[e.RowIndex].Cells["UserID"].Value);
+
+                if (rectShow.Contains(clickPoint))
+                {
+                    _Action = enActions.Show;
+                    ShowUserControl(userID);
+                }
+                else if (rectEdit.Contains(clickPoint))
+                {
+                    _Action = enActions.Edit;
+                    ShowUserControl(userID);
+                }
+                else if (rectDelete.Contains(clickPoint))
+                {
+                    if (MessageBox.Show($"Are you sure you want to delete User [{userID}]?", "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        if (clsUsers.DeleteUser(userID))
+                        {
+                            MessageBox.Show("User Deleted Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            _RefreshPeopleList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("User was not deleted because it is linked to other records in the system.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnAddUser_Click(object sender, EventArgs e)
+        {
+            _Action = enActions.AddNew;
+            ShowUserControl(-1);
+        }
+
+        private void ShowUserControl(int userID)
+        {
+            using (Form overlay = new Form())
+            {
+                overlay.StartPosition = FormStartPosition.Manual;
+                overlay.FormBorderStyle = FormBorderStyle.None;
+                overlay.BackColor = Color.FromArgb(45, 55, 72);
+                overlay.Opacity = 0.45d;
+                overlay.Bounds = Screen.FromControl(this).Bounds;
+                overlay.ShowInTaskbar = false;
+                overlay.Show(this);
+
+                using (Form frmContainer = new Form())
+                {
+                    frmContainer.FormBorderStyle = FormBorderStyle.None;
+                    frmContainer.BackColor = Color.White;
+                    frmContainer.StartPosition = FormStartPosition.CenterParent;
+
+                    switch (_Action)
+                    {
+                        case enActions.AddNew:
+                            ucAddUpdateUser myAddUser = new ucAddUpdateUser();
+                            myAddUser.LoadUserData(-1);
+                            frmContainer.Size = myAddUser.Size;
+                            myAddUser.Dock = DockStyle.Fill;
+                            frmContainer.Controls.Add(myAddUser);
+                            myAddUser.DataBack += MyAddPersonPage_DataBack;
+                            break;
+
+                        case enActions.Edit:
+                            ucAddUpdateUser myUpdateUser = new ucAddUpdateUser();
+                            myUpdateUser.LoadUserData(userID);
+                            frmContainer.Size = myUpdateUser.Size;
+                            myUpdateUser.Dock = DockStyle.Fill;
+                            frmContainer.Controls.Add(myUpdateUser);
+                            myUpdateUser._LoadUpdateMode(userID);
+                            myUpdateUser.DataBack += MyAddPersonPage_DataBack;
+                            break;
+
+                        case enActions.Show:
+                            ucShowDetailsUser myShowDetailsUserPage = new ucShowDetailsUser(userID);
+                            frmContainer.Size = myShowDetailsUserPage.Size;
+                            myShowDetailsUserPage.Dock = DockStyle.Fill;
+                            frmContainer.Controls.Add(myShowDetailsUserPage);
+                            break;
+                    }
+
+                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
+                    elipse.TargetControl = frmContainer;
+                    elipse.BorderRadius = 16;
+
+                    frmContainer.ShowDialog(overlay);
+                }
+            }
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (dgvUsers.DataSource is DataTable dt)
+            {
+                dt.DefaultView.RowFilter = string.Format("USER LIKE '%{0}%' OR UserName LIKE '%{0}%'", guna2TextBox1.Text.Replace("'", "''"));
+                UpdateRowsCount(dt);
+            }
+        }
+
+        private void UpdateRowsCount(DataTable dt)
+        {
+            if (dt != null)
+            {
+                DataView dvFiltered = dt.DefaultView;
+                int activeCount = dvFiltered.ToTable().Select("IsActive = 1").Length;
+                int totalFiltered = dvFiltered.Count;
+                int inactiveCount = totalFiltered - activeCount;
+                lblCountActiveAndInactive.Text = $"{activeCount} active • {inactiveCount} inactive";
+            }
+        }
+
+        private void MyAddPersonPage_DataBack(object sender, int PersonID)
+        {
+            _RefreshPeopleList();
+        }
+
         private void dgvUsers_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            // إخبار الويندوز ألا يرسم حدود السطر الافتراضية (PaintCellsBounds)
             e.PaintParts &= ~DataGridViewPaintParts.Border;
         }
-
-        private int _hoveredRowIndex = -1;
-        private int _hoveredColumnIndex = -1;
-        private int _hoveredIconIndex = -1;
 
         private void dgvUsers_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            // 🎯 1. عمود الـ Actions
             if (e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "Actions")
             {
-                // رسم الخلفية والتحديد فقط بدون أجزاء الحدود
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.SelectionBackground);
 
                 if (imageList1 != null && imageList1.Images.Count >= 3)
@@ -109,10 +250,8 @@ namespace DVLD_PresentationLayer.User
                     Image imgEdit = imageList1.Images[1];
                     Image imgDelete = imageList1.Images[2];
 
-                    int iconSize = 20;
-                    int margin = 8;
+                    int iconSize = 20, margin = 8;
                     int totalWidth = (iconSize * 3) + (margin * 2);
-
                     int startX = e.CellBounds.Left + (e.CellBounds.Width - totalWidth) / 2;
                     int startY = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
 
@@ -123,7 +262,6 @@ namespace DVLD_PresentationLayer.User
                     if (e.RowIndex == _hoveredRowIndex && e.ColumnIndex == _hoveredColumnIndex)
                     {
                         int padding = 4;
-
                         if (_hoveredIconIndex == 0)
                         {
                             Rectangle bgRect = new Rectangle(rectShow.X - padding, rectShow.Y - padding, rectShow.Width + (padding * 2), rectShow.Height + (padding * 2));
@@ -151,9 +289,8 @@ namespace DVLD_PresentationLayer.User
 
                 e.Handled = true;
             }
-            
-            // 🎯 2. عمود الحالة (Status / IsActive)
-           if (e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "IsActive")
+
+            if (e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "IsActive")
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.SelectionBackground);
 
@@ -163,8 +300,7 @@ namespace DVLD_PresentationLayer.User
                 Color backColor = isActive ? Color.FromArgb(230, 248, 235) : Color.FromArgb(242, 244, 247);
                 Color textColor = isActive ? Color.FromArgb(34, 154, 73) : Color.FromArgb(102, 112, 133);
 
-                int badgeWidth = 75;
-                int badgeHeight = 24;
+                int badgeWidth = 75, badgeHeight = 24;
                 int badgeX = e.CellBounds.Left + (e.CellBounds.Width - badgeWidth) / 2;
                 int badgeY = e.CellBounds.Top + (e.CellBounds.Height - badgeHeight) / 2;
                 Rectangle badgeRect = new Rectangle(badgeX, badgeY, badgeWidth, badgeHeight);
@@ -203,76 +339,6 @@ namespace DVLD_PresentationLayer.User
             dgvUsers.Columns["Actions"].DisplayIndex = dgvUsers.Columns.Count - 1;
         }
 
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-        {
-            if (dgvUsers.DataSource is DataTable dt)
-            {
-                dt.DefaultView.RowFilter = string.Format("USER LIKE '%{0}%' OR UserName LIKE '%{0}%'", guna2TextBox1.Text.Replace("'", "''"));
-                UpdateRowsCount(dt);
-            }
-        }
-
-        private void UpdateRowsCount(DataTable dt)
-        {
-            if (dt != null)
-            {
-                DataView dvFiltered = dt.DefaultView;
-                int activeCount = dvFiltered.ToTable().Select("IsActive = 1").Length;
-                int totalFiltered = dvFiltered.Count;
-                int inactiveCount = totalFiltered - activeCount;
-                lblCountActiveAndInactive.Text = $"{activeCount} active • {inactiveCount} inactive";
-            }
-        }
-
-        private void dgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "Actions" && e.RowIndex >= 0)
-            {
-                Point clickPoint = dgvUsers.PointToClient(Cursor.Position);
-                Rectangle cellRect = dgvUsers.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-
-                int iconSize = 20;
-                int margin = 8;
-                int totalWidth = (iconSize * 3) + (margin * 2);
-                int startX = cellRect.Left + (cellRect.Width - totalWidth) / 2;
-                int startY = cellRect.Top + (cellRect.Height - iconSize) / 2;
-
-                Rectangle rectShow = new Rectangle(startX, startY, iconSize, iconSize);
-                Rectangle rectEdit = new Rectangle(startX + iconSize + margin, startY, iconSize, iconSize);
-                Rectangle rectDelete = new Rectangle(startX + (iconSize * 2) + (margin * 2), startY, iconSize, iconSize);
-
-                int userID = Convert.ToInt32(dgvUsers.Rows[e.RowIndex].Cells["UserID"].Value);
-
-                if (rectShow.Contains(clickPoint))
-                {
-                    _Action = enActions.Show;
-                    ShowUserControl();
-                }
-                else if (rectEdit.Contains(clickPoint))
-                {
-                    _Action = enActions.Edit;
-                    ShowUserControl();
-                }
-                else if (rectDelete.Contains(clickPoint))
-                {
-                    if (MessageBox.Show($"Are you sure you want to delete User [{userID}]?", "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    {
-                        if (clsUsers.DeleteUser(userID))
-                        {
-                            MessageBox.Show("User Deleted Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            // استدعاء دالة تحديث قائمة المستخدمين لتنعكس التغيرات فوراً
-                            _RefreshPeopleList();
-                        }
-                        else
-                        {
-                            MessageBox.Show("User was not deleted because it is linked to other records in the system.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-        }
-
         private void dgvUsers_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && dgvUsers.Columns[e.ColumnIndex].Name == "Actions")
@@ -280,8 +346,7 @@ namespace DVLD_PresentationLayer.User
                 Point localPoint = dgvUsers.PointToClient(Cursor.Position);
                 Rectangle cellRect = dgvUsers.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
 
-                int iconSize = 20;
-                int margin = 8;
+                int iconSize = 20, margin = 8;
                 int totalWidth = (iconSize * 3) + (margin * 2);
                 int startX = cellRect.Left + (cellRect.Width - totalWidth) / 2;
                 int startY = cellRect.Top + (cellRect.Height - iconSize) / 2;
@@ -335,144 +400,6 @@ namespace DVLD_PresentationLayer.User
                 }
             }
         }
-        int selectedUserID = -1;
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            _Action = enActions.AddNew;
-            ShowUserControl();
-
-        }
-
-        private void ShowUserControl()
-        {
-            using (Form overlay = new Form())
-            {
-                overlay.StartPosition = FormStartPosition.Manual;
-                overlay.FormBorderStyle = FormBorderStyle.None;
-                overlay.BackColor = Color.FromArgb(45, 55, 72);
-                overlay.Opacity = 0.45d;
-                overlay.Bounds = Screen.FromControl(this).Bounds;
-                overlay.ShowInTaskbar = false;
-                overlay.Show(this);
-
-                using (Form frmContainer = new Form())
-                {
-                    frmContainer.FormBorderStyle = FormBorderStyle.None;
-                    frmContainer.BackColor = Color.White;
-                    frmContainer.StartPosition = FormStartPosition.CenterParent;
-
-                    if (_Action != enActions.AddNew)
-                        selectedUserID = Convert.ToInt32(dgvUsers.CurrentRow.Cells["UserID"].Value);
-                    else
-                        selectedUserID = -1;
-                    switch (_Action)
-                    {
-                        case enActions.AddNew:
-                            ucAddUpdateUser myAddUpdateUser = new ucAddUpdateUser();
-                            myAddUpdateUser.LoadUserData(selectedUserID);
-                            frmContainer.Size = myAddUpdateUser.Size;
-                            myAddUpdateUser.Dock = DockStyle.Fill;
-                            frmContainer.Controls.Add(myAddUpdateUser);
-                            // 🌟 السطر السحري: ربط الـ Delegate الخاص بالـ User Control بالدالة المخصصة للتحديث
-                            myAddUpdateUser.DataBack += MyAddPersonPage_DataBack;
-                            break;
-                        case enActions.Edit:
-                            ucAddUpdateUser myUpdateUser = new ucAddUpdateUser();
-                            myUpdateUser.LoadUserData(selectedUserID);
-                            frmContainer.Size = myUpdateUser.Size;
-                            myUpdateUser.Dock = DockStyle.Fill;
-                            frmContainer.Controls.Add(myUpdateUser);
-                            myUpdateUser._LoadUpdateMode(selectedUserID);
-                            myUpdateUser.DataBack += MyAddPersonPage_DataBack;
-                            break;
-                        case enActions.Show:
-                            ucShowDetailsUser myShowDetailsUserPage = new ucShowDetailsUser(selectedUserID);
-                            frmContainer.Size = myShowDetailsUserPage.Size;
-                            myShowDetailsUserPage.Dock = DockStyle.Fill;
-                            frmContainer.Controls.Add(myShowDetailsUserPage);
-                            break;
-                    }
-                    
-                    
-
-                    Guna.UI2.WinForms.Guna2Elipse elipse = new Guna.UI2.WinForms.Guna2Elipse();
-                    elipse.TargetControl = frmContainer;
-                    elipse.BorderRadius = 16;
-                    
-                    frmContainer.ShowDialog(overlay);
-                }
-            }
-        }
-
-        private void _RefreshPeopleList()
-        {
-           DataTable _dtAllUsers = clsUsers.getAllUsers();
-
-            if (_dtAllUsers != null)
-            {
-                // إضافة الأعمدة المحسوبة ديناميكياً
-                _dtAllUsers.Columns.Add("USER", typeof(string));
-
-                // 2. نمر على السطور ونقوم بالدمج والتنظيف معاً في الـ Loop
-                foreach (DataRow row in _dtAllUsers.Rows)
-                {
-                    string firstName = row["FirstName"]?.ToString() ?? "";
-                    string secondName = row["SecondName"]?.ToString() ?? "";
-                    string thirdName = row["ThirdName"]?.ToString() ?? "";
-                    string lastName = row["LastName"]?.ToString() ?? "";
-
-                    string fullName = $"{firstName} {secondName} {thirdName} {lastName}";
-
-                    // تنظيف المسافات الزائدة
-                    fullName = fullName.Replace("   ", " ").Replace("  ", " ").Trim();
-
-                    row["USER"] = fullName;
-                }
-            }
-
-            dgvUsers.DataSource = _dtAllUsers;
-
-            UpdateRowsCount(_dtAllUsers);
-
-            if (dgvUsers.Columns.Count > 0)
-            {
-                dgvUsers.Columns["UserName"].HeaderText = "USERNAME";
-                dgvUsers.Columns["IsActive"].HeaderText = "Status";
-                dgvUsers.Columns["USER"].HeaderText = "   USER";
-                dgvUsers.Columns["USER"].DefaultCellStyle.Padding = new Padding(10, 0, 0, 0);
-
-                dgvUsers.Columns["FirstName"].Visible = false;
-                dgvUsers.Columns["SecondName"].Visible = false;
-                dgvUsers.Columns["ThirdName"].Visible = false;
-                dgvUsers.Columns["LastName"].Visible = false;
-                dgvUsers.Columns["UserID"].Visible = false;
-
-                if (dgvUsers.Columns.Contains("Password")) dgvUsers.Columns["Password"].Visible = false;
-                if (dgvUsers.Columns.Contains("PersonID")) dgvUsers.Columns["PersonID"].Visible = false;
-
-                dgvUsers.Columns["UserName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-                dgvUsers.Columns["USER"].DisplayIndex = 0;
-                dgvUsers.Columns["UserName"].DisplayIndex = 1;
-
-                if (dgvUsers.Columns.Contains("Permissions")) dgvUsers.Columns["Permissions"].DisplayIndex = 2;
-
-                // 💎 تصفير الحدود تماماً من الإعدادات الأساسية
-                dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.None;
-                dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-                dgvUsers.RowHeadersVisible = false;
-            }
-
-            // ربط حدث الـ RowPrePaint لضمان مسح الحدود قبل رسم محتوى الخلية
-            dgvUsers.RowPrePaint += dgvUsers_RowPrePaint;
-
-            UpdateRowsCount(_dtAllUsers);
-        }
-
-        private void MyAddPersonPage_DataBack(object sender, int PersonID)
-        {
-            _RefreshPeopleList();
-        }
 
         private void dgvUsers_Paint(object sender, PaintEventArgs e)
         {
@@ -480,20 +407,15 @@ namespace DVLD_PresentationLayer.User
             {
                 string noDataText = "No users match your search.";
 
-                // اختيار الخط واللون المناسب (رمادي هادئ ومريح للعين)
                 using (Font font = new Font("Segoe UI", 11, FontStyle.Regular))
-                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156))) // Slate Gray
+                using (Brush brush = new SolidBrush(Color.FromArgb(120, 144, 156)))
                 {
-                    // حساب قياسات النص لتوسيطه تماماً في وسط الـ Grid
                     Size textSize = TextRenderer.MeasureText(noDataText, font);
-
-                    // نأخذ بعين الاعتبار ارتفاع الـ Headers باش يجي النص في وسط المساحة البيضاء بالظبط
                     int headersHeight = dgvUsers.ColumnHeadersVisible ? dgvUsers.ColumnHeadersHeight : 0;
 
                     int x = (dgvUsers.Width - textSize.Width) / 2;
                     int y = headersHeight + (dgvUsers.Height - headersHeight - textSize.Height) / 3;
 
-                    // رسم النص
                     e.Graphics.DrawString(noDataText, font, brush, x, y);
                 }
             }

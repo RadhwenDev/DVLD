@@ -44,6 +44,7 @@ namespace DVLD_PresentationLayer
             _RefreshApplicationTypesList();
         }
 
+
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvApplicationTypes.CurrentRow == null) return;

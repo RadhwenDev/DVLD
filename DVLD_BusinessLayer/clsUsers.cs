@@ -15,21 +15,45 @@ namespace DVLD_BusinessLayer
 {
     public class clsUsers
     {
+        [Flags]
+        public enum enPermissions
+        {
+            SuperUser = -1,
+            None = 0,
+            ManagePeople = 1,
+            ManageUsers = 2,
+            ManageApplications = 4,
+            NewApplications = 8,
+            ManageApplicationTypes = 16,
+            ManageTestTypes = 32,
+            ManageLicenseClasses = 64,
+            ManageDetainedLicenses = 128,
+            ManageInternationalApp = 256,
+            AuditLogs = 512,
+
+            FullPermissions = ManagePeople | ManageUsers | ManageInternationalApp |
+                              ManageApplications | ManageLicenseClasses | ManageTestTypes |
+                              NewApplications | ManageDetainedLicenses | ManageApplicationTypes | AuditLogs
+        }
+
         private clsUsers _OriginalUser;
         private const int RememberMeDays = 30;
+
         public enum enSaveResult
         {
             SavedSuccessfully,
             NoChanges,
             Failed
         }
+
         enum enMode { AddNew, Update };
         enMode Mode;
+
         public int UserID { set; get; }
         public int PersonID { set; get; }
         public string UserName { set; get; }
         public string Password { set; get; }
-        public int Permissions {  set; get; }
+        public int Permissions { set; get; }
         public bool isActive { set; get; }
 
         public clsUsers()
@@ -67,6 +91,7 @@ namespace DVLD_BusinessLayer
                 Mode = enMode.AddNew;
             }
         }
+
         public clsUsers(int UserID, int PersonID, string UserName, string Password, int Permission, bool isActive)
         {
             this.UserID = UserID;
@@ -87,7 +112,6 @@ namespace DVLD_BusinessLayer
             Mode = enMode.Update;
         }
 
-
         public static DataTable getAllUsers()
         {
             return clsUsersDataAccess.getAllUsers();
@@ -101,8 +125,9 @@ namespace DVLD_BusinessLayer
         public bool AddNewPerson()
         {
             this.UserID = clsUsersDataAccess.AddNewUser(this.PersonID, this.UserName, this.Password, this.isActive, this.Permissions);
-            return (this.PersonID != -1);
+            return (this.UserID != -1);
         }
+
         public enSaveResult UpdatePerson()
         {
             if (clsUsersDataAccess.UpdateUser(this.UserID, this.UserName, this.isActive, this.Permissions))
@@ -140,10 +165,12 @@ namespace DVLD_BusinessLayer
         {
             return clsUsersDataAccess.IsUserNameExistForPersonID(UserName);
         }
+
         public static bool DeleteUser(int UserID)
         {
             return clsUsersDataAccess.DeleteUser(UserID);
         }
+
         public static clsUsers Find(int UserID)
         {
             string UserName = "", Password = "";
@@ -160,10 +187,10 @@ namespace DVLD_BusinessLayer
             string hashedPasswordFromDB = "";
             bool isActive = false;
             UserName = UserName.Trim().ToLower();
-            // نجلب بيانات المستخدم بالـ اسم فقط
+
+            // نجلب بيانات المستخدم باسم المستخدم فقط
             if (clsUsersDataAccess.GetUserInfoByUserName(UserName, ref UserID, ref PersonID, ref hashedPasswordFromDB, ref Permissions, ref isActive))
             {
-
                 if (hashedPasswordFromDB == Password)
                 {
                     return new clsUsers(UserID, PersonID, UserName, hashedPasswordFromDB, Permissions, isActive);
@@ -198,10 +225,10 @@ namespace DVLD_BusinessLayer
                         return enSaveResult.NoChanges;
 
                     return UpdatePerson();
-
             }
             return enSaveResult.Failed;
         }
+
         private bool HasChanges()
         {
             return
@@ -209,16 +236,16 @@ namespace DVLD_BusinessLayer
                 Permissions != _OriginalUser.Permissions ||
                 isActive != _OriginalUser.isActive;
         }
+
         private bool isPasswordChanged()
         {
             return Password != _OriginalUser.Password;
-
         }
 
         public static bool RememberUser(int userID)
         {
             string plainToken = TokenHelper.GenerateToken();
-            string tokenHash = HashHelper.ComputeSHA256(plainToken); // تحسين اسم الدالة
+            string tokenHash = HashHelper.ComputeSHA256(plainToken);
             DateTime expiry = DateTime.Now.AddDays(RememberMeDays);
 
             if (clsUsersDataAccess.UpdateRememberToken(userID, tokenHash, expiry))
@@ -229,7 +256,6 @@ namespace DVLD_BusinessLayer
             return false;
         }
 
-        // 2. دالة TryLoginWithRememberMe
         public static clsUsers TryLoginWithRememberMe()
         {
             if (!RememberMeManager.TryLoadToken(out string plainToken))
@@ -244,17 +270,26 @@ namespace DVLD_BusinessLayer
             }
             else
             {
-                // تحسين: إذا كان التوكن غير موجود في الـ DB أو منتهي الصلاحية، نحذف الملف التالف
                 RememberMeManager.DeleteToken();
                 return null;
             }
         }
 
-        // 3. دالة Logout
         public static void Logout(int userID)
         {
             clsUsersDataAccess.ClearRememberToken(userID);
             RememberMeManager.DeleteToken();
+        }
+
+        public bool CheckAccessPermission(enPermissions permission)
+        {
+            if (this.Permissions == (int)enPermissions.SuperUser)
+                return true;
+
+            if ((this.Permissions & (int)permission) == (int)permission)
+                return true;
+
+            return false;
         }
     }
 }

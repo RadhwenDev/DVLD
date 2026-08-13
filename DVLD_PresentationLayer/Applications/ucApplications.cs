@@ -1,5 +1,6 @@
 ﻿using DVLD_BusinessLayer;
 using DVLD_PresentationLayer.Drivers;
+using DVLD_PresentationLayer.Global;
 using DVLD_PresentationLayer.Licenses;
 using DVLD_PresentationLayer.TestAppointments;
 using Guna.UI2.WinForms;
@@ -284,18 +285,18 @@ namespace DVLD_PresentationLayer.Applications
 
         private void btnNewApplication_Click(object sender, EventArgs e)
         {
-            ucNewApplication myNewApplication = new ucNewApplication();
-            myNewApplication.Dock = DockStyle.Fill;
-            myNewApplication.Name = "ucNewApplicationWizard";
-
-            foreach (Control ctrl in this.Controls)
+            if (!CheckAccessRights(clsCurrentUser.CurrentUser.Permissions, clsUsers.enPermissions.NewApplications))
             {
-                ctrl.Visible = false;
+                MessageBox.Show("Access Denied! You do not have permission to create or process new applications.",
+                                "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            myNewApplication.OnApplicationSaved += MyNewApplication_OnApplicationSaved;
-            this.Controls.Add(myNewApplication);
-            myNewApplication.BringToFront();
+            // 💡 إذا كانت لديه الصلاحية، يستدعي الـ Wizard من الـ Main Form
+            if (this.ParentForm is frmMain mainForm)
+            {
+                mainForm.OpenNewApplicationWizard();
+            }
         }
 
         private void MyNewApplication_OnApplicationSaved(object sender, int ApplicationID)
@@ -632,8 +633,28 @@ namespace DVLD_PresentationLayer.Applications
             TestAppointment();
         }
 
+        private bool CheckAccessRights(int userPermissions, clsUsers.enPermissions permissionToCheck)
+        {
+            // 1. Super User (-1) bypasses all permission checks
+            if (userPermissions == (int)clsUsers.enPermissions.SuperUser)
+                return true;
+
+            // 2. Bitwise AND check for normal permissions
+            return (userPermissions & (int)permissionToCheck) == (int)permissionToCheck;
+        }
+
+
+
         private void btnApplicationTypes_Click(object sender, EventArgs e)
         {
+            if (!CheckAccessRights(clsCurrentUser.CurrentUser.Permissions, clsUsers.enPermissions.ManageApplicationTypes))
+            {
+                MessageBox.Show("Access Denied! You do not have permission to manage Application Types.",
+                                "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 💡 إذا كانت لديه الصلاحية، يفتح واجهة types
             using (Form overlay = new Form())
             {
                 overlay.StartPosition = FormStartPosition.Manual;

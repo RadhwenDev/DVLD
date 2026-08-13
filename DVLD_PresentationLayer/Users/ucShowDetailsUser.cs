@@ -18,44 +18,45 @@ namespace DVLD_PresentationLayer.Users
 {
     public partial class ucShowDetailsUser : UserControl
     {
-        int _UserID = -1;
+        private int _UserID = -1;
+
         public ucShowDetailsUser(int UserID)
         {
             InitializeComponent();
             _UserID = UserID;
         }
+
+        // الألوان المعتمدة لحالات الصلاحيات
         Color ColorGranted = Color.FromArgb(56, 142, 60);
         Color ColorDenied = Color.FromArgb(158, 158, 158);
         Color ColorTextGranted = Color.FromArgb(33, 33, 33);
         Color ColorTextDenied = Color.FromArgb(189, 189, 189);
 
-        // أمثلة لقيم الصلاحيات (تأكد أنها تطابق الـ Database عندك)
+        // القيم المحدثة للـ Enum الخاص بالصلاحيات (Bitwise Power of 2)
         const int pManagePeople = 1;
         const int pManageUsers = 2;
-        const int pManageDrivers= 4;
-        const int pViewApplications = 8;
-        const int pProcessApplications = 16;
-        const int pManageApplicationTests= 32;
-        const int pEnterTestResults = 64;
+        const int pManageApplications = 4;
+        const int pNewApplications = 8;
+        const int pManageApplicationTypes = 16;
+        const int pManageTestTypes = 32;
+        const int pManageLicenseClasses = 64;
         const int pManageDetainedLicenses = 128;
-        const int pManageSettingsAndFees = 256;
+        const int pManageInternationalApp = 256;
         const int pAuditLogs = 512;
-        private void UpdateLabelPermission(Label label, Label lblText, bool test, bool isSuperUser)
+
+        private void UpdateLabelPermission(Label label, Label lblText, bool isGranted, bool isSuperUser)
         {
-            if (test)
+            if (isGranted || isSuperUser)
             {
                 label.Text = "✓";
-                if (isSuperUser)
-                    label.ForeColor = Color.FromArgb(148, 139, 216);
-                else
-                    label.ForeColor = ColorGranted;
+                label.ForeColor = isSuperUser ? Color.FromArgb(148, 139, 216) : ColorGranted;
                 lblText.ForeColor = ColorTextGranted;
-                label.Font = new Font(label.Font, FontStyle.Bold); // جعل الـ صح سميك
+                label.Font = new Font(label.Font, FontStyle.Bold);
                 lblText.Font = new Font(lblText.Font, FontStyle.Bold);
             }
             else
             {
-                label.Text = "✕"; // أو يمكن مسح النص تماماً ""
+                label.Text = "✕";
                 label.ForeColor = ColorDenied;
                 lblText.ForeColor = ColorTextDenied;
                 label.Font = new Font(label.Font, FontStyle.Regular);
@@ -69,54 +70,61 @@ namespace DVLD_PresentationLayer.Users
                 Label l21, Label l24, Label l25, Label l28, Label l26, Label l29,
                 Label l27, Label l30)
         {
-            // دالة داخلية لتسهيل الفحص
+            // دالة مساعدة محليّة لفحص وإبراز كل صلاحية على حدة
             void Check(Label lblSym, Label lblText, int permissionVal)
             {
                 bool isGranted = (permissions & permissionVal) == permissionVal;
                 UpdateLabelPermission(lblSym, lblText, isGranted, isSuperUser);
             }
 
-            // الآن نفحص كل صلاحية بناءً على قيمتها
-            Check(l15, l11, pManagePeople);
-            Check(l16, l12, pViewApplications);
-            Check(l17, l13, pEnterTestResults);
-            Check(l18, l14, pManageUsers);
-            Check(l19, l22, pProcessApplications);
-            Check(l20, l23, pManageDetainedLicenses);
-            Check(l21, l24, pManageDrivers);
-            Check(l25, l28, pManageApplicationTests);
-            Check(l26, l29, pManageSettingsAndFees);
-            Check(l27, l30, pAuditLogs);
+            Check(l15, l11, pManagePeople);            
+            Check(l19, l22, pManageUsers);             
+            Check(l25, l12, pManageApplications);      
+            Check(l16, l13, pNewApplications);         
+            Check(l20, l30, pManageApplicationTypes);  
+            Check(l26, l29, pManageTestTypes);         
+            Check(l17, l23, pManageLicenseClasses);    
+            Check(l21, l24, pManageDetainedLicenses);  
+            Check(l27, l28, pManageInternationalApp);  
+            Check(l18, l14, pAuditLogs);               
         }
 
         private void ucShowDetailsUser_Load(object sender, EventArgs e)
         {
             DataTable dt = clsUsers.getAllDetailsForShowButton(_UserID);
-            lblFullName.Text = dt.Rows[0]["FullName"].ToString();
-            string PersonID = dt.Rows[0]["PersonID"].ToString();
-            string UserName = dt.Rows[0]["UserName"].ToString();
+
+            if (dt == null || dt.Rows.Count == 0) return;
+
+            DataRow row = dt.Rows[0];
+
+            lblFullName.Text = row["FullName"].ToString();
+            string PersonID = row["PersonID"].ToString();
+            string UserName = row["UserName"].ToString();
             lblPersonID_UserName.Text = $"PersonID: {PersonID} • Username: {UserName}";
 
-            lblNationalNo.Text = dt.Rows[0]["NationalNo"].ToString();
-            if (DateTime.TryParse(dt.Rows[0]["DateOfBirth"].ToString(), out DateTime birthDate))
+            lblNationalNo.Text = row["NationalNo"].ToString();
+
+            if (DateTime.TryParse(row["DateOfBirth"].ToString(), out DateTime birthDate))
                 lblDoB.Text = birthDate.ToString("MMM dd, yyyy", CultureInfo.InvariantCulture);
             else
-                lblDoB.Text = dt.Rows[0]["DateOfBirth"].ToString();
-            lblGender.Text = dt.Rows[0]["GenderName"].ToString();
-            lblNationality.Text = dt.Rows[0]["CountryName"].ToString();
-            lblPhone.Text = dt.Rows[0]["Phone"].ToString();
-            lblMail.Text = dt.Rows[0]["Email"].ToString();
-            lblAddress.Text = dt.Rows[0]["Address"].ToString();
-            lblAddress.Text = dt.Rows[0]["Address"].ToString();
+                lblDoB.Text = row["DateOfBirth"].ToString();
 
-            int Permissions = int.Parse(dt.Rows[0]["Permissions"].ToString());
+            lblGender.Text = row["GenderName"].ToString();
+            lblNationality.Text = row["CountryName"].ToString();
+            lblPhone.Text = row["Phone"].ToString();
+            lblMail.Text = row["Email"].ToString();
+            lblAddress.Text = row["Address"].ToString();
 
-            bool isSuperUser = (Permissions == -1);
-            UpdatePermissionVisuals(Permissions, isSuperUser,
+            int permissions = Convert.ToInt32(row["Permissions"]);
+            bool isSuperUser = (permissions == -1);
+
+            // تحديث حالة الأيقونات والنصوص لكل صلاحية
+            UpdatePermissionVisuals(permissions, isSuperUser,
                     label15, label11, label16, label12, label17, label13,
                     label18, label14, label19, label22, label20, label23,
                     label21, label24, label25, label28, label26, label29, label27, label30);
 
+            // إدراج حالة الـ Badge الخاصة بالصلاحيات (Full Permissions = 1023 كـ Sum للـ Flags من 1 إلى 512)
             if (isSuperUser)
             {
                 permissionsBadge.Text = "Global access (super user)";
@@ -124,7 +132,7 @@ namespace DVLD_PresentationLayer.Users
                 permissionsBadge.FillColor = Color.FromArgb(29, 22, 73);
                 permissionsBadge.BorderColor = Color.FromArgb(45, 45, 90);
             }
-            else if(Permissions == 1023)
+            else if (permissions == 1023)
             {
                 permissionsBadge.Text = "Global access (full permissions)";
                 permissionsBadge.ForeColor = Color.FromArgb(91, 144, 206);
@@ -139,24 +147,25 @@ namespace DVLD_PresentationLayer.Users
                 permissionsBadge.BorderColor = Color.FromArgb(26, 26, 25);
             }
 
-                string statusName = dt.Rows[0]["Status"].ToString();
+            // تحديد حالة المستخدم (Active / Inactive)
+            string statusName = row["Status"].ToString();
             if (statusName == "Active")
             {
                 statusBadge.Text = "Active";
-                statusBadge.FillColor = Color.FromArgb(232, 245, 233); // أخضر فاتح
+                statusBadge.FillColor = Color.FromArgb(232, 245, 233);
                 statusBadge.ForeColor = Color.FromArgb(56, 142, 60);
                 statusBadge.BorderColor = Color.FromArgb(56, 142, 60);
             }
             else
             {
                 statusBadge.Text = "Inactive";
-                statusBadge.FillColor = Color.FromArgb(254, 234, 234); // أحمر فاتح
+                statusBadge.FillColor = Color.FromArgb(254, 234, 234);
                 statusBadge.ForeColor = Color.FromArgb(183, 28, 28);
                 statusBadge.BorderColor = Color.FromArgb(183, 28, 28);
             }
 
-            string imagePath = dt.Rows[0]["ImagePath"].ToString();
-
+            // تحميل صورة المستخدم بأمان
+            string imagePath = row["ImagePath"].ToString();
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
                 try
@@ -168,19 +177,14 @@ namespace DVLD_PresentationLayer.Users
                 }
                 catch
                 {
+                    // يمكن وضع صورة افتراضية هنا في حال فشل تحميل الملف
                 }
             }
-            else
-            {
-            }
-
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.FindForm()?.Close();
         }
-
-        
     }
 }
