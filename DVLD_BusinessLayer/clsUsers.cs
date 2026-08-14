@@ -291,5 +291,41 @@ namespace DVLD_BusinessLayer
 
             return false;
         }
+        public static bool GetUserInfoForPasswordReset(
+    string UserName,
+    ref int UserID,
+    ref int PersonID,
+    ref string Email)
+        {
+            return clsUsersDataAccess.GetUserInfoForPasswordReset(
+                UserName,
+                ref UserID,
+                ref PersonID,
+                ref Email);
+        }
+
+        public static string GeneratePasswordResetCode(int UserID)
+        {
+            // Generate 6-digit code
+            string resetCode = TokenHelper.GenerateResetCode();
+
+            // Hash the code before storing it in database
+            string resetCodeHash = HashHelper.ComputeSHA256(resetCode);
+
+            // Code expires after 15 minutes
+            DateTime expiration = DateTime.Now.AddMinutes(15);
+
+            // Save hash + expiration in database
+            bool saved = clsUsersDataAccess.SaveResetCode(
+                UserID,
+                resetCodeHash,
+                expiration);
+
+            if (!saved)
+                return null;
+
+            // Return the original code so it can be sent by email
+            return resetCode;
+        }
     }
 }

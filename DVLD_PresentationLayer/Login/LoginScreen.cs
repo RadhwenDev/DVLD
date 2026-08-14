@@ -72,5 +72,11 @@ namespace DVLD_PresentationLayer.Login
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void linkLblForgetPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ForgotPassword frm = new ForgotPassword();
+            frm.ShowDialog();
+        }
     }
 }

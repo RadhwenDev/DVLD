@@ -189,11 +189,29 @@
     <Compile Include="Licenses\ucShowLicense.Designer.cs">
       <DependentUpon>ucShowLicense.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login\ForgotPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\ForgotPassword.Designer.cs">
+      <DependentUpon>ForgotPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\LoginScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Login\LoginScreen.Designer.cs">
       <DependentUpon>LoginScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\ResetPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\ResetPassword.Designer.cs">
+      <DependentUpon>ResetPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\VerifyCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\VerifyCode.Designer.cs">
+      <DependentUpon>VerifyCode.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -341,8 +359,14 @@
     <EmbeddedResource Include="Licenses\ucShowLicense.resx">
       <DependentUpon>ucShowLicense.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Login\ForgotPassword.resx">
+      <DependentUpon>ForgotPassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\ResetPassword.resx">
+      <DependentUpon>ResetPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

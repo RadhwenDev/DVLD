@@ -29,5 +29,19 @@ namespace DVLD_Security
 
             return builder.ToString();
         }
+
+        // باش نعملو function خاصة بال ResetCode لانها باش ترجعلنا 6 ارقام
+        public static string GenerateResetCode()
+        {
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            {
+                byte[] bytes = new byte[4];
+                rng.GetBytes(bytes);
+
+                uint number = BitConverter.ToUInt32(bytes, 0);
+
+                return (number % 1000000).ToString("D6");
+            }
+        }
     }
 }

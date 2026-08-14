@@ -150,6 +150,7 @@
             this.linkLblForgetPassword.TabStop = true;
             this.linkLblForgetPassword.Text = "Forget Password?";
             this.linkLblForgetPassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLblForgetPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLblForgetPassword_LinkClicked);
             // 
             // btnSignIn
             // 

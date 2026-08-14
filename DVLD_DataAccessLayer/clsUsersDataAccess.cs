@@ -386,6 +386,137 @@ namespace DVLD_DataAccessLayer
 
             return (rowsAffected > 0);
         }
+        public static bool GetUserInfoForPasswordReset(
+    string UserName,
+    ref int UserID,
+    ref int PersonID,
+    ref string Email)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT U.UserID, U.PersonID, P.Email
+                         FROM Users U
+                         INNER JOIN People P ON U.PersonID = P.PersonID
+                         WHERE LOWER(U.UserName) = LOWER(@UserName)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserName", UserName.Trim());
+
+                    try
+                    {
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                UserID = (int)reader["UserID"];
+                                PersonID = (int)reader["PersonID"];
+                                Email = reader["Email"].ToString();
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
+        public static bool SaveResetCode(
+    int UserID,
+    string ResetCodeHash,
+    DateTime ResetCodeExpiration)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"UPDATE Users
+                         SET ResetCodeHash = @ResetCodeHash,
+                             ResetCodeExpiration = @ResetCodeExpiration,
+                             IsResetCodeUsed = 0
+                         WHERE UserID = @UserID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+                    command.Parameters.AddWithValue("@ResetCodeHash", ResetCodeHash);
+                    command.Parameters.AddWithValue("@ResetCodeExpiration", ResetCodeExpiration);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return rowsAffected > 0;
+        }
+
+        public static bool GetResetCodeInfo(
+    int UserID,
+    ref string ResetCodeHash,
+    ref DateTime ResetCodeExpiration,
+    ref bool IsResetCodeUsed)
+        {
+            bool isFound = false;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT ResetCodeHash,
+                                ResetCodeExpiration,
+                                IsResetCodeUsed
+                         FROM Users
+                         WHERE UserID = @UserID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+                    try
+                    {
+                        connection.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                ResetCodeHash = reader["ResetCodeHash"] == DBNull.Value
+                                    ? ""
+                                    : reader["ResetCodeHash"].ToString();
+
+                                ResetCodeExpiration = reader["ResetCodeExpiration"] == DBNull.Value
+                                    ? DateTime.MinValue
+                                    : (DateTime)reader["ResetCodeExpiration"];
+
+                                IsResetCodeUsed = (bool)reader["IsResetCodeUsed"];
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+
+            return isFound;
+        }
 
     }
 }
