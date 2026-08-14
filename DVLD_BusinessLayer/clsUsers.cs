@@ -383,5 +383,9 @@ namespace DVLD_BusinessLayer
         {
             return clsUsersDataAccess.IncrementResetCodeAttempts(UserID);
         }
+        public static string GetUserEmailByID(int UserID)
+        {
+            return clsUsersDataAccess.GetUserEmailByID(UserID);
+        }
     }
 }

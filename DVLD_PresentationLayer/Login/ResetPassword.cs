@@ -70,5 +70,10 @@ namespace DVLD_PresentationLayer.Login
                     MessageBoxIcon.Error);
             }
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.FindForm()?.Close();
+        }
     }
 }

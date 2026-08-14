@@ -121,7 +121,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EQAACxEBf2RfkQAAA/RJREFUaEPtmMuLFFcUxmeMj2gENYmOfW47iujGXchjkUgeKmQbMP4D4gtB1Dq3
+        EAAACxABrSO9dQAAA/RJREFUaEPtmMuLFFcUxmeMj2gENYmOfW47iujGXchjkUgeKmQbMP4D4gtB1Dq3
         M0oevc0muIghBNcmwY0RdaMLQWKIpu1zRkcXoig+ECEhMRiS6GjLuTPVU3Vu9XRV9XT3LPoHHzR1Hve7
         M7eKe29fX48ePXpMWwoBrzVIPwLyPWN51FiudUijYPmusfRDwdI72ldzymdmGsvfJDTulr4WT9pmQ6aZ
         +TEhH9Q+E3HLJlZIx4tYfXNNeWS2zm0XMpaMCZZPRL2kWk6y5qPmdbzTGMtHQz+AfFjHPcZfWFewrHTx
@@ -143,5 +143,8 @@
   </data>
   <metadata name="expiryTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
+  </metadata>
+  <metadata name="resendTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>155, 17</value>
   </metadata>
 </root>

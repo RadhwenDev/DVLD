@@ -37,9 +37,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblTimer = new System.Windows.Forms.Label();
             this.btnVerify = new Guna.UI2.WinForms.Guna2Button();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblResendCode = new System.Windows.Forms.Label();
             this.linkLblForgetPassword = new System.Windows.Forms.LinkLabel();
             this.expiryTimer = new System.Windows.Forms.Timer(this.components);
+            this.resendTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -147,18 +148,20 @@
             this.btnVerify.Text = "Verify";
             this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
             // 
-            // label4
+            // lblResendCode
             // 
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(84)))));
-            this.label4.Location = new System.Drawing.Point(105, 489);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(187, 37);
-            this.label4.TabIndex = 5;
-            this.label4.Tag = "";
-            this.label4.Text = "Resend Code";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblResendCode.BackColor = System.Drawing.Color.Transparent;
+            this.lblResendCode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblResendCode.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblResendCode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(84)))));
+            this.lblResendCode.Location = new System.Drawing.Point(105, 489);
+            this.lblResendCode.Name = "lblResendCode";
+            this.lblResendCode.Size = new System.Drawing.Size(187, 37);
+            this.lblResendCode.TabIndex = 5;
+            this.lblResendCode.Tag = "";
+            this.lblResendCode.Text = "Resend Code";
+            this.lblResendCode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblResendCode.Click += new System.EventHandler(this.lblResendCode_Click);
             // 
             // linkLblForgetPassword
             // 
@@ -177,6 +180,11 @@
             this.expiryTimer.Interval = 1000;
             this.expiryTimer.Tick += new System.EventHandler(this.expiryTimer_Tick);
             // 
+            // resendTimer
+            // 
+            this.resendTimer.Interval = 1000;
+            this.resendTimer.Tick += new System.EventHandler(this.resendTimer_Tick);
+            // 
             // VerifyCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -186,7 +194,7 @@
             this.Controls.Add(this.btnVerify);
             this.Controls.Add(this.txtCode);
             this.Controls.Add(this.lblTimer);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblResendCode);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);
@@ -209,8 +217,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblTimer;
         private Guna.UI2.WinForms.Guna2Button btnVerify;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblResendCode;
         private System.Windows.Forms.LinkLabel linkLblForgetPassword;
         private System.Windows.Forms.Timer expiryTimer;
+        private System.Windows.Forms.Timer resendTimer;
     }
 }

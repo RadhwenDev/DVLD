@@ -440,10 +440,11 @@ namespace DVLD_DataAccessLayer
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"UPDATE Users
-                         SET ResetCodeHash = @ResetCodeHash,
-                             ResetCodeExpiration = @ResetCodeExpiration,
-                             IsResetCodeUsed = 0
-                         WHERE UserID = @UserID";
+                 SET ResetCodeHash = @ResetCodeHash,
+                     ResetCodeExpiration = @ResetCodeExpiration,
+                     IsResetCodeUsed = 0,
+                     ResetCodeAttempts = 0
+                 WHERE UserID = @UserID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -579,6 +580,39 @@ namespace DVLD_DataAccessLayer
             }
 
             return rowsAffected > 0;
+        }
+        public static string GetUserEmailByID(int UserID)
+        {
+            string email = "";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"SELECT P.Email
+                         FROM Users U
+                         INNER JOIN People P ON U.PersonID = P.PersonID
+                         WHERE U.UserID = @UserID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+                    try
+                    {
+                        connection.Open();
+
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                            email = result.ToString();
+                    }
+                    catch (Exception)
+                    {
+                        return "";
+                    }
+                }
+            }
+
+            return email;
         }
     }
 }
