@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVLD_DataAccessLayer", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVLD_Security", "..\DVLD_Security\DVLD_Security.csproj", "{302782DB-35E5-445B-BE94-B8834D395825}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVLD_EmailService", "..\DVLD_EmailService\DVLD_EmailService.csproj", "{9CF1E3A1-DB9E-4792-9C31-08910D1B14FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{302782DB-35E5-445B-BE94-B8834D395825}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{302782DB-35E5-445B-BE94-B8834D395825}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{302782DB-35E5-445B-BE94-B8834D395825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF1E3A1-DB9E-4792-9C31-08910D1B14FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF1E3A1-DB9E-4792-9C31-08910D1B14FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF1E3A1-DB9E-4792-9C31-08910D1B14FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF1E3A1-DB9E-4792-9C31-08910D1B14FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

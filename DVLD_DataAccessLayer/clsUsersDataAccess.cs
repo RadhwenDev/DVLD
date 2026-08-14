@@ -466,6 +466,7 @@ namespace DVLD_DataAccessLayer
             return rowsAffected > 0;
         }
 
+        //نحتاجو دالة تقرأ الـResetCodeHash والـResetCodeExpiration من Users
         public static bool GetResetCodeInfo(
     int UserID,
     ref string ResetCodeHash,

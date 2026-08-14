@@ -327,5 +327,35 @@ namespace DVLD_BusinessLayer
             // Return the original code so it can be sent by email
             return resetCode;
         }
+
+        public static bool VerifyPasswordResetCode(int UserID, string resetCode)
+        {
+            string resetCodeHash = "";
+            DateTime resetCodeExpiration = DateTime.MinValue;
+            bool isResetCodeUsed = false;
+
+            bool found = clsUsersDataAccess.GetResetCodeInfo(
+                UserID,
+                ref resetCodeHash,
+                ref resetCodeExpiration,
+                ref isResetCodeUsed);
+
+            if (!found)
+                return false;
+
+            // Code already used
+            if (isResetCodeUsed)
+                return false;
+
+            // Code expired
+            if (DateTime.Now > resetCodeExpiration)
+                return false;
+
+            // Hash the code entered by the user
+            string enteredCodeHash = HashHelper.ComputeSHA256(resetCode);
+
+            // Compare hashes
+            return enteredCodeHash == resetCodeHash;
+        }
     }
 }

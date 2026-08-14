@@ -368,6 +368,9 @@
     <EmbeddedResource Include="Login\ResetPassword.resx">
       <DependentUpon>ResetPassword.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Login\VerifyCode.resx">
+      <DependentUpon>VerifyCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -433,6 +436,10 @@
     <ProjectReference Include="..\DVLD_BusinessLayer\DVLD_BusinessLayer.csproj">
       <Project>{1cc23619-1d24-4c40-a937-ba5516e051e2}</Project>
       <Name>DVLD_BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DVLD_EmailService\DVLD_EmailService.csproj">
+      <Project>{9cf1e3a1-db9e-4792-9c31-08910d1b14fa}</Project>
+      <Name>DVLD_EmailService</Name>
     </ProjectReference>
     <ProjectReference Include="..\DVLD_Security\DVLD_Security.csproj">
       <Project>{302782db-35e5-445b-be94-b8834d395825}</Project>

@@ -32,7 +32,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtUsername = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txtCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnVerify = new Guna.UI2.WinForms.Guna2Button();
@@ -77,27 +77,27 @@
             this.label1.Text = "Enter the 6-digit code sent to your email.";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtUsername
+            // txtCode
             // 
-            this.txtUsername.BorderColor = System.Drawing.Color.Black;
-            this.txtUsername.BorderRadius = 10;
-            this.txtUsername.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtUsername.DefaultText = "";
-            this.txtUsername.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.txtUsername.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.txtUsername.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtUsername.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.txtUsername.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtUsername.Font = new System.Drawing.Font("Segoe UI Emoji", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.ForeColor = System.Drawing.Color.Black;
-            this.txtUsername.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtUsername.Location = new System.Drawing.Point(68, 238);
-            this.txtUsername.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.PlaceholderText = " ";
-            this.txtUsername.SelectedText = "";
-            this.txtUsername.Size = new System.Drawing.Size(293, 59);
-            this.txtUsername.TabIndex = 6;
+            this.txtCode.BorderColor = System.Drawing.Color.Black;
+            this.txtCode.BorderRadius = 10;
+            this.txtCode.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtCode.DefaultText = "";
+            this.txtCode.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txtCode.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txtCode.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtCode.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txtCode.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtCode.Font = new System.Drawing.Font("Segoe UI Emoji", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCode.ForeColor = System.Drawing.Color.Black;
+            this.txtCode.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txtCode.Location = new System.Drawing.Point(68, 238);
+            this.txtCode.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.PlaceholderText = " ";
+            this.txtCode.SelectedText = "";
+            this.txtCode.Size = new System.Drawing.Size(293, 59);
+            this.txtCode.TabIndex = 6;
             // 
             // label2
             // 
@@ -142,6 +142,7 @@
             this.btnVerify.Size = new System.Drawing.Size(233, 45);
             this.btnVerify.TabIndex = 7;
             this.btnVerify.Text = "Verify";
+            this.btnVerify.Click += new System.EventHandler(this.btnVerify_Click);
             // 
             // label4
             // 
@@ -175,7 +176,7 @@
             this.ClientSize = new System.Drawing.Size(404, 632);
             this.Controls.Add(this.linkLblForgetPassword);
             this.Controls.Add(this.btnVerify);
-            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.txtCode);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
@@ -195,7 +196,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
-        private Guna.UI2.WinForms.Guna2TextBox txtUsername;
+        private Guna.UI2.WinForms.Guna2TextBox txtCode;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private Guna.UI2.WinForms.Guna2Button btnVerify;
