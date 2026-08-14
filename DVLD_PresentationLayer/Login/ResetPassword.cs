@@ -73,7 +73,8 @@ namespace DVLD_PresentationLayer.Login
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.FindForm()?.Close();
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

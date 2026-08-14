@@ -174,6 +174,7 @@
             this.linkLblForgetPassword.TabStop = true;
             this.linkLblForgetPassword.Text = "Cancel";
             this.linkLblForgetPassword.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLblForgetPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLblForgetPassword_LinkClicked);
             // 
             // expiryTimer
             // 

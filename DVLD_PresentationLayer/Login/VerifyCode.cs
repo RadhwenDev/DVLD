@@ -45,9 +45,11 @@ namespace DVLD_PresentationLayer.Login
                 MessageBox.Show("Code verified successfully.");
 
                 ResetPassword frm = new ResetPassword(_UserID);
-                frm.ShowDialog();
-
-                this.FindForm().Close();
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
             else
             {
@@ -119,8 +121,13 @@ namespace DVLD_PresentationLayer.Login
                 MessageBox.Show("A new verification code has been sent to your email.");
 
                 _timeLeftInSeconds = 900;
+
                 lblTimer.Text = "15:00";
                 lblTimer.ForeColor = Color.Black;
+
+                btnVerify.Enabled = true;
+                expiryTimer.Start();
+
 
                 _resendCooldown = 60;
                 lblResendCode.Enabled = false;
@@ -155,6 +162,12 @@ namespace DVLD_PresentationLayer.Login
             {
                 lblResendCode.Text = $"Resend Code ({_resendCooldown}s)";
             }
+        }
+
+        private void linkLblForgetPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }
