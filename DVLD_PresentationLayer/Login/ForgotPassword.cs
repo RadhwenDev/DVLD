@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_EmailService;
 
 namespace DVLD_PresentationLayer.Login
 {
@@ -49,13 +50,51 @@ namespace DVLD_PresentationLayer.Login
                 MessageBox.Show("Username not found.");
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(email))
             {
                 MessageBox.Show("This user does not have an email address.");
                 return;
             }
 
-            MessageBox.Show("User found. Email: " + email);
+            // Generate the reset code and save its hash in the database
+            string resetCode = clsUsers.GeneratePasswordResetCode(userID);
+
+            if (string.IsNullOrEmpty(resetCode))
+            {
+                MessageBox.Show("Failed to generate password reset code.");
+                return;
+            }
+
+            // Send the reset code by email
+            IEmailService emailService = new EmailService();
+
+            string subject = "DVLD - Password Reset Code";
+
+            string body =
+                "Hello,\r\n\r\n" +
+                "Your DVLD password reset code is:\r\n\r\n" +
+                resetCode + "\r\n\r\n" +
+                "This code will expire in 15 minutes.\r\n\r\n" +
+                "If you did not request a password reset, please ignore this email.";
+
+            bool emailSent = emailService.SendEmail(
+                email,
+                subject,
+                body);
+
+            if (!emailSent)
+            {
+                MessageBox.Show(
+                    "Failed to send the verification code. Please try again.");
+                return;
+            }
+
+            // Open verification form
+            VerifyCode frm = new VerifyCode(userID);
+            frm.ShowDialog();
+
+            this.Close();
         }
     }
 }

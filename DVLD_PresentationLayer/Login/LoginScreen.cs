@@ -79,20 +79,5 @@ namespace DVLD_PresentationLayer.Login
             ForgotPassword frm = new ForgotPassword();
             frm.ShowDialog();
         }
-
-        private void btnTestEmail_Click(object sender, EventArgs e)
-        {
-            IEmailService emailService = new EmailService();
-
-            bool result = emailService.SendEmail(
-                "radhwenhmad@gmail.com",
-                "DVLD Email Test",
-                "This is a test email from the DVLD application.");
-
-            if (result)
-                MessageBox.Show("Email sent successfully.");
-            else
-                MessageBox.Show("Failed to send email.");
-        }
     }
 }

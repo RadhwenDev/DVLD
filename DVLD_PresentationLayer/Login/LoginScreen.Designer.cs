@@ -46,7 +46,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new Guna.UI2.WinForms.Guna2Button();
-            this.btnTestEmail = new Guna.UI2.WinForms.Guna2Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -259,24 +258,6 @@
             this.btnClose.Text = "✖️";
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnTestEmail
-            // 
-            this.btnTestEmail.BorderRadius = 10;
-            this.btnTestEmail.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnTestEmail.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnTestEmail.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnTestEmail.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnTestEmail.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnTestEmail.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(51)))), ((int)(((byte)(126)))));
-            this.btnTestEmail.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnTestEmail.ForeColor = System.Drawing.Color.White;
-            this.btnTestEmail.Location = new System.Drawing.Point(438, 429);
-            this.btnTestEmail.Name = "btnTestEmail";
-            this.btnTestEmail.Size = new System.Drawing.Size(357, 48);
-            this.btnTestEmail.TabIndex = 6;
-            this.btnTestEmail.Text = "Sign In";
-            this.btnTestEmail.Click += new System.EventHandler(this.btnTestEmail_Click);
-            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -289,7 +270,6 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblCopyRight);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnTestEmail);
             this.Controls.Add(this.btnSignIn);
             this.Controls.Add(this.linkLblForgetPassword);
             this.Controls.Add(this.cbRememberMe);
@@ -328,6 +308,5 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2Button btnClose;
-        private Guna.UI2.WinForms.Guna2Button btnTestEmail;
     }
 }
