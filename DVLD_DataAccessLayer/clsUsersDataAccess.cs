@@ -471,17 +471,19 @@ namespace DVLD_DataAccessLayer
     int UserID,
     ref string ResetCodeHash,
     ref DateTime ResetCodeExpiration,
-    ref bool IsResetCodeUsed)
+    ref bool IsResetCodeUsed,
+    ref int ResetCodeAttempts)
         {
             bool isFound = false;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"SELECT ResetCodeHash,
-                                ResetCodeExpiration,
-                                IsResetCodeUsed
-                         FROM Users
-                         WHERE UserID = @UserID";
+                        ResetCodeExpiration,
+                        IsResetCodeUsed,
+                        ResetCodeAttempts
+                 FROM Users
+                 WHERE UserID = @UserID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -506,6 +508,10 @@ namespace DVLD_DataAccessLayer
                                     : (DateTime)reader["ResetCodeExpiration"];
 
                                 IsResetCodeUsed = (bool)reader["IsResetCodeUsed"];
+
+                                ResetCodeAttempts = reader["ResetCodeAttempts"] == DBNull.Value
+                                    ? 0
+                                    : (int)reader["ResetCodeAttempts"];
                             }
                         }
                     }
@@ -526,6 +532,34 @@ namespace DVLD_DataAccessLayer
             {
                 string query = @"UPDATE Users
                          SET IsResetCodeUsed = 1
+                         WHERE UserID = @UserID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return rowsAffected > 0;
+        }
+        public static bool IncrementResetCodeAttempts(int UserID)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"UPDATE Users
+                         SET ResetCodeAttempts = ResetCodeAttempts + 1
                          WHERE UserID = @UserID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))

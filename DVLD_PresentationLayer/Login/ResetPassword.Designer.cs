@@ -102,6 +102,7 @@
             this.txtNewPassword.Location = new System.Drawing.Point(38, 212);
             this.txtNewPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNewPassword.Name = "txtNewPassword";
+            this.txtNewPassword.PasswordChar = '•';
             this.txtNewPassword.PlaceholderText = "🗝️";
             this.txtNewPassword.SelectedText = "";
             this.txtNewPassword.Size = new System.Drawing.Size(423, 48);
@@ -133,6 +134,7 @@
             this.txtConfirmPassword.Location = new System.Drawing.Point(38, 315);
             this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
+            this.txtConfirmPassword.PasswordChar = '•';
             this.txtConfirmPassword.PlaceholderText = "🗝️";
             this.txtConfirmPassword.SelectedText = "";
             this.txtConfirmPassword.Size = new System.Drawing.Size(423, 48);

@@ -333,17 +333,19 @@ namespace DVLD_BusinessLayer
             string resetCodeHash = "";
             DateTime resetCodeExpiration = DateTime.MinValue;
             bool isResetCodeUsed = false;
+            int resetCodeAttempts = 0;
 
             bool found = clsUsersDataAccess.GetResetCodeInfo(
                 UserID,
                 ref resetCodeHash,
                 ref resetCodeExpiration,
-                ref isResetCodeUsed);
+                ref isResetCodeUsed,
+                ref resetCodeAttempts);
 
             if (!found)
                 return false;
 
-            // Code already used
+            // Code already used or invalidated
             if (isResetCodeUsed)
                 return false;
 
@@ -351,15 +353,35 @@ namespace DVLD_BusinessLayer
             if (DateTime.Now > resetCodeExpiration)
                 return false;
 
-            // Hash the code entered by the user
-            string enteredCodeHash = HashHelper.ComputeSHA256(resetCode);
+            // Maximum attempts reached
+            if (resetCodeAttempts >= 5)
+            {
+                clsUsersDataAccess.MarkResetCodeAsUsed(UserID);
+                return false;
+            }
 
-            // Compare hashes
-            return enteredCodeHash == resetCodeHash;
+            // Hash the code entered by the user
+            string enteredCodeHash =
+                HashHelper.ComputeSHA256(resetCode);
+
+            // Correct code
+            if (enteredCodeHash == resetCodeHash)
+            {
+                return true;
+            }
+
+            // Wrong code
+            clsUsersDataAccess.IncrementResetCodeAttempts(UserID);
+
+            return false;
         }
         public static bool MarkResetCodeAsUsed(int UserID)
         {
             return clsUsersDataAccess.MarkResetCodeAsUsed(UserID);
+        }
+        public static bool IncrementResetCodeAttempts(int UserID)
+        {
+            return clsUsersDataAccess.IncrementResetCodeAttempts(UserID);
         }
     }
 }
