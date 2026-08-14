@@ -15,12 +15,15 @@ namespace DVLD_PresentationLayer.Login
     public partial class VerifyCode : Form
     {
         private int _UserID;
+        private int _timeLeftInSeconds = 900;
 
         public VerifyCode(int UserID)
         {
             InitializeComponent();
 
             _UserID = UserID;
+
+            expiryTimer.Start();
         }
 
         private void btnVerify_Click(object sender, EventArgs e)
@@ -38,15 +41,32 @@ namespace DVLD_PresentationLayer.Login
             {
                 MessageBox.Show("Code verified successfully.");
 
-                // بعدين نفتح Reset Password
                 ResetPassword frm = new ResetPassword(_UserID);
                 frm.ShowDialog();
 
-                this.Close();
+                this.FindForm().Close();
             }
             else
             {
                 MessageBox.Show("Invalid or expired code.");
+            }
+        }
+
+        private void expiryTimer_Tick(object sender, EventArgs e)
+        {
+            if (_timeLeftInSeconds > 0)
+            {
+                _timeLeftInSeconds--;
+
+                TimeSpan time = TimeSpan.FromSeconds(_timeLeftInSeconds);
+                lblTimer.Text = $"{time:mm\\:ss}";
+            }
+            else
+            {
+                expiryTimer.Stop();
+
+                lblTimer.Text = "Code expired!";
+                btnVerify.Enabled = false;
             }
         }
     }

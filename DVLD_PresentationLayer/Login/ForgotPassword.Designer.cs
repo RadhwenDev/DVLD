@@ -61,10 +61,10 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(101, 31);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(291, 37);
+            this.label5.Size = new System.Drawing.Size(291, 42);
             this.label5.TabIndex = 2;
             this.label5.Tag = "";
-            this.label5.Text = "Reset Password";
+            this.label5.Text = "Forgot Password";
             // 
             // label2
             // 

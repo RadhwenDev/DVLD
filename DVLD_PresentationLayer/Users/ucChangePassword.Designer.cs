@@ -112,7 +112,7 @@
             this.txtConfirmPassword.Location = new System.Drawing.Point(58, 326);
             this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.PlaceholderText = "";
+            this.txtConfirmPassword.PlaceholderText = "🗝️";
             this.txtConfirmPassword.SelectedText = "";
             this.txtConfirmPassword.Size = new System.Drawing.Size(400, 48);
             this.txtConfirmPassword.TabIndex = 3;
@@ -133,7 +133,7 @@
             this.txtNewPassword.Location = new System.Drawing.Point(57, 203);
             this.txtNewPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNewPassword.Name = "txtNewPassword";
-            this.txtNewPassword.PlaceholderText = "";
+            this.txtNewPassword.PlaceholderText = "🗝️";
             this.txtNewPassword.SelectedText = "";
             this.txtNewPassword.Size = new System.Drawing.Size(400, 48);
             this.txtNewPassword.TabIndex = 2;
@@ -154,7 +154,7 @@
             this.txtCurrentPassword.Location = new System.Drawing.Point(57, 66);
             this.txtCurrentPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCurrentPassword.Name = "txtCurrentPassword";
-            this.txtCurrentPassword.PlaceholderText = "";
+            this.txtCurrentPassword.PlaceholderText = "🗝️";
             this.txtCurrentPassword.SelectedText = "";
             this.txtCurrentPassword.Size = new System.Drawing.Size(400, 48);
             this.txtCurrentPassword.TabIndex = 1;

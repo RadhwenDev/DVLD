@@ -28,16 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VerifyCode));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtCode = new Guna.UI2.WinForms.Guna2TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblTimer = new System.Windows.Forms.Label();
             this.btnVerify = new Guna.UI2.WinForms.Guna2Button();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLblForgetPassword = new System.Windows.Forms.LinkLabel();
+            this.expiryTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,17 +114,18 @@
             this.label2.Text = "Code expires in";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // lblTimer
             // 
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(105, 365);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(187, 37);
-            this.label3.TabIndex = 5;
-            this.label3.Tag = "";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTimer.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimer.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.lblTimer.ForeColor = System.Drawing.Color.Black;
+            this.lblTimer.Location = new System.Drawing.Point(105, 365);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(187, 37);
+            this.lblTimer.TabIndex = 5;
+            this.lblTimer.Tag = "";
+            this.lblTimer.Text = "15:00";
+            this.lblTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnVerify
             // 
@@ -169,6 +172,11 @@
             this.linkLblForgetPassword.Text = "Cancel";
             this.linkLblForgetPassword.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // expiryTimer
+            // 
+            this.expiryTimer.Interval = 1000;
+            this.expiryTimer.Tick += new System.EventHandler(this.expiryTimer_Tick);
+            // 
             // VerifyCode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -177,7 +185,7 @@
             this.Controls.Add(this.linkLblForgetPassword);
             this.Controls.Add(this.btnVerify);
             this.Controls.Add(this.txtCode);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -185,6 +193,7 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "VerifyCode";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "VerifyCode";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -198,9 +207,10 @@
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2TextBox txtCode;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblTimer;
         private Guna.UI2.WinForms.Guna2Button btnVerify;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLblForgetPassword;
+        private System.Windows.Forms.Timer expiryTimer;
     }
 }

@@ -518,6 +518,33 @@ namespace DVLD_DataAccessLayer
 
             return isFound;
         }
+        public static bool MarkResetCodeAsUsed(int UserID)
+        {
+            int rowsAffected = 0;
 
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                string query = @"UPDATE Users
+                         SET IsResetCodeUsed = 1
+                         WHERE UserID = @UserID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+                    try
+                    {
+                        connection.Open();
+                        rowsAffected = command.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return rowsAffected > 0;
+        }
     }
 }

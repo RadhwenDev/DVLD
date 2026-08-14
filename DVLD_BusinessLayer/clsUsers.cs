@@ -357,5 +357,9 @@ namespace DVLD_BusinessLayer
             // Compare hashes
             return enteredCodeHash == resetCodeHash;
         }
+        public static bool MarkResetCodeAsUsed(int UserID)
+        {
+            return clsUsersDataAccess.MarkResetCodeAsUsed(UserID);
+        }
     }
 }

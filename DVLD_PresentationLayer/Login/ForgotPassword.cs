@@ -94,7 +94,7 @@ namespace DVLD_PresentationLayer.Login
             VerifyCode frm = new VerifyCode(userID);
             frm.ShowDialog();
 
-            this.Close();
+            this.FindForm()?.Close();
         }
     }
 }
