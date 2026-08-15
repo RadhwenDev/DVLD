@@ -175,6 +175,7 @@ namespace DVLD_PresentationLayer
         {
             pnlContainer.Controls.Clear();
             userControl.Dock = DockStyle.Fill;
+            userControl.Visible = true;
             pnlContainer.Controls.Add(userControl);
             userControl.BringToFront();
         }
@@ -203,10 +204,12 @@ namespace DVLD_PresentationLayer
             activeSidebarButton = btnDashboard;
             lblBreadcrumb.Text = "DVLD > Dashboard";
 
+            //ucDashboard myDashboardPage = new ucDashboard();
             if (_dashboard == null)
             {
                 _dashboard = new ucDashboard();
             }
+
 
             showUserControl(_dashboard);
 
@@ -530,5 +533,6 @@ namespace DVLD_PresentationLayer
                 }
             }
         }
+
     }
 }

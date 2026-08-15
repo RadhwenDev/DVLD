@@ -31,63 +31,100 @@ namespace DVLD_PresentationLayer.Dashboard
 
         private void ucDashboard_Load(object sender, EventArgs e)
         {
+            RefreshDashboard();
+        }
+
+        public void RefreshDashboard()
+        {
             lblTotalPeople.Text = clsDashboard.GetTotalPeople().ToString();
-            int totalPersonLastMonth = int.Parse(clsDashboard.GetTotalPeopleInThisMonth().ToString());
-            if( totalPersonLastMonth > 0 )
+
+            int totalPersonLastMonth =
+                clsDashboard.GetTotalPeopleInThisMonth();
+
+            if (totalPersonLastMonth > 0)
                 lblLastTotalPeople.Text = $"+{totalPersonLastMonth} this month";
             else
                 lblLastTotalPeople.Text = "No logins this month";
-            lblPendingApps.Text = clsDashboard.getPendingApplicants().ToString();
-            lblActiveLicenses.Text = clsLicenses.getTotalActiveLicenses().ToString();
-            lblCompleted.Text = clsDashboard.GetCompletedApplicationsThisMonth().ToString();
+
+            lblPendingApps.Text =
+                clsDashboard.getPendingApplicants().ToString();
+
+            lblActiveLicenses.Text =
+                clsLicenses.getTotalActiveLicenses().ToString();
+
+            lblCompleted.Text =
+                clsDashboard.GetCompletedApplicationsThisMonth().ToString();
+
+            // Applications
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.Controls.Clear();
-            DataTable dtApplications = clsDashboard.GetApplicationPeopleInfo();
+
+            DataTable dtApplications =
+                clsDashboard.GetApplicationPeopleInfo();
 
             if (dtApplications != null && dtApplications.Rows.Count > 0)
             {
                 foreach (DataRow row in dtApplications.Rows)
                 {
-                    ucApplicationPersonInfos ucItem = new ucApplicationPersonInfos();
-                    ucItem.Width = flowLayoutPanel1.DisplayRectangle.Width - 5;
+                    ucApplicationPersonInfos ucItem =
+                        new ucApplicationPersonInfos();
+
+                    ucItem.Width =
+                        flowLayoutPanel1.DisplayRectangle.Width - 5;
+
                     ucItem.LoadApplicationInfo(row);
                     flowLayoutPanel1.Controls.Add(ucItem);
                 }
             }
+
             flowLayoutPanel1.ResumeLayout();
+
+            // Licenses
             flowLayoutPanel3.SuspendLayout();
             flowLayoutPanel3.Controls.Clear();
-            DataTable dtLicenses = clsDashboard.GetLicensePeopleInfo();
+
+            DataTable dtLicenses =
+                clsDashboard.GetLicensePeopleInfo();
+
             if (dtLicenses != null && dtLicenses.Rows.Count > 0)
             {
                 foreach (DataRow row in dtLicenses.Rows)
                 {
-                    ucDashboardActiveLicense ucItem = new ucDashboardActiveLicense();
+                    ucDashboardActiveLicense ucItem =
+                        new ucDashboardActiveLicense();
 
-                    // تطبيق نفس قواعد العرض والـ Anchor لتجنب أي فراغات جانبية في الـ FlowLayoutPanel الثالثة
-                    ucItem.Width = flowLayoutPanel3.DisplayRectangle.Width - 5; 
+                    ucItem.Width =
+                        flowLayoutPanel3.DisplayRectangle.Width - 5;
 
                     ucItem.LoadLicenseInfo(row);
                     flowLayoutPanel3.Controls.Add(ucItem);
                 }
             }
+
             flowLayoutPanel3.ResumeLayout();
+
+            // Services
             flowLayoutPanel2.SuspendLayout();
             flowLayoutPanel2.Controls.Clear();
-            DataTable dtService = clsDashboard.GetServiceBreakdown();
+
+            DataTable dtService =
+                clsDashboard.GetServiceBreakdown();
+
             if (dtService != null && dtService.Rows.Count > 0)
             {
                 foreach (DataRow row in dtService.Rows)
                 {
-                    ucServiceBreakdown ucItem = new ucServiceBreakdown();
+                    ucServiceBreakdown ucItem =
+                        new ucServiceBreakdown();
 
-                    // تطبيق نفس قواعد العرض والـ Anchor لتجنب أي فراغات جانبية في الـ FlowLayoutPanel الثالثة
-                    ucItem.Width = flowLayoutPanel2.DisplayRectangle.Width - 5; 
+                    ucItem.Width =
+                        flowLayoutPanel2.DisplayRectangle.Width - 5;
 
                     ucItem.LoadServiceInfo(row);
                     flowLayoutPanel2.Controls.Add(ucItem);
                 }
             }
+
             flowLayoutPanel2.ResumeLayout();
         }
 
@@ -132,6 +169,7 @@ namespace DVLD_PresentationLayer.Dashboard
 
         private void flowLayoutPanel1_Resize(object sender, EventArgs e)
         {
+
             ResizeItems1();
         }
 

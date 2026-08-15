@@ -444,16 +444,25 @@ namespace DVLD_DataAccessLayer
 
             return isFound;
         }
-        public static bool hasInternationalLicense(int personID)
+        public static bool HasInternationalLicenseOrNonClass3(int personID)
         {
             bool isFound = false;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"SELECT Found = 1 FROM InternationalLicenses IL
-                                 INNER JOIN Drivers D ON IL.DriverID = D.DriverID
-                                 WHERE D.PersonID = @PersonID
-                                 AND IL.IsActive = 1";
+                // استخدام EXISTS أسرع وأكفاء للتحقق من الوجود من SELECT DISTINCT
+                string query = @"SELECT 1 WHERE EXISTS (
+                            SELECT 1 
+                            FROM Drivers D
+                            LEFT JOIN InternationalLicenses IL ON IL.DriverID = D.DriverID AND IL.IsActive = 1
+                            LEFT JOIN Licenses L ON L.DriverID = D.DriverID
+                            WHERE D.PersonID = @PersonID 
+                              AND (
+                                  IL.InternationalLicenseID IS NOT NULL 
+                                  OR 
+                                  L.LicenseClass <> 3
+                              )
+                        )";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -469,8 +478,9 @@ namespace DVLD_DataAccessLayer
                             isFound = true;
                         }
                     }
-                    catch (Exception )
+                    catch (Exception)
                     {
+                        // يمكن تسجيل الخطأ هنا ex.Message
                         isFound = false;
                     }
                 }

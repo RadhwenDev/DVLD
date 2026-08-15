@@ -28,6 +28,7 @@ namespace DVLD_DataAccessLayer
                                  END as [STATUS]
                                  FROM Applications A INNER JOIN People P on A.ApplicantPersonID = P.PersonID
                                  INNER JOIN ApplicationTypes ATy on A.ApplicationTypeID = Aty.ApplicationTypeID
+                                 ORDER BY A.ApplicationID DESC
                                  ;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

@@ -124,7 +124,7 @@ namespace DVLD_BusinessLayer
         }
         public static bool hasInternationalLicense(int personID)
         {
-            return clsLicensesDataAccess.hasInternationalLicense(personID);
+            return clsLicensesDataAccess.HasInternationalLicenseOrNonClass3(personID);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,14 +13,15 @@ namespace DVLD_DataAccessLayer
     public class clsPeopleDataAccess
     {
         public static string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+
         public static DataTable GetPeople()
         {
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 string query = @"select PersonID, FirstName, SecondName, ThirdName, LastName, NationalNo, DateOfBirth, Gendor,
-                         Address, Email, Phone, CountryName, ImagePath
-                         from People P inner join Countries C on P.NationalityCountryID = C.CountryID;";
+                                 Address, Email, Phone, CountryName, ImagePath
+                                 from People P inner join Countries C on P.NationalityCountryID = C.CountryID;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -33,15 +35,14 @@ namespace DVLD_DataAccessLayer
                             {
                                 dt.Load(reader);
                             }
-                        } 
+                        }
                     }
-                    catch (Exception){}
-                } 
+                    catch (Exception) { }
+                }
             }
 
             return dt;
         }
-        
 
         public static DataTable GetPeopleFullName()
         {
@@ -127,23 +128,22 @@ namespace DVLD_DataAccessLayer
 
             return dt;
         }
+
         public static int AddNewPerson(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalCountryID, string ImagePath)
         {
             int PersonID = -1;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                // 🌟 ملاحظة: تأكد إن كان الحقل في قاعدتك اسمه NationalityCountryID أو NationalCountryID وقمت بضبطه هنا
                 string query = @"INSERT INTO People (NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gendor, Address, Phone, Email, NationalityCountryID, ImagePath)
-                         VALUES (@NationalNo, @FirstName, @SecondName, @ThirdName, @LastName, @DateOfBirth, @Gendor, @Address, @Phone, @Email, @NationalCountryID, @ImagePath);
-                         SELECT SCOPE_IDENTITY();";
+                                 VALUES (@NationalNo, @FirstName, @SecondName, @ThirdName, @LastName, @DateOfBirth, @Gendor, @Address, @Phone, @Email, @NationalCountryID, @ImagePath);
+                                 SELECT SCOPE_IDENTITY();";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
-                {   
+                {
                     command.Parameters.AddWithValue("@NationalNo", NationalNo);
                     command.Parameters.AddWithValue("@FirstName", FirstName);
 
-                    // 🌟 الحل هنا: إرسال نص فارغ "" بدل DBNull لأن الجدول مصمم NOT NULL
                     command.Parameters.AddWithValue("@SecondName", string.IsNullOrWhiteSpace(SecondName) ? "" : SecondName.Trim());
                     command.Parameters.AddWithValue("@ThirdName", string.IsNullOrWhiteSpace(ThirdName) ? "" : ThirdName.Trim());
 
@@ -159,7 +159,7 @@ namespace DVLD_DataAccessLayer
                     if (!string.IsNullOrEmpty(ImagePath))
                         command.Parameters.AddWithValue("@ImagePath", ImagePath);
                     else
-                        command.Parameters.AddWithValue("@ImagePath", ""); // أو اتركها System.DBNull.Value إذا كان حقل الصورة يقبل NULL في الداتابيز
+                        command.Parameters.AddWithValue("@ImagePath", "");
 
                     try
                     {
@@ -173,8 +173,6 @@ namespace DVLD_DataAccessLayer
                     }
                     catch (Exception ex)
                     {
-                        // 💡 لكي تعرف سبب المشكلة الحقيقي الآن:
-                        // ضع Breakpoint هنا واقرأ محتوى الـ ex.Message لتعرف الحقل المسبب للأزمة!
                         System.Diagnostics.Debug.WriteLine("SQL Error: " + ex.Message);
                         PersonID = -1;
                     }
@@ -183,6 +181,7 @@ namespace DVLD_DataAccessLayer
 
             return PersonID;
         }
+
         public static bool IsPersonExist(string NationalNo)
         {
             bool isFound = false;
@@ -268,7 +267,6 @@ namespace DVLD_DataAccessLayer
             command.Parameters.AddWithValue("@NationalNo", NationalNo);
             command.Parameters.AddWithValue("@FirstName", FirstName);
 
-            // 🌟 الحل هنا: إرسال نص فارغ "" بدل DBNull لأن الجدول مصمم NOT NULL
             command.Parameters.AddWithValue("@SecondName", string.IsNullOrWhiteSpace(SecondName) ? "" : SecondName.Trim());
             command.Parameters.AddWithValue("@ThirdName", string.IsNullOrWhiteSpace(ThirdName) ? "" : ThirdName.Trim());
 
@@ -299,26 +297,51 @@ namespace DVLD_DataAccessLayer
 
             return rowAffected != 0;
         }
+
         public static bool DeletePerson(int PersonID)
         {
             int rowsAffected = 0;
+            string imagePath = string.Empty;
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"DELETE FROM People WHERE PersonID = @PersonID;";
+                // 1. جلب مسار الصورة أولاً قبل القيام بحذف السجل
+                string selectQuery = @"SELECT ImagePath FROM People WHERE PersonID = @PersonID;";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@PersonID", PersonID);
+                    selectCommand.Parameters.AddWithValue("@PersonID", PersonID);
 
                     try
                     {
                         connection.Open();
-                        rowsAffected = command.ExecuteNonQuery();
+                        object result = selectCommand.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            imagePath = result.ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Error fetching ImagePath: " + ex.Message);
+                        return false;
+                    }
+                }
+
+                // 2. حذف السجل من قاعدة البيانات
+                string deleteQuery = @"DELETE FROM People WHERE PersonID = @PersonID;";
+
+                using (SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection))
+                {
+                    deleteCommand.Parameters.AddWithValue("@PersonID", PersonID);
+
+                    try
+                    {
+                        rowsAffected = deleteCommand.ExecuteNonQuery();
                     }
                     catch (SqlException ex)
                     {
-                        // إذا حاول حذف شخص مرتبط بـ Users أو Applications يرجع false من غير كراش
                         System.Diagnostics.Debug.WriteLine("SQL Delete Error: " + ex.Message);
                         return false;
                     }
@@ -327,6 +350,21 @@ namespace DVLD_DataAccessLayer
                         System.Diagnostics.Debug.WriteLine("General Error: " + ex.Message);
                         return false;
                     }
+                }
+            }
+            // 3. حذف الصورة من المجلد (Folder) في حالة نجاح الحذف من قاعدة البيانات
+            if (rowsAffected > 0 && !string.IsNullOrEmpty(imagePath))
+            {
+                try
+                {
+                    if (File.Exists(imagePath))
+                    {
+                        File.Delete(imagePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("File Delete Error: " + ex.Message);
                 }
             }
 
