@@ -40,6 +40,7 @@ namespace DVLD_PresentationLayer.Dashboard
             lblPendingApps.Text = clsDashboard.getPendingApplicants().ToString();
             lblActiveLicenses.Text = clsLicenses.getTotalActiveLicenses().ToString();
             lblCompleted.Text = clsDashboard.GetCompletedApplicationsThisMonth().ToString();
+            flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.Controls.Clear();
             DataTable dtApplications = clsDashboard.GetApplicationPeopleInfo();
 
@@ -53,6 +54,8 @@ namespace DVLD_PresentationLayer.Dashboard
                     flowLayoutPanel1.Controls.Add(ucItem);
                 }
             }
+            flowLayoutPanel1.ResumeLayout();
+            flowLayoutPanel3.SuspendLayout();
             flowLayoutPanel3.Controls.Clear();
             DataTable dtLicenses = clsDashboard.GetLicensePeopleInfo();
             if (dtLicenses != null && dtLicenses.Rows.Count > 0)
@@ -68,6 +71,8 @@ namespace DVLD_PresentationLayer.Dashboard
                     flowLayoutPanel3.Controls.Add(ucItem);
                 }
             }
+            flowLayoutPanel3.ResumeLayout();
+            flowLayoutPanel2.SuspendLayout();
             flowLayoutPanel2.Controls.Clear();
             DataTable dtService = clsDashboard.GetServiceBreakdown();
             if (dtService != null && dtService.Rows.Count > 0)
@@ -83,6 +88,7 @@ namespace DVLD_PresentationLayer.Dashboard
                     flowLayoutPanel2.Controls.Add(ucItem);
                 }
             }
+            flowLayoutPanel2.ResumeLayout();
         }
 
 

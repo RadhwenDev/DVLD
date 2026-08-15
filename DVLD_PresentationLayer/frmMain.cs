@@ -27,7 +27,7 @@ namespace DVLD_PresentationLayer
     {
         private bool isSidebarExpanded = true;
         private Guna2Button activeSidebarButton = null;
-
+        private ucDashboard _dashboard;
         public frmMain()
         {
             InitializeComponent();
@@ -202,8 +202,14 @@ namespace DVLD_PresentationLayer
 
             activeSidebarButton = btnDashboard;
             lblBreadcrumb.Text = "DVLD > Dashboard";
-            ucDashboard myDashboardPage = new ucDashboard();
-            showUserControl(myDashboardPage);
+
+            if (_dashboard == null)
+            {
+                _dashboard = new ucDashboard();
+            }
+
+            showUserControl(_dashboard);
+
             pnlContainer.BringToFront();
             pnlSidebar.Refresh();
         }
