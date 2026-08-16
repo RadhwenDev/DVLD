@@ -25,7 +25,6 @@ namespace DVLD_PresentationLayer
 {
     public partial class frmMain : Form
     {
-        private bool isSidebarExpanded = true;
         private Guna2Button activeSidebarButton = null;
         private ucDashboard _dashboard;
         public frmMain()
@@ -43,28 +42,6 @@ namespace DVLD_PresentationLayer
 
             // Load initial user data and permissions
             UpdateUserData();
-        }
-
-        private void btnMenu_Click(object sender, EventArgs e)
-        {
-            if (isSidebarExpanded)
-            {
-                pnlSidebar.Width = 0;
-                btnMenu.Text = "≡";
-                btnMenu.Font = new Font("Arial", 18, FontStyle.Bold);
-                btnMenu.ForeColor = Color.Black;
-                isSidebarExpanded = false;
-            }
-            else
-            {
-                pnlSidebar.Width = 260;
-                btnMenu.Text = "✖️";
-                btnMenu.Font = new Font("Arial", 12, FontStyle.Bold);
-                btnMenu.ForeColor = Color.Black;
-                isSidebarExpanded = true;
-            }
-            btnMenu.Invalidate();
-            btnMenu.Update();
         }
 
         // ==========================================================
@@ -320,6 +297,14 @@ namespace DVLD_PresentationLayer
                 lblBreadcrumb.Text = "DVLD > Licenses";
                 ucLicenses myLicensesPage = new ucLicenses();
                 showUserControl(myLicensesPage);
+                myLicensesPage.OnLicenseReplaced += () =>
+                {
+                    _dashboard?.RefreshDashboard();
+                };
+                myLicensesPage.OnLicenseReleased += () =>
+                {
+                    _dashboard?.RefreshDashboard();
+                };
             }
             // 2. إذا كان لديه صلاحية الرخص المحجوزة فقط (Detained Licenses)
             else if (hasDetainedPermission)
@@ -330,6 +315,10 @@ namespace DVLD_PresentationLayer
                 // 💡 استدعِ واجهة الرخص المحجوزة مباشرة هنا
                 ucDetainLicense myDetainedPage = new ucDetainLicense();
                 showUserControl(myDetainedPage);
+                myDetainedPage.OnLicenseReleased += () =>
+                {
+                    _dashboard?.RefreshDashboard();
+                };
 
             }
             // 3. إذا كان لديه صلاحية الرخص الدولية فقط (International Applications)
@@ -421,6 +410,7 @@ namespace DVLD_PresentationLayer
             };
             pnlContainer.Controls.Add(appPage);
             appPage.BringToFront();
+            _dashboard?.RefreshDashboard();
         }
 
         // ==========================================================
@@ -486,13 +476,14 @@ namespace DVLD_PresentationLayer
 
                 clsCurrentUser.CurrentUser = null;
                 clsCurrentPerson.CurrentPerson = null;
-
+                    
                 this.Hide();
                 frmLogin loginForm = new frmLogin();
 
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
                     UpdateUserData();
+                    btnDashboard.PerformClick();
                     this.Show();
                 }
                 else

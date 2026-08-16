@@ -340,7 +340,7 @@ namespace DVLD_PresentationLayer.Licenses
                 }
             }
         }
-
+        public event Action OnLicenseReplaced;
         private void dgvLicenses_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
@@ -468,6 +468,7 @@ namespace DVLD_PresentationLayer.Licenses
                         _dtAllLicenses = clsLicenses.getAllLicenses();
                         dgvLicenses.DataSource = _dtAllLicenses;
                         ApplyCombinedFilter();
+                        OnLicenseReplaced?.Invoke();
                     }
                     else
                     {
@@ -493,20 +494,23 @@ namespace DVLD_PresentationLayer.Licenses
         {
             ReplaceLicense(enReplacementReason.Lost);
         }
-
+        public event Action OnLicenseReleased;
         private void btnDetainLicense_Click(object sender, EventArgs e)
         {
-            ucDetainLicense myDetainLicensen = new ucDetainLicense();
-            myDetainLicensen.Dock = DockStyle.Fill;
-            myDetainLicensen.Name = "ucDetainLicense";
-
+            ucDetainLicense myDetainLicense = new ucDetainLicense();
+            myDetainLicense.Dock = DockStyle.Fill;
+            myDetainLicense.Name = "ucDetainLicense";
+            myDetainLicense.OnLicenseReleased += () =>
+            {
+                OnLicenseReleased?.Invoke();
+            };
             foreach (Control ctrl in this.Controls)
             {
                 ctrl.Visible = false;
             }
 
-            this.Controls.Add(myDetainLicensen);
-            myDetainLicensen.BringToFront();    
+            this.Controls.Add(myDetainLicense);
+            myDetainLicense.BringToFront();    
         }
 
         private void detainLicenseToolStripMenuItem_Click(object sender, EventArgs e)

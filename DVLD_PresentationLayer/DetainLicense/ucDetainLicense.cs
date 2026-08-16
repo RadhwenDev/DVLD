@@ -252,6 +252,7 @@ namespace DVLD_PresentationLayer.DetainLicense
         {
             ApplyCombinedFilter();
         }
+        public event Action OnLicenseReleased;
 
         private void releaseDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -317,6 +318,7 @@ namespace DVLD_PresentationLayer.DetainLicense
                     _dtDetainedLicenses = clsDetainedLicense.GetAllDetainedLicenses();
                     dgvDetainedLicenses.DataSource = _dtDetainedLicenses;
                     UpdateRowsCount(_dtDetainedLicenses);
+                    OnLicenseReleased?.Invoke();
                 }
                 else
                 {

@@ -49,7 +49,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblBreadcrumb = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.lblDate = new System.Windows.Forms.Label();
-            this.btnMenu = new Guna.UI2.WinForms.Guna2Button();
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.guna2ContextMenuStrip1 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
             this.showDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -368,7 +367,6 @@
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.Controls.Add(this.lblBreadcrumb);
             this.panel3.Controls.Add(this.lblDate);
-            this.panel3.Controls.Add(this.btnMenu);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(260, 0);
             this.panel3.Name = "panel3";
@@ -381,7 +379,7 @@
             this.lblBreadcrumb.BackColor = System.Drawing.Color.Transparent;
             this.lblBreadcrumb.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBreadcrumb.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblBreadcrumb.Location = new System.Drawing.Point(118, 13);
+            this.lblBreadcrumb.Location = new System.Drawing.Point(52, 13);
             this.lblBreadcrumb.Name = "lblBreadcrumb";
             this.lblBreadcrumb.Size = new System.Drawing.Size(899, 41);
             this.lblBreadcrumb.TabIndex = 4;
@@ -399,24 +397,6 @@
             this.lblDate.TabIndex = 3;
             this.lblDate.Text = "Date";
             this.lblDate.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.BorderRadius = 3;
-            this.btnMenu.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnMenu.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnMenu.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnMenu.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnMenu.FillColor = System.Drawing.Color.White;
-            this.btnMenu.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.btnMenu.ForeColor = System.Drawing.Color.Gray;
-            this.btnMenu.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnMenu.Location = new System.Drawing.Point(39, 12);
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(44, 41);
-            this.btnMenu.TabIndex = 0;
-            this.btnMenu.Text = "✖️";
-            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // pnlContainer
             // 
@@ -506,7 +486,6 @@
         private System.Windows.Forms.Panel panel3;
         private Guna.UI2.WinForms.Guna2HtmlLabel lblBreadcrumb;
         private System.Windows.Forms.Label lblDate;
-        private Guna.UI2.WinForms.Guna2Button btnMenu;
         private System.Windows.Forms.Panel pnlContainer;
         private Guna.UI2.WinForms.Guna2Button btnUsers;
         private Guna.UI2.WinForms.Guna2Button btnLicenses;

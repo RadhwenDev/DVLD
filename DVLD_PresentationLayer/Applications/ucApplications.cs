@@ -439,7 +439,6 @@ namespace DVLD_PresentationLayer.Applications
                 deleteApplicationToolStripMenuItem.Enabled = true;
                 cancelApplicationToolStripMenuItem.Enabled = true;
                 scheduleTestsToolStripMenuItem.Enabled = true;
-                issueDrivingLicenseToolStripMenuItem.Enabled = false; // مثلاً رخصة السياقة ممنوعة في الحالة الجديدة
                 showLicenseToolStripMenuItem.Enabled = false;
                 showPersonToolStripMenuItem.Enabled = true;
                 byte passedTests = clsTestAppointment.GetPassedTestCountApplication(appID);
@@ -469,7 +468,6 @@ namespace DVLD_PresentationLayer.Applications
                 deleteApplicationToolStripMenuItem.Enabled = false;
                 cancelApplicationToolStripMenuItem.Enabled = false; // ما تنجمش تلغى حاجة مكتملة
                 scheduleTestsToolStripMenuItem.Enabled = false;
-                issueDrivingLicenseToolStripMenuItem.Enabled = false;
                 bool hasDriverLicense = clsTestAppointment.IsRetakeTest(appID);
                 showPersonToolStripMenuItem.Enabled = !hasDriverLicense;
                 showLicenseToolStripMenuItem.Enabled = !hasDriverLicense;
@@ -480,7 +478,6 @@ namespace DVLD_PresentationLayer.Applications
                 deleteApplicationToolStripMenuItem.Enabled = true;
                 cancelApplicationToolStripMenuItem.Enabled = false;
                 scheduleTestsToolStripMenuItem.Enabled = false;
-                issueDrivingLicenseToolStripMenuItem.Enabled = false;
                 showLicenseToolStripMenuItem.Enabled = false;
             }
         }
@@ -716,5 +713,6 @@ namespace DVLD_PresentationLayer.Applications
                                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

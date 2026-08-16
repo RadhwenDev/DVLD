@@ -74,7 +74,7 @@ namespace DVLD_DataAccessLayer
                                  SELECT LDL.LicenseClassID 
                                  FROM LocalDrivingLicenseApplications LDL
                                  INNER JOIN Applications A ON LDL.ApplicationID = A.ApplicationID
-                                 WHERE A.ApplicantPersonID = @PersonID AND A.ApplicationStatus IN (1, 2)";
+                                 WHERE A.ApplicantPersonID = @PersonID AND A.ApplicationStatus = 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
