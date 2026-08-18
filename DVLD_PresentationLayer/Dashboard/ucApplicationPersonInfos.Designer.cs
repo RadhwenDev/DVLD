@@ -62,7 +62,7 @@
             this.lblAppType_AppID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(136)))), ((int)(((byte)(164)))));
             this.lblAppType_AppID.Location = new System.Drawing.Point(120, 40);
             this.lblAppType_AppID.Name = "lblAppType_AppID";
-            this.lblAppType_AppID.Size = new System.Drawing.Size(364, 25);
+            this.lblAppType_AppID.Size = new System.Drawing.Size(439, 25);
             this.lblAppType_AppID.TabIndex = 1;
             // 
             // lblDateApp

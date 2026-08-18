@@ -375,7 +375,7 @@ namespace DVLD_PresentationLayer
                 return;
             }
 
-            SetActiveSidebarButton(btnApplications, "DVLD > Applications > New Application");
+
             ucNewApplication myNewApplication = new ucNewApplication
             {
                 Dock = DockStyle.Fill,
@@ -523,6 +523,10 @@ namespace DVLD_PresentationLayer
                     frmContainer.ShowDialog(overlay);
                 }
             }
+        }
+        public void SetBreadcrumb(string breadcrumbText)
+        {
+            lblBreadcrumb.Text = breadcrumbText;
         }
 
     }

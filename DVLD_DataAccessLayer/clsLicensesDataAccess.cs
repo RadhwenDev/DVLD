@@ -77,35 +77,39 @@ namespace DVLD_DataAccessLayer
             DataTable dt = new DataTable();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                string query = @"select L.LicenseID,
+                string query = @"SELECT 
+                                    L.LicenseID,
                                     L.DriverID,
-	                                People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '')  + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
+                                    People.FirstName + ISNULL(' ' + NULLIF(People.SecondName, ''), '') + ISNULL(' ' + NULLIF(People.ThirdName, ''), '') + ISNULL(' ' + NULLIF(People.LastName, ''), '') AS FullName,
                                     People.NationalNo,
-	                                CASE 
+                                    CASE 
                                         WHEN People.Gendor = 0 THEN 'Male' 
                                         ELSE 'Female' 
                                     END AS Gender,
                                     People.DateOfBirth,
                                     People.ImagePath,
-	                                LC.ClassName AS LicenseClass,
-	                                L.IssueDate,
+                                    LC.ClassName AS LicenseClass,
+                                    L.IssueDate,
                                     L.ExpirationDate,
-	                                CASE 
+                                    CASE 
                                         WHEN L.IsActive = 0 THEN 'No' 
                                         ELSE 'Yes' 
                                     END AS IsActive,
+                                    CASE 
+                                        WHEN DetainedLicenses.LicenseID IS NOT NULL THEN 'Yes' 
+                                        ELSE 'No' 
+                                    END AS IsDetained,
                                     L.Notes,
                                     L.PaidFees,
-	                                A_T.ApplicationTypeTitle AS IssueReason
-								from Applications A
-								INNER JOIN People ON A.ApplicantPersonID = People.PersonID
-								inner join InternationalLicenses IL on A.ApplicationID = IL.ApplicationID
-								inner join Drivers D on IL.DriverID = D.DriverID
-								INNER JOIN Licenses L on D.DriverID = L.DriverID
-								INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
+                                    A_T.ApplicationTypeTitle AS IssueReason
+                                FROM Applications A
+                                INNER JOIN People ON A.ApplicantPersonID = People.PersonID
+                                INNER JOIN Licenses L ON A.ApplicationID = L.ApplicationID
+                                INNER JOIN Drivers D ON L.DriverID = D.DriverID
+                                INNER JOIN LicenseClasses LC ON L.LicenseClass = LC.LicenseClassID
                                 INNER JOIN ApplicationTypes A_T ON A.ApplicationTypeID = A_T.ApplicationTypeID
-								LEFT JOIN DetainedLicenses ON L.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
-                                WHERE Licenses.ApplicationID = @ApplicationID;";
+                                LEFT JOIN DetainedLicenses ON L.LicenseID = DetainedLicenses.LicenseID AND DetainedLicenses.IsReleased = 0
+                                WHERE L.ApplicationID = @ApplicationID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -444,7 +448,7 @@ namespace DVLD_DataAccessLayer
 
             return isFound;
         }
-        public static bool HasInternationalLicenseOrNonClass3(int personID)
+        public static bool HasInternationalLicenseOrNonClass3(int DriverID)
         {
             bool isFound = false;
 
@@ -456,7 +460,7 @@ namespace DVLD_DataAccessLayer
                             FROM Drivers D
                             LEFT JOIN InternationalLicenses IL ON IL.DriverID = D.DriverID AND IL.IsActive = 1
                             LEFT JOIN Licenses L ON L.DriverID = D.DriverID
-                            WHERE D.PersonID = @PersonID 
+                            WHERE D.DriverID = @DriverID 
                               AND (
                                   IL.InternationalLicenseID IS NOT NULL 
                                   OR 
@@ -466,7 +470,7 @@ namespace DVLD_DataAccessLayer
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@PersonID", personID);
+                    command.Parameters.AddWithValue("@DriverID", DriverID);
 
                     try
                     {

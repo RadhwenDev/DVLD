@@ -497,6 +497,12 @@ namespace DVLD_PresentationLayer.Licenses
         public event Action OnLicenseReleased;
         private void btnDetainLicense_Click(object sender, EventArgs e)
         {
+            frmMain mainForm = this.FindForm() as frmMain;
+
+            if (mainForm != null)
+            {
+                mainForm.SetBreadcrumb("DVLD > Licenses > Detained Licenses");
+            }
             ucDetainLicense myDetainLicense = new ucDetainLicense();
             myDetainLicense.Dock = DockStyle.Fill;
             myDetainLicense.Name = "ucDetainLicense";
@@ -597,6 +603,12 @@ namespace DVLD_PresentationLayer.Licenses
 
         private void btnInternationalApp_Click(object sender, EventArgs e)
         {
+            frmMain mainForm = this.FindForm() as frmMain;
+
+            if (mainForm != null)
+            {
+                mainForm.SetBreadcrumb("DVLD > Licenses > International Applications");
+            }
             ucInternationalApplication myInternationalLicensen = new ucInternationalApplication();
             myInternationalLicensen.Dock = DockStyle.Fill;
             myInternationalLicensen.Name = "ucDetainLicense";
