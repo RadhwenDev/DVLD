@@ -699,11 +699,8 @@ Before running the project, make sure the development environment contains:
 ## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone [https://github.com/RadhwenDev/DVLD.git](https://github.com/RadhwenDev/DVLD.git)
 ```
-
-> Replace `<repository-url>` with your repository URL.
-
 ---
 
 ## 2. Open the Solution
